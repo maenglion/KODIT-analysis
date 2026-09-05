@@ -8,13 +8,15 @@ const migrationPath = path.join(root, "supabase", "migrations", "20260905000100_
 const configPath = path.join(root, "supabase", "config.toml");
 const accessTestPath = path.join(root, "supabase", "tests", "remote_access_contract.mjs");
 const fixturePath = path.join(root, "supabase", "tests", "fixtures", "0001_access_contract_fixtures.sql");
+const storageDraftPath = path.join(root, "supabase", "drafts", "20260905_storage_policy_draft.sql");
 const migration = fs.readFileSync(migrationPath, "utf8");
 const config = fs.readFileSync(configPath, "utf8");
 const accessTest = fs.readFileSync(accessTestPath, "utf8");
 const fixtures = fs.readFileSync(fixturePath, "utf8");
+const storageDraft = fs.readFileSync(storageDraftPath, "utf8");
 const apiSection = migration.slice(
   migration.indexOf("create function api.current_access_level"),
-  migration.indexOf("-- Buckets stay private"),
+  migration.indexOf("\ncommit;", migration.indexOf("create function api.current_access_level")),
 );
 
 const checks = [];
@@ -79,9 +81,21 @@ check("raw schemas revoke browser privileges and enable forced RLS", () => {
   assert.match(migration, /force row level security/i);
   assert.match(migration, /alter default privileges[\s\S]*schema core[\s\S]*revoke all on tables/i);
 });
-check("office download and case storage isolation are explicit", () => {
-  assert.match(migration, /kodit_office_release_artifacts_select/);
-  assert.doesNotMatch(migration, /create\s+policy[^;]+case-documents/is);
+check("initial migration has no Supabase Storage objects or policies", () => {
+  assert.doesNotMatch(migration, /storage\.buckets/i);
+  assert.doesNotMatch(migration, /storage\.objects/i);
+  assert.doesNotMatch(migration, /create\s+policy[^;]+\bon\s+storage\./is);
+});
+check("Storage SQL is retained only as a non-migration draft", () => {
+  for (const marker of [
+    "core-documents", "case-documents", "release-artifacts",
+    "kodit_internal_core_objects_select", "kodit_office_release_artifacts_select",
+    "kodit_internal_core_objects_insert", "kodit_internal_core_objects_update",
+    "kodit_internal_core_objects_delete",
+  ]) assert.match(storageDraft, new RegExp(marker));
+  const migrationsDirectory = path.join(root, "supabase", "migrations") + path.sep;
+  assert.ok(!storageDraftPath.startsWith(migrationsDirectory));
+  assert.doesNotMatch(config, /drafts/i);
 });
 check("every API view is security_invoker", () => {
   const views = migration.match(/^\s*create\s+view\s+api\.[^\n]+/gim) ?? [];

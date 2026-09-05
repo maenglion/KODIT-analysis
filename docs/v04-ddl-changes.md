@@ -14,7 +14,7 @@
 | `status_code` 단독 PK | `(methodology_version, status_code)` 유일키와 별도 UUID PK | 판정기준 버전 병존 |
 | 상태 이력에 `valid_to` 갱신 | `supersedes_assignment_id` 기반 append-only | 판정 이력 덮어쓰기 방지 |
 | 보증번호·사건 접수번호 평문 | 암호문 + 검색용 SHA-256 fingerprint | 사건 식별정보 평문 저장 방지 |
-| Storage 경로만 정의 | private bucket 3개와 internal 정책 초안 | 일반 원문·사건 원문·배포 산출물 분리 |
+| Storage 경로만 정의 | database migration과 분리된 private bucket·정책 초안 | 별도 승인 전 미실행 |
 | `facts.source_type` 누락 | 사실 원장에 `source_type` 필수화 | 출력 시 출처 유형 추적 |
 | 공개 결정트리 전용 원장 없음 | 버전형 `publication_decision_rules` 추가 | 방법론별 결정순서와 결과 재현 |
 | 배포 승인·변경·철회 필드 부족 | 승인자·승인시각·변경 건수·최신본·철회시각·사유 추가 | 배포 원장과 정정 이력 보강 |

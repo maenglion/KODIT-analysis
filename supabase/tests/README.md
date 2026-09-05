@@ -13,7 +13,7 @@
 원격 접근계약 fixture는 운영 migration과 분리되어 있습니다.
 
 1. 직접 PostgreSQL 테스트 연결로 `fixtures/0001_access_contract_fixtures.sql`을 적용합니다.
-2. 네 개의 환경변수를 프로세스에만 주입하고 `pnpm test:remote-access`를 실행합니다.
+2. 별도 승인된 Storage migration이 적용된 테스트 환경에서만 네 개의 환경변수를 프로세스에 주입하고 `pnpm test:remote-access`를 실행합니다.
 3. 직접 PostgreSQL 연결로 `fixtures/9999_drop_test_support.sql`을 실행합니다.
 
 `test_support`는 `supabase/config.toml`의 PostgREST 노출 스키마에 포함하지 않습니다.

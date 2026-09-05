@@ -6,7 +6,7 @@
 
 1. 대상 프로젝트 ref와 새 KODIT 프로젝트의 URL·publishable key가 일치하는지 확인합니다.
 2. 원격 스키마·RLS·GRANT·bucket·migration 이력을 다시 읽기 전용으로 스냅샷합니다.
-3. 최초 migration을 적용해 `core`, `case`, `api`와 private bucket을 만듭니다. 이때 `public`은 비어 있고 브라우저 권한이 회수된 상태여야 합니다.
+3. 최초 database migration을 적용해 `core`, `case`, `api`만 만듭니다. 이때 `public`은 비어 있고 브라우저 권한이 회수된 상태여야 합니다. Storage는 별도 승인 전 생성하지 않습니다.
 4. Supabase API 설정의 exposed schemas를 `api`, `graphql_public`으로 변경합니다. `public`, `core`, `case`는 제외합니다.
 5. 스키마 캐시 재적재 후 `core`와 `case`의 Accept-Profile 요청이 406인지 확인합니다.
 6. `remote_access_contract.mjs`로 anon, 일반 JWT, office JWT, internal JWT를 각각 검사합니다.

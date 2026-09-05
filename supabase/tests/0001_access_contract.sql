@@ -92,18 +92,17 @@ select ok(
   'api functions never read case'
 );
 select ok(
+  not exists(select 1 from pg_policies where schemaname = 'storage' and policyname like 'kodit_%'),
+  'initial database migration creates no KODIT Storage policy'
+);
+select ok(
   not exists(select 1 from pg_policies where schemaname = 'storage' and coalesce(qual, '') like '%case-documents%'),
   'case-documents has no browser read policy'
 );
-select ok(
-  exists(select 1 from pg_policies where schemaname = 'storage'
-    and policyname = 'kodit_office_release_artifacts_select' and roles @> array['authenticated'::name]),
-  'office download policy exists only through authenticated role and access function'
-);
 select is(
-  (select count(*)::integer from storage.buckets where id in ('core-documents', 'case-documents', 'release-artifacts') and public),
+  (select count(*)::integer from storage.buckets where id in ('core-documents', 'case-documents', 'release-artifacts')),
   0,
-  'all KODIT buckets are private'
+  'initial database migration creates no KODIT bucket'
 );
 
 select ok(
