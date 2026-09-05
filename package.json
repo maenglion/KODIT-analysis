@@ -1,0 +1,15 @@
+{
+  "name": "kodit-analysis",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.15.1",
+  "scripts": {
+    "check:schema": "node tools/check-schema-contract.mjs",
+    "check": "pnpm -r --if-present check",
+    "test": "pnpm -r --if-present test",
+    "test:remote-access": "node supabase/tests/remote_access_contract.mjs"
+  },
+  "devDependencies": {
+    "pg": "^8.16.3"
+  }
+}

@@ -1,0 +1,10 @@
+project_id = "kodit-analysis"
+
+[api]
+enabled = true
+schemas = ["api", "graphql_public"]
+extra_search_path = ["api", "extensions"]
+max_rows = 1000
+
+[db]
+major_version = 17
