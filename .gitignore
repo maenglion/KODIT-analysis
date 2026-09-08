@@ -32,9 +32,14 @@ private-data/
 raw-data/
 imports/
 exports/
+outputs/
 *.xlsx
 *.xls
 *.csv
+!apps/public-site/data/
+!apps/public-site/data/**/
+!apps/public-site/data/review-20260908/regulations.csv
+!apps/public-site/data/review-20260908/unpublished-unknown.csv
 *.tsv
 *.parquet
 *.hwp

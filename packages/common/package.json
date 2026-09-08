@@ -1,5 +1,17 @@
 {
   "name": "@kodit/common",
   "private": true,
-  "version": "0.0.0"
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./regulations": "./src/regulations/index.ts",
+    "./regulations/RegulationExplorer": "./src/regulations/RegulationExplorer.tsx"
+  },
+  "peerDependencies": {
+    "react": "^19.1.1",
+    "next": "^15.5.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10"
+  }
 }

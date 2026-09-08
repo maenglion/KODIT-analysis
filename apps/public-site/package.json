@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit --incremental false"
   },
   "dependencies": {
+    "@kodit/common": "workspace:*",
     "next": "15.5.2",
     "pg": "^8.16.3",
     "react": "19.1.1",

@@ -10,6 +10,10 @@ const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclud
 }).split("\0").filter(Boolean);
 
 const forbiddenExtensions = /\.(pdf|hwp|hwpx|docx?|xlsx?|csv|tsv|zip|7z|rar|sqlite3?|db|dump)$/i;
+const allowedReviewData = new Set([
+  "apps/public-site/data/review-20260908/regulations.csv",
+  "apps/public-site/data/review-20260908/unpublished-unknown.csv",
+]);
 const secretPatterns = [
   /github_pat_[A-Za-z0-9_]{20,}/,
   /\beyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\b/,
@@ -23,7 +27,9 @@ const privateDataPatterns = [
 
 let scanned = 0;
 for (const relative of files) {
-  assert.doesNotMatch(relative, forbiddenExtensions, `binary/private source artifact must not be tracked: ${relative}`);
+  if (!allowedReviewData.has(relative.replaceAll("\\", "/"))) {
+    assert.doesNotMatch(relative, forbiddenExtensions, `binary/private source artifact must not be tracked: ${relative}`);
+  }
   const absolute = path.join(root, relative);
   if (!fs.statSync(absolute).isFile() || fs.statSync(absolute).size > 2_000_000) continue;
   const content = fs.readFileSync(absolute, "utf8");

@@ -16,6 +16,9 @@ importers:
 
   apps/public-site:
     dependencies:
+      '@kodit/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       next:
         specifier: 15.5.2
         version: 15.5.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -50,7 +53,18 @@ importers:
 
   apps/workbench: {}
 
-  packages/common: {}
+  packages/common:
+    dependencies:
+      next:
+        specifier: ^15.5.2
+        version: 15.5.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      react:
+        specifier: ^19.1.1
+        version: 19.1.1
+    devDependencies:
+      '@types/react':
+        specifier: ^19.1.10
+        version: 19.2.18
 
   packages/database: {}
 

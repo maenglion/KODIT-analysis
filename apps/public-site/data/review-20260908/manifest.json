@@ -1,0 +1,55 @@
+{
+  "run_id": "20260908T192031+0900",
+  "started_at": "2026-09-08T19:20:31.163009+09:00",
+  "finished_at": "2026-09-08T19:20:45.551994+09:00",
+  "methodology_version": "v0.4",
+  "collector_version": "kodit-full-regenerator/0.1",
+  "release_status": "review_pending",
+  "baseline_counts": {
+    "0811": 989,
+    "0831": 987
+  },
+  "legacy_snapshot_files": 455,
+  "result_count": 1041,
+  "failure_count": 1,
+  "status_distribution": {
+    "판정대기": 182,
+    "사전예고만": 831,
+    "전문 공개": 23,
+    "출처불명": 5
+  },
+  "live_preannouncement_count": 2097,
+  "column_contract": [
+    "regulation_code",
+    "regulation_name",
+    "normalized_name",
+    "public_status_code",
+    "public_status_label",
+    "lifecycle_code",
+    "document_verification_code",
+    "nonpublic_stage",
+    "primary_claim",
+    "confidence_level",
+    "decision_reason_code",
+    "decision_reason",
+    "official_source_count",
+    "search_verification_count",
+    "human_confirmed",
+    "last_collected_at",
+    "last_verified_at",
+    "official_url",
+    "document_sha256",
+    "document_format",
+    "revision_date",
+    "legacy_0811_status",
+    "legacy_0831_status",
+    "methodology_version",
+    "release_status"
+  ],
+  "notes": [
+    "기존 판정은 legacy 비교 열에만 보존",
+    "HWP/HWPX 전문 공개는 본문 앵커 확인 필수",
+    "검색엔진 검증 미실행 건은 0"
+  ],
+  "data_source": "server-bundled review-20260908"
+}

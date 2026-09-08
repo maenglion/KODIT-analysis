@@ -5,7 +5,9 @@
   "packageManager": "pnpm@10.15.1",
   "scripts": {
     "check:schema": "node tools/check-schema-contract.mjs",
+    "check:regeneration": "node tools/check-regeneration-contract.mjs",
     "check:vertical": "node tools/check-vertical-slice.mjs",
+    "check:regulations": "node --experimental-strip-types tools/check-regulation-table.mjs",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs"

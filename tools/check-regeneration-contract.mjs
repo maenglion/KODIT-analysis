@@ -1,0 +1,11 @@
+import fs from "node:fs";
+const py = fs.readFileSync("tools/legacy-import/regenerate_v04.py", "utf8");
+const wb = fs.readFileSync("tools/legacy-import/build_release_workbook.mjs", "utf8");
+const must = ["public_status_code", "lifecycle_code", "document_verification_code", "nonpublic_stage", "confidence_level", "official_source_count", "search_verification_count", "human_confirmed", "last_collected_at", "last_verified_at"];
+for (const token of must) if (!py.includes(`\"${token}\"`)) throw new Error(`missing output contract: ${token}`);
+for (const sheet of ["전체 공개현황", "미공개·출처불명", "주장과 신뢰도", "판정기준 해설", "수집·검증 이력", "변경내역"]) if (!wb.includes(`\"${sheet}\"`)) throw new Error(`missing sheet: ${sheet}`);
+if (!py.includes('encoding="utf-8-sig"')) throw new Error("CSV BOM contract missing");
+if (!py.includes('"release_status": "review_pending"')) throw new Error("review-pending contract missing");
+if (!py.includes("'v0.4','draft'")) throw new Error("database draft release contract missing");
+if (!py.includes("body_anchors")) throw new Error("HWP/HWPX body gate missing");
+console.log("regeneration contract: ok");
