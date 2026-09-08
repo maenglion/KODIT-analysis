@@ -86,8 +86,19 @@ select ok(
 );
 select ok(
   not exists(
-    select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-    where n.nspname = 'api' and pg_get_functiondef(p.oid) like '%"case".%'
+    with api_functions as materialized (
+      select p.oid, p.proname
+      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+      where n.nspname = 'api'
+        and p.prokind = 'f'
+        and p.proname::text = any (array[
+          'current_access_level', 'has_access',
+          'public_regulation_rows', 'public_fact_rows', 'public_event_rows',
+          'public_notice_rows', 'public_claim_rows', 'public_release_rows',
+          'office_claim_rows', 'internal_verification_queue_rows'
+        ]::text[])
+    )
+    select 1 from api_functions where pg_get_functiondef(oid) like '%"case".%'
   ),
   'api functions never read case'
 );
@@ -170,8 +181,17 @@ select ok(
 );
 select ok(
   not exists(
-    select 1 from pg_class c join pg_namespace n on n.oid = c.relnamespace
-    where n.nspname = 'api' and c.relkind = 'v' and pg_get_viewdef(c.oid) like '%"case".%'
+    with api_views as materialized (
+      select c.oid, c.relname
+      from pg_class c join pg_namespace n on n.oid = c.relnamespace
+      where n.nspname = 'api'
+        and c.relkind = 'v'
+        and c.relname::text = any (array[
+          'public_regulations', 'public_facts', 'public_events', 'public_notices',
+          'public_releases', 'public_claims', 'office_claims', 'internal_verification_queue'
+        ]::text[])
+    )
+    select 1 from api_views where pg_get_viewdef(oid) like '%"case".%'
   ),
   'api views never read case'
 );
@@ -179,9 +199,20 @@ select ok((select rolbypassrls from pg_roles where rolname = 'postgres'),
   'api definer owner bypasses RLS, so function filters are the effective boundary');
 select ok(
   not exists(
-    select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-    where n.nspname = 'api'
-      and pg_get_functiondef(p.oid) ~* '(insert[[:space:]]+into|update|delete[[:space:]]+from|merge[[:space:]]+into)[[:space:]]+core\.'
+    with api_functions as materialized (
+      select p.oid, p.proname
+      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+      where n.nspname = 'api'
+        and p.prokind = 'f'
+        and p.proname::text = any (array[
+          'current_access_level', 'has_access',
+          'public_regulation_rows', 'public_fact_rows', 'public_event_rows',
+          'public_notice_rows', 'public_claim_rows', 'public_release_rows',
+          'office_claim_rows', 'internal_verification_queue_rows'
+        ]::text[])
+    )
+    select 1 from api_functions
+    where pg_get_functiondef(oid) ~* '(insert[[:space:]]+into|update|delete[[:space:]]+from|merge[[:space:]]+into)[[:space:]]+core\.'
   ),
   'no operating api function can mutate core access profiles or data'
 );

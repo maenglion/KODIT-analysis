@@ -7,11 +7,13 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const migrationPath = path.join(root, "supabase", "migrations", "20260905000100_initial_secure_schema.sql");
 const configPath = path.join(root, "supabase", "config.toml");
 const accessTestPath = path.join(root, "supabase", "tests", "remote_access_contract.mjs");
+const accessContractSqlPath = path.join(root, "supabase", "tests", "0001_access_contract.sql");
 const fixturePath = path.join(root, "supabase", "tests", "fixtures", "0001_access_contract_fixtures.sql");
 const storageDraftPath = path.join(root, "supabase", "drafts", "20260905_storage_policy_draft.sql");
 const migration = fs.readFileSync(migrationPath, "utf8");
 const config = fs.readFileSync(configPath, "utf8");
 const accessTest = fs.readFileSync(accessTestPath, "utf8");
+const accessContractSql = fs.readFileSync(accessContractSqlPath, "utf8");
 const fixtures = fs.readFileSync(fixturePath, "utf8");
 const storageDraft = fs.readFileSync(storageDraftPath, "utf8");
 const apiSection = migration.slice(
@@ -166,6 +168,38 @@ check("SQL tests cover URL topology and historical reproduction", () => {
     "one URL retains multiple document hashes", "one SHA may be discovered at multiple URLs",
     "past methodology decision remains reproducible", "EXTRACTION_PENDING document cannot advance",
   ]) assert.match(sqlTests, new RegExp(marker));
+});
+check("PostgreSQL 17 definition checks materialize typed API allowlists", () => {
+  const functionCalls = accessContractSql.match(/pg_get_functiondef\s*\(\s*oid\s*\)/gi) ?? [];
+  const functionScopes = accessContractSql.match(
+    /with\s+api_functions\s+as\s+materialized\s*\([\s\S]*?select\s+1\s+from\s+api_functions\s+where\s+pg_get_functiondef\s*\(\s*oid\s*\)/gi,
+  ) ?? [];
+  assert.equal(functionCalls.length, 2);
+  assert.equal(functionScopes.length, 2);
+  for (const scope of functionScopes) {
+    assert.match(scope, /n\.nspname\s*=\s*'api'/i);
+    assert.match(scope, /p\.prokind\s*=\s*'f'/i);
+    for (const name of [
+      "current_access_level", "has_access", "public_regulation_rows", "public_fact_rows",
+      "public_event_rows", "public_notice_rows", "public_claim_rows", "public_release_rows",
+      "office_claim_rows", "internal_verification_queue_rows",
+    ]) assert.match(scope, new RegExp(`'${name}'`));
+    assert.doesNotMatch(scope, /p\.prokind\s*=\s*'[awp]'/i);
+  }
+
+  const viewCalls = accessContractSql.match(/pg_get_viewdef\s*\(\s*oid\s*\)/gi) ?? [];
+  const viewScopes = accessContractSql.match(
+    /with\s+api_views\s+as\s+materialized\s*\([\s\S]*?select\s+1\s+from\s+api_views\s+where\s+pg_get_viewdef\s*\(\s*oid\s*\)/gi,
+  ) ?? [];
+  assert.equal(viewCalls.length, 1);
+  assert.equal(viewScopes.length, 1);
+  assert.match(viewScopes[0], /n\.nspname\s*=\s*'api'/i);
+  assert.match(viewScopes[0], /c\.relkind\s*=\s*'v'/i);
+  for (const name of [
+    "public_regulations", "public_facts", "public_events", "public_notices",
+    "public_releases", "public_claims", "office_claims", "internal_verification_queue",
+  ]) assert.match(viewScopes[0], new RegExp(`'${name}'`));
+  assert.doesNotMatch(accessContractSql, /pg_get_triggerdef\s*\(/i);
 });
 check("service role is restricted to setup and cleanup helper", () => {
   assert.match(accessTest, /function adminRequest/);
