@@ -1,0 +1,18 @@
+{
+  "sourceCode": "kodit-official-regulation-download",
+  "sourceName": "신용보증기금 공식 규정 원문",
+  "sourceType": "official_website",
+  "baseUrl": "https://www.kodit.or.kr",
+  "externalKey": "c74408f0327cbdaf45e574544a248fb6",
+  "url": "https://www.kodit.or.kr/common/nttFileDownload.do?fileKey=c74408f0327cbdaf45e574544a248fb6",
+  "fileName": "「투자옵션부보증 운용기준」.pdf",
+  "expectedBytes": 1060212,
+  "expectedSha256": "d4a734b94bfdafec03e267a3ef592dbc02c923eb98a43f0737d455298dd38804",
+  "expectedPages": 45,
+  "regulationName": "투자옵션부보증 운용기준",
+  "revisionDate": "2024-02-23",
+  "versionLabel": "2024.02.23 개정본",
+  "collectorVersion": "kodit-regulation-pdf/0.1.0",
+  "methodologyVersion": "kodit-v0.4",
+  "advanceNoticeDate": "2026-06-24"
+}

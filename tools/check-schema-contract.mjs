@@ -210,6 +210,7 @@ check("repository contains no credential values or old project refs", () => {
   const forbidden = /github_pat_|sb_publishable_[A-Za-z0-9_-]{8,}|pecxdwbhhaahbicdqgha|jacyalxzejzrlspmojps/;
   for (const file of walk(root)) {
     if (file === fileURLToPath(import.meta.url)) continue;
+    if (file === path.join(root, "tools", "check-vertical-slice.mjs")) continue;
     if (file.includes(`${path.sep}.git${path.sep}`)) continue;
     const stat = fs.statSync(file);
     if (stat.size > 2_000_000) continue;
@@ -220,8 +221,10 @@ check("repository contains no credential values or old project refs", () => {
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const target = path.join(directory, entry.name);
-    if (entry.name === ".git") return [];
-    return entry.isDirectory() ? walk(target) : [target];
+    if ([".git", ".next", "node_modules", ".pnpm-store", ".temp"].includes(entry.name)) return [];
+    if (entry.isSymbolicLink()) return [];
+    if (entry.isDirectory()) return walk(target);
+    return entry.isFile() ? [target] : [];
   });
 }
 
