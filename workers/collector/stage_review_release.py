@@ -73,7 +73,14 @@ def main() -> None:
     affected = 0
     for offset in range(0, len(rows), 200):
         affected += int(rpc("upsert_draft_regulation_rows", {"p_release_id": release_id, "p_rows": rows[offset:offset + 200]}))
-    print(json.dumps({"release_id": release_id, "source_rows": len(rows), "source_sha256": source_sha256, "affected_rows": affected}, ensure_ascii=False))
+    verified = [item for item in rpc("draft_regulation_release_candidates", {}) if item["release_id"] == release_id]
+    if len(verified) != 1 or int(verified[0]["row_count"]) != len(rows):
+        raise RuntimeError("remote draft snapshot row count differs from source CSV")
+    print(json.dumps({
+        "release_id": release_id, "release_status": "draft", "is_latest": False,
+        "source_rows": len(rows), "stored_rows": int(verified[0]["row_count"]),
+        "source_sha256": source_sha256, "affected_rows": affected,
+    }, ensure_ascii=False))
 
 
 if __name__ == "__main__":
