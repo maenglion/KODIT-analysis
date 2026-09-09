@@ -1,10 +1,10 @@
-:root { --ink:#13231d; --muted:#607069; --paper:#f4f2eb; --green:#0b6849; --lime:#c9ef72; --line:#d9ddd6; --amber:#9a5b04; }
+:root { --ink:#172b4d; --muted:#5c6b7c; --paper:#eef4f8; --green:#1d6fa3; --lime:#dff2ff; --line:#dce3ea; --amber:#9a5b04; --primary:#1d6fa3; --primary-dark:#155985; --primary-soft:#e7f2f9; --surface:#fff; }
 * { box-sizing:border-box; }
 html { background:var(--paper); }
-body { margin:0; color:var(--ink); font-family:Arial,"Noto Sans KR",sans-serif; background:linear-gradient(180deg,#fbfcf8 0,#f4f2eb 70%); font-size:16px; }
+body { margin:0; color:var(--ink); font-family:Inter,"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif; background:linear-gradient(180deg,#f7f9fb 0,var(--paper) 70%); font-size:16px; }
 a { color:inherit; }
 .shell { width:min(1180px,calc(100% - 48px)); margin-inline:auto; }
-.site-header { border-bottom:1px solid rgba(19,35,29,.13); background:rgba(251,252,248,.92); position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); }
+.site-header { border-bottom:1px solid rgba(23,43,77,.13); background:rgba(255,255,255,.92); position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); }
 .header-inner { width:min(1240px,calc(100% - 48px)); height:82px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:28px; }
 .brand { display:flex; align-items:center; gap:12px; text-decoration:none; letter-spacing:-.02em; }
 .brand-mark { width:38px; height:38px; border-radius:50%; display:grid; place-items:center; background:var(--ink); color:var(--lime); font-weight:800; }
@@ -29,3 +29,58 @@ button,input,select{font:inherit}.review-hero{padding:54px 0 32px}.title-line{di
 @media(max-width:680px){.review-hero{padding-top:34px}.metric-grid{grid-template-columns:repeat(2,1fr)}.update-grid{grid-template-columns:1fr}.filter-panel fieldset{width:100%;margin-right:0}.table-toolbar{align-items:flex-start;flex-direction:column}.download-menu{justify-content:flex-start}.table-scroll{overflow:visible}.regulations-table{min-width:0}.regulations-table thead{display:none}.regulations-table tbody,.regulations-table tr,.regulations-table td{display:block}.regulations-table tr{border-bottom:1px solid var(--line);padding:13px}.regulations-table td{display:none;border:0;padding:5px 0}.regulations-table td:nth-child(-n+3){display:flex;align-items:center;justify-content:space-between;gap:14px}.regulations-table tr:focus-within td{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.regulations-table td::before{content:attr(data-label);color:var(--muted);font-size:11px;flex:0 0 92px}.regulations-table td:first-child{font-size:15px}.regulations-table td:first-child .name-button{margin-left:auto}.regulations-table td:first-child .detail-ready{display:none}.title-line h1{font-size:39px}}
 .mobile-expand{display:none}
 @media(max-width:720px){.regulations-table tr.is-expanded td{display:flex}.mobile-expand{display:inline-flex;margin-left:auto;border:0;border-radius:999px;padding:.35rem .65rem;background:#eef3f7;color:#23475f;font-weight:800}}
+
+/* Paperlogy + blue institutional theme adapted from the approved visual reference. */
+.brand-mark {
+  background:var(--primary);
+  color:#fff;
+  box-shadow:0 5px 16px rgba(29,111,163,.2);
+}
+nav a { color:#526174; }
+nav a:hover { color:var(--primary); }
+.title-line h1 {
+  font-family:Paperlogy,Inter,"Noto Sans KR",sans-serif;
+  font-weight:800;
+}
+.home h1 {
+  font-family:Paperlogy,Inter,"Noto Sans KR",sans-serif;
+  font-weight:800;
+}
+.metric-grid div,
+.update-grid,
+.filter-panel,
+.table-panel {
+  border-color:var(--line);
+  border-radius:10px;
+  box-shadow:0 8px 26px rgba(23,43,77,.045);
+}
+.metric-grid strong {
+  font-family:Paperlogy,Inter,"Noto Sans KR",sans-serif;
+  font-weight:800;
+  color:var(--primary);
+}
+.table-toolbar strong,
+.confidence-flag,
+.pagination span {
+  font-weight:800;
+}
+.filter-head button,
+.preset-row button {
+  background:#f7f9fb;
+  color:var(--ink);
+}
+.download-menu button:first-child {
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+}
+.download-menu small { background:#edf3f7; }
+.regulations-table th { background:var(--primary-dark); }
+.regulations-table td { border-bottom-color:#e5ebf0; }
+.regulations-table tbody tr:hover { background:#f2f7fb; }
+.regulations-table .has-detail { background:#eaf4fa; }
+.confidence-flag {
+  background:var(--primary-dark);
+  color:#fff;
+}
+.detail-ready { color:var(--primary); }
