@@ -40,6 +40,15 @@ export type ApprovedRegulationRow = RegulationRow & {
   release_as_of_date: string;
 };
 
+export type ApprovedReleasePayload = {
+  rows: ApprovedRegulationRow[];
+  releaseId: string;
+  asOf: string;
+  approvedAt: string;
+  snapshotRowCount: number;
+  csvSha256: string | null;
+};
+
 export function chooseRegulationDataset(approvedRows: ApprovedRegulationRow[], fallbackRows: RegulationRow[]) {
   if (approvedRows.length > 0) {
     const first = approvedRows[0];
@@ -49,6 +58,27 @@ export function chooseRegulationDataset(approvedRows: ApprovedRegulationRow[], f
     return { rows: approvedRows as RegulationRow[], source: "approved" as const, releaseId: first.release_id, asOf: first.release_as_of_date };
   }
   return { rows: fallbackRows, source: "fallback" as const, releaseId: null, asOf: null };
+}
+
+export async function resolveRegulationDataset(
+  loadApproved: () => Promise<ApprovedReleasePayload | null>,
+  fallbackRows: RegulationRow[],
+  onFailure?: (error: unknown) => void,
+) {
+  try {
+    const approved = await loadApproved();
+    if (approved?.rows.length) {
+      const selected = chooseRegulationDataset(approved.rows, fallbackRows);
+      if (approved.releaseId !== selected.releaseId || approved.snapshotRowCount !== approved.rows.length) {
+        throw new Error("approved release metadata contract mismatch");
+      }
+      return { ...selected, approved, rpcFailed: false };
+    }
+    return { ...chooseRegulationDataset([], fallbackRows), approved: null, rpcFailed: false };
+  } catch (error) {
+    onFailure?.(error);
+    return { ...chooseRegulationDataset([], fallbackRows), approved: null, rpcFailed: true };
+  }
 }
 
 export const statusOrder = ["FULLTEXT_PUBLIC", "EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"];

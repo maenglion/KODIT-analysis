@@ -8,6 +8,7 @@ type Props = {
   rows: RegulationRow[];
   manifest: {
     asOf: string; dataStatus: string; releaseId: string; lastAutomaticCheck: string; lastSuccessfulAt: string;
+    approvedAt: string | null; snapshotRowCount: number | null; csvSha256Prefix: string | null;
     recentResult: string; nextDueAt: string; automationStatus: string; humanReviewPendingCount: number;
   };
 };
@@ -67,6 +68,7 @@ export function RegulationExplorer({ rows, manifest }: Props) {
       <dl className="update-grid">
         <div><dt>현재 화면 데이터 기준일</dt><dd>{manifest.asOf}</dd></div><div><dt>현재 데이터 상태</dt><dd>{manifest.dataStatus}</dd></div>
         <div><dt>Release ID</dt><dd>{manifest.releaseId}</dd></div>
+        {approved && <><div><dt>승인일</dt><dd>{manifest.approvedAt}</dd></div><div><dt>스냅샷 행 수</dt><dd>{manifest.snapshotRowCount?.toLocaleString("ko-KR")}건</dd></div><div><dt>CSV SHA-256</dt><dd>{manifest.csvSha256Prefix}</dd></div></>}
         <div><dt>마지막 자동 점검일</dt><dd>{manifest.lastAutomaticCheck}</dd></div><div><dt>마지막 성공 수집일</dt><dd>{manifest.lastSuccessfulAt}</dd></div>
         <div><dt>최근 실행 결과</dt><dd>{manifest.recentResult}</dd></div><div><dt>다음 전체 수집 예정일</dt><dd>{manifest.nextDueAt}</dd></div>
         <div><dt>자동수집 상태</dt><dd>{manifest.automationStatus}</dd></div><div><dt>인간 검토 대기 건수</dt><dd>{manifest.humanReviewPendingCount.toLocaleString("ko-KR")}건</dd></div>
