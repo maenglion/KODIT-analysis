@@ -6,7 +6,10 @@ import { filterRegulations, rowsToCsv, statusOrder, type RegulationFilters, type
 
 type Props = {
   rows: RegulationRow[];
-  manifest: { asOf: string; collectedAt: string; verifiedAt: string; nextCheckAt: string };
+  manifest: {
+    asOf: string; dataStatus: string; lastAutomaticCheck: string; lastSuccessfulAt: string;
+    recentResult: string; nextDueAt: string; automationStatus: string; humanReviewPendingCount: number;
+  };
 };
 
 const statusClass: Record<string, string> = {
@@ -54,9 +57,10 @@ export function RegulationExplorer({ rows, manifest }: Props) {
           <div key={label}><span>{label}</span><strong>{Number(value).toLocaleString("ko-KR")}</strong></div>)}
       </div>
       <dl className="update-grid">
-        <div><dt>데이터 기준일</dt><dd>{manifest.asOf}</dd></div><div><dt>최근 수집 완료일</dt><dd>{manifest.collectedAt}</dd></div>
-        <div><dt>최근 판정 완료일</dt><dd>{manifest.verifiedAt}</dd></div><div><dt>수집 방식</dt><dd>수동 재생성</dd></div>
-        <div><dt>자동수집 상태</dt><dd>아직 미설정</dd></div><div><dt>다음 예상 점검일</dt><dd>{manifest.nextCheckAt}</dd></div>
+        <div><dt>현재 화면 데이터 기준일</dt><dd>{manifest.asOf}</dd></div><div><dt>현재 데이터 상태</dt><dd>{manifest.dataStatus}</dd></div>
+        <div><dt>마지막 자동 점검일</dt><dd>{manifest.lastAutomaticCheck}</dd></div><div><dt>마지막 성공 수집일</dt><dd>{manifest.lastSuccessfulAt}</dd></div>
+        <div><dt>최근 실행 결과</dt><dd>{manifest.recentResult}</dd></div><div><dt>다음 전체 수집 예정일</dt><dd>{manifest.nextDueAt}</dd></div>
+        <div><dt>자동수집 상태</dt><dd>{manifest.automationStatus}</dd></div><div><dt>인간 검토 대기 건수</dt><dd>{manifest.humanReviewPendingCount.toLocaleString("ko-KR")}건</dd></div>
       </dl>
     </section>
 

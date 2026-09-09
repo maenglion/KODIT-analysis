@@ -1,0 +1,33 @@
+name: Ten-day regulation collection
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 18 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kodit-regulation-full-collection
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: workers/collector/requirements.txt
+      - name: Install collector dependencies
+        run: python -m pip install --disable-pip-version-check -r workers/collector/requirements.txt
+      - name: Claim and run collection when due
+        env:
+          KODIT_SUPABASE_URL: ${{ secrets.KODIT_SUPABASE_URL }}
+          KODIT_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.KODIT_SUPABASE_SERVICE_ROLE_KEY }}
+          KODIT_TRIGGER: ${{ github.event_name == 'schedule' && 'schedule' || 'manual' }}
+        run: python workers/collector/scheduled_collection.py --trigger "$KODIT_TRIGGER"

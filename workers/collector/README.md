@@ -20,3 +20,9 @@ python workers/collector/collect_regulation.py `
 ```
 
 생성 SQL에는 자격증명이 없으며 DB 적용은 별도 승인·연결 경로에서 수행합니다. 원본 PDF와 추출 중간물은 OS 임시 폴더 밖에 저장하지 않습니다.
+
+## 10일 자동 수집
+
+`scheduled_collection.py`는 매일 실행되는 GitHub Actions에서 DB의 원자적 claim 함수를 먼저 호출합니다. 마지막 성공 완료일부터 10일 전이면 `not_due`, 이미 실행 중이면 `locked`로 정상 종료합니다.
+
+기한이 지난 경우 신보 사전예고·ALIO·상품/업무 페이지와 검토본의 공식 원문 URL을 점검합니다. 변경은 draft release와 `grok`부터 시작하는 검증대기 항목으로만 기록하며, `published` 또는 `is_latest`로 자동 승격하지 않습니다. HWP/HWPX는 다운로드·magic bytes·SHA만으로 전문 공개 상태를 올리지 않습니다.
