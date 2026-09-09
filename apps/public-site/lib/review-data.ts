@@ -25,16 +25,29 @@ function safeRpcWarning(name: string, error: unknown) {
   console.warn("[regulations] public RPC fallback", { rpc: name, reason });
 }
 
-async function callPublicRpc<T>(name: string): Promise<T> {
+async function callPublicRpc<T>(name: string, range?: { from: number; to: number }): Promise<T> {
   const config = publicApiConfig();
   if (!config) throw new Error("public_api_not_configured");
-  const response = await fetch(`${config.url}/rest/v1/rpc/${name}`, {
+  const pagination = range ? `?limit=${range.to - range.from + 1}&offset=${range.from}` : "";
+  const response = await fetch(`${config.url}/rest/v1/rpc/${name}${pagination}`, {
     method: "POST",
-    headers: { apikey: config.key, "Content-Type": "application/json", "Content-Profile": "api", "Accept-Profile": "api" },
+    headers: {
+      apikey: config.key, "Content-Type": "application/json", "Content-Profile": "api", "Accept-Profile": "api",
+    },
     body: "{}", cache: "no-store", signal: AbortSignal.timeout(5000),
   });
   if (!response.ok) throw new Error(`public_rpc_http_${response.status}`);
   return await response.json() as T;
+}
+
+async function getAllPublicRegulationRows() {
+  const pageSize = 1000; const all: Record<string, unknown>[] = [];
+  for (let from = 0; from < 100_000; from += pageSize) {
+    const page = await callPublicRpc<Record<string, unknown>[]>("public_regulation_rows", { from, to: from + pageSize - 1 });
+    all.push(...page);
+    if (page.length < pageSize) return all;
+  }
+  throw new Error("public_regulation_rows_pagination_limit");
 }
 
 async function getCollectionState(): Promise<CollectionState | null> {
@@ -48,7 +61,7 @@ async function getCollectionState(): Promise<CollectionState | null> {
 }
 
 async function getApprovedRelease(): Promise<ApprovedReleasePayload | null> {
-  const rawRows = await callPublicRpc<Record<string, unknown>[]>("public_regulation_rows");
+  const rawRows = await getAllPublicRegulationRows();
   const rows = rawRows
     .filter((row) => typeof row.release_id === "string" && typeof row.release_as_of_date === "string" && row.release_status === "published")
     .map((row) => coerce(row as Record<string, string>) as ApprovedRegulationRow);

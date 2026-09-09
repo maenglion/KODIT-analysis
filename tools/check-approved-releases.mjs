@@ -27,6 +27,8 @@ assert.doesNotMatch(publicLoader, /KODIT_SUPABASE_SERVICE_ROLE_KEY|Authorization
 assert.match(publicLoader, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/);
 assert.match(publicLoader, /row\.release_status === "published"/);
 assert.match(publicLoader, /AbortSignal\.timeout\(5000\)/);
+assert.match(publicLoader, /`\?limit=\$\{range\.to - range\.from \+ 1\}&offset=\$\{range\.from\}`/);
+assert.match(publicLoader, /const pageSize = 1000/);
 assert.match(publicLoader, /console\.warn\("\[regulations\] public RPC fallback"/);
 assert.doesNotMatch(publicLoader, /console\.(?:warn|error|log)\([^\n]*(?:config\.key|config\.url|SUPABASE_PUBLISHABLE)/i);
 
