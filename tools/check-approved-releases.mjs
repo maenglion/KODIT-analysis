@@ -6,6 +6,7 @@ const migration = fs.readFileSync("supabase/migrations/20260909000300_approved_r
 const workflow = fs.readFileSync(".github/workflows/publish-regulation-release.yml", "utf8");
 const publicLoader = fs.readFileSync("apps/public-site/lib/review-data.ts", "utf8");
 const scheduleWorkflow = fs.readFileSync(".github/workflows/ten-day-collection.yml", "utf8");
+const provenanceMigration = fs.readFileSync("supabase/migrations/20260909000400_regulation_snapshot_provenance.sql", "utf8");
 
 for (const predicate of ["r.status = 'published'", "r.is_latest", "r.published_at is not null", "r.published_at <= now()"])
   assert.ok(migration.includes(predicate), `missing public release predicate: ${predicate}`);
@@ -14,6 +15,8 @@ assert.match(migration, /publish_regulation_release[\s\S]*security definer set s
 assert.match(migration, /revoke all on function api\.publish_regulation_release[\s\S]*from public, anon, authenticated, service_role/i);
 assert.match(migration, /grant execute on function api\.upsert_draft_regulation_rows[\s\S]*publish_regulation_release[\s\S]*to service_role/i);
 assert.match(migration, /published or latest release snapshots are immutable/);
+assert.match(provenanceMigration, /source_sha256 char\(64\)/);
+assert.match(provenanceMigration, /v_regulation_count <> v_manifest\.source_row_count/);
 assert.doesNotMatch(migration, /grant execute on function api\.publish_regulation_release[^;]+to (anon|authenticated|public)/i);
 for (const input of ["release_id", "confirmation", "approval_note"]) assert.match(workflow, new RegExp(`${input}:`));
 assert.match(workflow, /test "\$CONFIRMATION" = "PUBLISH"/);

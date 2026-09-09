@@ -171,7 +171,7 @@ begin
     search_verification_count smallint, human_confirmed boolean, last_collected_at timestamptz,
     last_verified_at timestamptz, official_url text, document_sha256 text,
     document_format text, revision_date text, methodology_version text
-  ) x
+  )
   on conflict (release_id, regulation_name) do update set
     regulation_code = excluded.regulation_code, normalized_name = excluded.normalized_name,
     public_status_code = excluded.public_status_code, public_status_label = excluded.public_status_label,

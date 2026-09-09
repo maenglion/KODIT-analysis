@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import os
 import urllib.error
@@ -57,6 +58,7 @@ def main() -> None:
     parser.add_argument("--methodology-version", default="v0.4")
     args = parser.parse_args()
     rows = load_rows(args.csv)
+    source_sha256 = hashlib.sha256(args.csv.read_bytes()).hexdigest()
     release_id = args.release_id
     if not release_id:
         candidates = rpc("draft_regulation_release_candidates", {})
@@ -64,10 +66,14 @@ def main() -> None:
         if len(matches) != 1:
             raise RuntimeError(f"expected one matching draft release, found {len(matches)}")
         release_id = matches[0]["release_id"]
+    rpc("register_draft_regulation_snapshot", {
+        "p_release_id": release_id, "p_source_file_name": args.csv.name,
+        "p_source_sha256": source_sha256, "p_source_row_count": len(rows),
+    })
     affected = 0
     for offset in range(0, len(rows), 200):
         affected += int(rpc("upsert_draft_regulation_rows", {"p_release_id": release_id, "p_rows": rows[offset:offset + 200]}))
-    print(json.dumps({"release_id": release_id, "source_rows": len(rows), "affected_rows": affected}, ensure_ascii=False))
+    print(json.dumps({"release_id": release_id, "source_rows": len(rows), "source_sha256": source_sha256, "affected_rows": affected}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

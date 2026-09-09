@@ -1,0 +1,37 @@
+name: Stage 2026-09-08 review release snapshot
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type STAGE exactly; this does not publish the release
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kodit-regulation-release-staging
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: test "$CONFIRMATION" = "STAGE"
+      - name: Stage immutable draft snapshot candidate
+        env:
+          KODIT_SUPABASE_URL: ${{ secrets.KODIT_SUPABASE_URL }}
+          KODIT_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.KODIT_SUPABASE_SERVICE_ROLE_KEY }}
+        run: >-
+          python workers/collector/stage_review_release.py
+          --csv apps/public-site/data/review-20260908/regulations.csv
