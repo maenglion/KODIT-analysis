@@ -35,6 +35,22 @@ export type RegulationFilters = {
   human: "all" | "yes" | "no";
 };
 
+export type ApprovedRegulationRow = RegulationRow & {
+  release_id: string;
+  release_as_of_date: string;
+};
+
+export function chooseRegulationDataset(approvedRows: ApprovedRegulationRow[], fallbackRows: RegulationRow[]) {
+  if (approvedRows.length > 0) {
+    const first = approvedRows[0];
+    if (!first.release_id || !first.release_as_of_date || approvedRows.some((row) => row.release_id !== first.release_id)) {
+      throw new Error("approved release dataset contract mismatch");
+    }
+    return { rows: approvedRows as RegulationRow[], source: "approved" as const, releaseId: first.release_id, asOf: first.release_as_of_date };
+  }
+  return { rows: fallbackRows, source: "fallback" as const, releaseId: null, asOf: null };
+}
+
 export const statusOrder = ["FULLTEXT_PUBLIC", "EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"];
 
 export function filterRegulations(rows: RegulationRow[], filters: RegulationFilters) {

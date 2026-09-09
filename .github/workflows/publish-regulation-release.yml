@@ -1,0 +1,52 @@
+name: Publish regulation release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: Draft release UUID to publish
+        required: true
+        type: string
+      confirmation:
+        description: Type PUBLISH exactly
+        required: true
+        type: string
+      approval_note:
+        description: Human approval rationale
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kodit-regulation-release-approval
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate confirmation
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: test "$CONFIRMATION" = "PUBLISH"
+      - name: Publish validated draft release
+        env:
+          KODIT_SUPABASE_URL: ${{ secrets.KODIT_SUPABASE_URL }}
+          KODIT_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.KODIT_SUPABASE_SERVICE_ROLE_KEY }}
+          RELEASE_ID: ${{ inputs.release_id }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+          APPROVAL_NOTE: ${{ inputs.approval_note }}
+          APPROVED_BY_ACTOR: ${{ github.actor }}
+        run: >-
+          python workers/collector/publish_release.py
+          --release-id "$RELEASE_ID"
+          --confirmation "$CONFIRMATION"
+          --approval-note "$APPROVAL_NOTE"
+          --actor "$APPROVED_BY_ACTOR"

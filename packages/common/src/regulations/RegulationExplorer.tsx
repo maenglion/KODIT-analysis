@@ -7,7 +7,7 @@ import { filterRegulations, rowsToCsv, statusOrder, type RegulationFilters, type
 type Props = {
   rows: RegulationRow[];
   manifest: {
-    asOf: string; dataStatus: string; lastAutomaticCheck: string; lastSuccessfulAt: string;
+    asOf: string; dataStatus: string; releaseId: string; lastAutomaticCheck: string; lastSuccessfulAt: string;
     recentResult: string; nextDueAt: string; automationStatus: string; humanReviewPendingCount: number;
   };
 };
@@ -43,21 +43,30 @@ export function RegulationExplorer({ rows, manifest }: Props) {
   const toggle = <T,>(items: T[], item: T) => items.includes(item) ? items.filter((x) => x !== item) : [...items, item];
   const exceptionRows = rows.filter((row) => ["NONPUBLIC", "SOURCE_UNKNOWN", "NONPUBLIC_CANDIDATE"].includes(row.public_status_code));
   const externalRows = rows.filter((row) => row.confidence_level >= 4);
+  const counts = {
+    fulltext: rows.filter((row) => row.public_status_code === "FULLTEXT_PUBLIC").length,
+    pending: rows.filter((row) => row.public_status_code === "EXTRACTION_PENDING").length,
+    notice: rows.filter((row) => row.public_status_code === "NOTICE_ONLY").length,
+    unknown: rows.filter((row) => row.public_status_code === "SOURCE_UNKNOWN").length,
+  };
+  const approved = manifest.dataStatus === "승인본";
 
   const openDetail = (row: RegulationRow) => {
     if (row.regulation_name === "투자옵션부보증 운용기준") router.push("/regulations/investment-option-guarantee");
   };
+  const rowKey = (row: RegulationRow) => `${row.regulation_code}:${row.regulation_name}`;
 
   return <>
     <section className="review-hero shell">
-      <div><p className="eyebrow">규정·법령 / 전체 공개현황</p><div className="title-line"><h1>신용보증기금 규정 공개현황</h1><span className="review-badge">검토본</span></div>
-        <p className="review-warning">현재 자료는 공개 승격 전 검토본입니다. 자동 갱신 중인 데이터가 아닙니다.</p></div>
+      <div><p className="eyebrow">규정·법령 / 전체 공개현황</p><div className="title-line"><h1>신용보증기금 규정 공개현황</h1><span className="review-badge">{manifest.dataStatus}</span></div>
+        <p className="review-warning">{approved ? "명시적 승인을 거친 최신 공개 release입니다." : "현재 자료는 DB 공개 승인 전 번들 검토본입니다."}</p></div>
       <div className="metric-grid">
-        {[['전체 규정', rows.length], ['전문 공개', 23], ['판정대기', 182], ['사전예고만', 831], ['출처불명', 5]].map(([label, value]) =>
+        {[['전체 규정', rows.length], ['전문 공개', counts.fulltext], ['판정대기', counts.pending], ['사전예고만', counts.notice], ['출처불명', counts.unknown]].map(([label, value]) =>
           <div key={label}><span>{label}</span><strong>{Number(value).toLocaleString("ko-KR")}</strong></div>)}
       </div>
       <dl className="update-grid">
         <div><dt>현재 화면 데이터 기준일</dt><dd>{manifest.asOf}</dd></div><div><dt>현재 데이터 상태</dt><dd>{manifest.dataStatus}</dd></div>
+        <div><dt>Release ID</dt><dd>{manifest.releaseId}</dd></div>
         <div><dt>마지막 자동 점검일</dt><dd>{manifest.lastAutomaticCheck}</dd></div><div><dt>마지막 성공 수집일</dt><dd>{manifest.lastSuccessfulAt}</dd></div>
         <div><dt>최근 실행 결과</dt><dd>{manifest.recentResult}</dd></div><div><dt>다음 전체 수집 예정일</dt><dd>{manifest.nextDueAt}</dd></div>
         <div><dt>자동수집 상태</dt><dd>{manifest.automationStatus}</dd></div><div><dt>인간 검토 대기 건수</dt><dd>{manifest.humanReviewPendingCount.toLocaleString("ko-KR")}건</dd></div>
@@ -79,13 +88,13 @@ export function RegulationExplorer({ rows, manifest }: Props) {
       <section className="table-panel">
         <div className="table-toolbar"><div><p>현재 필터 결과</p><strong>{filtered.length.toLocaleString("ko-KR")}건</strong></div>
           <div className="download-menu"><button onClick={() => downloadCsv("kodit_regulations_filtered.csv", filtered)}>현재 필터 CSV <small>{filtered.length}</small></button>
-            <button onClick={() => downloadCsv("kodit_regulations_review_all.csv", rows)}>전체 검토본 CSV <small>{rows.length}</small></button>
+            <button onClick={() => downloadCsv(approved ? "kodit_regulations_approved_all.csv" : "kodit_regulations_review_all.csv", rows)}>전체 {approved ? "승인본" : "검토본"} CSV <small>{rows.length}</small></button>
             <button onClick={() => downloadCsv("kodit_regulations_unpublished_unknown.csv", exceptionRows)}>미공개·출처불명 CSV <small>{exceptionRows.length}</small></button>
             <button onClick={() => downloadCsv("kodit_regulations_external_confidence_4plus.csv", externalRows)}>외부전달용 CSV <small>{externalRows.length}</small></button></div>
         </div>
         <div className="table-scroll"><table className="regulations-table"><thead><tr>{["규정명","공개상태","신뢰도","현행 여부","문서검증 상태","미공개 검증단계","공식출처 수","엔진 검증 수","인간확정 여부","최근 수집일","최근 검증일"].map((h) => <th key={h}>{h}</th>)}</tr></thead>
-          <tbody>{shown.map((row) => <tr key={row.regulation_code} onClick={() => openDetail(row)} className={`${row.regulation_name === "투자옵션부보증 운용기준" ? "has-detail" : ""} ${expandedRow === row.regulation_code ? "is-expanded" : ""}`}>
-            <td data-label="규정명"><button className="name-button" onClick={(e) => { e.stopPropagation(); openDetail(row); }}>{row.regulation_name}</button>{row.regulation_name === "투자옵션부보증 운용기준" && <small className="detail-ready">상세 보기 ↗</small>}<button className="mobile-expand" aria-expanded={expandedRow === row.regulation_code} onClick={(e) => { e.stopPropagation(); setExpandedRow((current) => current === row.regulation_code ? null : row.regulation_code); }}>{expandedRow === row.regulation_code ? "접기" : "나머지 보기"}</button></td>
+          <tbody>{shown.map((row) => <tr key={rowKey(row)} onClick={() => openDetail(row)} className={`${row.regulation_name === "투자옵션부보증 운용기준" ? "has-detail" : ""} ${expandedRow === rowKey(row) ? "is-expanded" : ""}`}>
+            <td data-label="규정명"><button className="name-button" onClick={(e) => { e.stopPropagation(); openDetail(row); }}>{row.regulation_name}</button>{row.regulation_name === "투자옵션부보증 운용기준" && <small className="detail-ready">상세 보기 ↗</small>}<button className="mobile-expand" aria-expanded={expandedRow === rowKey(row)} onClick={(e) => { e.stopPropagation(); setExpandedRow((current) => current === rowKey(row) ? null : rowKey(row)); }}>{expandedRow === rowKey(row) ? "접기" : "나머지 보기"}</button></td>
             <td data-label="공개상태"><button className={`status-flag ${statusClass[row.public_status_code] ?? ""}`} onClick={(e) => { e.stopPropagation(); setSelected({ kind: row.public_status_code === "EXTRACTION_PENDING" ? "pending" : "status", row }); }}>{row.public_status_label}</button></td>
             <td data-label="신뢰도"><button className="confidence-flag" onClick={(e) => { e.stopPropagation(); setSelected({ kind: "confidence", row }); }}>{row.confidence_level}</button></td>
             <td data-label="현행 여부">{lifecycleLabels[row.lifecycle_code] ?? row.lifecycle_code}</td><td data-label="문서검증 상태"><code>{row.document_verification_code}</code></td>
