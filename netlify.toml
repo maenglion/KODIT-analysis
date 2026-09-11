@@ -1,0 +1,8 @@
+[build]
+  command = "pnpm --filter @kodit/public-site build"
+  publish = "apps/public-site/.next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10.15.1"
+  PNPM_FLAGS = "--shamefully-hoist"
