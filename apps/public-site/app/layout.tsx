@@ -31,7 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <div className="header-inner">
             <Link className="brand" href="/" aria-label="KODIT 규정 아카이브 홈">
               <span className="brand-mark">K</span>
-              <span><b>KODIT</b><small>공식자료 판정 아카이브</small></span>
+              <span><b>KODIT</b><small>규정 공개·검증 시스템</small></span>
             </Link>
             <nav aria-label="주 메뉴">
               {nav.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
         </header>
         {children}
-        <footer><span>KODIT 자료 판정 아카이브</span><span>출처·무결성·판정 근거를 함께 공개합니다.</span></footer>
+        <footer><span>KODIT 규정 공개·검증 시스템</span><span>출처·무결성·판정 근거를 함께 공개합니다.</span></footer>
       </body>
     </html>
   );
