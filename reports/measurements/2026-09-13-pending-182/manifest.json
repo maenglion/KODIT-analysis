@@ -1,0 +1,67 @@
+{
+  "measurement_run_id": "ccdee57b-1a7d-4aa9-ace5-a64671ec5e3a",
+  "executed_at": "2026-09-13T05:45:15.144Z",
+  "source_db_snapshot_as_of": "2026-09-08T19:20:45.551994+09:00",
+  "source_release_run_id": "20260908T192031+0900",
+  "source_methodology_version": "v0.4",
+  "git_commit": "aebae1d42dc910acfa83d4d781dcd1005de496ea",
+  "query_hash": "ebd05b6bd86b3992d72a8b9217d952ba48413f4d396f20208ba8fa959e5a031b",
+  "query_contract": {
+    "population": "public_status_code = EXTRACTION_PENDING",
+    "join": "release official_url = extraction_manifest.download_url AND document_sha256 equal",
+    "noticeEvidence": "rule mention post_number exists in stored preannouncement inventory; attachment observation has HTTP 200, successful download, content type, and SHA-256",
+    "officialEvidence": "ALIO title match plus attachment URL match plus stored HTTP 200/download/SHA match",
+    "externalHttp": false
+  },
+  "row_count": 182,
+  "residual_count": 182,
+  "external_http_used": false,
+  "rate_limit_policy": "not_applicable",
+  "remote_db_read_only_observation": {
+    "project_ref": "jacyalxzejzrlspmojps",
+    "observation_method": "supabase inspect db table-stats --linked",
+    "counts_are_estimates": true,
+    "core_regulations": 1041,
+    "core_release_regulation_rows": 1041,
+    "core_documents": 1,
+    "core_document_urls": 1,
+    "core_document_url_observations": 2,
+    "core_claim_checks": 5,
+    "conclusion": "normalized document evidence for the 182 rows is not present in core; measurement joined the immutable release export to its archived extraction evidence"
+  },
+  "identity_limitation": "regulation_id is not exposed by the release snapshot; regulation_code is retained and regulation_id is blank",
+  "source_files": {
+    "release_csv": {
+      "sha256": "f07c055b0a650cdea876fc74058834c1ab5bf98cb6ff3c1f63cc5fbfee6c9831"
+    },
+    "release_manifest": {
+      "sha256": "b83404e60d2b9d3181946ffd91517d55c2a71f0bd824851d9a6592c89b8e837c"
+    },
+    "extraction_manifest": {
+      "sha256": "5e1e41266e0dd6d27099e0ff8a81eb0c5b36f7ef6668d091c4dfd17e84516f44"
+    },
+    "alio_inventory": {
+      "sha256": "1440ea6960c13aca7d28543a9b94500c64e18b9dcc056b242fe821eeb43ccc32"
+    },
+    "preannouncement_inventory": {
+      "sha256": "8636bc1e165bd081dce323884a7a2082791cd80d4b2f177ce0a7c066997fb9cf"
+    },
+    "rule_mentions": {
+      "sha256": "9b4d6bfe6030c3548ee7af3797ae4a16d26e1e151bf73437f58465304326cb59"
+    }
+  },
+  "output_files": {
+    "measurement_items.csv": {
+      "sha256": "0f8cfca66259a42691150515956013b32b3bd6d3b733a6d8e554754a1d376360",
+      "data_rows": 182
+    },
+    "measurement_residuals.csv": {
+      "sha256": "97294a437075a03d005f72744b586b3ffa8dc9c17cc69d60982f8862391deca7",
+      "data_rows": 182
+    },
+    "measurement_summary.csv": {
+      "sha256": "f3444a1b3cea83946f46191e0723cea252eaeb36ca2669ec25af1988c349a8ff",
+      "data_rows": 12
+    }
+  }
+}

@@ -1,0 +1,13 @@
+﻿dimension,value,count,notes
+population,EXTRACTION_PENDING,182,2026-09-08 release snapshot
+detected_format,hwp,182,
+extraction_status,ole_error:AttributeError,182,
+residual_type,PARSER_RESIDUAL,182,
+notice_evidence_status,UNKNOWN,37,
+notice_evidence_status,VERIFIED_EXISTS,145,
+official_source_evidence_status,VERIFIED_EXISTS,182,
+field_coverage,regulation_id_missing,182,not exposed by release snapshot
+field_coverage,magic_verified_unknown,182,
+field_coverage,parser_identity_unknown,182,
+automatic_resolution_candidate,PARSER_RETRY_REQUIRED,182,
+human_review_trigger,OPEN,0,measurement does not create review triggers
