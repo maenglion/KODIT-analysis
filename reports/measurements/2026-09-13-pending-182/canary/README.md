@@ -1,8 +1,8 @@
 # HWP parser canary 결과
 
-- canary run ID: `a1a89a3a-0f26-4903-a6fe-1024db372458`
+- canary run ID: `0a9cda64-a057-4621-9eaa-27bc2c75cda4`
 - provenance: `ACTUAL_EXECUTION`
-- parser code commit: `2c70186cc1dbbad21fb4ca8b12c5f34baae72924`
+- parser code commit: `b28814d6dd66a344a6d36361d8c6c9c901273b19`
 - parser: `kodit-hwp-ole 0.1.0`
 - engine: `olefile 0.47`
 - 표본: 15건 (`NOTICE_UNKNOWN` 3건, `VERIFIED_EXISTS` 12건)
@@ -13,7 +13,7 @@
 - 두 실행의 extract hash 불일치: 0건
 - parser code dirty: `false`
 - 오류 및 stack trace 발생: 0건
-- 결과 JSON SHA-256: `07a25f1b7e22878e810f4dba48807f6767d9ff6c8ed7f0784bd79062dbcd1291`
+- 결과 JSON SHA-256: `128883816ca3046665a2bab920d7571c05f70c812862433f14440aa6e016edec`
 
 ## 통과 조건
 

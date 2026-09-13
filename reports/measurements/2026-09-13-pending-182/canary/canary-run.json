@@ -1,8 +1,8 @@
 {
-  "canary_run_id": "a1a89a3a-0f26-4903-a6fe-1024db372458",
+  "canary_run_id": "0a9cda64-a057-4621-9eaa-27bc2c75cda4",
   "provenance": "ACTUAL_EXECUTION",
-  "started_at": "2026-09-13T07:12:16.568364+00:00",
-  "finished_at": "2026-09-13T07:12:18.353186+00:00",
+  "started_at": "2026-09-13T07:14:28.858502+00:00",
+  "finished_at": "2026-09-13T07:14:30.682988+00:00",
   "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
   "selection_contract": {
     "population": 182,
@@ -35,7 +35,7 @@
       "baseline_sha256": "efa2980fc9c56957eea3228d4fda9e29690b592b829644b58e7c32771ce7c358",
       "attempts": [
         {
-          "parser_run_id": "98d7db26-4e53-42da-9646-25d5ddec3e42",
+          "parser_run_id": "e8d62cc0-fa6b-4837-85a0-66396a19b4c8",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "efa2980fc9c56957eea3228d4fda9e29690b592b829644b58e7c32771ce7c358",
@@ -45,7 +45,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -62,8 +62,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.568407+00:00",
-          "finished_at": "2026-09-13T07:12:16.570234+00:00",
+          "started_at": "2026-09-13T07:14:28.858550+00:00",
+          "finished_at": "2026-09-13T07:14:28.860569+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -74,7 +74,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "859b2dc3-246d-4b9a-adfe-05fd1b7d3ebc",
+          "parser_run_id": "072165bd-3c9a-4e4e-b9b2-5923bcda8bd3",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "efa2980fc9c56957eea3228d4fda9e29690b592b829644b58e7c32771ce7c358",
@@ -84,7 +84,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -101,8 +101,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.673808+00:00",
-          "finished_at": "2026-09-13T07:12:16.674364+00:00",
+          "started_at": "2026-09-13T07:14:28.981142+00:00",
+          "finished_at": "2026-09-13T07:14:28.981733+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -129,7 +129,7 @@
       "baseline_sha256": "8c83d06aef6eff524cb495f5ba0284fff960c0d467e50e15de65589d3f1adfaa",
       "attempts": [
         {
-          "parser_run_id": "156e07b1-aa36-4379-8354-04091a9744e3",
+          "parser_run_id": "432c5df1-b65f-458a-b334-a6bfc5321cf1",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "8c83d06aef6eff524cb495f5ba0284fff960c0d467e50e15de65589d3f1adfaa",
@@ -139,7 +139,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -156,8 +156,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.727659+00:00",
-          "finished_at": "2026-09-13T07:12:16.730350+00:00",
+          "started_at": "2026-09-13T07:14:29.037456+00:00",
+          "finished_at": "2026-09-13T07:14:29.040183+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -168,7 +168,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "700fde42-697b-42f7-b7d5-dac3fb779100",
+          "parser_run_id": "9ba8778b-8bc9-4f9c-b970-bd29337f88c1",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "8c83d06aef6eff524cb495f5ba0284fff960c0d467e50e15de65589d3f1adfaa",
@@ -178,7 +178,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -195,8 +195,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.784089+00:00",
-          "finished_at": "2026-09-13T07:12:16.786529+00:00",
+          "started_at": "2026-09-13T07:14:29.099389+00:00",
+          "finished_at": "2026-09-13T07:14:29.101970+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -223,7 +223,7 @@
       "baseline_sha256": "6bddf6c6e3782e12e760bf4aae629b23144d0fef5d080804f052381e30d37c53",
       "attempts": [
         {
-          "parser_run_id": "2463fbf8-5170-485b-aded-ee87e8e9837f",
+          "parser_run_id": "62330589-03f5-44d2-bce8-0254bee8fee3",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "6bddf6c6e3782e12e760bf4aae629b23144d0fef5d080804f052381e30d37c53",
@@ -233,7 +233,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -250,8 +250,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.843737+00:00",
-          "finished_at": "2026-09-13T07:12:16.845491+00:00",
+          "started_at": "2026-09-13T07:14:29.158379+00:00",
+          "finished_at": "2026-09-13T07:14:29.160008+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -262,7 +262,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "4fc04cb8-fa5f-4824-bfc0-ea67593fa15a",
+          "parser_run_id": "f5757a3a-2f0a-4ed7-906d-f2169abfadbf",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "6bddf6c6e3782e12e760bf4aae629b23144d0fef5d080804f052381e30d37c53",
@@ -272,7 +272,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -289,8 +289,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.909593+00:00",
-          "finished_at": "2026-09-13T07:12:16.911200+00:00",
+          "started_at": "2026-09-13T07:14:29.215616+00:00",
+          "finished_at": "2026-09-13T07:14:29.217201+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -317,7 +317,7 @@
       "baseline_sha256": "3d2e970d1435df5fcd329051c6be3070b664e7d2d6123d1554c6c126d6b2ad71",
       "attempts": [
         {
-          "parser_run_id": "a93758ff-dc2c-4afc-af54-1087a3dcc9db",
+          "parser_run_id": "8a8207e9-2933-4234-9feb-0728a90bda16",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "3d2e970d1435df5fcd329051c6be3070b664e7d2d6123d1554c6c126d6b2ad71",
@@ -327,7 +327,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -344,8 +344,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:16.965729+00:00",
-          "finished_at": "2026-09-13T07:12:16.966352+00:00",
+          "started_at": "2026-09-13T07:14:29.271763+00:00",
+          "finished_at": "2026-09-13T07:14:29.272394+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -356,7 +356,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "b901b5a4-ff68-47c9-ba86-f0cb28bc702c",
+          "parser_run_id": "8ede690e-6a91-4e82-bcc5-97699f104a0f",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "3d2e970d1435df5fcd329051c6be3070b664e7d2d6123d1554c6c126d6b2ad71",
@@ -366,7 +366,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -383,8 +383,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.020043+00:00",
-          "finished_at": "2026-09-13T07:12:17.020658+00:00",
+          "started_at": "2026-09-13T07:14:29.326470+00:00",
+          "finished_at": "2026-09-13T07:14:29.327070+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -411,7 +411,7 @@
       "baseline_sha256": "6109e6ffaf5ee4febd13434102f7dbe92511f1ef35e75f7c9f8def05d0dfd083",
       "attempts": [
         {
-          "parser_run_id": "01d07c4d-e360-4114-a64c-c5051e268691",
+          "parser_run_id": "af319039-2045-479d-a278-be504583f578",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "6109e6ffaf5ee4febd13434102f7dbe92511f1ef35e75f7c9f8def05d0dfd083",
@@ -421,7 +421,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -438,8 +438,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.073984+00:00",
-          "finished_at": "2026-09-13T07:12:17.076466+00:00",
+          "started_at": "2026-09-13T07:14:29.381391+00:00",
+          "finished_at": "2026-09-13T07:14:29.383806+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -450,7 +450,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "dc318f75-4397-47f5-b929-04abb53c05a8",
+          "parser_run_id": "e4f21386-cc3c-47ae-a7bd-effb58d88ded",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "6109e6ffaf5ee4febd13434102f7dbe92511f1ef35e75f7c9f8def05d0dfd083",
@@ -460,7 +460,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -477,8 +477,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.131391+00:00",
-          "finished_at": "2026-09-13T07:12:17.133707+00:00",
+          "started_at": "2026-09-13T07:14:29.438067+00:00",
+          "finished_at": "2026-09-13T07:14:29.440371+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -505,7 +505,7 @@
       "baseline_sha256": "721498fbe34723e1f714a6bdebbffd1fd66731a8b89e9d41b1c12a2fa5465fb5",
       "attempts": [
         {
-          "parser_run_id": "ad943229-9a38-4d76-9d74-af72334e5b6d",
+          "parser_run_id": "1904448c-fdc9-474a-96bc-8ea5409651de",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "721498fbe34723e1f714a6bdebbffd1fd66731a8b89e9d41b1c12a2fa5465fb5",
@@ -515,7 +515,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -532,8 +532,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.187376+00:00",
-          "finished_at": "2026-09-13T07:12:17.188333+00:00",
+          "started_at": "2026-09-13T07:14:29.510491+00:00",
+          "finished_at": "2026-09-13T07:14:29.511440+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -544,7 +544,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "07a0ccb8-b1b0-41d3-9492-e567ff97d344",
+          "parser_run_id": "8922c19d-2758-4e88-83f3-25d706c515ac",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "721498fbe34723e1f714a6bdebbffd1fd66731a8b89e9d41b1c12a2fa5465fb5",
@@ -554,7 +554,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -571,8 +571,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.241602+00:00",
-          "finished_at": "2026-09-13T07:12:17.242750+00:00",
+          "started_at": "2026-09-13T07:14:29.564962+00:00",
+          "finished_at": "2026-09-13T07:14:29.565896+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -599,7 +599,7 @@
       "baseline_sha256": "dbf649dcdcd345a0a256b7b28f3ea39493549cf3440a5535e873bd491a703dc5",
       "attempts": [
         {
-          "parser_run_id": "9a9eb4e0-f797-437c-8485-e2c386889ed0",
+          "parser_run_id": "2e66b704-5e0a-4594-832a-61d7fc14e687",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "dbf649dcdcd345a0a256b7b28f3ea39493549cf3440a5535e873bd491a703dc5",
@@ -609,7 +609,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -626,8 +626,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.298422+00:00",
-          "finished_at": "2026-09-13T07:12:17.300250+00:00",
+          "started_at": "2026-09-13T07:14:29.620064+00:00",
+          "finished_at": "2026-09-13T07:14:29.621877+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -638,7 +638,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "b200576f-4c2e-4c92-a659-580b90ffb2bc",
+          "parser_run_id": "6ecfbe48-9a67-43f7-a81a-f9f04f3537a5",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "dbf649dcdcd345a0a256b7b28f3ea39493549cf3440a5535e873bd491a703dc5",
@@ -648,7 +648,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -665,8 +665,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.354004+00:00",
-          "finished_at": "2026-09-13T07:12:17.355723+00:00",
+          "started_at": "2026-09-13T07:14:29.675856+00:00",
+          "finished_at": "2026-09-13T07:14:29.677614+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -693,7 +693,7 @@
       "baseline_sha256": "e9af0ca40168d7d015c5b973a3274076011310ad06be7ef0de9e174893058471",
       "attempts": [
         {
-          "parser_run_id": "7d03dc37-2a55-4fc4-96c1-f9f0e88aff9d",
+          "parser_run_id": "f0c4b129-6c4f-47b2-b613-a38070917b10",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "e9af0ca40168d7d015c5b973a3274076011310ad06be7ef0de9e174893058471",
@@ -703,7 +703,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -720,8 +720,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.408550+00:00",
-          "finished_at": "2026-09-13T07:12:17.410408+00:00",
+          "started_at": "2026-09-13T07:14:29.731393+00:00",
+          "finished_at": "2026-09-13T07:14:29.733243+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -732,7 +732,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "cdcd62b8-5759-400d-975d-80a3a568131c",
+          "parser_run_id": "e82e2427-84db-414c-bbcb-f7e8f99358ee",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "e9af0ca40168d7d015c5b973a3274076011310ad06be7ef0de9e174893058471",
@@ -742,7 +742,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -759,8 +759,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.463843+00:00",
-          "finished_at": "2026-09-13T07:12:17.465648+00:00",
+          "started_at": "2026-09-13T07:14:29.787380+00:00",
+          "finished_at": "2026-09-13T07:14:29.789209+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -787,7 +787,7 @@
       "baseline_sha256": "ffae667b59a59548d0e8783d82c68bf99ccf3927004bbfd05db1455b117d5577",
       "attempts": [
         {
-          "parser_run_id": "bf294eb8-3307-41f6-80ed-0624e018cf1d",
+          "parser_run_id": "debe682b-16da-4ebe-89c8-57991cc2b9ca",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "ffae667b59a59548d0e8783d82c68bf99ccf3927004bbfd05db1455b117d5577",
@@ -797,7 +797,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -814,8 +814,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.524769+00:00",
-          "finished_at": "2026-09-13T07:12:17.527321+00:00",
+          "started_at": "2026-09-13T07:14:29.843323+00:00",
+          "finished_at": "2026-09-13T07:14:29.845892+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -826,7 +826,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "0e5b814b-8a60-4011-800b-14d3082deec2",
+          "parser_run_id": "9b731e6c-f838-48e5-9983-12677c4498e2",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "ffae667b59a59548d0e8783d82c68bf99ccf3927004bbfd05db1455b117d5577",
@@ -836,7 +836,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -853,8 +853,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.581854+00:00",
-          "finished_at": "2026-09-13T07:12:17.584322+00:00",
+          "started_at": "2026-09-13T07:14:29.901206+00:00",
+          "finished_at": "2026-09-13T07:14:29.903667+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -881,7 +881,7 @@
       "baseline_sha256": "3167185f5a4bf7e17acc3e02ad9b93d9ae995f9c0e2ab707ce5376f28b4f5525",
       "attempts": [
         {
-          "parser_run_id": "929d126a-5b84-4fbe-97ca-83c0f1555202",
+          "parser_run_id": "930dde6b-0ef7-4ce5-8b63-82146b3a8b61",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "3167185f5a4bf7e17acc3e02ad9b93d9ae995f9c0e2ab707ce5376f28b4f5525",
@@ -891,7 +891,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -908,8 +908,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.640894+00:00",
-          "finished_at": "2026-09-13T07:12:17.643613+00:00",
+          "started_at": "2026-09-13T07:14:29.958456+00:00",
+          "finished_at": "2026-09-13T07:14:29.961273+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -920,7 +920,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "cff5e665-62f6-40d7-bfbe-6c1a9f01a15c",
+          "parser_run_id": "f063ff6f-176e-42f1-b132-ae9fb32cc947",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "3167185f5a4bf7e17acc3e02ad9b93d9ae995f9c0e2ab707ce5376f28b4f5525",
@@ -930,7 +930,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -947,8 +947,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.700436+00:00",
-          "finished_at": "2026-09-13T07:12:17.703037+00:00",
+          "started_at": "2026-09-13T07:14:30.015101+00:00",
+          "finished_at": "2026-09-13T07:14:30.017672+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -975,7 +975,7 @@
       "baseline_sha256": "6b41d361413497c278defcc1d3de60b55225c8b414687fd62f9aac1318979922",
       "attempts": [
         {
-          "parser_run_id": "babe8be2-e6f3-44c5-9acd-2933510ba33a",
+          "parser_run_id": "ec423ea5-c781-42b5-8dc8-6844c81f112b",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "6b41d361413497c278defcc1d3de60b55225c8b414687fd62f9aac1318979922",
@@ -985,7 +985,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1002,8 +1002,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.756595+00:00",
-          "finished_at": "2026-09-13T07:12:17.759851+00:00",
+          "started_at": "2026-09-13T07:14:30.073295+00:00",
+          "finished_at": "2026-09-13T07:14:30.076592+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1014,7 +1014,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "7575e8f0-6172-4ab0-b95f-a05510efde4b",
+          "parser_run_id": "495f3fa9-e506-435e-b1ec-9eaf7ab178ed",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "6b41d361413497c278defcc1d3de60b55225c8b414687fd62f9aac1318979922",
@@ -1024,7 +1024,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1041,8 +1041,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.813742+00:00",
-          "finished_at": "2026-09-13T07:12:17.816959+00:00",
+          "started_at": "2026-09-13T07:14:30.132929+00:00",
+          "finished_at": "2026-09-13T07:14:30.136043+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1069,7 +1069,7 @@
       "baseline_sha256": "bd44331c619a0e10bed84d7b8f341d556060ac3b9524b22cde1a12b914d44194",
       "attempts": [
         {
-          "parser_run_id": "747fc6b7-fd98-4f72-a0b6-264361cc22ec",
+          "parser_run_id": "809a1634-39d3-4f11-aa3b-28d56040872a",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "bd44331c619a0e10bed84d7b8f341d556060ac3b9524b22cde1a12b914d44194",
@@ -1079,7 +1079,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1096,8 +1096,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.870797+00:00",
-          "finished_at": "2026-09-13T07:12:17.871935+00:00",
+          "started_at": "2026-09-13T07:14:30.193697+00:00",
+          "finished_at": "2026-09-13T07:14:30.194898+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1108,7 +1108,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "a92db54b-4e5f-45c5-8db8-a28731c373b2",
+          "parser_run_id": "2e909d46-286b-430b-b190-b86a9825a464",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "bd44331c619a0e10bed84d7b8f341d556060ac3b9524b22cde1a12b914d44194",
@@ -1118,7 +1118,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1135,8 +1135,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.926576+00:00",
-          "finished_at": "2026-09-13T07:12:17.927732+00:00",
+          "started_at": "2026-09-13T07:14:30.250206+00:00",
+          "finished_at": "2026-09-13T07:14:30.251376+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1163,7 +1163,7 @@
       "baseline_sha256": "3a92486c90584680568d101aa8f98e58fd988f227dfbef96268d50dc5b8464fa",
       "attempts": [
         {
-          "parser_run_id": "18d7aabb-7605-4f22-9e9a-b756232bcc41",
+          "parser_run_id": "b3cf914a-d51c-4a0d-b264-93f6d170754f",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "3a92486c90584680568d101aa8f98e58fd988f227dfbef96268d50dc5b8464fa",
@@ -1173,7 +1173,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1190,8 +1190,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:17.981935+00:00",
-          "finished_at": "2026-09-13T07:12:17.986277+00:00",
+          "started_at": "2026-09-13T07:14:30.305543+00:00",
+          "finished_at": "2026-09-13T07:14:30.310044+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1202,7 +1202,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "952e762d-fb18-41fc-883a-1d989857f937",
+          "parser_run_id": "b7ef4215-bcf3-4821-8818-cdf8a1bf32c0",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "3a92486c90584680568d101aa8f98e58fd988f227dfbef96268d50dc5b8464fa",
@@ -1212,7 +1212,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1229,8 +1229,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:18.040501+00:00",
-          "finished_at": "2026-09-13T07:12:18.044854+00:00",
+          "started_at": "2026-09-13T07:14:30.363380+00:00",
+          "finished_at": "2026-09-13T07:14:30.367840+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1257,7 +1257,7 @@
       "baseline_sha256": "865a656856142f795e67b767fce253f8952511270a4d2da48cef03b439178341",
       "attempts": [
         {
-          "parser_run_id": "97b73f58-93da-406c-9236-2683943ef3a7",
+          "parser_run_id": "5f1f3df2-5935-450c-a829-e9e9438ae349",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "865a656856142f795e67b767fce253f8952511270a4d2da48cef03b439178341",
@@ -1267,7 +1267,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1284,8 +1284,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:18.098938+00:00",
-          "finished_at": "2026-09-13T07:12:18.109645+00:00",
+          "started_at": "2026-09-13T07:14:30.421415+00:00",
+          "finished_at": "2026-09-13T07:14:30.432459+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1296,7 +1296,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "9d33fad5-fcfc-4766-8c13-7b157f3828fe",
+          "parser_run_id": "816fd464-14b2-460e-9cfc-6f446dfcf76c",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "865a656856142f795e67b767fce253f8952511270a4d2da48cef03b439178341",
@@ -1306,7 +1306,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1323,8 +1323,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:18.163673+00:00",
-          "finished_at": "2026-09-13T07:12:18.174351+00:00",
+          "started_at": "2026-09-13T07:14:30.487245+00:00",
+          "finished_at": "2026-09-13T07:14:30.498291+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1351,7 +1351,7 @@
       "baseline_sha256": "20d005e22d5464a1770700b798a06b3a2ed15ec6660437022042f2e79dda91e2",
       "attempts": [
         {
-          "parser_run_id": "79eec064-ceef-462f-9692-4f3ed4a1efb9",
+          "parser_run_id": "a8983f9a-8d3e-4a17-9d6b-6dee5410d7dd",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "20d005e22d5464a1770700b798a06b3a2ed15ec6660437022042f2e79dda91e2",
@@ -1361,7 +1361,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1378,8 +1378,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:18.228830+00:00",
-          "finished_at": "2026-09-13T07:12:18.235567+00:00",
+          "started_at": "2026-09-13T07:14:30.553061+00:00",
+          "finished_at": "2026-09-13T07:14:30.562086+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
@@ -1390,7 +1390,7 @@
           "attempt_number": 1
         },
         {
-          "parser_run_id": "2c13d0fb-9b10-4f8e-827b-9204b00eb85b",
+          "parser_run_id": "ac9d537c-5478-4599-a2b6-7e30f5dc5423",
           "provenance": "ACTUAL_EXECUTION",
           "evidence_as_of": "2026-09-08T19:20:45.551994+09:00",
           "input_sha256": "20d005e22d5464a1770700b798a06b3a2ed15ec6660437022042f2e79dda91e2",
@@ -1400,7 +1400,7 @@
           "parser_version": "0.1.0",
           "parser_engine": "olefile",
           "parser_engine_version": "0.47",
-          "code_commit_sha": "2c70186cc1dbbad21fb4ca8b12c5f34baae72924",
+          "code_commit_sha": "b28814d6dd66a344a6d36361d8c6c9c901273b19",
           "parser_code_dirty": false,
           "parser_source_sha256": "61cc9e4c92c04b72221ae25029bac833125a72d67fb006aeb3b735430c57937a",
           "runtime_version": "3.13.7",
@@ -1417,8 +1417,8 @@
             "dependency_lock_hash": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
             "environment_fingerprint": "8472c691d5f144ef696e95a032079df8e3c177d4e2109200742b90b12e4b9c87"
           },
-          "started_at": "2026-09-13T07:12:18.290990+00:00",
-          "finished_at": "2026-09-13T07:12:18.297745+00:00",
+          "started_at": "2026-09-13T07:14:30.619129+00:00",
+          "finished_at": "2026-09-13T07:14:30.626356+00:00",
           "result": "SUCCESS",
           "identity_matched": true,
           "error_class": "",
