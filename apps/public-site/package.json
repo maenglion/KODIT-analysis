@@ -17,6 +17,7 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "5.15.13",
     "@types/node": "^22.15.30",
     "@types/pg": "^8.15.5",
     "@types/react": "^19.1.10",
