@@ -8,7 +8,6 @@ import hashlib
 import io
 import json
 import os
-import platform
 import re
 import subprocess
 import sys
@@ -20,6 +19,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from parser_contract import normalize_identity
+from parser_runtime import build_runtime_manifest, require_runtime
 
 try:
     import olefile  # type: ignore
@@ -30,6 +30,12 @@ except Exception:  # recorded by run_file rather than hidden at import time
 PARSER_NAME = "kodit-hwp-ole"
 PARSER_VERSION = "0.1.1"
 OLE_MAGIC = bytes.fromhex("d0cf11e0a1b11ae1")
+SOURCE_FILES = (
+    Path(__file__),
+    Path(__file__).with_name("parser_contract.py"),
+    Path(__file__).with_name("parser_runtime.py"),
+    Path(__file__).with_name("parser-runtime-contract.json"),
+)
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -126,7 +132,14 @@ def git_value(args: list[str], fallback: str = "UNKNOWN") -> str:
 def parser_code_dirty() -> bool | None:
     try:
         result = subprocess.run(
-            ["git", "diff", "--quiet", "HEAD", "--", str(Path(__file__).resolve())],
+            [
+                "git",
+                "diff",
+                "--quiet",
+                "HEAD",
+                "--",
+                *(str(path.resolve()) for path in SOURCE_FILES),
+            ],
             check=False,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
@@ -136,26 +149,13 @@ def parser_code_dirty() -> bool | None:
         return None
 
 
-def dependency_lock_hash(lock_path: Path) -> str:
-    return sha256_bytes(lock_path.read_bytes()) if lock_path.exists() else "UNKNOWN"
-
-
-def environment(lock_path: Path) -> dict[str, Any]:
-    engine_version = getattr(olefile, "__version__", "UNKNOWN") if olefile else "UNAVAILABLE"
-    values = {
-        "os": platform.system(),
-        "os_release": platform.release(),
-        "architecture": platform.machine(),
-        "python_implementation": platform.python_implementation(),
-        "runtime_version": platform.python_version(),
-        "parser_engine": "olefile",
-        "parser_engine_version": engine_version,
-        "dependency_lock_hash": dependency_lock_hash(lock_path),
-    }
-    values["environment_fingerprint"] = sha256_bytes(
-        json.dumps(values, ensure_ascii=False, sort_keys=True).encode("utf-8")
-    )
-    return values
+def parser_source_sha256() -> str:
+    digest = hashlib.sha256()
+    for path in sorted(SOURCE_FILES, key=lambda item: item.name):
+        digest.update(path.name.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(path.read_bytes())
+    return digest.hexdigest()
 
 
 def sanitize_trace(value: str, roots: Iterable[Path]) -> str:
@@ -185,7 +185,10 @@ def run_file(
     full_stack_trace = ""
     result = "FAILED"
     identity_matched = False
+    failure_layer = ""
+    env = build_runtime_manifest(lock_path)
     try:
+        require_runtime(env)
         data = file_path.read_bytes()
         actual_sha256 = sha256_bytes(data)
         if actual_sha256 != expected_sha256:
@@ -200,12 +203,23 @@ def run_file(
         )
         result = "SUCCESS" if identity_matched else "IDENTITY_NOT_FOUND"
     except Exception as exc:
+        failure_layer = (
+            "RUNTIME"
+            if type(exc).__name__ == "RuntimeContractError"
+            else "INPUT_INTEGRITY"
+            if isinstance(exc, ValueError) and "SHA-256" in str(exc)
+            else "PARSER"
+        )
         error_class = type(exc).__name__
         error_message = str(exc)
         full_stack_trace = sanitize_trace(traceback.format_exc(), redact_roots)
 
     finished = datetime.now(timezone.utc)
-    env = environment(lock_path)
+    engine_version = next(
+        dependency["installed_version"]
+        for dependency in env["dependencies"]
+        if dependency["name"] == "olefile"
+    )
     return {
         "parser_run_id": parser_run_id,
         "provenance": "ACTUAL_EXECUTION",
@@ -215,19 +229,21 @@ def run_file(
         "detected_magic": detect_magic(data),
         "parser_name": PARSER_NAME,
         "parser_version": PARSER_VERSION,
-        "parser_engine": env["parser_engine"],
-        "parser_engine_version": env["parser_engine_version"],
+        "parser_engine": "olefile",
+        "parser_engine_version": engine_version,
         "code_commit_sha": git_value(["rev-parse", "HEAD"]),
         "parser_code_dirty": parser_code_dirty(),
-        "parser_source_sha256": sha256_bytes(Path(__file__).read_bytes()),
-        "runtime_version": env["runtime_version"],
-        "dependency_lock_hash": env["dependency_lock_hash"],
+        "parser_source_sha256": parser_source_sha256(),
+        "runtime_version": env["python_version"],
+        "dependency_lock_hash": env["dependency_lock_sha256"],
+        "runtime_manifest_sha256": env["runtime_manifest_sha256"],
         "environment_fingerprint": env["environment_fingerprint"],
         "environment": env,
         "started_at": started.isoformat(),
         "finished_at": finished.isoformat(),
         "result": result,
         "identity_matched": identity_matched,
+        "failure_layer": failure_layer,
         "error_class": error_class,
         "error_message": error_message,
         "full_stack_trace": full_stack_trace,

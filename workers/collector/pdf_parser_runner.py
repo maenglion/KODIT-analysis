@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""HWPX runner with the same execution-ledger contract as the HWP runner."""
+"""Audited PDF runner with parser and identity layers kept separate."""
 
 from __future__ import annotations
 
@@ -7,29 +7,24 @@ import argparse
 import hashlib
 import json
 import subprocess
-import sys
 import traceback
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
-from hwpx_parser import (
+from parser_runtime import build_runtime_manifest, require_runtime
+from pdf_parser import (
     PARSER_ENGINE,
-    PARSER_ENGINE_VERSION,
     PARSER_NAME,
     PARSER_VERSION,
     detect_magic,
-    parse_hwpx_bytes,
+    parse_pdf_bytes,
 )
-from parser_contract import normalize_identity
-from parser_runtime import build_runtime_manifest, require_runtime
-
 
 SOURCE_FILES = (
     Path(__file__),
-    Path(__file__).with_name("hwpx_parser.py"),
-    Path(__file__).with_name("parser_contract.py"),
+    Path(__file__).with_name("pdf_parser.py"),
     Path(__file__).with_name("parser_runtime.py"),
     Path(__file__).with_name("parser-runtime-contract.json"),
 )
@@ -60,7 +55,14 @@ def parser_source_sha256() -> str:
 def parser_code_dirty() -> bool | None:
     try:
         result = subprocess.run(
-            ["git", "diff", "--quiet", "HEAD", "--", *(str(path.resolve()) for path in SOURCE_FILES)],
+            [
+                "git",
+                "diff",
+                "--quiet",
+                "HEAD",
+                "--",
+                *(str(path.resolve()) for path in SOURCE_FILES),
+            ],
             check=False,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
@@ -82,8 +84,6 @@ def run_file(
     *,
     expected_sha256: str,
     file_name: str,
-    regulation_name: str,
-    aliases: list[str],
     evidence_as_of: str,
     lock_path: Path,
     redact_roots: Iterable[Path] = (),
@@ -91,27 +91,33 @@ def run_file(
     parser_run_id = str(uuid.uuid4())
     started = datetime.now(timezone.utc)
     data = b""
-    extracted = ""
+    extracted_text = ""
+    result = "EXTRACTION_FAILED"
+    failure_layer = ""
     error_class = ""
     error_message = ""
     full_stack_trace = ""
-    result = "FAILED"
-    identity_matched = False
-    failure_layer = ""
-    env = build_runtime_manifest(lock_path)
+    metrics: dict[str, int | float] = {
+        "page_count": 0,
+        "extracted_char_count": 0,
+        "replacement_char_count": 0,
+        "replacement_char_ratio": 0.0,
+        "hangul_char_count": 0,
+        "hangul_ratio": 0.0,
+        "pages_with_text": 0,
+        "pages_without_text": 0,
+    }
+    environment = build_runtime_manifest(lock_path)
     try:
-        require_runtime(env)
+        require_runtime(environment)
         data = file_path.read_bytes()
         if sha256_bytes(data) != expected_sha256:
             raise ValueError("input SHA-256 does not match baseline")
-        extracted = parse_hwpx_bytes(data)
-        normalized_text = normalize_identity(extracted)
-        identity_matched = any(
-            normalize_identity(candidate) in normalized_text
-            for candidate in [regulation_name, *aliases]
-            if normalize_identity(candidate)
-        )
-        result = "SUCCESS" if identity_matched else "IDENTITY_NOT_FOUND"
+        parsed = parse_pdf_bytes(data)
+        result = parsed["result"]
+        extracted_text = parsed.pop("extracted_text")
+        metrics.update(parsed)
+        metrics.pop("result", None)
     except Exception as exc:
         failure_layer = (
             "RUNTIME"
@@ -125,6 +131,11 @@ def run_file(
         full_stack_trace = sanitize_trace(traceback.format_exc(), redact_roots)
 
     finished = datetime.now(timezone.utc)
+    engine_version = next(
+        dependency["installed_version"]
+        for dependency in environment["dependencies"]
+        if dependency["name"] == "pypdf"
+    )
     return {
         "parser_run_id": parser_run_id,
         "provenance": "ACTUAL_EXECUTION",
@@ -135,25 +146,26 @@ def run_file(
         "parser_name": PARSER_NAME,
         "parser_version": PARSER_VERSION,
         "parser_engine": PARSER_ENGINE,
-        "parser_engine_version": PARSER_ENGINE_VERSION,
+        "parser_engine_version": engine_version,
         "code_commit_sha": git_value(["rev-parse", "HEAD"]),
         "parser_code_dirty": parser_code_dirty(),
         "parser_source_sha256": parser_source_sha256(),
-        "runtime_version": env["python_version"],
-        "dependency_lock_hash": env["dependency_lock_sha256"],
-        "runtime_manifest_sha256": env["runtime_manifest_sha256"],
-        "environment_fingerprint": env["environment_fingerprint"],
-        "environment": env,
+        "runtime_version": environment["python_version"],
+        "dependency_lock_hash": environment["dependency_lock_sha256"],
+        "runtime_manifest_sha256": environment["runtime_manifest_sha256"],
+        "environment_fingerprint": environment["environment_fingerprint"],
+        "environment": environment,
         "started_at": started.isoformat(),
         "finished_at": finished.isoformat(),
         "result": result,
-        "identity_matched": identity_matched,
         "failure_layer": failure_layer,
         "error_class": error_class,
         "error_message": error_message,
         "full_stack_trace": full_stack_trace,
-        "extract_hash": sha256_bytes(extracted.encode("utf-8")) if extracted else "",
-        "extracted_char_count": len(extracted),
+        "extract_hash": (
+            sha256_bytes(extracted_text.encode("utf-8")) if extracted_text else ""
+        ),
+        **metrics,
     }
 
 
@@ -162,26 +174,31 @@ def main() -> int:
     parser.add_argument("--file", required=True, type=Path)
     parser.add_argument("--expected-sha256", required=True)
     parser.add_argument("--file-name", required=True)
-    parser.add_argument("--regulation-name", required=True)
-    parser.add_argument("--alias", action="append", default=[])
     parser.add_argument("--evidence-as-of", required=True)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--lock-file", type=Path, default=Path(__file__).with_name("requirements.txt"))
+    parser.add_argument(
+        "--lock-file",
+        type=Path,
+        default=Path(__file__).with_name("requirements.txt"),
+    )
     args = parser.parse_args()
     record = run_file(
         args.file,
         expected_sha256=args.expected_sha256,
         file_name=args.file_name,
-        regulation_name=args.regulation_name,
-        aliases=args.alias,
         evidence_as_of=args.evidence_as_of,
         lock_path=args.lock_file,
         redact_roots=[args.file.parent, Path.cwd()],
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_bytes((json.dumps(record, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
-    print(json.dumps({key: record[key] for key in ("parser_run_id", "result", "extract_hash")}, ensure_ascii=False))
-    return 0 if record["result"] == "SUCCESS" else 2
+    args.output.write_bytes(
+        (json.dumps(record, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    )
+    print(json.dumps({
+        key: record[key]
+        for key in ("parser_run_id", "result", "extract_hash", "page_count")
+    }, ensure_ascii=False))
+    return 0 if record["result"] != "EXTRACTION_FAILED" else 2
 
 
 if __name__ == "__main__":

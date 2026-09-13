@@ -1,0 +1,10 @@
+{
+  "contract_version": "1.0.0",
+  "python_implementation": "CPython",
+  "python_version": "3.13.7",
+  "dependency_lock_file": "requirements.txt",
+  "required_dependencies": [
+    "olefile",
+    "pypdf"
+  ]
+}
