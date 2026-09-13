@@ -38,6 +38,8 @@ const rows = rawRows.map((row) => ({
 const exceptionRows = parseCsv(await readFile(new URL("unpublished-unknown.csv", dataDir), "utf8"));
 const manifestText = await readFile(new URL("manifest.json", dataDir), "utf8");
 const manifest = JSON.parse(manifestText);
+const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
+const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
 const empty = { query: "", statuses: [], confidence: [], lifecycle: "", verification: "", human: "all" };
 
 assert.equal(rows.length, 1041);
@@ -55,6 +57,12 @@ assert.equal(filterRegulations(rows, { ...empty, human: "no" }).length, 1041);
 assert.equal(filterRegulations(rows, { ...empty, query: "투자옵션부보증 운용기준" }).length, 1);
 assert.equal(exceptionRows.length, 5);
 assert.equal(rows.filter((row) => row.confidence_level >= 4).length, 23);
+assert.equal(rows.filter((row) => ["EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(row.public_status_code)).length, 1018);
+assert.ok(explorerText.includes("자동·엔진 검증 대기"));
+assert.ok(explorerText.includes("미산정 · v0.5 trigger 필요"));
+assert.ok(!explorerText.includes("인간 검토 대기 건수"));
+assert.ok(loaderText.includes("humanReviewPendingCount: null"));
+assert.ok(!loaderText.includes("rows.filter((row) => !row.human_confirmed).length"));
 assert.ok(rowsToCsv(rows.slice(0, 1)).startsWith("\uFEFF"));
 assert.ok(!manifestText.includes("C:\\") && !manifestText.includes("/Users/") && !manifestText.includes("service_role"));
 assert.equal(manifest.release_status, "review_pending");

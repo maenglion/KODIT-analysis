@@ -9,7 +9,7 @@ type Props = {
   manifest: {
     asOf: string; dataStatus: string; releaseId: string; lastAutomaticCheck: string; lastSuccessfulAt: string;
     approvedAt: string | null; snapshotRowCount: number | null; csvSha256Prefix: string | null;
-    recentResult: string; nextDueAt: string; automationStatus: string; humanReviewPendingCount: number;
+    recentResult: string; nextDueAt: string; automationStatus: string; humanReviewPendingCount: number | null;
   };
 };
 
@@ -50,6 +50,12 @@ export function RegulationExplorer({ rows, manifest }: Props) {
     notice: rows.filter((row) => row.public_status_code === "NOTICE_ONLY").length,
     unknown: rows.filter((row) => row.public_status_code === "SOURCE_UNKNOWN").length,
   };
+  const workQueues = {
+    automatic: rows.filter((row) => ["EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(row.public_status_code)).length,
+    document: counts.pending,
+    nonpublic: counts.notice,
+    source: counts.unknown,
+  };
   const approved = manifest.dataStatus === "승인본";
 
   const openDetail = (row: RegulationRow) => {
@@ -71,7 +77,12 @@ export function RegulationExplorer({ rows, manifest }: Props) {
         {approved && <><div><dt>승인일</dt><dd>{manifest.approvedAt}</dd></div><div><dt>스냅샷 행 수</dt><dd>{manifest.snapshotRowCount?.toLocaleString("ko-KR")}건</dd></div><div><dt>CSV SHA-256</dt><dd>{manifest.csvSha256Prefix}</dd></div></>}
         <div><dt>마지막 자동 점검일</dt><dd>{manifest.lastAutomaticCheck}</dd></div><div><dt>마지막 성공 수집일</dt><dd>{manifest.lastSuccessfulAt}</dd></div>
         <div><dt>최근 실행 결과</dt><dd>{manifest.recentResult}</dd></div><div><dt>다음 전체 수집 예정일</dt><dd>{manifest.nextDueAt}</dd></div>
-        <div><dt>자동수집 상태</dt><dd>{manifest.automationStatus}</dd></div><div><dt>인간 검토 대기 건수</dt><dd>{manifest.humanReviewPendingCount.toLocaleString("ko-KR")}건</dd></div>
+        <div><dt>자동수집 상태</dt><dd>{manifest.automationStatus}</dd></div>
+        <div><dt>자동·엔진 검증 대기</dt><dd>{workQueues.automatic.toLocaleString("ko-KR")}건</dd></div>
+        <div><dt>문서처리 재검증</dt><dd>{workQueues.document.toLocaleString("ko-KR")}건</dd></div>
+        <div><dt>미공개 검증</dt><dd>{workQueues.nonpublic.toLocaleString("ko-KR")}건</dd></div>
+        <div><dt>원출처 탐색</dt><dd>{workQueues.source.toLocaleString("ko-KR")}건</dd></div>
+        <div><dt>인간 검토 필요</dt><dd>{manifest.humanReviewPendingCount === null ? "미산정 · v0.5 trigger 필요" : `${manifest.humanReviewPendingCount.toLocaleString("ko-KR")}건`}</dd></div>
       </dl>
     </section>
 

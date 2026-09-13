@@ -137,7 +137,9 @@ export async function getReviewDataset() {
       recentResult: statusLabels[recentStatus] ?? recentStatus,
       nextDueAt: collectionState?.next_due_at ? date(collectionState.next_due_at) : date(next),
       automationStatus: recentStatus === "failed" ? "실패" : recentStatus === "waiting" ? "실행대기" : "작동 중",
-      humanReviewPendingCount: collectionState?.human_review_pending_count ?? rows.filter((row) => !row.human_confirmed).length,
+      // human_confirmed=false is not a review queue. This remains unknown until
+      // v0.5 emits explicit review triggers after automated checks are exhausted.
+      humanReviewPendingCount: null,
     },
   };
 }
