@@ -8,8 +8,8 @@
     "./regulations/RegulationExplorer": "./src/regulations/RegulationExplorer.tsx"
   },
   "peerDependencies": {
-    "react": "^19.1.1",
-    "next": "^15.5.2"
+    "react": "19.1.2",
+    "next": "15.5.9"
   },
   "devDependencies": {
     "@types/react": "^19.1.10"
