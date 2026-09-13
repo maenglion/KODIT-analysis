@@ -1,0 +1,46 @@
+{
+  "corpus_label": "preannouncement_rule_match_20260831/downloads",
+  "selection_method": "source strata and size range; real ZIP_HWPX only",
+  "samples": [
+    {
+      "source_kind": "kodit",
+      "source_owner_id": "1793",
+      "relative_path": "kodit/1793/2de18e3bc4981c24b9eb3f3cfdab8d31.hwpx",
+      "file_name": "(붙임) 제규정 제개정 사전예고(임금피크제 운영기준).hwpx",
+      "regulation_name": "임금피크제 운영기준",
+      "expected_sha256": "1576d56be047ae4f2b196a3dd1cdf8c1a6e54a3c01d8ab91a619772644ea9918"
+    },
+    {
+      "source_kind": "kodit",
+      "source_owner_id": "1688",
+      "relative_path": "kodit/1688/e2a02638b6516f77f779dbb4f332b2a9.hwpx",
+      "file_name": "(붙임)제규정 제·개정 사전예고_투자업무처리기준.hwpx",
+      "regulation_name": "투자업무처리기준",
+      "expected_sha256": "5344caff2a07e6679b79cc1632c2b8ecfdb3d0c07556e5879ad810768c247036"
+    },
+    {
+      "source_kind": "kodit",
+      "source_owner_id": "1922",
+      "relative_path": "kodit/1922/3a9baf3c2ee7b5fd0f87aaf688abc99a.hwpx",
+      "file_name": "(붙임) 「매출채권보험 인수업무기준」 외 8개 제규정 개정 사전예고.hwpx",
+      "regulation_name": "매출채권보험 인수업무기준",
+      "expected_sha256": "852c431b2b7daecedc1162469dfb9500d489c0bd2b6a6a931a3bd533e3523448"
+    },
+    {
+      "source_kind": "alio",
+      "source_owner_id": "53718",
+      "relative_path": "alio/53718/220576.hwpx",
+      "file_name": "해상풍력대출보증약관 면책기준(2025년도 9월 1일 제정).hwpx",
+      "regulation_name": "해상풍력대출보증약관 면책기준",
+      "expected_sha256": "383f7db67290905b2c860a65483552c645836dbfff27bfdfc1ec2cda01e8dadc"
+    },
+    {
+      "source_kind": "alio",
+      "source_owner_id": "40846",
+      "relative_path": "alio/40846/238909.hwp",
+      "file_name": "혁신스타트업 성장지원 프로그램 운용기준(2026년도 7월 15일 개정).hwp",
+      "regulation_name": "혁신스타트업 성장지원 프로그램 운용기준",
+      "expected_sha256": "6085fc89c04519b0c470454420fd834c984c6df6a090577e640ebfdc65768bdd"
+    }
+  ]
+}
