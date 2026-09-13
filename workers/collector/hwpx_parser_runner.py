@@ -23,7 +23,7 @@ from hwpx_parser import (
     parse_hwpx_bytes,
 )
 from parser_contract import normalize_identity
-from parser_runtime import build_runtime_manifest, require_runtime
+from parser_runtime import build_runtime_manifest, require_runtime, sanitize_trace
 
 
 SOURCE_FILES = (
@@ -68,13 +68,6 @@ def parser_code_dirty() -> bool | None:
         return result.returncode != 0
     except Exception:
         return None
-
-
-def sanitize_trace(value: str, roots: Iterable[Path]) -> str:
-    sanitized = value
-    for root in roots:
-        sanitized = sanitized.replace(str(root.resolve()), "<REDACTED_ROOT>")
-    return sanitized
 
 
 def run_file(

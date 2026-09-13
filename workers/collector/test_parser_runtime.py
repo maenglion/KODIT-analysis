@@ -6,7 +6,12 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from parser_runtime import RuntimeContractError, build_runtime_manifest, dependency_pins
+from parser_runtime import (
+    RuntimeContractError,
+    build_runtime_manifest,
+    dependency_pins,
+    sanitize_trace,
+)
 
 
 class ParserRuntimeContractTest(unittest.TestCase):
@@ -39,6 +44,12 @@ class ParserRuntimeContractTest(unittest.TestCase):
             lock.write_text("pypdf>=6\n", encoding="utf-8")
             with self.assertRaises(RuntimeContractError):
                 dependency_pins(lock)
+
+    def test_all_windows_traceback_paths_are_sanitized(self):
+        trace = '  File "C:\\tmp\\runtime\\module.py", line 10\n'
+        sanitized = sanitize_trace(trace)
+        self.assertNotIn("C:\\", sanitized)
+        self.assertIn("<REDACTED_PATH>", sanitized)
 
 
 if __name__ == "__main__":

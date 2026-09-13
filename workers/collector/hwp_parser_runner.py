@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from parser_contract import normalize_identity
-from parser_runtime import build_runtime_manifest, require_runtime
+from parser_runtime import build_runtime_manifest, require_runtime, sanitize_trace
 
 try:
     import olefile  # type: ignore
@@ -156,13 +156,6 @@ def parser_source_sha256() -> str:
         digest.update(b"\0")
         digest.update(path.read_bytes())
     return digest.hexdigest()
-
-
-def sanitize_trace(value: str, roots: Iterable[Path]) -> str:
-    sanitized = value
-    for root in roots:
-        sanitized = sanitized.replace(str(root.resolve()), "<REDACTED_ROOT>")
-    return sanitized
 
 
 def run_file(

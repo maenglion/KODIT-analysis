@@ -8,7 +8,7 @@ import json
 import platform
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 CONTRACT_PATH = Path(__file__).with_name("parser-runtime-contract.json")
 PIN_RE = re.compile(r"^([A-Za-z0-9_.-]+)==([^\s]+)$")
@@ -103,3 +103,14 @@ def require_runtime(manifest: dict[str, Any]) -> None:
             "parser runtime contract failed: "
             + ", ".join(manifest["runtime_contract_violations"])
         )
+
+
+def sanitize_trace(value: str, roots: Iterable[Path] = ()) -> str:
+    sanitized = value
+    for root in roots:
+        sanitized = sanitized.replace(str(root.resolve()), "<REDACTED_ROOT>")
+    return re.sub(
+        r"(?i)(?<![A-Za-z0-9_])[A-Z]:\\[^\"\r\n]+",
+        "<REDACTED_PATH>",
+        sanitized,
+    )

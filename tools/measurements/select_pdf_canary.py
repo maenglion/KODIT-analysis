@@ -32,6 +32,24 @@ def quantile_samples(rows: list[dict], count: int) -> list[dict]:
     return selected
 
 
+def source_samples(rows: list[dict], count: int) -> list[dict]:
+    selected: list[dict] = []
+    anomalous_statuses = sorted(
+        {row["legacy_extraction_status"] for row in rows}
+        - {"", "ok"}
+    )
+    for status in anomalous_statuses:
+        candidates = sorted(
+            (row for row in rows if row["legacy_extraction_status"] == status),
+            key=lambda row: (row["size_bytes"], row["relative_path"]),
+        )
+        if candidates and len(selected) < count:
+            selected.append(candidates[len(candidates) // 2])
+    remaining = [row for row in rows if row not in selected]
+    selected.extend(quantile_samples(remaining, count - len(selected)))
+    return selected
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--measurement", required=True, type=Path)
@@ -44,14 +62,14 @@ def main() -> int:
     rows = measurement["files"]
     sources = sorted({row["source_kind"] for row in rows})
     if len(sources) < 2:
-        selected = quantile_samples(rows, args.sample_count)
+        selected = source_samples(rows, args.sample_count)
     else:
         first_count = args.sample_count // 2
         selected = []
         for index, source in enumerate(sources[:2]):
             count = first_count if index == 0 else args.sample_count - first_count
             selected.extend(
-                quantile_samples(
+                source_samples(
                     [row for row in rows if row["source_kind"] == source], count
                 )
             )

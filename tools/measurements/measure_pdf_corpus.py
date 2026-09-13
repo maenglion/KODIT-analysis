@@ -46,12 +46,13 @@ def main() -> int:
         previous = baseline_by_path.get(relative_path)
         observation = observations.get(digest, {})
         parts = Path(relative_path).parts
-        years = sorted(set(re.findall(r"(?:19|20)\d{2}", path.name)))
+        original_file_name = observation.get("filename") or path.name
+        years = sorted(set(re.findall(r"(?:19|20)\d{2}", original_file_name)))
         results.append({
             "relative_path": relative_path,
             "source_kind": parts[0] if parts else "",
             "source_owner_id": parts[1] if len(parts) > 1 else "",
-            "file_name": path.name,
+            "file_name": original_file_name,
             "size_bytes": len(data),
             "sha256": digest,
             "detected_magic": "PDF",

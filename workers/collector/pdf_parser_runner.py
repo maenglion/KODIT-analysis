@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
-from parser_runtime import build_runtime_manifest, require_runtime
+from parser_runtime import build_runtime_manifest, require_runtime, sanitize_trace
 from pdf_parser import (
     PARSER_ENGINE,
     PARSER_NAME,
@@ -70,13 +70,6 @@ def parser_code_dirty() -> bool | None:
         return result.returncode != 0
     except Exception:
         return None
-
-
-def sanitize_trace(value: str, roots: Iterable[Path]) -> str:
-    sanitized = value
-    for root in roots:
-        sanitized = sanitized.replace(str(root.resolve()), "<REDACTED_ROOT>")
-    return sanitized
 
 
 def run_file(
