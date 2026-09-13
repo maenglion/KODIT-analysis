@@ -78,6 +78,22 @@ nav a:hover { color:var(--primary); }
 .regulations-table tbody tr:hover { background:#f2f7fb; }
 .regulations-table .has-detail { background:#eaf4fa; }
 .detail-ready { color:var(--primary); }
+.processing-flag {
+  display:inline-block;
+  border:1px solid #c9d6f8;
+  border-radius:999px;
+  background:#f1f5ff;
+  color:#34549a;
+  padding:6px 9px;
+  font-weight:750;
+  white-space:nowrap;
+}
+.record-meta {
+  margin:-4px 0 20px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+}
 
 /* Civic operations theme — adapted from the reference system's visual language. */
 :root {

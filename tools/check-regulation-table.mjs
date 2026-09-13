@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { filterRegulations, rowsToCsv, validOfficialUrl } from "../packages/common/src/regulations/index.ts";
+import { filterRegulations, processingStatusLabel, publicAvailabilityLabel, rowsToCsv, validOfficialUrl } from "../packages/common/src/regulations/index.ts";
 
 const dataDir = new URL("../apps/public-site/data/review-20260908/", import.meta.url);
 
@@ -50,15 +50,23 @@ for (const [status, expected] of [["FULLTEXT_PUBLIC", 23], ["EXTRACTION_PENDING"
   assert.equal(filterRegulations(rows, { ...empty, statuses: [status] }).length, expected);
 }
 assert.equal(filterRegulations(rows, { ...empty, query: "투자옵션부보증 운용기준" }).length, 1);
+const legacyPending = rows.find((row) => row.public_status_code === "EXTRACTION_PENDING");
+assert.ok(legacyPending);
+assert.equal(publicAvailabilityLabel(legacyPending), "미확정");
+assert.equal(processingStatusLabel(legacyPending), "v0.5 재평가 대기");
 assert.equal(exceptionRows.length, 5);
 assert.equal(rows.filter((row) => ["EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(row.public_status_code)).length, 1018);
-assert.ok(explorerText.includes("자동·엔진 검증 대기"));
+assert.ok(explorerText.includes("이전 기록상 자동·엔진 검증 대상"));
 assert.ok(explorerText.includes("미산정 · v0.5 trigger 필요"));
 assert.ok(!explorerText.includes("인간 검토 대기 건수"));
 assert.ok(!explorerText.includes("신뢰도"));
 assert.ok(!explorerText.includes("confidence_level"));
 assert.ok(!explorerText.includes("외부전달용 CSV"));
 assert.ok(!explorerText.includes("인간확정 여부"));
+assert.ok(!explorerText.includes("v0.4 판정 상세"));
+assert.ok(explorerText.includes("이전 판정 기록"));
+assert.ok(explorerText.includes("현재 처리상태: v0.5 재평가 대기"));
+assert.ok(explorerText.includes("이전 판정 상태 · v0.4"));
 assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
 assert.ok(explorerText.includes("상세 보기 →"));
 assert.equal(validOfficialUrl("javascript:alert(1)"), null);
@@ -70,6 +78,8 @@ assert.ok(!loaderText.includes("rows.filter((row) => !row.human_confirmed).lengt
 assert.ok(rowsToCsv(rows.slice(0, 1)).startsWith("\uFEFF"));
 assert.ok(!rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("confidence_level"));
 assert.ok(!rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("human_confirmed"));
+assert.ok(rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("previous_public_status_code"));
+assert.ok(rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("current_processing_status"));
 assert.ok(!manifestText.includes("C:\\") && !manifestText.includes("/Users/") && !manifestText.includes("service_role"));
 assert.equal(manifest.release_status, "review_pending");
 

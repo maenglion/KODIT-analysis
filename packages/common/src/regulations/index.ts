@@ -81,6 +81,20 @@ export async function resolveRegulationDataset(
 
 export const statusOrder = ["FULLTEXT_PUBLIC", "EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"];
 
+export function isLegacyRegulationRow(row: RegulationRow) {
+  return row.methodology_version === "v0.4" || row.methodology_version === "legacy_methodology";
+}
+
+export function publicAvailabilityLabel(row: RegulationRow) {
+  if (!isLegacyRegulationRow(row)) return row.public_status_label;
+  if (row.public_status_code === "EXTRACTION_PENDING") return "미확정";
+  return `이전 판정 · ${row.public_status_label}`;
+}
+
+export function processingStatusLabel(row: RegulationRow) {
+  return isLegacyRegulationRow(row) ? "v0.5 재평가 대기" : "평가 완료";
+}
+
 export function filterRegulations(rows: RegulationRow[], filters: RegulationFilters) {
   const query = filters.query.trim().toLocaleLowerCase("ko-KR");
   return rows.filter((row) =>
@@ -100,12 +114,31 @@ export function validOfficialUrl(value: string) {
   }
 }
 
-export const downloadColumns: (keyof RegulationRow)[] = [
-  "regulation_code", "regulation_name", "normalized_name", "public_status_code", "public_status_label",
-  "lifecycle_code", "document_verification_code", "nonpublic_stage", "primary_claim",
-  "decision_reason_code", "decision_reason", "official_source_count", "search_verification_count",
-  "last_collected_at", "last_verified_at", "official_url", "document_sha256",
-  "document_format", "revision_date", "legacy_0811_status", "legacy_0831_status", "methodology_version", "release_status",
+const publicDownloadColumns: [string, (row: RegulationRow) => unknown][] = [
+  ["regulation_code", (row) => row.regulation_code],
+  ["regulation_name", (row) => row.regulation_name],
+  ["normalized_name", (row) => row.normalized_name],
+  ["previous_public_status_code", (row) => row.public_status_code],
+  ["previous_public_status_label", (row) => row.public_status_label],
+  ["current_processing_status", processingStatusLabel],
+  ["lifecycle_code", (row) => row.lifecycle_code],
+  ["previous_document_verification_code", (row) => row.document_verification_code],
+  ["previous_nonpublic_stage", (row) => row.nonpublic_stage],
+  ["primary_claim", (row) => row.primary_claim],
+  ["previous_decision_reason_code", (row) => row.decision_reason_code],
+  ["previous_decision_reason", (row) => row.decision_reason],
+  ["official_source_count", (row) => row.official_source_count],
+  ["search_verification_count", (row) => row.search_verification_count],
+  ["last_collected_at", (row) => row.last_collected_at],
+  ["last_verified_at", (row) => row.last_verified_at],
+  ["official_url", (row) => row.official_url],
+  ["document_sha256", (row) => row.document_sha256],
+  ["document_format", (row) => row.document_format],
+  ["revision_date", (row) => row.revision_date],
+  ["legacy_0811_status", (row) => row.legacy_0811_status],
+  ["legacy_0831_status", (row) => row.legacy_0831_status],
+  ["methodology_version", (row) => row.methodology_version],
+  ["release_status", (row) => row.release_status],
 ];
 
 const csvCell = (value: unknown) => {
@@ -114,5 +147,8 @@ const csvCell = (value: unknown) => {
 };
 
 export function rowsToCsv(rows: RegulationRow[]) {
-  return "\uFEFF" + [downloadColumns.join(","), ...rows.map((row) => downloadColumns.map((key) => csvCell(row[key])).join(","))].join("\r\n") + "\r\n";
+  return "\uFEFF" + [
+    publicDownloadColumns.map(([label]) => label).join(","),
+    ...rows.map((row) => publicDownloadColumns.map(([, value]) => csvCell(value(row))).join(",")),
+  ].join("\r\n") + "\r\n";
 }
