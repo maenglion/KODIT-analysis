@@ -29,10 +29,8 @@ export type RegulationRow = {
 export type RegulationFilters = {
   query: string;
   statuses: string[];
-  confidence: number[];
   lifecycle: string;
   verification: string;
-  human: "all" | "yes" | "no";
 };
 
 export type ApprovedRegulationRow = RegulationRow & {
@@ -88,18 +86,25 @@ export function filterRegulations(rows: RegulationRow[], filters: RegulationFilt
   return rows.filter((row) =>
     (!query || row.regulation_name.toLocaleLowerCase("ko-KR").includes(query)) &&
     (!filters.statuses.length || filters.statuses.includes(row.public_status_code)) &&
-    (!filters.confidence.length || filters.confidence.includes(row.confidence_level)) &&
     (!filters.lifecycle || row.lifecycle_code === filters.lifecycle) &&
-    (!filters.verification || row.document_verification_code === filters.verification) &&
-    (filters.human === "all" || row.human_confirmed === (filters.human === "yes"))
+    (!filters.verification || row.document_verification_code === filters.verification)
   );
+}
+
+export function validOfficialUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
+  } catch {
+    return null;
+  }
 }
 
 export const downloadColumns: (keyof RegulationRow)[] = [
   "regulation_code", "regulation_name", "normalized_name", "public_status_code", "public_status_label",
-  "lifecycle_code", "document_verification_code", "nonpublic_stage", "primary_claim", "confidence_level",
+  "lifecycle_code", "document_verification_code", "nonpublic_stage", "primary_claim",
   "decision_reason_code", "decision_reason", "official_source_count", "search_verification_count",
-  "human_confirmed", "last_collected_at", "last_verified_at", "official_url", "document_sha256",
+  "last_collected_at", "last_verified_at", "official_url", "document_sha256",
   "document_format", "revision_date", "legacy_0811_status", "legacy_0831_status", "methodology_version", "release_status",
 ];
 
