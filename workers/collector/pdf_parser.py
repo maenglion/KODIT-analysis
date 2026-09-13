@@ -5,6 +5,13 @@ from __future__ import annotations
 import io
 from typing import Any
 
+from failure_taxonomy import (
+    DependencyImportFailed,
+    DocumentParseFailed,
+    MagicMismatch,
+    TextExtractionFailed,
+)
+
 try:
     from pypdf import PdfReader  # type: ignore
 except Exception:
@@ -35,11 +42,15 @@ def _ratio(numerator: int, denominator: int) -> float:
 
 def parse_pdf_bytes(data: bytes) -> dict[str, Any]:
     if detect_magic(data) != "PDF":
-        raise ValueError("input is not a strict PDF document")
+        raise MagicMismatch("input is not a strict PDF document")
     if PdfReader is None:
-        raise RuntimeError("pypdf import failed")
+        raise DependencyImportFailed("pypdf import failed")
 
-    reader = PdfReader(io.BytesIO(data), strict=False)
+    try:
+        reader = PdfReader(io.BytesIO(data), strict=False)
+    except Exception as exc:
+        code = "PDF_READ_FAILED" if type(exc).__name__ == "PdfReadError" else "PDF_STRUCTURE_INVALID"
+        raise DocumentParseFailed(str(exc), code=code) from exc
     if reader.is_encrypted:
         return {
             "result": "ENCRYPTED",
@@ -54,11 +65,17 @@ def parse_pdf_bytes(data: bytes) -> dict[str, Any]:
             "pages_without_text": 0,
         }
 
-    page_count = len(reader.pages)
+    try:
+        page_count = len(reader.pages)
+    except Exception as exc:
+        raise DocumentParseFailed(str(exc), code="PDF_STRUCTURE_INVALID") from exc
     page_texts: list[str] = []
     pages_with_text = 0
     for page in reader.pages:
-        text = page.extract_text() or ""
+        try:
+            text = page.extract_text() or ""
+        except Exception as exc:
+            raise TextExtractionFailed(str(exc)) from exc
         normalized = text.strip()
         page_texts.append(normalized)
         if normalized:

@@ -118,6 +118,8 @@ class HwpxRunnerContractTest(unittest.TestCase):
         self.assertEqual(result["provenance"], "ACTUAL_EXECUTION")
         self.assertEqual(result["detected_magic"], "ZIP_HWPX")
         self.assertTrue(result["extract_hash"])
+        self.assertEqual(result["failure_domain"], "")
+        self.assertEqual(result["failure_code"], "")
 
     def test_common_identity_normalization_handles_punctuation(self):
         result = self.execute(
@@ -131,12 +133,15 @@ class HwpxRunnerContractTest(unittest.TestCase):
         self.assertEqual(result["result"], "IDENTITY_NOT_FOUND")
         self.assertFalse(result["identity_matched"])
         self.assertFalse(result["error_class"])
+        self.assertEqual(result["failure_domain"], "")
+        self.assertEqual(result["failure_code"], "")
 
     def test_sha_mismatch_records_full_traceback(self):
         data = make_hwpx({"Contents/section0.xml": section_xml(["안전보건규정"])})
         result = self.execute(data, expected_sha="0" * 64)
         self.assertEqual(result["result"], "FAILED")
-        self.assertEqual(result["error_class"], "ValueError")
+        self.assertEqual(result["failure_domain"], "INPUT_INTEGRITY")
+        self.assertEqual(result["failure_code"], "SHA256_MISMATCH")
         self.assertIn("Traceback", result["full_stack_trace"])
         self.assertNotIn(str(self.root), result["full_stack_trace"])
 

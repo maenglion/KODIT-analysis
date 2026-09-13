@@ -53,12 +53,15 @@ def main() -> int:
     parser.add_argument("--corpus-root", required=True, type=Path)
     parser.add_argument("--lock-file", required=True, type=Path)
     parser.add_argument("--runtime-manifest", required=True, type=Path)
+    parser.add_argument("--previous-canary", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
     plan = json.loads(args.plan.read_text(encoding="utf-8"))
     measurement = json.loads(args.measurement.read_text(encoding="utf-8"))
     runtime = json.loads(args.runtime_manifest.read_text(encoding="utf-8"))
+    previous = json.loads(args.previous_canary.read_text(encoding="utf-8")) if args.previous_canary else None
+    previous_by_sha = {row["baseline_sha256"]: row for row in previous["results"]} if previous else {}
     if plan["plan_type"] != "PDF_CANARY_PLAN" or not 10 <= len(plan["samples"]) <= 15:
         raise ValueError("PDF canary plan must contain 10 to 15 samples")
     measured = {row["relative_path"]: row for row in measurement["files"]}
@@ -136,6 +139,17 @@ def main() -> int:
             "attempts": attempts,
         })
 
+    previous_mismatches = []
+    if previous:
+        for row in results:
+            old = previous_by_sha.get(row["baseline_sha256"])
+            if old is None:
+                previous_mismatches.append({"baseline_sha256": row["baseline_sha256"], "reason": "MISSING_BASELINE"})
+                continue
+            changed = [key for key in ("result", "extract_hash") if old["attempts"][0][key] != row["attempts"][0][key]]
+            if changed:
+                previous_mismatches.append({"baseline_sha256": row["baseline_sha256"], "changed_fields": changed})
+
     counts = Counter(row["attempts"][0]["result"] for row in results)
     fingerprints = {attempt["environment_fingerprint"] for row in results for attempt in row["attempts"]}
     runtime_matches = fingerprints == {runtime["environment_fingerprint"]}
@@ -154,6 +168,9 @@ def main() -> int:
         "quality_metric_summary": metric_summary(results),
         "environment_fingerprint_count": len(fingerprints),
         "runtime_manifest_matches": runtime_matches,
+        "previous_canary_run_id": previous.get("canary_run_id") if previous else None,
+        "previous_outcome_extract_hash_match": not previous_mismatches if previous else None,
+        "previous_comparison_mismatches": previous_mismatches,
         "integrity_mismatch_count": sum(
             any(a["input_sha256"] != row["baseline_sha256"] for a in row["attempts"])
             for row in results
@@ -165,6 +182,7 @@ def main() -> int:
         "result": (
             "PASSED"
             if passed_count == len(results) and len(fingerprints) == 1 and runtime_matches
+            and (not previous or not previous_mismatches)
             else "FAILED"
         ),
         "full_batch_authorized": False,
@@ -173,6 +191,7 @@ def main() -> int:
             "measurement": sha256_file(args.measurement),
             "runtime_manifest": sha256_file(args.runtime_manifest),
             "dependency_lock": sha256_file(args.lock_file),
+            **({"previous_canary": sha256_file(args.previous_canary)} if args.previous_canary else {}),
         },
         "state_changes_performed": False,
         "results": results,

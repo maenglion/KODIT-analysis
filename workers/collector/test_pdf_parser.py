@@ -72,22 +72,59 @@ class PdfParserContractTest(unittest.TestCase):
         with patch("pdf_parser.PdfReader", side_effect=RuntimeError("synthetic parser error")):
             with self.runner(text_pdf()) as result:
                 self.assertEqual(result["result"], "EXTRACTION_FAILED")
-                self.assertEqual(result["failure_layer"], "PARSER")
-                self.assertEqual(result["error_class"], "RuntimeError")
+                self.assertEqual(result["failure_domain"], "DOCUMENT")
+                self.assertEqual(result["failure_code"], "PDF_STRUCTURE_INVALID")
+
+    def test_dependency_metadata_does_not_mask_import_failure(self):
+        with patch("pdf_parser.PdfReader", None):
+            with self.runner(text_pdf()) as result:
+                self.assertEqual(result["failure_domain"], "ENVIRONMENT")
+                self.assertEqual(result["failure_code"], "DEPENDENCY_IMPORT_FAILED")
 
     def test_sha_mismatch_and_traceback_are_audited(self):
         with self.runner(text_pdf(), expected_sha="0" * 64) as result:
             self.assertEqual(result["result"], "EXTRACTION_FAILED")
             self.assertEqual(result["failure_layer"], "INPUT_INTEGRITY")
-            self.assertEqual(result["error_class"], "ValueError")
+            self.assertEqual(result["failure_code"], "SHA256_MISMATCH")
             self.assertIn("Traceback", result["full_stack_trace"])
             self.assertNotIn(result["test_root"], result["full_stack_trace"])
+
+    def test_magic_mismatch_is_input_integrity_failure(self):
+        data = b"not-a-pdf"
+        with self.runner(data) as result:
+            self.assertEqual(result["failure_domain"], "INPUT_INTEGRITY")
+            self.assertEqual(result["failure_code"], "MAGIC_MISMATCH")
+
+    def test_malformed_pdf_is_document_failure(self):
+        data = b"%PDF-1.7\nmalformed"
+        with self.runner(data) as result:
+            self.assertEqual(result["failure_domain"], "DOCUMENT")
+            self.assertIn(result["failure_code"], {"PDF_READ_FAILED", "PDF_STRUCTURE_INVALID"})
+
+    def test_extraction_exception_is_extraction_failure(self):
+        class BrokenPage:
+            def extract_text(self):
+                raise RuntimeError("synthetic extraction failure")
+
+        class FakeReader:
+            is_encrypted = False
+            pages = [BrokenPage()]
+
+            def __init__(self, *_args, **_kwargs):
+                pass
+
+        with patch("pdf_parser.PdfReader", FakeReader):
+            with self.runner(text_pdf()) as result:
+                self.assertEqual(result["failure_domain"], "EXTRACTION")
+                self.assertEqual(result["failure_code"], "TEXT_EXTRACTION_FAILED")
 
     def test_extract_hash_is_deterministic_and_identity_is_absent(self):
         data = text_pdf()
         with self.runner(data) as first, self.runner(data) as second:
             self.assertEqual(first["result"], "SUCCESS")
             self.assertEqual(first["extract_hash"], second["extract_hash"])
+            self.assertEqual(first["failure_domain"], "")
+            self.assertEqual(first["failure_code"], "")
             self.assertNotIn("identity_matched", first)
 
     def test_full_runtime_and_source_provenance(self):
@@ -99,7 +136,8 @@ class PdfParserContractTest(unittest.TestCase):
                 "parser_code_dirty", "parser_source_sha256", "runtime_version",
                 "dependency_lock_hash", "runtime_manifest_sha256",
                 "environment_fingerprint", "environment", "started_at", "finished_at",
-                "result", "failure_layer", "error_class", "error_message",
+                "result", "failure_layer", "failure_domain", "failure_code",
+                "error_class", "error_message",
                 "full_stack_trace", "extract_hash", "extracted_char_count",
                 "page_count", "replacement_char_count", "replacement_char_ratio",
                 "hangul_char_count", "hangul_ratio", "pages_with_text",

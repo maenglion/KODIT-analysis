@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
+from failure_taxonomy import MagicMismatch, Sha256Mismatch, classify_failure
 from hwpx_parser import (
     PARSER_ENGINE,
     PARSER_ENGINE_VERSION,
@@ -28,6 +29,7 @@ from parser_runtime import build_runtime_manifest, require_runtime, sanitize_tra
 
 SOURCE_FILES = (
     Path(__file__),
+    Path(__file__).with_name("failure_taxonomy.py"),
     Path(__file__).with_name("hwpx_parser.py"),
     Path(__file__).with_name("parser_contract.py"),
     Path(__file__).with_name("parser_runtime.py"),
@@ -91,12 +93,16 @@ def run_file(
     result = "FAILED"
     identity_matched = False
     failure_layer = ""
+    failure_domain = ""
+    failure_code = ""
     env = build_runtime_manifest(lock_path)
     try:
         require_runtime(env)
         data = file_path.read_bytes()
         if sha256_bytes(data) != expected_sha256:
-            raise ValueError("input SHA-256 does not match baseline")
+            raise Sha256Mismatch("input SHA-256 does not match baseline")
+        if detect_magic(data) != "ZIP_HWPX":
+            raise MagicMismatch("input magic is not strict HWPX")
         extracted = parse_hwpx_bytes(data)
         normalized_text = normalize_identity(extracted)
         identity_matched = any(
@@ -106,13 +112,10 @@ def run_file(
         )
         result = "SUCCESS" if identity_matched else "IDENTITY_NOT_FOUND"
     except Exception as exc:
-        failure_layer = (
-            "RUNTIME"
-            if type(exc).__name__ == "RuntimeContractError"
-            else "INPUT_INTEGRITY"
-            if isinstance(exc, ValueError) and "SHA-256" in str(exc)
-            else "PARSER"
-        )
+        failure = classify_failure(exc)
+        failure_layer = failure.domain
+        failure_domain = failure.domain
+        failure_code = failure.code
         error_class = type(exc).__name__
         error_message = str(exc)
         full_stack_trace = sanitize_trace(traceback.format_exc(), redact_roots)
@@ -142,6 +145,8 @@ def run_file(
         "result": result,
         "identity_matched": identity_matched,
         "failure_layer": failure_layer,
+        "failure_domain": failure_domain,
+        "failure_code": failure_code,
         "error_class": error_class,
         "error_message": error_message,
         "full_stack_trace": full_stack_trace,

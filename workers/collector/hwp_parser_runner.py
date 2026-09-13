@@ -18,6 +18,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
+from failure_taxonomy import (
+    DependencyImportFailed,
+    MagicMismatch,
+    Sha256Mismatch,
+    classify_failure,
+)
 from parser_contract import normalize_identity
 from parser_runtime import build_runtime_manifest, require_runtime, sanitize_trace
 
@@ -32,6 +38,7 @@ PARSER_VERSION = "0.1.1"
 OLE_MAGIC = bytes.fromhex("d0cf11e0a1b11ae1")
 SOURCE_FILES = (
     Path(__file__),
+    Path(__file__).with_name("failure_taxonomy.py"),
     Path(__file__).with_name("parser_contract.py"),
     Path(__file__).with_name("parser_runtime.py"),
     Path(__file__).with_name("parser-runtime-contract.json"),
@@ -179,13 +186,19 @@ def run_file(
     result = "FAILED"
     identity_matched = False
     failure_layer = ""
+    failure_domain = ""
+    failure_code = ""
     env = build_runtime_manifest(lock_path)
     try:
         require_runtime(env)
+        if olefile is None or not hasattr(olefile, "OleFileIO"):
+            raise DependencyImportFailed("olefile import failed")
         data = file_path.read_bytes()
         actual_sha256 = sha256_bytes(data)
         if actual_sha256 != expected_sha256:
-            raise ValueError("input SHA-256 does not match baseline")
+            raise Sha256Mismatch("input SHA-256 does not match baseline")
+        if detect_magic(data) != "OLE_HWP":
+            raise MagicMismatch("input magic is not OLE/HWP")
         extracted = extract_hwp(data)
         normalized_text = normalize_identity(extracted)
         candidates = [regulation_name, *aliases]
@@ -196,13 +209,10 @@ def run_file(
         )
         result = "SUCCESS" if identity_matched else "IDENTITY_NOT_FOUND"
     except Exception as exc:
-        failure_layer = (
-            "RUNTIME"
-            if type(exc).__name__ == "RuntimeContractError"
-            else "INPUT_INTEGRITY"
-            if isinstance(exc, ValueError) and "SHA-256" in str(exc)
-            else "PARSER"
-        )
+        failure = classify_failure(exc)
+        failure_layer = failure.domain
+        failure_domain = failure.domain
+        failure_code = failure.code
         error_class = type(exc).__name__
         error_message = str(exc)
         full_stack_trace = sanitize_trace(traceback.format_exc(), redact_roots)
@@ -237,6 +247,8 @@ def run_file(
         "result": result,
         "identity_matched": identity_matched,
         "failure_layer": failure_layer,
+        "failure_domain": failure_domain,
+        "failure_code": failure_code,
         "error_class": error_class,
         "error_message": error_message,
         "full_stack_trace": full_stack_trace,

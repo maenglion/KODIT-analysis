@@ -13,7 +13,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
+import pdf_parser
 from parser_runtime import build_runtime_manifest, require_runtime, sanitize_trace
+from failure_taxonomy import (
+    DependencyImportFailed,
+    MagicMismatch,
+    Sha256Mismatch,
+    classify_failure,
+)
 from pdf_parser import (
     PARSER_ENGINE,
     PARSER_NAME,
@@ -25,6 +32,7 @@ from pdf_parser import (
 SOURCE_FILES = (
     Path(__file__),
     Path(__file__).with_name("pdf_parser.py"),
+    Path(__file__).with_name("failure_taxonomy.py"),
     Path(__file__).with_name("parser_runtime.py"),
     Path(__file__).with_name("parser-runtime-contract.json"),
 )
@@ -87,6 +95,8 @@ def run_file(
     extracted_text = ""
     result = "EXTRACTION_FAILED"
     failure_layer = ""
+    failure_domain = ""
+    failure_code = ""
     error_class = ""
     error_message = ""
     full_stack_trace = ""
@@ -103,25 +113,30 @@ def run_file(
     environment = build_runtime_manifest(lock_path)
     try:
         require_runtime(environment)
+        if pdf_parser.PdfReader is None:
+            raise DependencyImportFailed("pypdf import failed")
         data = file_path.read_bytes()
         if sha256_bytes(data) != expected_sha256:
-            raise ValueError("input SHA-256 does not match baseline")
+            raise Sha256Mismatch("input SHA-256 does not match baseline")
+        if detect_magic(data) != "PDF":
+            raise MagicMismatch("input magic is not PDF")
         parsed = parse_pdf_bytes(data)
         result = parsed["result"]
         extracted_text = parsed.pop("extracted_text")
         metrics.update(parsed)
         metrics.pop("result", None)
     except Exception as exc:
-        failure_layer = (
-            "RUNTIME"
-            if type(exc).__name__ == "RuntimeContractError"
-            else "INPUT_INTEGRITY"
-            if isinstance(exc, ValueError) and "SHA-256" in str(exc)
-            else "PARSER"
-        )
+        failure = classify_failure(exc)
+        failure_layer = failure.domain
+        failure_domain = failure.domain
+        failure_code = failure.code
         error_class = type(exc).__name__
         error_message = str(exc)
         full_stack_trace = sanitize_trace(traceback.format_exc(), redact_roots)
+
+    else:
+        failure_domain = ""
+        failure_code = ""
 
     finished = datetime.now(timezone.utc)
     engine_version = next(
@@ -152,6 +167,8 @@ def run_file(
         "finished_at": finished.isoformat(),
         "result": result,
         "failure_layer": failure_layer,
+        "failure_domain": failure_domain,
+        "failure_code": failure_code,
         "error_class": error_class,
         "error_message": error_message,
         "full_stack_trace": full_stack_trace,

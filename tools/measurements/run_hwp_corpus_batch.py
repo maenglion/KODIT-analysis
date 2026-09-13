@@ -84,10 +84,13 @@ def main() -> int:
     parser.add_argument("--rule-mentions", required=True, type=Path)
     parser.add_argument("--alio-rules", required=True, type=Path)
     parser.add_argument("--lock-file", required=True, type=Path)
+    parser.add_argument("--previous-batch", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
     corpus = json.loads(args.corpus_measurement.read_text(encoding="utf-8"))
+    previous = json.loads(args.previous_batch.read_text(encoding="utf-8"))
+    previous_by_path = {row["relative_path"]: row for row in previous["results"]}
     items = [row for row in corpus["files"] if row["detected_magic"] == "OLE_HWP"]
     if len(items) != 326:
         raise ValueError(f"strict OLE/HWP population must be 326, received {len(items)}")
@@ -158,6 +161,19 @@ def main() -> int:
             }
         )
 
+    previous_mismatches = []
+    for row in results:
+        old = previous_by_path.get(row["relative_path"])
+        changed = [] if old else ["MISSING_BASELINE"]
+        if old:
+            if old["classification"] != row["classification"]:
+                changed.append("classification")
+            for key in ("result", "extract_hash"):
+                if old["attempts"][0][key] != row["attempts"][0][key]:
+                    changed.append(key)
+        if changed:
+            previous_mismatches.append({"relative_path": row["relative_path"], "changed_fields": changed})
+
     counts = Counter(row["classification"] for row in results)
     failure_signatures = Counter(
         f"{attempt['error_class']}:{attempt['error_message']}"
@@ -179,6 +195,8 @@ def main() -> int:
         guardrails.append("NEW_FAILURE_SIGNATURE")
     if code_dirty is not False:
         guardrails.append("BATCH_RUNNER_CODE_DIRTY_OR_UNKNOWN")
+    if previous_mismatches:
+        guardrails.append("PREVIOUS_RESULT_MISMATCH")
 
     output = {
         "batch_run_id": batch_run_id,
@@ -198,6 +216,7 @@ def main() -> int:
             "rule_mentions": sha256_file(args.rule_mentions),
             "alio_rules": sha256_file(args.alio_rules),
             "dependency_lock": sha256_file(args.lock_file),
+            "previous_batch": sha256_file(args.previous_batch),
         },
         "identity_reference_found_count": sum(
             row["identity_reference_found"] for row in results
@@ -206,6 +225,10 @@ def main() -> int:
             not row["identity_reference_found"] for row in results
         ),
         "classification_counts": {name: counts[name] for name in CLASSIFICATIONS},
+        "previous_batch_run_id": previous["batch_run_id"],
+        "previous_classification_counts": previous["classification_counts"],
+        "previous_result_match": not previous_mismatches,
+        "previous_comparison_mismatches": previous_mismatches,
         "failure_signature_counts": dict(sorted(failure_signatures.items())),
         "extract_hash_reproducibility_anomaly_count": sum(
             not row["deterministic"] for row in results
