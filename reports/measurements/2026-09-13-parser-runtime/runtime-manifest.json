@@ -1,0 +1,28 @@
+{
+  "manifest_type": "KODIT_PARSER_RUNTIME",
+  "generated_at": "2026-09-13T10:56:08.727589+00:00",
+  "contract_version": "1.0.0",
+  "python_implementation": "CPython",
+  "python_version": "3.13.7",
+  "os": "Windows",
+  "os_release": "11",
+  "architecture": "AMD64",
+  "dependencies": [
+    {
+      "name": "olefile",
+      "locked_version": "0.47",
+      "installed_version": "0.47"
+    },
+    {
+      "name": "pypdf",
+      "locked_version": "6.0.0",
+      "installed_version": "6.0.0"
+    }
+  ],
+  "dependency_lock_sha256": "e0fc6c69c1a6b4b81da2a9d51a63b0be9c3bac1b722f0a157e69fdb016bb2a51",
+  "runtime_contract_sha256": "891672208a04a008d18bccce2c0e4a9d821fa857a4cb700e781da863555ba684",
+  "runtime_manifest_sha256": "35bb4d18b3c88d39d0e25ed1e4035f4a10229c1e9fa5ac80e028c249caa7b5b8",
+  "environment_fingerprint": "e77e6a2dd79ef2342b80787149c451c7facbfccc6969393b5f07340e78ed6a64",
+  "runtime_contract_status": "SATISFIED",
+  "runtime_contract_violations": []
+}
