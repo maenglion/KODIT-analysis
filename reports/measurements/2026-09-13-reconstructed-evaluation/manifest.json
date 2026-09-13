@@ -1,0 +1,50 @@
+{
+  "artifact_type": "REGULATION_RECONSTRUCTED_EVALUATION",
+  "provenance": "RECONSTRUCTED_EVALUATION",
+  "methodology_version": "v0.5",
+  "evaluated_at": "2026-09-13T21:00:00+09:00",
+  "evidence_as_of": "2026-09-13",
+  "population_count": 1041,
+  "evaluable_count": 1039,
+  "status_counts": {
+    "FULLTEXT_PUBLIC": 203,
+    "NOTICE_ONLY": 831,
+    "SOURCE_UNKNOWN": 5,
+    "REEVALUATION_PENDING": 2
+  },
+  "changed_count": 182,
+  "identity_linkage_unresolved_count": 2,
+  "source_hashes": {
+    "legacyCsv": {
+      "path": "apps/public-site/data/review-20260908/regulations.csv",
+      "sha256": "f07c055b0a650cdea876fc74058834c1ab5bf98cb6ff3c1f63cc5fbfee6c9831"
+    },
+    "legacyManifest": {
+      "path": "apps/public-site/data/review-20260908/manifest.json",
+      "sha256": "b83404e60d2b9d3181946ffd91517d55c2a71f0bd824851d9a6592c89b8e837c"
+    },
+    "hwp": {
+      "path": "reports/measurements/2026-09-13-runtime-v1-reproduction/hwp/batch-run.json",
+      "sha256": "2f9b737515084d4fd9d78c9e72407394088dd5c40e6b6c27f50e28b94c97c6d0"
+    },
+    "hwpx": {
+      "path": "reports/measurements/2026-09-13-runtime-v1-reproduction/hwpx/batch-run.json",
+      "sha256": "a73e231d1544d11620cc01d7e6730b985cf170dd873039732a9be1363d512df9"
+    },
+    "pdf": {
+      "path": "reports/measurements/2026-09-13-pdf-full-corpus/batch-run.json",
+      "sha256": "15730562df6d43f917c88aabd15b2c234d2a7f6517aae7d745862af2904fc8b4"
+    }
+  },
+  "safeguards": {
+    "legacy_snapshot_modified": false,
+    "database_modified": false,
+    "filename_only_identity_used": false,
+    "extraction_failure_lowers_availability": false,
+    "confidence_derived": false
+  },
+  "output_hashes": {
+    "reconstructed-evaluation.json": "cb4857337ac1761161a8b54d8db58a7185d97dabe8efbb57ecd599ca1e24c7b7",
+    "comparison-with-v04.csv": "435de52ea3adc0fca3dd6956fd4a79ad64cfef7b060f3066417eecf5a65f0d9b"
+  }
+}

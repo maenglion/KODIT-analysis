@@ -40,6 +40,8 @@ outputs/
 !apps/public-site/data/**/
 !apps/public-site/data/review-20260908/regulations.csv
 !apps/public-site/data/review-20260908/unpublished-unknown.csv
+!apps/public-site/data/review-20260913-reconstructed/
+!apps/public-site/data/review-20260913-reconstructed/regulations.csv
 *.tsv
 *.parquet
 *.hwp
