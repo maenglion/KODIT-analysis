@@ -20,10 +20,12 @@
 - 같은 extractor의 본문 추출 성공
 
 따라서 표본에서는 `FORMAT_MISMATCH`, `DOWNLOAD_OR_FILE_CORRUPTION`,
-`DRM_OR_UNSUPPORTED`가 지지되지 않는다. 현재 가장 강한 분류는
-`PARSER_CODE_BUG`이며, 정확히는 **실행환경·dependency loading 상태를 고정하지 않고
-예외의 클래스명만 저장해 원래 AttributeError의 발생 지점을 소실한 진단·provenance 결함**이다.
-원래 실패의 세부 원인은 전체 stack trace가 저장되지 않아 소급 확정할 수 없다.
+`DRM_OR_UNSUPPORTED`가 지지되지 않는다. 잠정 분류는
+`HISTORICAL_PARSER_EXECUTION_FAILURE / EXECUTION_PROVENANCE_GAP`이다. 파일 자체보다
+과거 실행환경·dependency 조합·호출경로 또는 일시적인 runtime 조건이 원인일 가능성이
+남아 있지만, 현재 동일 계열 extractor에서 실패가 재현되지 않았다. 실행환경을 고정하지
+않고 예외의 클래스명만 저장해 원래 AttributeError의 발생 지점을 소실한 것이 확인 가능한
+결함이며, 원래 실패의 세부 원인은 전체 stack trace가 없어 소급 확정할 수 없다.
 
 이 결과만으로 182건 전체가 현재 parser에서 성공한다고 단정하지 않는다. 다음 단계는
 parser/runtime metadata와 전체 stack trace를 보존하는 새 실행기로 10~20건 canary를
