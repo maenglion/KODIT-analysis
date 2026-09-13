@@ -21,6 +21,11 @@ All ten failures are `DOCUMENT/PDF_READ_FAILED`. Non-failure outcomes have empty
 failure taxonomy fields. No OCR, identity evaluation, download retry, or state
 transition was performed.
 
+These ten failures belong to this runtime-v1 full-corpus run. They are distinct
+from both the single `DOCUMENT/PDF_READ_FAILED` in the 12-file runtime-v1
+re-canary and the ten legacy `pdf_error:PdfReadError` observations. Equal counts
+across ledgers do not merge their execution provenance.
+
 ## Metric distributions
 
 These values are observations, not classification thresholds.
@@ -47,11 +52,13 @@ These values are observations, not classification thresholds.
 ## Interpretation boundary
 
 This ledger describes individual PDF representations only. A PDF outcome does
-not directly determine a regulation version's availability or confidence. When
-official PDF/HWP/HWPX attachments are verified as equivalent representations,
-verified full text from any one member can satisfy the regulation-version
-full-text gate. Therefore `NO_EXTRACTABLE_TEXT` and `EXTRACTION_FAILED` here do
-not reduce publication status and do not create residuals or human-review work.
+not directly determine a regulation version's availability or confidence.
+Equivalence is not a prerequisite for availability: one verified official PDF,
+HWP, HWPX, or official HTML body can independently satisfy the regulation-version
+full-text gate. Equivalence grouping is a later operation for organizing sibling
+representations and deciding whether technical work such as OCR is useful.
+Therefore `NO_EXTRACTABLE_TEXT` and `EXTRACTION_FAILED` here do not reduce
+publication status and do not create residuals or human-review work.
 
 No Supabase, publication status, confidence, residual, OCR, re-collection,
 human trigger, production dispatcher, Ollama, or Discord operation occurred.
