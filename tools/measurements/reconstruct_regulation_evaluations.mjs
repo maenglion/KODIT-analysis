@@ -136,7 +136,7 @@ const evaluations = legacyRows.map((legacy) => {
   if (/^https?:\/\//.test(legacy.official_url)) evidenceRefs.push({ evidence_type: "OFFICIAL_URL", url: legacy.official_url });
 
   return {
-    evaluation_id: crypto.randomUUID(),
+    evaluation_id: `reconstructed-v05-${legacy.regulation_code}`,
     regulation_code: legacy.regulation_code,
     regulation_name: legacy.regulation_name,
     provenance: "RECONSTRUCTED_EVALUATION",
@@ -199,7 +199,7 @@ assert.deepEqual(counts, { FULLTEXT_PUBLIC: 203, NOTICE_ONLY: 831, SOURCE_UNKNOW
 assert.equal(changedCount, 182);
 
 const evaluationText = JSON.stringify({
-  evaluation_run_id: crypto.randomUUID(), provenance: "RECONSTRUCTED_EVALUATION", methodology_version: "v0.5",
+  evaluation_run_id: "reconstructed-v05-20260913", provenance: "RECONSTRUCTED_EVALUATION", methodology_version: "v0.5",
   evaluated_at: EVALUATED_AT, evidence_as_of: "2026-09-13", population_count: evaluations.length,
   evaluable_count: evaluations.length - counts.REEVALUATION_PENDING, status_counts: counts,
   changed_count: changedCount, unresolved_count: unresolvedCount, evaluations,
@@ -220,6 +220,8 @@ const manifest = {
   methodology_version: "v0.5",
   evaluated_at: EVALUATED_AT,
   evidence_as_of: "2026-09-13",
+  source_data_as_of: "2026-09-08",
+  source_collection_completed_at: legacyManifest.finished_at,
   population_count: evaluations.length,
   evaluable_count: evaluations.length - counts.REEVALUATION_PENDING,
   status_counts: counts,

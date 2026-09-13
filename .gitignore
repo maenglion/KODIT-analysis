@@ -42,6 +42,7 @@ outputs/
 !apps/public-site/data/review-20260908/unpublished-unknown.csv
 !apps/public-site/data/review-20260913-reconstructed/
 !apps/public-site/data/review-20260913-reconstructed/regulations.csv
+!reports/measurements/2026-09-13-reconstructed-evaluation/comparison-with-v04.csv
 *.tsv
 *.parquet
 *.hwp

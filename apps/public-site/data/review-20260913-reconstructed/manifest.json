@@ -4,6 +4,8 @@
   "methodology_version": "v0.5",
   "evaluated_at": "2026-09-13T21:00:00+09:00",
   "evidence_as_of": "2026-09-13",
+  "source_data_as_of": "2026-09-08",
+  "source_collection_completed_at": "2026-09-08T19:20:45.551994+09:00",
   "population_count": 1041,
   "evaluable_count": 1039,
   "status_counts": {

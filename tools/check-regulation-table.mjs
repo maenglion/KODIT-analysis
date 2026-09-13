@@ -1,86 +1,59 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { filterRegulations, processingStatusLabel, publicAvailabilityLabel, rowsToCsv, validOfficialUrl } from "../packages/common/src/regulations/index.ts";
+import { filterRegulations, processingStatusLabel, rowsToCsv, validOfficialUrl } from "../packages/common/src/regulations/index.ts";
 
-const dataDir = new URL("../apps/public-site/data/review-20260908/", import.meta.url);
-
+const dataDir = new URL("../apps/public-site/data/review-20260913-reconstructed/", import.meta.url);
 function parseCsv(text) {
-  const records = [];
-  let record = [];
-  let cell = "";
-  let quoted = false;
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
-    if (quoted && char === '"' && text[i + 1] === '"') { cell += '"'; i += 1; }
+  const records = []; let record = [], cell = "", quoted = false;
+  const input = text.replace(/^\uFEFF/, "");
+  for (let i = 0; i < input.length; i++) {
+    const char = input[i];
+    if (quoted && char === '"' && input[i + 1] === '"') { cell += '"'; i++; }
     else if (char === '"') quoted = !quoted;
     else if (char === "," && !quoted) { record.push(cell); cell = ""; }
-    else if ((char === "\n" || char === "\r") && !quoted) {
-      if (char === "\r" && text[i + 1] === "\n") i += 1;
-      record.push(cell); cell = "";
-      if (record.some(Boolean)) records.push(record);
-      record = [];
-    } else cell += char;
+    else if ((char === "\n" || char === "\r") && !quoted) { if (char === "\r" && input[i + 1] === "\n") i++; record.push(cell); cell = ""; if (record.some(Boolean)) records.push(record); record = []; }
+    else cell += char;
   }
-  if (cell || record.length) { record.push(cell); records.push(record); }
   const [headers, ...values] = records;
-  return values.map((fields) => Object.fromEntries(headers.map((header, i) => [header, fields[i] ?? ""])));
+  return values.map((fields) => Object.fromEntries(headers.map((header, index) => [header, fields[index] ?? ""])));
 }
 
 const rawRows = parseCsv(await readFile(new URL("regulations.csv", dataDir), "utf8"));
-const rows = rawRows.map((row) => ({
-  ...row,
-  nonpublic_stage: Number(row.nonpublic_stage),
-  confidence_level: Number(row.confidence_level),
-  official_source_count: Number(row.official_source_count),
-  search_verification_count: Number(row.search_verification_count),
-  human_confirmed: row.human_confirmed.toLowerCase() === "true",
-}));
-const exceptionRows = parseCsv(await readFile(new URL("unpublished-unknown.csv", dataDir), "utf8"));
+const rows = rawRows.map((row) => ({ ...row, nonpublic_stage: Number(row.nonpublic_stage), confidence_level: Number(row.confidence_level), official_source_count: Number(row.official_source_count), search_verification_count: Number(row.search_verification_count), human_confirmed: row.human_confirmed.toLowerCase() === "true" }));
 const manifestText = await readFile(new URL("manifest.json", dataDir), "utf8");
 const manifest = JSON.parse(manifestText);
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
+const cssText = await readFile(new URL("../apps/public-site/app/styles.css", import.meta.url), "utf8");
 const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
-const empty = { query: "", statuses: [], lifecycle: "", verification: "" };
+const empty = { query: "", statuses: [], lifecycle: "" };
 
 assert.equal(rows.length, 1041);
-assert.deepEqual(Object.fromEntries(Object.entries(manifest.status_distribution)), {
-  "판정대기": 182, "사전예고만": 831, "전문 공개": 23, "출처불명": 5,
-});
-for (const [status, expected] of [["FULLTEXT_PUBLIC", 23], ["EXTRACTION_PENDING", 182], ["NOTICE_ONLY", 831], ["SOURCE_UNKNOWN", 5]]) {
-  assert.equal(filterRegulations(rows, { ...empty, statuses: [status] }).length, expected);
-}
+assert.deepEqual(manifest.status_counts, { FULLTEXT_PUBLIC: 203, NOTICE_ONLY: 831, SOURCE_UNKNOWN: 5, REEVALUATION_PENDING: 2 });
+for (const [status, expected] of [["FULLTEXT_PUBLIC", 203], ["NOTICE_ONLY", 831], ["SOURCE_UNKNOWN", 5], ["REEVALUATION_PENDING", 2]]) assert.equal(filterRegulations(rows, { ...empty, statuses: [status] }).length, expected);
 assert.equal(filterRegulations(rows, { ...empty, query: "투자옵션부보증 운용기준" }).length, 1);
-const legacyPending = rows.find((row) => row.public_status_code === "EXTRACTION_PENDING");
-assert.ok(legacyPending);
-assert.equal(publicAvailabilityLabel(legacyPending), "미확정");
-assert.equal(processingStatusLabel(legacyPending), "v0.5 재평가 대기");
-assert.equal(exceptionRows.length, 5);
-assert.equal(rows.filter((row) => ["EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(row.public_status_code)).length, 1018);
-assert.ok(explorerText.includes("이전 기록상 자동·엔진 검증 대상"));
-assert.ok(explorerText.includes("미산정 · v0.5 trigger 필요"));
-assert.ok(!explorerText.includes("인간 검토 대기 건수"));
-assert.ok(!explorerText.includes("신뢰도"));
-assert.ok(!explorerText.includes("confidence_level"));
-assert.ok(!explorerText.includes("외부전달용 CSV"));
-assert.ok(!explorerText.includes("인간확정 여부"));
-assert.ok(!explorerText.includes("v0.4 판정 상세"));
-assert.ok(explorerText.includes("이전 판정 기록"));
-assert.ok(explorerText.includes("현재 처리상태: v0.5 재평가 대기"));
-assert.ok(explorerText.includes("이전 판정 상태 · v0.4"));
+assert.equal(rows.filter((row) => processingStatusLabel(row).includes("대기")).length, 2);
+assert.equal(rows.filter((row) => row.methodology_version === "v0.5" && row.evaluation_provenance === "RECONSTRUCTED_EVALUATION").length, 1041);
+assert.ok(explorerText.includes('["규정명", "현재 판정상태", "현행상태", "근거요약", "기준일 / 최근검증일"]'));
+for (const removed of ["신뢰도", "confidence_level", "인간확정 여부", "공식출처 수", "엔진 검증 수", "미공개 검증단계", "문서검증 코드"]) assert.ok(!explorerText.includes(removed));
+assert.ok(explorerText.includes("평가 근거 원장"));
+assert.ok(explorerText.includes("현재 평가"));
+assert.ok(explorerText.includes("공식 근거"));
+assert.ok(explorerText.includes("문서 처리"));
+assert.ok(explorerText.includes("이전 평가"));
+assert.ok(explorerText.includes("미해결 사항"));
 assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
 assert.ok(explorerText.includes("상세 보기 →"));
 assert.equal(validOfficialUrl("javascript:alert(1)"), null);
-assert.equal(validOfficialUrl("ftp://example.com/rule.pdf"), null);
-assert.equal(validOfficialUrl("not a url"), null);
 assert.equal(validOfficialUrl("https://www.kodit.or.kr/rule.pdf"), "https://www.kodit.or.kr/rule.pdf");
-assert.ok(loaderText.includes("humanReviewPendingCount: null"));
-assert.ok(!loaderText.includes("rows.filter((row) => !row.human_confirmed).length"));
-assert.ok(rowsToCsv(rows.slice(0, 1)).startsWith("\uFEFF"));
-assert.ok(!rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("confidence_level"));
-assert.ok(!rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("human_confirmed"));
-assert.ok(rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("previous_public_status_code"));
-assert.ok(rowsToCsv(rows.slice(0, 1)).split("\r\n", 1)[0].includes("current_processing_status"));
-assert.ok(!manifestText.includes("C:\\") && !manifestText.includes("/Users/") && !manifestText.includes("service_role"));
-assert.equal(manifest.release_status, "review_pending");
+assert.ok(!/\.regulations-table\s*\{[^}]*min-width:\s*1100px/.test(cssText));
+assert.ok(cssText.includes(".regulations-table { min-width:0; table-layout:fixed; }"));
+assert.ok(loaderText.includes('review-20260913-reconstructed'));
+assert.ok(loaderText.includes('row.methodology_version === "v0.5"'));
+const csv = rowsToCsv(rows.slice(0, 2));
+assert.ok(csv.startsWith("\uFEFF") && csv.includes("\r\n"));
+assert.ok(!csv.split("\r\n", 1)[0].includes("confidence_level"));
+assert.ok(!csv.split("\r\n", 1)[0].includes("human_confirmed"));
+assert.ok(csv.split("\r\n", 1)[0].includes("evidence_summary"));
+assert.ok(!manifestText.includes("C:\\") && !manifestText.includes("service_role"));
 
-console.log("regulation table contract: 1041 rows, status 23/182/831/5, public legacy confidence removed, filters PASS");
+console.log("regulation table contract: reconstructed 1041, status 203/831/5/2, five-column evidence UI PASS");

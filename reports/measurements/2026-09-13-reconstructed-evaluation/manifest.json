@@ -4,6 +4,8 @@
   "methodology_version": "v0.5",
   "evaluated_at": "2026-09-13T21:00:00+09:00",
   "evidence_as_of": "2026-09-13",
+  "source_data_as_of": "2026-09-08",
+  "source_collection_completed_at": "2026-09-08T19:20:45.551994+09:00",
   "population_count": 1041,
   "evaluable_count": 1039,
   "status_counts": {
@@ -44,7 +46,7 @@
     "confidence_derived": false
   },
   "output_hashes": {
-    "reconstructed-evaluation.json": "cb4857337ac1761161a8b54d8db58a7185d97dabe8efbb57ecd599ca1e24c7b7",
+    "reconstructed-evaluation.json": "c44ab6352141851266cdf5980c5a668332adcb9a7c3ebe5cd5d501f4607dc41d",
     "comparison-with-v04.csv": "435de52ea3adc0fca3dd6956fd4a79ad64cfef7b060f3066417eecf5a65f0d9b"
   }
 }

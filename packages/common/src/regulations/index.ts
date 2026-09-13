@@ -24,13 +24,25 @@ export type RegulationRow = {
   legacy_0831_status: string;
   methodology_version: string;
   release_status: string;
+  evaluation_provenance?: string;
+  evaluated_at?: string;
+  evidence_as_of?: string;
+  processing_status?: string;
+  evidence_summary?: string;
+  unresolved_reason?: string;
+  evidence_refs_json?: string;
+  representations_json?: string;
+  previous_public_status_code?: string;
+  previous_public_status_label?: string;
+  previous_decision_reason_code?: string;
+  previous_decision_reason?: string;
+  previous_evaluation_date?: string;
 };
 
 export type RegulationFilters = {
   query: string;
   statuses: string[];
   lifecycle: string;
-  verification: string;
 };
 
 export type ApprovedRegulationRow = RegulationRow & {
@@ -79,7 +91,7 @@ export async function resolveRegulationDataset(
   }
 }
 
-export const statusOrder = ["FULLTEXT_PUBLIC", "EXTRACTION_PENDING", "NOTICE_ONLY", "SOURCE_UNKNOWN"];
+export const statusOrder = ["FULLTEXT_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN", "REEVALUATION_PENDING"];
 
 export function isLegacyRegulationRow(row: RegulationRow) {
   return row.methodology_version === "v0.4" || row.methodology_version === "legacy_methodology";
@@ -92,7 +104,8 @@ export function publicAvailabilityLabel(row: RegulationRow) {
 }
 
 export function processingStatusLabel(row: RegulationRow) {
-  return isLegacyRegulationRow(row) ? "v0.5 재평가 대기" : "평가 완료";
+  if (isLegacyRegulationRow(row) || row.processing_status === "REEVALUATION_PENDING") return "v0.5 재평가 대기";
+  return "재구성 평가 완료";
 }
 
 export function filterRegulations(rows: RegulationRow[], filters: RegulationFilters) {
@@ -100,8 +113,7 @@ export function filterRegulations(rows: RegulationRow[], filters: RegulationFilt
   return rows.filter((row) =>
     (!query || row.regulation_name.toLocaleLowerCase("ko-KR").includes(query)) &&
     (!filters.statuses.length || filters.statuses.includes(row.public_status_code)) &&
-    (!filters.lifecycle || row.lifecycle_code === filters.lifecycle) &&
-    (!filters.verification || row.document_verification_code === filters.verification)
+    (!filters.lifecycle || row.lifecycle_code === filters.lifecycle)
   );
 }
 
@@ -118,17 +130,14 @@ const publicDownloadColumns: [string, (row: RegulationRow) => unknown][] = [
   ["regulation_code", (row) => row.regulation_code],
   ["regulation_name", (row) => row.regulation_name],
   ["normalized_name", (row) => row.normalized_name],
-  ["previous_public_status_code", (row) => row.public_status_code],
-  ["previous_public_status_label", (row) => row.public_status_label],
+  ["public_status_code", (row) => row.public_status_code],
+  ["public_status_label", (row) => row.public_status_label],
   ["current_processing_status", processingStatusLabel],
   ["lifecycle_code", (row) => row.lifecycle_code],
-  ["previous_document_verification_code", (row) => row.document_verification_code],
-  ["previous_nonpublic_stage", (row) => row.nonpublic_stage],
   ["primary_claim", (row) => row.primary_claim],
-  ["previous_decision_reason_code", (row) => row.decision_reason_code],
-  ["previous_decision_reason", (row) => row.decision_reason],
-  ["official_source_count", (row) => row.official_source_count],
-  ["search_verification_count", (row) => row.search_verification_count],
+  ["decision_reason_code", (row) => row.decision_reason_code],
+  ["decision_reason", (row) => row.decision_reason],
+  ["evidence_summary", (row) => row.evidence_summary],
   ["last_collected_at", (row) => row.last_collected_at],
   ["last_verified_at", (row) => row.last_verified_at],
   ["official_url", (row) => row.official_url],
@@ -138,6 +147,14 @@ const publicDownloadColumns: [string, (row: RegulationRow) => unknown][] = [
   ["legacy_0811_status", (row) => row.legacy_0811_status],
   ["legacy_0831_status", (row) => row.legacy_0831_status],
   ["methodology_version", (row) => row.methodology_version],
+  ["evaluation_provenance", (row) => row.evaluation_provenance],
+  ["evaluated_at", (row) => row.evaluated_at],
+  ["evidence_as_of", (row) => row.evidence_as_of],
+  ["unresolved_reason", (row) => row.unresolved_reason],
+  ["previous_public_status_code", (row) => row.previous_public_status_code],
+  ["previous_public_status_label", (row) => row.previous_public_status_label],
+  ["previous_decision_reason_code", (row) => row.previous_decision_reason_code],
+  ["previous_decision_reason", (row) => row.previous_decision_reason],
   ["release_status", (row) => row.release_status],
 ];
 

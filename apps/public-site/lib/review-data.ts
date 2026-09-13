@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { resolveRegulationDataset, type ApprovedRegulationRow, type ApprovedReleasePayload, type RegulationRow } from "@kodit/common/regulations";
 
-const dataDir = path.join(process.cwd(), "data", "review-20260908");
+const dataDir = path.join(process.cwd(), "data", "review-20260913-reconstructed");
 
 type CollectionState = {
   last_checked_at: string | null;
@@ -63,7 +63,7 @@ async function getCollectionState(): Promise<CollectionState | null> {
 async function getApprovedRelease(): Promise<ApprovedReleasePayload | null> {
   const rawRows = await getAllPublicRegulationRows();
   const rows = rawRows
-    .filter((row) => typeof row.release_id === "string" && typeof row.release_as_of_date === "string" && row.release_status === "published")
+    .filter((row) => typeof row.release_id === "string" && typeof row.release_as_of_date === "string" && row.release_status === "published" && row.methodology_version === "v0.5" && row.evaluation_provenance === "RECONSTRUCTED_EVALUATION")
     .map((row) => coerce(row as Record<string, string>) as ApprovedRegulationRow);
   if (!rows.length) return null;
   const releaseId = rows[0].release_id;
@@ -115,19 +115,19 @@ export async function getReviewDataset() {
   ]);
   const matrix = parseCsv(csv); const headers = matrix.shift() ?? [];
   const fallbackRows = matrix.map((values) => coerce(Object.fromEntries(headers.map((key, index) => [key, values[index] ?? ""]))));
-  const manifest = JSON.parse(manifestText) as { as_of?: string; started_at: string; finished_at: string; release_status: string; result_count: number };
+  const manifest = JSON.parse(manifestText) as { source_data_as_of: string; source_collection_completed_at: string; evaluated_at: string; release_status: string; result_count: number };
   if (manifest.release_status !== "review_pending" || manifest.result_count !== fallbackRows.length) throw new Error("review dataset contract mismatch");
   const selected = await resolveRegulationDataset(getApprovedRelease, fallbackRows, (error) => safeRpcWarning("approved_release", error));
   const rows = selected.rows;
-  const completed = new Date(manifest.finished_at); const next = new Date(completed); next.setDate(next.getDate() + 10);
+  const completed = new Date(manifest.source_collection_completed_at); const next = new Date(completed); next.setDate(next.getDate() + 10);
   const date = (value: Date | string) => new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(value));
   const statusLabels: Record<string, string> = { succeeded: "변경사항 수집 완료", no_change: "변경 없음", not_due: "수집 예정일 전 — 정상 생략", failed: "최근 실행 실패", running: "수집 실행 중", waiting: "실행 기록 없음" };
   const recentStatus = collectionState?.recent_status ?? "waiting";
   return {
     rows,
     manifest: {
-      asOf: date(selected.asOf ?? manifest.as_of ?? manifest.started_at),
-      dataStatus: selected.source === "approved" ? "승인본" : "검토본 · DB 승인 전",
+      asOf: date(selected.asOf ?? manifest.source_data_as_of),
+      dataStatus: selected.source === "approved" ? "승인본" : "재구성 검토본 · DB 승인 전",
       releaseId: selected.releaseId ?? "승인 전",
       approvedAt: selected.approved ? date(selected.approved.approvedAt) : null,
       snapshotRowCount: selected.approved?.snapshotRowCount ?? null,
