@@ -125,6 +125,19 @@ def git_value(args: list[str], fallback: str = "UNKNOWN") -> str:
         return fallback
 
 
+def parser_code_dirty() -> bool | None:
+    try:
+        result = subprocess.run(
+            ["git", "diff", "--quiet", "HEAD", "--", str(Path(__file__).resolve())],
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        return result.returncode != 0
+    except Exception:
+        return None
+
+
 def dependency_lock_hash(lock_path: Path) -> str:
     return sha256_bytes(lock_path.read_bytes()) if lock_path.exists() else "UNKNOWN"
 
@@ -207,7 +220,7 @@ def run_file(
         "parser_engine": env["parser_engine"],
         "parser_engine_version": env["parser_engine_version"],
         "code_commit_sha": git_value(["rev-parse", "HEAD"]),
-        "code_worktree_dirty": bool(git_value(["status", "--porcelain"], "")),
+        "parser_code_dirty": parser_code_dirty(),
         "parser_source_sha256": sha256_bytes(Path(__file__).read_bytes()),
         "runtime_version": env["runtime_version"],
         "dependency_lock_hash": env["dependency_lock_hash"],
