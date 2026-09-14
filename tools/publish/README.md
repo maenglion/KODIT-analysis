@@ -2,6 +2,8 @@
 
 `project_v06_baseline.mjs` is the only implementation of the v0.6 baseline projection. It does not scrape, download, parse, or edit source artifacts.
 
+The baseline projection is implemented as a versioned `.mjs` module for the repository's Node ESM environment and reproducible execution on Windows.
+
 ## Fixed identity
 
 - UUIDv5 namespace: `71e07e7a-8e4e-569c-86cf-38cde51739a7`
@@ -30,6 +32,8 @@ The caller supplies `--evidence-root`; paths below that root are also fixed:
 - `alio_internal_rules.json`.
 
 No user-specific absolute path is stored in the manifest or database.
+
+`source_snapshot_hash` covers the complete `input_artifacts` array (`name`, logical `path`, and each file's SHA-256), ordered canonically by artifact name. The array is serialized as UTF-8 with recursively sorted object keys and stable array order, then hashed once with SHA-256.
 
 ## Deterministic joins
 
@@ -76,3 +80,12 @@ The versioned artifacts currently reproduce 1,041 rows, but two earlier lineage 
 - exact URL-to-SHA manifest linkage: 1,015/1,041, not 1,035/1,041.
 
 The official source URL itself is present for 1,035/1,041 rows. These differences are retained as measured coverage and are not repaired by inference.
+
+## Baseline correction
+
+`project_v06_baseline_correction.mjs` preserves the original baseline release and projects an approved correction release from the preserved 2,089-row notice artifact plus the two direct identity-resolution records. The correction uses the same collection-cycle UUID as the baseline, keeps every regulation row at `is_new=false` and `is_updated=false`, and moves the singleton current pointer only after all correction assertions pass.
+
+- canonical correction name: `kodit:v0.6:baseline-correction:2026-09-14`
+- correction release UUID: `47c5562f-b3be-5105-8e4f-dca2f56574f6`
+- preserved notice evidence date: `2026-08-31`
+- corrected notice range: 2,073 through 2,089, posted from `2026-08-04` through `2026-08-31`

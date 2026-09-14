@@ -1,0 +1,107 @@
+{
+  "artifact_type": "KODIT_V06_BASELINE_CORRECTION_PROJECTION",
+  "projection_implementation": "tools/publish/project_v06_baseline_correction.mjs",
+  "canonical_name": "kodit:v0.6:baseline-correction:2026-09-14",
+  "correction_release_id": "47c5562f-b3be-5105-8e4f-dca2f56574f6",
+  "baseline_release_id": "9a87d0c2-2901-5fc8-bceb-f068f02b697a",
+  "collection_cycle_id": "3773771c-af63-570a-ad4d-1fae255da383",
+  "notice_evidence_as_of": "2026-08-31",
+  "notice_scrape_collected_at": "2026-09-01T00:19:57+09:00",
+  "notice_posted_date_range": [
+    "2026-08-04",
+    "2026-08-31"
+  ],
+  "source_snapshot_hash": "0759bc9c6d99b818682c97f18c59e6664b3703b7d39360540041783f3069d80f",
+  "projection_hash": "537cab7c08ecffbc313f6d372e73ef90eaf4113d90074176ec969ff9705b0e06",
+  "input_artifacts": [
+    {
+      "name": "alioRules",
+      "path": "evidence-root:howareyou-sinbo-site/alio_internal_rules.json",
+      "sha256": "865c1b7e9eb2a52c64f43e68053799598c74dd8dd9149b23152f842f881fb16d"
+    },
+    {
+      "name": "baselineManifest",
+      "path": "repo:reports/projections/2026-09-14-v06-baseline/manifest.json",
+      "sha256": "1414ecd6397f78bf21a5a601e9a5e8f9fbfd8a78818b9d7f4416424a1779f43a"
+    },
+    {
+      "name": "correctedNotices",
+      "path": "evidence-root:.verify/preannouncement_rule_match_20260831/data/current_preannouncements_2089.json",
+      "sha256": "8636bc1e165bd081dce323884a7a2082791cd80d4b2f177ce0a7c066997fb9cf"
+    },
+    {
+      "name": "extractionManifest",
+      "path": "evidence-root:outputs/019fa475-b3fc-7522-934f-878c4256772a/07_첨부_SHA256_매니페스트.csv",
+      "sha256": "89dab27600a01fe183c87ddc836bbbe11faddece8e0e38e090679a19a6e6a6d3"
+    },
+    {
+      "name": "identityResolution",
+      "path": "repo:reports/projections/2026-09-14-v06-baseline-correction/identity-resolution.json",
+      "sha256": "64866a6604022f56ea1149ebdb4978cce3b112731aa92d4a2ff77e3ef9535f23"
+    },
+    {
+      "name": "noticeAnalysis",
+      "path": "evidence-root:.verify/preannouncement_rule_match_20260831/data/analysis_result.json",
+      "sha256": "7228603dc5df89a2332b941f59f24001396073b63d0e98a6c116be320fc1d9a3"
+    },
+    {
+      "name": "noticeScrapeManifest",
+      "path": "evidence-root:.verify/preannouncement_rule_match_20260831/source_snapshot/scrape_manifest.json",
+      "sha256": "717988e84e6ec0ff0839c3b12b49bab95feb2af885e75e9fcc84d52aa9306322"
+    },
+    {
+      "name": "priorNotices",
+      "path": "evidence-root:howareyou-sinbo-site/kodit_preannouncements.json",
+      "sha256": "4481ae65cdc84051f7d7b3580aac376d005edb8062c0071a01da61342a2d9996"
+    },
+    {
+      "name": "regulationsCsv",
+      "path": "repo:apps/public-site/data/review-20260913-reconstructed/regulations.csv",
+      "sha256": "7712c14b96a05219533baf41de6f1550debf400220bcc3d8f5990742f5a41835"
+    },
+    {
+      "name": "ruleMentions",
+      "path": "evidence-root:outputs/019fa475-b3fc-7522-934f-878c4256772a/06_게시물별_규정명_언급행_전체.csv",
+      "sha256": "dc6818d60918f6e110c367843cacb74b6fe9f342c25536e6ed2f083c7a7713c7"
+    }
+  ],
+  "corrections": {
+    "notices_added_to_snapshot": 17,
+    "omitted_post_numbers": [
+      "2073",
+      "2074",
+      "2075",
+      "2076",
+      "2077",
+      "2078",
+      "2079",
+      "2080",
+      "2081",
+      "2082",
+      "2083",
+      "2084",
+      "2085",
+      "2086",
+      "2087",
+      "2088",
+      "2089"
+    ],
+    "identity_resolved": [
+      "0b2d33b4c927be01",
+      "1310b99c022cc337"
+    ]
+  },
+  "expected": {
+    "regulations": 1041,
+    "notices": 2089,
+    "sources": 1035,
+    "changes": 0,
+    "is_new_or_updated": 0,
+    "availability": {
+      "FULLTEXT_PUBLIC": 205,
+      "NOTICE_ONLY": 831,
+      "SOURCE_UNKNOWN": 5,
+      "NULL": 0
+    }
+  }
+}
