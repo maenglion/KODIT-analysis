@@ -8,12 +8,10 @@ export const metadata: Metadata = {
 };
 
 const nav = [
-  ["홈", "/"],
   ["규정·법령", "/regulations"],
-  ["투자·보증", "/investment-guarantee"],
-  ["통계", "/statistics"],
-  ["기사·외부자료", "/articles"],
-  ["방법론·변경공지", "/methodology"],
+  ["부서별 통계", "/department-statistics"],
+  ["투자·보증 통계", "/investment-statistics"],
+  ["기술 스펙", "/technical-specs"],
 ];
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -29,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <header className="site-header">
           <div className="header-inner">
-            <Link className="brand" href="/" aria-label="KODIT 규정 아카이브 홈">
+            <Link className="brand" href="/regulations" aria-label="KODIT 규정 공개현황">
               <span className="brand-mark">K</span>
               <span><b>KODIT</b><small>규정 공개·검증 시스템</small></span>
             </Link>
@@ -39,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
         </header>
         {children}
-        <footer><span>KODIT 규정 공개·검증 시스템</span><span>출처·무결성·판정 근거를 함께 공개합니다.</span></footer>
+        <footer><span>KODIT 규정 공개현황</span><span>공개 결론과 공식 원문을 제공합니다.</span></footer>
       </body>
     </html>
   );

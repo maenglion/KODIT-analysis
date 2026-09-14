@@ -2,7 +2,7 @@ project_id = "kodit-analysis"
 
 [api]
 enabled = true
-schemas = ["api", "graphql_public"]
+schemas = ["api", "graphql_public", "publish"]
 extra_search_path = ["api", "extensions"]
 max_rows = 1000
 

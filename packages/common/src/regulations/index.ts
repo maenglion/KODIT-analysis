@@ -1,171 +1,82 @@
-export type RegulationRow = {
-  regulation_code: string;
-  regulation_name: string;
-  normalized_name: string;
-  public_status_code: string;
-  public_status_label: string;
-  lifecycle_code: string;
-  document_verification_code: string;
-  nonpublic_stage: number;
-  primary_claim: string;
-  confidence_level: number;
-  decision_reason_code: string;
-  decision_reason: string;
-  official_source_count: number;
-  search_verification_count: number;
-  human_confirmed: boolean;
-  last_collected_at: string;
-  last_verified_at: string;
-  official_url: string;
-  document_sha256: string;
-  document_format: string;
-  revision_date: string;
-  legacy_0811_status: string;
-  legacy_0831_status: string;
-  methodology_version: string;
-  release_status: string;
-  evaluation_provenance?: string;
-  evaluated_at?: string;
-  evidence_as_of?: string;
-  processing_status?: string;
-  evidence_summary?: string;
-  unresolved_reason?: string;
-  evidence_refs_json?: string;
-  representations_json?: string;
-  previous_public_status_code?: string;
-  previous_public_status_label?: string;
-  previous_decision_reason_code?: string;
-  previous_decision_reason?: string;
-  previous_evaluation_date?: string;
-};
-
-export type RegulationFilters = {
-  query: string;
-  statuses: string[];
-  lifecycle: string;
-};
-
-export type ApprovedRegulationRow = RegulationRow & {
+export type PublishRegulationRow = {
   release_id: string;
-  release_as_of_date: string;
+  regulation_version_id: string;
+  regulation_code: string;
+  display_name: string;
+  normalized_name: string;
+  availability: "FULLTEXT_PUBLIC" | "PARTIAL_PUBLIC" | "NOTICE_ONLY" | "SOURCE_UNKNOWN";
+  currentness: string;
+  revision_date: string | null;
+  notice_department: string | null;
+  official_source_available: boolean;
+  source_location: string | null;
+  partial_alio: boolean;
+  partial_kodit_page: boolean;
+  partial_attachment: boolean;
+  is_new: boolean;
+  is_updated: boolean;
 };
 
-export type ApprovedReleasePayload = {
-  rows: ApprovedRegulationRow[];
-  releaseId: string;
-  asOf: string;
-  approvedAt: string;
-  snapshotRowCount: number;
-  csvSha256: string | null;
+export type PublishNoticeRow = {
+  release_id: string;
+  notice_number: string;
+  title: string;
+  notice_department: string | null;
+  posted_date: string;
+  source_location: string;
+  linked_regulation_version_ids: string[];
 };
 
-export function chooseRegulationDataset(approvedRows: ApprovedRegulationRow[], fallbackRows: RegulationRow[]) {
-  if (approvedRows.length > 0) {
-    const first = approvedRows[0];
-    if (!first.release_id || !first.release_as_of_date || approvedRows.some((row) => row.release_id !== first.release_id)) {
-      throw new Error("approved release dataset contract mismatch");
-    }
-    return { rows: approvedRows as RegulationRow[], source: "approved" as const, releaseId: first.release_id, asOf: first.release_as_of_date };
-  }
-  return { rows: fallbackRows, source: "fallback" as const, releaseId: null, asOf: null };
+export type PublishReleaseMetadata = {
+  release_id: string;
+  release_type: string;
+  schema_version: string;
+  evidence_as_of: string;
+  generated_at: string;
+  source_snapshot_hash: string;
+  projection_hash: string;
+  population: number;
+};
+
+export type PublicRegulationFilters = {
+  query: string;
+  availability: PublishRegulationRow["availability"] | "ALL";
+  currentness: string;
+  partialType: "ALL" | "ALIO" | "KODIT_PAGE" | "ATTACHMENT";
+};
+
+export const availabilityOrder: PublishRegulationRow["availability"][] = ["FULLTEXT_PUBLIC", "PARTIAL_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN"];
+export const availabilityLabels: Record<PublishRegulationRow["availability"], string> = {
+  FULLTEXT_PUBLIC: "전문 공개", PARTIAL_PUBLIC: "일부 공개", NOTICE_ONLY: "사전예고만", SOURCE_UNKNOWN: "출처불명",
+};
+export const currentnessLabels: Record<string, string> = { current: "현행 확인", past: "과거", abolished: "폐지", merged: "통합", unknown: "미확인" };
+
+export function validPublicUrl(value: string | null | undefined) {
+  if (!value) return null;
+  try { const url = new URL(value); return url.protocol === "http:" || url.protocol === "https:" ? url.href : null; } catch { return null; }
 }
 
-export async function resolveRegulationDataset(
-  loadApproved: () => Promise<ApprovedReleasePayload | null>,
-  fallbackRows: RegulationRow[],
-  onFailure?: (error: unknown) => void,
-) {
-  try {
-    const approved = await loadApproved();
-    if (approved?.rows.length) {
-      const selected = chooseRegulationDataset(approved.rows, fallbackRows);
-      if (approved.releaseId !== selected.releaseId || approved.snapshotRowCount !== approved.rows.length) {
-        throw new Error("approved release metadata contract mismatch");
-      }
-      return { ...selected, approved, rpcFailed: false };
-    }
-    return { ...chooseRegulationDataset([], fallbackRows), approved: null, rpcFailed: false };
-  } catch (error) {
-    onFailure?.(error);
-    return { ...chooseRegulationDataset([], fallbackRows), approved: null, rpcFailed: true };
-  }
-}
-
-export const statusOrder = ["FULLTEXT_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN", "REEVALUATION_PENDING"];
-
-export function isLegacyRegulationRow(row: RegulationRow) {
-  return row.methodology_version === "v0.4" || row.methodology_version === "legacy_methodology";
-}
-
-export function publicAvailabilityLabel(row: RegulationRow) {
-  if (!isLegacyRegulationRow(row)) return row.public_status_label;
-  if (row.public_status_code === "EXTRACTION_PENDING") return "미확정";
-  return `이전 판정 · ${row.public_status_label}`;
-}
-
-export function processingStatusLabel(row: RegulationRow) {
-  if (isLegacyRegulationRow(row) || row.processing_status === "REEVALUATION_PENDING") return "v0.5 재평가 대기";
-  return "재구성 평가 완료";
-}
-
-export function filterRegulations(rows: RegulationRow[], filters: RegulationFilters) {
+export function filterPublishRegulations(rows: PublishRegulationRow[], filters: PublicRegulationFilters) {
   const query = filters.query.trim().toLocaleLowerCase("ko-KR");
-  return rows.filter((row) =>
-    (!query || row.regulation_name.toLocaleLowerCase("ko-KR").includes(query)) &&
-    (!filters.statuses.length || filters.statuses.includes(row.public_status_code)) &&
-    (!filters.lifecycle || row.lifecycle_code === filters.lifecycle)
-  );
+  return rows.filter((row) => {
+    if (query && !row.display_name.toLocaleLowerCase("ko-KR").includes(query)) return false;
+    if (filters.availability !== "ALL" && row.availability !== filters.availability) return false;
+    if (filters.currentness && row.currentness !== filters.currentness) return false;
+    if (filters.partialType === "ALIO" && !row.partial_alio) return false;
+    if (filters.partialType === "KODIT_PAGE" && !row.partial_kodit_page) return false;
+    if (filters.partialType === "ATTACHMENT" && !row.partial_attachment) return false;
+    return true;
+  });
 }
 
-export function validOfficialUrl(value: string) {
-  try {
-    const url = new URL(value);
-    return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
-  } catch {
-    return null;
-  }
-}
-
-const publicDownloadColumns: [string, (row: RegulationRow) => unknown][] = [
-  ["regulation_code", (row) => row.regulation_code],
-  ["regulation_name", (row) => row.regulation_name],
-  ["normalized_name", (row) => row.normalized_name],
-  ["public_status_code", (row) => row.public_status_code],
-  ["public_status_label", (row) => row.public_status_label],
-  ["current_processing_status", processingStatusLabel],
-  ["lifecycle_code", (row) => row.lifecycle_code],
-  ["primary_claim", (row) => row.primary_claim],
-  ["decision_reason_code", (row) => row.decision_reason_code],
-  ["decision_reason", (row) => row.decision_reason],
-  ["evidence_summary", (row) => row.evidence_summary],
-  ["last_collected_at", (row) => row.last_collected_at],
-  ["last_verified_at", (row) => row.last_verified_at],
-  ["official_url", (row) => row.official_url],
-  ["document_sha256", (row) => row.document_sha256],
-  ["document_format", (row) => row.document_format],
-  ["revision_date", (row) => row.revision_date],
-  ["legacy_0811_status", (row) => row.legacy_0811_status],
-  ["legacy_0831_status", (row) => row.legacy_0831_status],
-  ["methodology_version", (row) => row.methodology_version],
-  ["evaluation_provenance", (row) => row.evaluation_provenance],
-  ["evaluated_at", (row) => row.evaluated_at],
-  ["evidence_as_of", (row) => row.evidence_as_of],
-  ["unresolved_reason", (row) => row.unresolved_reason],
-  ["previous_public_status_code", (row) => row.previous_public_status_code],
-  ["previous_public_status_label", (row) => row.previous_public_status_label],
-  ["previous_decision_reason_code", (row) => row.previous_decision_reason_code],
-  ["previous_decision_reason", (row) => row.previous_decision_reason],
-  ["release_status", (row) => row.release_status],
+const downloadColumns: [string, (row: PublishRegulationRow) => unknown][] = [
+  ["regulation_code", (row) => row.regulation_code], ["regulation_name", (row) => row.display_name],
+  ["availability", (row) => row.availability], ["availability_label", (row) => availabilityLabels[row.availability]],
+  ["currentness", (row) => row.currentness], ["revision_date", (row) => row.revision_date],
+  ["notice_department", (row) => row.notice_department], ["official_source_url", (row) => row.source_location],
+  ["is_new", (row) => row.is_new], ["is_updated", (row) => row.is_updated],
 ];
-
-const csvCell = (value: unknown) => {
-  const text = String(value ?? "");
-  return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-};
-
-export function rowsToCsv(rows: RegulationRow[]) {
-  return "\uFEFF" + [
-    publicDownloadColumns.map(([label]) => label).join(","),
-    ...rows.map((row) => publicDownloadColumns.map(([, value]) => csvCell(value(row))).join(",")),
-  ].join("\r\n") + "\r\n";
+const csvCell = (value: unknown) => { const text = String(value ?? ""); return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text; };
+export function publishRowsToCsv(rows: PublishRegulationRow[]) {
+  return "\uFEFF" + [downloadColumns.map(([label]) => label).join(","), ...rows.map((row) => downloadColumns.map(([, value]) => csvCell(value(row))).join(","))].join("\r\n") + "\r\n";
 }

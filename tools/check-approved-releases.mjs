@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { chooseRegulationDataset, resolveRegulationDataset, rowsToCsv } from "../packages/common/src/regulations/index.ts";
+import { publishRowsToCsv } from "../packages/common/src/regulations/index.ts";
 
 const migration = fs.readFileSync("supabase/migrations/20260909000300_approved_regulation_releases.sql", "utf8");
 const workflow = fs.readFileSync(".github/workflows/publish-regulation-release.yml", "utf8");
@@ -23,45 +23,20 @@ assert.doesNotMatch(migration, /grant execute on function api\.publish_regulatio
 for (const input of ["release_id", "confirmation", "approval_note"]) assert.match(workflow, new RegExp(`${input}:`));
 assert.match(workflow, /test "\$CONFIRMATION" = "PUBLISH"/);
 assert.doesNotMatch(scheduleWorkflow, /publish_regulation_release|publish_release\.py/);
-assert.doesNotMatch(publicLoader, /KODIT_SUPABASE_SERVICE_ROLE_KEY|Authorization:/);
+assert.doesNotMatch(publicLoader, /KODIT_SUPABASE_SERVICE_ROLE_KEY|service_role/i);
 assert.match(publicLoader, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/);
-assert.match(publicLoader, /row\.release_status === "published"/);
-assert.match(publicLoader, /AbortSignal\.timeout\(5000\)/);
+assert.match(publicLoader, /"Content-Profile": "publish"/);
+assert.match(publicLoader, /AbortSignal\.timeout\(7000\)/);
 assert.match(publicLoader, /`\?limit=\$\{range\.to - range\.from \+ 1\}&offset=\$\{range\.from\}`/);
 assert.match(publicLoader, /const pageSize = 1000/);
-assert.match(publicLoader, /console\.warn\("\[regulations\] public RPC fallback"/);
+assert.match(publicLoader, /console\.warn\("\[publish\] public RPC unavailable"/);
 assert.doesNotMatch(publicLoader, /console\.(?:warn|error|log)\([^\n]*(?:config\.key|config\.url|SUPABASE_PUBLISHABLE)/i);
 
-const fallback = [{ regulation_code: "fallback" }];
-assert.equal(chooseRegulationDataset([], fallback).source, "fallback");
-assert.equal(chooseRegulationDataset([], fallback).rows, fallback);
-const approved = [{ regulation_code: "approved", release_id: "r1", release_as_of_date: "2026-09-08" }];
-assert.equal(chooseRegulationDataset(approved, fallback).source, "approved");
-assert.equal(chooseRegulationDataset(approved, fallback).rows, approved);
-assert.throws(() => chooseRegulationDataset([
-  { regulation_code: "a", release_id: "r1", release_as_of_date: "2026-09-08" },
-  { regulation_code: "b", release_id: "r2", release_as_of_date: "2026-09-08" },
-], fallback));
+const publicRow = { regulation_code: "approved", display_name: "승인 규정", availability: "FULLTEXT_PUBLIC", currentness: "unknown", revision_date: null, notice_department: null, source_location: "https://example.test/rule", is_new: false, is_updated: false };
+const publicCsv = publishRowsToCsv([publicRow]);
+assert.ok(publicCsv.startsWith("\uFEFF"));
+assert.ok(publicCsv.endsWith("\r\n"));
+assert.match(publicCsv, /승인 규정/);
+assert.doesNotMatch(publicCsv.split("\r\n", 1)[0], /confidence|human|sha256|provenance/i);
 
-const approvedPayload = {
-  rows: approved, releaseId: "r1", asOf: "2026-09-08", approvedAt: "2026-09-09T00:00:00Z",
-  snapshotRowCount: 1, csvSha256: "a".repeat(64),
-};
-const fromDb = await resolveRegulationDataset(async () => approvedPayload, fallback);
-assert.equal(fromDb.source, "approved");
-assert.match(rowsToCsv(fromDb.rows), /approved/);
-assert.doesNotMatch(rowsToCsv(fromDb.rows), /fallback/);
-const fromEmpty = await resolveRegulationDataset(async () => null, fallback);
-assert.equal(fromEmpty.source, "fallback");
-let failureObserved = false;
-const fromTimeout = await resolveRegulationDataset(async () => { throw new DOMException("timeout", "TimeoutError"); }, fallback, () => { failureObserved = true; });
-assert.equal(fromTimeout.source, "fallback");
-assert.equal(fromTimeout.rpcFailed, true);
-assert.equal(failureObserved, true);
-const fallbackCsv = rowsToCsv(fromTimeout.rows);
-assert.ok(fallbackCsv.startsWith("\uFEFF"));
-assert.ok(fallbackCsv.endsWith("\r\n"));
-assert.match(fallbackCsv, /fallback/);
-assert.doesNotMatch(fallbackCsv, /approved/);
-
-console.log("approved release contract: published/latest only, service-only approval, fallback/DB switching PASS");
+console.log("approved release contract: service-only legacy approval and publish read-model loader PASS");
