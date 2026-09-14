@@ -1,0 +1,110 @@
+{
+  "artifact_type": "KODIT_V06_BASELINE_PROJECTION",
+  "projection_implementation": "tools/publish/project_v06_baseline.mjs",
+  "namespace": "71e07e7a-8e4e-569c-86cf-38cde51739a7",
+  "canonical_name": "kodit:v0.6:baseline:2026-09-14",
+  "baseline_release_id": "9a87d0c2-2901-5fc8-bceb-f068f02b697a",
+  "baseline_collection_cycle_id": "3773771c-af63-570a-ad4d-1fae255da383",
+  "schema_version": "v0.6",
+  "evidence_as_of": "2026-09-13",
+  "generated_at": "2026-09-14T21:00:00+09:00",
+  "source_snapshot_hash": "1c697db7bb50c93df9db2db3f2adf65980d978f616e430ad99e140849d6673fa",
+  "projection_hash": "01be39b990ddcec9d765dfe9b0c39ac9206e75f5c27d80c61e30ac996e55ec94",
+  "input_artifacts": [
+    {
+      "name": "alioRules",
+      "path": "evidence-root:howareyou-sinbo-site/alio_internal_rules.json",
+      "sha256": "865c1b7e9eb2a52c64f43e68053799598c74dd8dd9149b23152f842f881fb16d"
+    },
+    {
+      "name": "drmMeasurements",
+      "path": "repo:reports/measurements/2026-09-13-other-corpus/classification.json",
+      "sha256": "c87bd22b1b35595a1fd7b2a29c1a1d4dabce26ea37b1f036c417dc8612cdc516"
+    },
+    {
+      "name": "extractionManifest",
+      "path": "evidence-root:outputs/019fa475-b3fc-7522-934f-878c4256772a/07_첨부_SHA256_매니페스트.csv",
+      "sha256": "89dab27600a01fe183c87ddc836bbbe11faddece8e0e38e090679a19a6e6a6d3"
+    },
+    {
+      "name": "hwpMeasurements",
+      "path": "repo:reports/measurements/2026-09-13-runtime-v1-reproduction/hwp/batch-run.json",
+      "sha256": "2f9b737515084d4fd9d78c9e72407394088dd5c40e6b6c27f50e28b94c97c6d0"
+    },
+    {
+      "name": "hwpxMeasurements",
+      "path": "repo:reports/measurements/2026-09-13-runtime-v1-reproduction/hwpx/batch-run.json",
+      "sha256": "a73e231d1544d11620cc01d7e6730b985cf170dd873039732a9be1363d512df9"
+    },
+    {
+      "name": "pdfMeasurements",
+      "path": "repo:reports/measurements/2026-09-13-pdf-full-corpus/batch-run.json",
+      "sha256": "15730562df6d43f917c88aabd15b2c234d2a7f6517aae7d745862af2904fc8b4"
+    },
+    {
+      "name": "preannouncements",
+      "path": "evidence-root:howareyou-sinbo-site/kodit_preannouncements.json",
+      "sha256": "4481ae65cdc84051f7d7b3580aac376d005edb8062c0071a01da61342a2d9996"
+    },
+    {
+      "name": "reconstructedManifest",
+      "path": "repo:apps/public-site/data/review-20260913-reconstructed/manifest.json",
+      "sha256": "1a2bc17b171c9822c3289196f0abe2bc084194d180f34d5f536a9154a44d88ed"
+    },
+    {
+      "name": "regulationsCsv",
+      "path": "repo:apps/public-site/data/review-20260913-reconstructed/regulations.csv",
+      "sha256": "7712c14b96a05219533baf41de6f1550debf400220bcc3d8f5990742f5a41835"
+    },
+    {
+      "name": "ruleMentions",
+      "path": "evidence-root:outputs/019fa475-b3fc-7522-934f-878c4256772a/06_게시물별_규정명_언급행_전체.csv",
+      "sha256": "dc6818d60918f6e110c367843cacb74b6fe9f342c25536e6ed2f083c7a7713c7"
+    }
+  ],
+  "spec_registry": [
+    {
+      "spec_code": "publish-schema",
+      "spec_version": "v0.6.0",
+      "artifact_path": "supabase/migrations/20260914000100_publish_read_model.sql",
+      "artifact_sha256": "3903f15dc5c2a0d245546dcfa2172d5ad00cb238b4b8bf7b0294b993e3621da5",
+      "effective_at": "2026-09-14T21:00:00+09:00"
+    },
+    {
+      "spec_code": "baseline-projection",
+      "spec_version": "v0.6.0",
+      "artifact_path": "tools/publish/project_v06_baseline.mjs",
+      "artifact_sha256": "d19fac13dc52bbadae8a2a1abc8315dbb6c82cde4a7c5c7f1a9d7ccdbcef5407",
+      "effective_at": "2026-09-14T21:00:00+09:00"
+    }
+  ],
+  "deterministic_joins": [
+    "regulation.normalized_name -> rule_mentions.normalized_rule_name -> post_number -> preannouncement.number",
+    "regulation.official_url -> extraction_manifest.download_url -> sha256/filename/source kind",
+    "extraction_manifest.sha256 -> parser measurement baseline_sha256 -> representation format",
+    "extraction_manifest.sha256 -> DRM measurement baseline_sha256 -> DRM classification"
+  ],
+  "source_exception_policy": "retain regulation row with source_location NULL; never infer SOURCE_UNKNOWN from the missing link",
+  "coverage": {
+    "regulations": 1041,
+    "source_location_non_null": 1035,
+    "source_location_null": 6,
+    "notice_department_non_null": 982,
+    "revision_date_non_null": 205,
+    "document_source_linkage": 1015,
+    "fulltext_source_linkage": 202,
+    "alio_inventory_linkage": 196,
+    "notice_inventory": 2072,
+    "notice_rows_with_regulation_links": 2034,
+    "regulation_changes": 0,
+    "partial_alio": 0,
+    "partial_kodit_page": 0,
+    "partial_attachment": 0,
+    "availability": {
+      "FULLTEXT_PUBLIC": 203,
+      "NOTICE_ONLY": 831,
+      "NULL": 2,
+      "SOURCE_UNKNOWN": 5
+    }
+  }
+}
