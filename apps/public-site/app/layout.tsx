@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
         </header>
         {children}
-        <footer><span>KODIT 규정 공개현황</span><span>공개 결론과 공식 원문을 제공합니다.</span></footer>
+        <footer><span>KODIT 규정 공개현황</span><span>Soulspectrum Inc. · nanyoung이 만들었습니다.</span></footer>
       </body>
     </html>
   );

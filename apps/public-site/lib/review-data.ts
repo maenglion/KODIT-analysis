@@ -1,5 +1,13 @@
 import "server-only";
-import type { PublishNoticeRow, PublishRegulationRow, PublishReleaseMetadata } from "@kodit/common/regulations";
+import type { PublicRegulationSourceRow, PublishNoticeRow, PublishRegulationRow, PublishReleaseMetadata } from "@kodit/common/regulations";
+
+type RawRegulationSourceRow = PublicRegulationSourceRow & {
+  document_sha256?: unknown;
+  representation_format?: unknown;
+  is_primary?: unknown;
+  fulltext_verified?: unknown;
+  drm_classification?: unknown;
+};
 
 function publicApiConfig() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -45,19 +53,21 @@ async function paged<T>(name: string) {
 }
 
 export async function getPublishDataset(): Promise<
-  | { available: true; release: PublishReleaseMetadata; rows: PublishRegulationRow[]; notices: PublishNoticeRow[] }
+  | { available: true; release: PublishReleaseMetadata; rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[] }
   | { available: false }
 > {
   try {
-    const [metadata, rows, notices] = await Promise.all([
+    const [metadata, rows, notices, rawSources] = await Promise.all([
       callPublishRpc<PublishReleaseMetadata[]>("public_release_metadata"),
       paged<PublishRegulationRow>("public_regulation_rows"),
       paged<PublishNoticeRow>("public_notice_rows"),
+      paged<RawRegulationSourceRow>("public_regulation_source_rows"),
     ]);
     const release = metadata[0];
     if (!release || rows.length !== release.population) throw new Error("publish_release_population_mismatch");
     if (rows.some((row) => row.release_id !== release.release_id) || notices.some((row) => row.release_id !== release.release_id)) throw new Error("publish_mixed_release_rows");
-    return { available: true, release, rows, notices };
+    const sources = rawSources.map(({ release_id, regulation_version_id, regulation_code, source_kind, evidence_role, source_location, attachment_name }) => ({ release_id, regulation_version_id, regulation_code, source_kind, evidence_role, source_location, attachment_name }));
+    return { available: true, release, rows, notices, sources };
   } catch (error) {
     safeWarning("publish_read_model", error);
     return { available: false };

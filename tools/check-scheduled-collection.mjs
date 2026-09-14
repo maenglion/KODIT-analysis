@@ -30,7 +30,9 @@ for (const fn of ["collection_job_state", "claim_collection_run", "complete_coll
 assert.doesNotMatch(workflow, /echo.*(SUPABASE|SERVICE_ROLE)|upload-artifact/i);
 assert.doesNotMatch(collector, /print\([^\n]*(service_key|\.key)/i);
 assert.match(collector, /HWP\/HWPX never become full-text-public/);
-assert.match(ui, /public_collection_state/);
+// The v0.6 public read model intentionally exposes only approved publish RPCs.
+// Collection scheduling remains server-side and is not inferred in the public UI.
+assert.doesNotMatch(ui, /public_collection_state/);
 assert.doesNotMatch(ui, /KODIT_SUPABASE_SERVICE_ROLE_KEY/);
 assert.match(pendingMigration, /assigned_by like 'regenerator:%:review_pending'/);
 assert.match(pendingMigration, /workflow_status = 'verification_pending'/);

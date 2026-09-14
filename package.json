@@ -11,6 +11,7 @@
     "check:schedule": "node tools/check-scheduled-collection.mjs",
     "check:approved": "node --experimental-strip-types tools/check-approved-releases.mjs",
     "check:reconstructed": "node tools/check-reconstructed-evaluation.mjs",
+    "check:technical-specs": "node tools/check-technical-specs.mjs",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs",

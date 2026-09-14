@@ -1,0 +1,94 @@
+[
+  {
+    "name": "HWP parser / runner",
+    "role": "OLE 기반 HWP 문서의 본문 추출과 실행 결과 기록",
+    "version": "0.1.1",
+    "updatedAt": "2026-09-13",
+    "status": "active",
+    "artifacts": [
+      { "path": "workers/collector/hwp_parser_runner.py", "sha256": "1f9b6f9c9c583243c26fc7d18f5a2d3f5b14004cfbccfc701118ab89bf919a58" }
+    ]
+  },
+  {
+    "name": "HWPX parser / runner",
+    "role": "HWPX ZIP/XML 구조 확인, 본문 추출과 실행 결과 기록",
+    "version": "0.1.0",
+    "updatedAt": "2026-09-13",
+    "status": "active",
+    "artifacts": [
+      { "path": "workers/collector/hwpx_parser.py", "sha256": "a6cf1c00509ec5903bb8719ca7f0cae17b218fdeee223efe8c38f8199d7ac507" },
+      { "path": "workers/collector/hwpx_parser_runner.py", "sha256": "b40ee67538c54244025e4960179a9fb0e606e86be1f400a8b760f00981558124" }
+    ]
+  },
+  {
+    "name": "PDF parser / runner",
+    "role": "PDF 구조 확인, 본문 추출과 실행 결과 기록",
+    "version": "0.1.0",
+    "updatedAt": "2026-09-13",
+    "status": "active",
+    "artifacts": [
+      { "path": "workers/collector/pdf_parser.py", "sha256": "43e4a2eb52969906318ea76b5ae3641d560a4b66b2a939dfcede75d0be9f4ff5" },
+      { "path": "workers/collector/pdf_parser_runner.py", "sha256": "623e8c3fffdd1f6f89fac6c4b3c688277fcf2e4185321b1b7dd528777fe7bcec" }
+    ]
+  },
+  {
+    "name": "DRMONE/FASOO classifier",
+    "role": "보존 문서의 DRMONE·FASOO 컨테이너 형식 분류",
+    "version": "git:a490a2e",
+    "updatedAt": "2026-09-13",
+    "status": "active",
+    "artifacts": [
+      { "path": "tools/measurements/classify_other_corpus.py", "sha256": "db04dec5b57ddecf3a06bf456aa57ba3c22bd4fef150893db75d6e1196e66678" }
+    ]
+  },
+  {
+    "name": "Parser runtime contract",
+    "role": "문서 처리 실행환경과 필수 의존성 버전 고정",
+    "version": "1.0.0",
+    "updatedAt": "2026-09-13",
+    "status": "active",
+    "artifacts": [
+      { "path": "workers/collector/parser-runtime-contract.json", "sha256": "891672208a04a008d18bccce2c0e4a9d821fa857a4cb700e781da863555ba684" }
+    ]
+  },
+  {
+    "name": "Collector",
+    "role": "공식 규정 원문 다운로드, 검증과 적재",
+    "version": "git:c744d83",
+    "updatedAt": "2026-09-08",
+    "status": "active",
+    "artifacts": [
+      { "path": "workers/collector/collect_regulation.py", "sha256": "31508f4878ef3d602525f2319095dce7273212ffd554fbb74762b5fc19258890" }
+    ]
+  },
+  {
+    "name": "10-day collection workflow",
+    "role": "마지막 성공 수집일부터 10일 경과 여부에 따른 자동수집 제어",
+    "version": "git:088bd6d",
+    "updatedAt": "2026-09-09",
+    "status": "active",
+    "artifacts": [
+      { "path": ".github/workflows/ten-day-collection.yml", "sha256": "bed2d1439ef72f430945dce390c1e5db61086014b1f7c3b285332744b5a71309" }
+    ]
+  },
+  {
+    "name": "Publish schema",
+    "role": "승인된 대외 공개 데이터의 additive read model과 공개 API",
+    "version": "v0.6",
+    "updatedAt": "2026-09-14",
+    "status": "active",
+    "artifacts": [
+      { "path": "supabase/migrations/20260914000100_publish_read_model.sql", "sha256": "3903f15dc5c2a0d245546dcfa2172d5ad00cb238b4b8bf7b0294b993e3621da5" }
+    ]
+  },
+  {
+    "name": "Baseline projection",
+    "role": "보존 증거와 측정 산출물을 v0.6 공개 모델로 결정론적으로 투영",
+    "version": "v0.6",
+    "updatedAt": "2026-09-14",
+    "status": "active",
+    "artifacts": [
+      { "path": "tools/publish/project_v06_baseline.mjs", "sha256": "d19fac13dc52bbadae8a2a1abc8315dbb6c82cde4a7c5c7f1a9d7ccdbcef5407" }
+    ]
+  }
+]
