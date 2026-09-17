@@ -1,0 +1,192 @@
+{
+  "contract_version": "t02c-v1.0",
+  "mode": "dry-run",
+  "writer": "supabase-cli",
+  "started_at": "2026-09-17T12:20:12.670855+00:00",
+  "finished_at": "2026-09-17T12:29:39.582816+00:00",
+  "population": 2414,
+  "by_format": {
+    "HWP": 326,
+    "HWPX": 358,
+    "PDF": 1730
+  },
+  "outcomes": {
+    "EXTRACTION_FAILED": 10,
+    "IDENTITY_NOT_FOUND": 33,
+    "NO_EXTRACTABLE_TEXT": 1,
+    "SUCCESS": 2370
+  },
+  "outcomes_by_format": {
+    "HWP": {
+      "IDENTITY_NOT_FOUND": 28,
+      "SUCCESS": 298
+    },
+    "HWPX": {
+      "IDENTITY_NOT_FOUND": 5,
+      "SUCCESS": 353
+    },
+    "PDF": {
+      "EXTRACTION_FAILED": 10,
+      "NO_EXTRACTABLE_TEXT": 1,
+      "SUCCESS": 1719
+    }
+  },
+  "failure_domain_code": {
+    "DOCUMENT/PDF_READ_FAILED": 10
+  },
+  "unresolved_items": [
+    {
+      "relative_path": "kodit/1808/e9fd0a2477c75ecc1059e3a8870a77db.pdf",
+      "format": "PDF",
+      "sha256": "0a6c8b366c640fe043ea4aa53665686e24b520272b04632fcf9bd63c33ce00d4",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/1809/2600c46477098136c46ff9b713e01bc1.pdf",
+      "format": "PDF",
+      "sha256": "aa675958d8605b85b8232e929dea28a98f458e43d3644c791ef98c633e24df10",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/1832/80c58e232d1ec4f42d17596ae453a4f9.pdf",
+      "format": "PDF",
+      "sha256": "ada7b6798d7b124bfc441ecbde23be1843ac053ce93ff11fa687b905ff4b2491",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/1838/0b5329c99e1458c668f5e78873cb90ae.pdf",
+      "format": "PDF",
+      "sha256": "3309bb3914458723eed298985c9e6ea23e1220533f442320b95bac6eff703aec",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/1854/61b94ccf810ad10b660531eef2f14078.pdf",
+      "format": "PDF",
+      "sha256": "be31c3529dd3fb6a92027bd3802ded05198fc88eba9ce13e7e9388553136cd23",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/1933/280bb3677661fb9865f72b8bc05f4b83.pdf",
+      "format": "PDF",
+      "sha256": "c74162bca1557557a3f7d13f23f056270d86b96aae1b9546946620cd9490101c",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/2020/9f3e6d43e4d32c09c14664b38697b0b4.pdf",
+      "format": "PDF",
+      "sha256": "e5044cc41f239a537a96039e3a5726f4639c1ef8d5df2d70b3542b1acb83602b",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/2033/c54ba9c3bd3f32624df67ca806f51f4c.pdf",
+      "format": "PDF",
+      "sha256": "8a5704e17c13a8b4e96eef949d06b555b31b24d84dd52b9f8e7618ecdaab1e9f",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/2045/993ba9b5cd0fa33f6bf2a0ab0e25b3ed.pdf",
+      "format": "PDF",
+      "sha256": "aa1a73e1cc215e472975651e5f4ce0909abbfcd771a651d550c4e6472a735cb8",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/2077/aed5986a5cbaab4fa8d67b0dafcf7968.pdf",
+      "format": "PDF",
+      "sha256": "d3b59c62c00902b34bfdf01ac717024b8725559435d884c96faa5efba896466a",
+      "result": "EXTRACTION_FAILED",
+      "failure_domain": "DOCUMENT",
+      "failure_code": "PDF_READ_FAILED",
+      "error_class": "DocumentParseFailed",
+      "error_message": "Trailer cannot be read: '/Type'"
+    },
+    {
+      "relative_path": "kodit/951/aa786017fdb62ee34d9d1742b33857f1.pdf",
+      "format": "PDF",
+      "sha256": "286419c83a2488561744b08db58e10018db6d7d29e002fa6c10f90e94f8f5a0f",
+      "result": "NO_EXTRACTABLE_TEXT",
+      "failure_domain": "",
+      "failure_code": "",
+      "error_class": "",
+      "error_message": ""
+    }
+  ],
+  "source_resolution_failures": 0,
+  "binary_missing": 0,
+  "persistence_failures": 0,
+  "parser_output_characters": 4775920,
+  "persistence": {
+    "deduped_extractions": 2403,
+    "new_attachment_observations": 0,
+    "new_parser_runs": 0,
+    "new_source_attachments": 0,
+    "new_unique_binaries": 0,
+    "new_unique_extractions": 0
+  },
+  "ledger": {
+    "attachment_observations": 2414,
+    "broken_fk_chains": 0,
+    "duplicate_extraction_keys": 0,
+    "extracted_characters": 4770977,
+    "invalid_char_counts": 0,
+    "invalid_extract_hashes": 0,
+    "parser_runs": 2414,
+    "source_attachments": 2414,
+    "unique_binaries": 2408,
+    "unique_extractions": 2397
+  },
+  "idempotency": {
+    "changed_text": 0,
+    "missing_attachment_identities": 0,
+    "missing_attachment_observations": 0,
+    "missing_documents": 0,
+    "missing_exact_runs": 0,
+    "new_extractions": 0
+  },
+  "input_artifact_sha256": {
+    "preserved-corpus/data/current_alio_rules_205.json": "1440ea6960c13aca7d28543a9b94500c64e18b9dcc056b242fe821eeb43ccc32",
+    "preserved-corpus/data/current_preannouncements_2089.json": "8636bc1e165bd081dce323884a7a2082791cd80d4b2f177ce0a7c066997fb9cf",
+    "preserved-corpus/data/download_manifest.json": "71fb0b3f5dfd374d1a7af25b721652734706ce46f4fc5bbdb6a80b4b7736d6ca",
+    "reports/measurements/2026-09-13-pdf-full-corpus/batch-run.json": "15730562df6d43f917c88aabd15b2c234d2a7f6517aae7d745862af2904fc8b4",
+    "reports/measurements/2026-09-13-runtime-v1-reproduction/hwp/batch-run.json": "2f9b737515084d4fd9d78c9e72407394088dd5c40e6b6c27f50e28b94c97c6d0",
+    "reports/measurements/2026-09-13-runtime-v1-reproduction/hwpx/batch-run.json": "a73e231d1544d11620cc01d7e6730b985cf170dd873039732a9be1363d512df9"
+  },
+  "protected_state_unchanged": true,
+  "core_documents_extracted_text_used_as_canonical": false,
+  "mentions_created": false
+}

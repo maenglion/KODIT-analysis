@@ -2,15 +2,16 @@
 
 ## Status / 기준 commit
 
-- Status: **T02-B COMPLETE — REMOTE INTEGRATION VERIFIED**
+- Status: **T02-C COMPLETE — CORPUS EXTRACTION BACKFILL VERIFIED**
 - Baseline commit: `259f9b12de6120e38d3904e557de39c0ca142b74`
 - Parent contract: `KODIT 잔차·관계 온톨로지 작업 티켓 기준 v1`
 - Scope: corpus 본문 영속화와 provenance 경계의 설계 검토
 
 이 문서는 T02-A에서 확인한 현재 사실과 장기 의미 계약을 보존한다. T02-B에서
 아래 네 내부 원장과 선택적 private extraction artifact 출력 경계를 구현하고,
-원격 migration 및 최소 HWP/HWPX/PDF integration을 검증했다. 운영 corpus backfill은
-T02-C로 분리하며 아직 수행하지 않았다.
+원격 migration 및 최소 HWP/HWPX/PDF integration을 검증했다. T02-C에서는 보존
+corpus 2,414건을 같은 pinned parser runtime으로 재생성하여 immutable extraction
+ledger에 영속화하고, 동일 입력의 재실행이 새 row를 만들지 않음을 검증했다.
 
 ## Purpose
 
@@ -38,11 +39,12 @@ attachment / binary / parser run / extraction persistence
 
 T02-C
 corpus extraction backfill
-다음 단계
+완료
 
 T03
 extraction 기반 mention occurrence
 PERSON / ORG / RULE / WORK / EMAIL
+다음 단계
 
 T04
 label aggregation + typing
@@ -114,6 +116,31 @@ source record
 동일 text를 parser run마다 중복 저장하지 않는다. 실행 이력은 모두 보존하되,
 동일 binary에서 동일 `extract_hash`가 재현되면 extraction artifact를 재사용할 수
 있어야 한다.
+
+### Persisted corpus result
+
+T02-C는 기존 보존 binary만 사용했으며 새 다운로드나 재수집을 수행하지 않았다.
+
+| Metric | Count |
+|---|---:|
+| Input occurrences | 2,414 |
+| Source attachments | 2,414 |
+| Attachment observations | 2,414 |
+| Unique binary documents | 2,408 |
+| Parser runs | 2,414 |
+| Non-empty extraction occurrences | 2,403 |
+| Unique extraction artifacts | 2,397 |
+| Stored canonical characters | 4,770,977 |
+
+입력 occurrence 기준 결과는 `SUCCESS 2,370`, `IDENTITY_NOT_FOUND 33`,
+`NO_EXTRACTABLE_TEXT 1`, `EXTRACTION_FAILED 10`이다. identity 결과는 parser가
+본문을 정상 생성한 경우의 별도 관측값이므로 33건에도 extraction artifact가 있다.
+실패 10건은 모두 `DOCUMENT/PDF_READ_FAILED`다. 실패와 no-text 11건은 parser run만
+보존하며 `extraction_id`는 `NULL`이고 빈 extraction artifact는 만들지 않았다.
+
+2,403개 non-empty input occurrence가 2,397개 canonical extraction으로 저장되어,
+같은 binary·contract·text에 해당하는 6개 representation은 기존 extraction artifact를
+재사용했다.
 
 ## Canonical sources and identity
 
@@ -405,16 +432,12 @@ migration에서 설계한다.
 
 ## Known gaps
 
-- generic persistent `attachment_id` 원장은 생성됐지만 운영 corpus attachment는
-  T02-C backfill 전까지 적재되지 않는다.
-- 현재 corpus measurement JSON에는 본문이 없다.
+- T02-C 대상 2,414건의 attachment/binary/parser run/extraction은 원격 원장에
+  적재됐지만, 기존 measurement JSON 자체에는 본문이 없다.
 - measurement artifact에는 corpus 상대경로만 있고 절대 corpus root는 없다.
-- parser provenance는 checked-in JSON에는 있으나 DB 원장에는 없다.
-- corpus binary와 source별 attachment 복합키를 DB identity로 이관하는 deterministic
-  import 계약이 아직 없다.
 - `core.documents.extracted_text`를 읽는 모든 소비자가 확인되지 않았다.
-- 원격 integration 검증에는 직접 PostgreSQL test URL과 HWP/HWPX/PDF 최소 표본
-  경로가 명시적으로 주입되어야 한다.
+- PDF 10건의 `DOCUMENT/PDF_READ_FAILED`와 1건의 `NO_EXTRACTABLE_TEXT`는 후속
+  정책 없이 관측 상태 그대로 남아 있다.
 
 ## Future cautions
 
@@ -462,6 +485,9 @@ migration에서 설계한다.
 - `workers/collector/test_document_extraction_integration.py`
 - `workers/collector/requirements-integration.txt`
 - `tools/extractions/run_document_extraction_integration.ps1`
+- `tools/extractions/backfill_document_extractions.py`
+- `tools/extractions/run_document_extraction_backfill.ps1`
+- `reports/measurements/2026-09-17-document-extraction-backfill/`
 
 T02-B의 파일 후보는 신규 extraction ledger migration, DB contract test, parser runner의
 본문 artifact 전달 경계, 그리고 versioned corpus import 도구다. `publish` RPC와 UI는
@@ -490,6 +516,10 @@ T02-B의 기본 변경 대상이 아니다.
 | 2026-09-17 | T02-B | failure와 `NO_EXTRACTABLE_TEXT`는 run만 보존하고 빈 extraction artifact를 생성하지 않는다. |
 | 2026-09-17 | T02-B | mention은 notice 배열이 아니라 `extraction_id`에 귀속한다. |
 | 2026-09-17 | T02-B | 원격 최소 표본 검증의 assertion은 integration pytest에 두고 PowerShell은 pinned runtime launcher로만 사용한다. |
+| 2026-09-17 | T02-C | 보존 corpus 2,414건을 pinned runtime으로 재생성하여 immutable extraction ledger에 적재했다. |
+| 2026-09-17 | T02-C | 로컬 비밀번호 입력 대신 기존 Supabase CLI OAuth 및 linked-project Management API 경로를 trusted writer로 재사용했다. |
+| 2026-09-17 | T02-C | writer transaction 안에서 `service_role`로 전환하여 기존 `core.record_parser_execution()` 경계만 사용했다. |
+| 2026-09-17 | T02-C | 같은 corpus의 dry-run 재실행에서 새 attachment, observation, binary, parser run, extraction이 모두 0건임을 확인했다. |
 
 ## Verification
 
@@ -514,5 +544,10 @@ T02-B의 기본 변경 대상이 아니다.
 - integration target은 mention table을 생성하거나 채우지 않음을 확인한다.
 - transaction rollback 후 네 extraction ledger table과 `T02B_INTEGRATION_*` source의
   테스트 잔존 행이 모두 0건임을 별도 connection에서 확인했다.
-- 운영 corpus 2,414건 backfill은 T02-C 범위이며 T02-B integration에는 포함하지
-  않았다.
+- T02-C apply 결과는 2,414 parser run, 2,408 unique binary, 2,397 unique extraction이며
+  hash/char-count/FK/unique-key 위반은 모두 0건이다.
+- 같은 corpus dry-run 결과는 outcome 분포와 extraction hash가 모두 동일했고,
+  신규 ledger row와 변경 text가 각각 0건이었다.
+- publish 규정 1,041건, notice 2,089건, notice-regulation linkage 3,775건,
+  department residual 1,272건 및 legacy `core.documents.extracted_text`는 전후 동일했다.
+- T02-C는 mention table 또는 row를 생성하지 않았다. T03이 다음 단계다.

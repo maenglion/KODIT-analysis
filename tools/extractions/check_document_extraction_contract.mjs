@@ -55,7 +55,7 @@ for (const [path, runner] of runners) {
 
 assert.match(
   architecture,
-  /Status: \*\*T02-B COMPLETE — REMOTE INTEGRATION VERIFIED/i,
+  /Status: \*\*T02-(?:B|C) COMPLETE — (?:REMOTE INTEGRATION|CORPUS EXTRACTION BACKFILL) VERIFIED/i,
 );
 assert.match(architecture, /document_extractions.*immutable derived/is);
 assert.match(architecture, /compatibility\/cache/i);
