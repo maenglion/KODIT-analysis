@@ -103,7 +103,21 @@ class HwpxRunnerContractTest(unittest.TestCase):
         )
 
     def test_success_has_full_hwp_provenance_contract(self):
-        result = self.execute(make_hwpx({"Contents/section0.xml": section_xml(["안전 보건 규정", "제1조 목적"])}))
+        artifacts = []
+        data = make_hwpx({"Contents/section0.xml": section_xml(["안전 보건 규정", "제1조 목적"])})
+        path = self.root / "sample.hwpx"
+        path.write_bytes(data)
+        result = run_file(
+            path,
+            expected_sha256=hashlib.sha256(data).hexdigest(),
+            file_name=path.name,
+            regulation_name="안전보건규정",
+            aliases=[],
+            evidence_as_of="2026-09-08T00:00:00+09:00",
+            lock_path=self.lock,
+            redact_roots=[self.root],
+            extraction_sink=artifacts.append,
+        )
         self.assertEqual(result["result"], "SUCCESS")
         self.assertTrue(result["identity_matched"])
         required = {
@@ -120,6 +134,11 @@ class HwpxRunnerContractTest(unittest.TestCase):
         self.assertTrue(result["extract_hash"])
         self.assertEqual(result["failure_domain"], "")
         self.assertEqual(result["failure_code"], "")
+        self.assertNotIn("extracted_text", result)
+        self.assertEqual(len(artifacts), 1)
+        self.assertEqual(artifacts[0]["parser_run_id"], result["parser_run_id"])
+        self.assertEqual(artifacts[0]["extract_hash"], result["extract_hash"])
+        self.assertIn("제1조 목적", artifacts[0]["extracted_text"])
 
     def test_common_identity_normalization_handles_punctuation(self):
         result = self.execute(

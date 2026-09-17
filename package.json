@@ -12,6 +12,8 @@
     "check:approved": "node --experimental-strip-types tools/check-approved-releases.mjs",
     "check:reconstructed": "node tools/check-reconstructed-evaluation.mjs",
     "check:technical-specs": "node tools/check-technical-specs.mjs",
+    "check:extractions": "node tools/extractions/check_document_extraction_contract.mjs",
+    "test:extractions:integration": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/extractions/run_document_extraction_integration.ps1",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs",

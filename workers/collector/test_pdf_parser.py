@@ -127,6 +127,29 @@ class PdfParserContractTest(unittest.TestCase):
             self.assertEqual(first["failure_code"], "")
             self.assertNotIn("identity_matched", first)
 
+    def test_success_can_emit_private_extraction_without_polluting_run_record(self):
+        data = text_pdf("Private text")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "sample.pdf"
+            source.write_bytes(data)
+            artifacts = []
+            result = run_file(
+                source,
+                expected_sha256=hashlib.sha256(data).hexdigest(),
+                file_name=source.name,
+                evidence_as_of="2026-09-08T00:00:00+09:00",
+                lock_path=Path(__file__).with_name("requirements.txt"),
+                redact_roots=[root],
+                extraction_sink=artifacts.append,
+            )
+        self.assertEqual(result["result"], "SUCCESS")
+        self.assertNotIn("extracted_text", result)
+        self.assertEqual(len(artifacts), 1)
+        self.assertEqual(artifacts[0]["parser_run_id"], result["parser_run_id"])
+        self.assertEqual(artifacts[0]["extract_hash"], result["extract_hash"])
+        self.assertIn("Private text", artifacts[0]["extracted_text"])
+
     def test_full_runtime_and_source_provenance(self):
         with self.runner(text_pdf()) as result:
             required = {

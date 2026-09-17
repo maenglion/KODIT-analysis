@@ -16,7 +16,7 @@ import uuid
 import zlib
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from failure_taxonomy import (
     DependencyImportFailed,
@@ -24,6 +24,7 @@ from failure_taxonomy import (
     Sha256Mismatch,
     classify_failure,
 )
+from extraction_artifact import build_extraction_artifact, write_extraction_artifact
 from parser_contract import normalize_identity
 from parser_runtime import build_runtime_manifest, require_runtime, sanitize_trace
 
@@ -39,6 +40,7 @@ OLE_MAGIC = bytes.fromhex("d0cf11e0a1b11ae1")
 SOURCE_FILES = (
     Path(__file__),
     Path(__file__).with_name("failure_taxonomy.py"),
+    Path(__file__).with_name("extraction_artifact.py"),
     Path(__file__).with_name("parser_contract.py"),
     Path(__file__).with_name("parser_runtime.py"),
     Path(__file__).with_name("parser-runtime-contract.json"),
@@ -175,6 +177,7 @@ def run_file(
     evidence_as_of: str,
     lock_path: Path,
     redact_roots: Iterable[Path] = (),
+    extraction_sink: Callable[[dict[str, Any]], None] | None = None,
 ) -> dict[str, Any]:
     parser_run_id = str(uuid.uuid4())
     started = datetime.now(timezone.utc)
@@ -223,7 +226,7 @@ def run_file(
         for dependency in env["dependencies"]
         if dependency["name"] == "olefile"
     )
-    return {
+    record = {
         "parser_run_id": parser_run_id,
         "provenance": "ACTUAL_EXECUTION",
         "evidence_as_of": evidence_as_of,
@@ -255,6 +258,9 @@ def run_file(
         "extract_hash": sha256_bytes(extracted.encode("utf-8")) if extracted else "",
         "extracted_char_count": len(extracted),
     }
+    if extraction_sink is not None and extracted:
+        extraction_sink(build_extraction_artifact(record, extracted))
+    return record
 
 
 def main() -> int:
@@ -266,6 +272,7 @@ def main() -> int:
     parser.add_argument("--alias", action="append", default=[])
     parser.add_argument("--evidence-as-of", required=True)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--extraction-output", type=Path)
     parser.add_argument(
         "--lock-file",
         type=Path,
@@ -281,6 +288,11 @@ def main() -> int:
         evidence_as_of=args.evidence_as_of,
         lock_path=args.lock_file,
         redact_roots=[args.file.parent, Path.cwd()],
+        extraction_sink=(
+            (lambda artifact: write_extraction_artifact(args.extraction_output, artifact))
+            if args.extraction_output is not None
+            else None
+        ),
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
