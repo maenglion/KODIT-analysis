@@ -44,10 +44,11 @@ corpus extraction backfill
 T03
 extraction 기반 mention occurrence
 PERSON / ORG / RULE / WORK / EMAIL
-다음 단계
+완료
 
 T04
 label aggregation + typing
+다음 단계
 
 T05
 historical ORG_NODE + lineage

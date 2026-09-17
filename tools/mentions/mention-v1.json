@@ -1,0 +1,28 @@
+{
+  "mention_contract_version": "mention-v1",
+  "extractor_version": "kodit-lexical-mentions/0.1.0",
+  "offset_contract": "zero-based Unicode code-point offsets; span_end exclusive",
+  "rule_dictionary": {
+    "canonical_source": "core.regulations.canonical_name",
+    "checked_in_reproduction_source": "reports/measurements/2026-09-13-reconstructed-evaluation/reconstructed-evaluation.json",
+    "expected_count": 1041
+  },
+  "known_organizations": [
+    "경영기획부", "성과관리부", "ICT전략부", "신용보증부", "자본시장부",
+    "4.0창업부", "플랫폼금융부", "빅데이터부", "신용보험부", "기업개선부",
+    "인프라금융부", "인재경영부", "업무지원부", "고객지원부", "안전관리관",
+    "감사실", "미래전략실", "리스크준법실", "홍보실", "비서실"
+  ],
+  "organization_suffixes": ["사무소", "센터", "본부", "지점", "부", "실", "단", "팀"],
+  "organization_context_cues": ["담당부서", "소관부서", "주관부서", "담당조직", "부서명"],
+  "person_direct_cues": ["담당자", "기안자", "작성자", "문의처"],
+  "person_titles": ["선임차장", "부장", "차장", "과장", "대리", "주임"],
+  "person_reject_terms": [
+    "전화", "전화팩스", "전화번호", "연락처", "전자우편", "성명", "직위",
+    "부서장", "담당임원", "담당이사", "정보", "주소"
+  ],
+  "work_lexicon": [
+    "투자옵션부보증", "보증연계투자", "증자참여권", "대위변제", "구상권",
+    "채권회수", "소송대리"
+  ]
+}

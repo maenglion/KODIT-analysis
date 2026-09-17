@@ -1,0 +1,92 @@
+{
+  "mention_contract_version": "mention-v1",
+  "extractor_version": "kodit-lexical-mentions/0.1.0",
+  "mode": "apply",
+  "writer": "supabase-cli-linked-oauth",
+  "started_at": "2026-09-17T12:56:47.701061+00:00",
+  "finished_at": "2026-09-17T13:02:48.071655+00:00",
+  "rule_dictionary": {
+    "canonical_source": "core.regulations.canonical_name",
+    "count": 1041,
+    "snapshot_sha256": "069db90a0ec2690f46361efe57aaa969826cd346b6e9e2e921692ebacb4c58da"
+  },
+  "results": {
+    "total_extractions": 2397,
+    "total_mentions": 20937,
+    "zero_mention_extractions": 1,
+    "by_mention_type": {
+      "PERSON": {
+        "occurrence_count": 3460,
+        "distinct_raw_text_count": 528,
+        "extraction_count": 2089
+      },
+      "ORG": {
+        "occurrence_count": 5697,
+        "distinct_raw_text_count": 41,
+        "extraction_count": 1941
+      },
+      "RULE": {
+        "occurrence_count": 7402,
+        "distinct_raw_text_count": 759,
+        "extraction_count": 1632
+      },
+      "WORK": {
+        "occurrence_count": 1056,
+        "distinct_raw_text_count": 7,
+        "extraction_count": 175
+      },
+      "EMAIL": {
+        "occurrence_count": 3322,
+        "distinct_raw_text_count": 842,
+        "extraction_count": 2009
+      }
+    },
+    "by_extractor_rule": {
+      "EMAIL_RFC5322_LEXICAL": 3322,
+      "KNOWN_ORG_EXACT": 5411,
+      "ORG_CONTACT_BLOCK_PATTERN": 283,
+      "ORG_CONTEXT_PATTERN_CANDIDATE": 3,
+      "PERSON_CONTACT_BLOCK_PHONE": 3457,
+      "PERSON_EXPLICIT_CUE": 3,
+      "RULE_CANONICAL_NAME_EXACT": 7402,
+      "WORK_LEXICON_EXACT": 1056
+    },
+    "span_validation_failures": 0
+  },
+  "persistence": {
+    "inserted_mentions": 20937,
+    "before": {
+      "expected_mentions": 20937,
+      "existing_mentions": 0,
+      "new_mentions": 20937,
+      "unexpected_mentions": 0,
+      "changed_mentions": 0
+    },
+    "after": {
+      "expected_mentions": 20937,
+      "existing_mentions": 20937,
+      "new_mentions": 0,
+      "unexpected_mentions": 0,
+      "changed_mentions": 0
+    }
+  },
+  "validation": {
+    "broken_extraction_fk": 0,
+    "duplicate_deterministic_keys": 0,
+    "mentions": 20937,
+    "rollup_extractions": 2396,
+    "rollup_mentions": 20937,
+    "span_validation_failures": 0,
+    "unknown_contract_version": 0,
+    "unknown_mention_type": 0
+  },
+  "protected_state_unchanged": true,
+  "input_artifact_sha256": {
+    "tools/mentions/mention-v1.json": "c561efb9b5c0896f63106d98b97c0eef884399e2513b04b6d26aa7ab5d8a4636",
+    "reports/measurements/2026-09-13-reconstructed-evaluation/reconstructed-evaluation.json": "c44ab6352141851266cdf5980c5a668332adcb9a7c3ebe5cd5d501f4607dc41d",
+    "tools/mentions/backfill_extraction_mentions.py": "9505c7d744f4c5597e46772afa6dff50ddb2daf57d53c76f6e9d4f6b023e7791",
+    "tools/mentions/mention_extractor.py": "3c56a2012e6f8408269b8fcf3aa58ea7df9c8921e3abd0b37ae74ec4e2a25689"
+  },
+  "label_or_entity_created": false,
+  "public_or_ui_changed": false
+}
