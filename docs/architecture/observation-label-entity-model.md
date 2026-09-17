@@ -2,8 +2,8 @@
 
 ## Status / 기준 commit
 
-- Status: **T03 COMPLETE — EXTRACTION MENTION LEDGER VERIFIED**
-- Baseline commit: `228549b9eafd8c6828fe5f6b267ddd20f4f76725`
+- Status: **T04 COMPLETE — LEXICAL LABEL LEDGER VERIFIED**
+- Baseline checkpoint: `7f452f9ab03d1aa5eae4e9c42cd1dcff524e32c4`
 - Parent contracts:
   - `KODIT 잔차·관계 온톨로지 작업 티켓 기준 v1`
   - `docs/architecture/document-extraction-ledger.md`
@@ -140,6 +140,92 @@ MENTION
 같은 extraction artifact가 여러 source occurrence에서 재사용되어도 mention은 한 번만
 존재하며 source/notice별 값은 join으로 계산한다.
 
+## T04 lexical label contract
+
+```text
+LABEL
+= normalized lexical identity
+≠ entity
+≠ organization node
+```
+
+`label-v1`은 Unicode NFC, outer trim, internal whitespace normalization만 수행한다.
+이름·조직 suffix·문장부호·약칭·유사 문자열을 의미적으로 합치지 않는다.
+`label_id`는 `(label_contract_version, normalized_label)`로 결정되며 type은 identity에
+포함하지 않는다. 동명이인과 시대가 다른 동일 조직명도 LABEL 단계에서는 분리하지
+않는다.
+
+원 관측은 그대로 두고 link만 추가한다.
+
+```text
+core.extraction_mentions
+  → core.extraction_mention_labels
+  → core.labels
+
+publish.notice_department_residual_occurrences
+  → core.notice_department_residual_labels
+  → core.labels
+```
+
+T03 `mention_type`만 label type evidence다. T01 department residual은 type evidence를
+제공하지 않는다. 단일 mention type만 있으면 그 type, 둘 이상이면 `AMBIGUOUS`, mention
+근거가 없으면 `UNTYPED`다. 자동 우선순위와 `NOISE` heuristic은 없다.
+
+`core.label_type_evidence`, `core.label_raw_variants`, `core.label_metrics`는 원 관측을
+복제하지 않는 derived security-invoker view다. raw variant는 임의 대표명을 정하지 않고
+variant별 mention/residual occurrence 수로 재현한다.
+
+### Timeline contract
+
+`first_seen_at`과 `last_seen_at`은 source observation date만 사용한다.
+
+- T01 residual: `posted_at`
+- KODIT T03: 보존 사규예고 `posted_date`가 적재된
+  `core.source_records.published_at`
+- ALIO T03: `final_modified_date`가 적재된
+  `core.source_records.published_at`
+
+parser 실행시각, extraction 생성시각, DB insert 시각은 source date가 아니다. 신뢰할 수
+있는 source date가 없으면 NULL로 남긴다.
+
+날짜 coverage의 observation 단위는 source까지 연결된 `(mention_id,
+source_record_id)` pair다. 하나의 mention이 둘 이상의 source occurrence에 귀속될 수
+있으므로 unique mention 수와 같다고 가정하지 않는다. 현재 ALIO 6,588/6,588,
+KODIT mention-source 14,417/14,417, T01 residual 1,272/1,272가 날짜를 가진다.
+
+### T04 corpus verification
+
+| Measure | Result |
+|---|---:|
+| lexical labels | 2,209 |
+| mention links | 20,937 / 20,937 |
+| residual links | 1,272 / 1,272 |
+| distinct extractions represented | 2,396 |
+| distinct source records represented | 2,276 |
+| distinct KODIT notices represented | 2,071 |
+| invalid normalized labels / broken FK / duplicate mappings | 0 / 0 / 0 |
+
+| Resolved type | Labels |
+|---|---:|
+| PERSON | 527 |
+| ORG | 40 |
+| RULE | 759 |
+| WORK | 7 |
+| EMAIL | 842 |
+| AMBIGUOUS | 1 |
+| UNTYPED | 33 |
+
+T01의 355 distinct raw department labels는 `label-v1`에서도 355 lexical labels다.
+그중 PERSON evidence 317, ORG evidence 5, UNTYPED 33이며 AMBIGUOUS는 0이다. 이는
+사람·조직 entity 판정이 아니라 다른 T03 mention에서 관측된 lexical type evidence다.
+
+PERSON mention의 3,457건은 연락처 block+전화 pattern, 3건은 explicit cue에서 왔다.
+이 정보만으로 담당자·문의처·기안자 role을 일관되게 재현할 수 없으므로 T04는 role
+table을 만들지 않고 role을 `UNKNOWN`으로 보류한다.
+
+`ORG_LABEL ≠ ORG_NODE`다. T05는 T04 ORG type을 곧바로 institutional truth로 사용하지
+않고 별도 historical evidence와 node identity 계약을 적용해야 한다.
+
 ## Invariants
 
 1. mention은 반드시 `extraction_id`에 귀속한다.
@@ -188,9 +274,6 @@ PERSON mention + ORG mention in same notice
 ## Later layers
 
 ```text
-T04
-raw mention aggregation / label typing
-
 T05
 historical organization node / lineage
 
@@ -201,14 +284,12 @@ T07
 topic analysis
 ```
 
-T04는 distinct raw string을 집계하고 typing할 수 있지만 T03 row를 수정하지 않는다.
 T05의 조직 node와 lineage, T07의 소송·투자 등 topic은 별도 근거와 계약을 가져야 한다.
 
 ## Non-goals
 
-T03은 다음을 만들지 않는다.
+T04까지도 다음을 만들지 않는다.
 
-- LABEL table 또는 canonical label
 - PERSON entity 또는 실제 신원 확정
 - ORG node 또는 과거·현재 조직 판정
 - PERSON→ORG 소속·기안·담당 relation
@@ -227,11 +308,13 @@ T03은 다음을 만들지 않는다.
 - EMAIL은 연락처 식별 단서일 뿐 시대·조직 승계 근거가 아니다.
 - contract별 active/preferred selection policy는 아직 없다.
 - mention이 없는 extraction 1건의 의미를 자동 해석하지 않는다.
+- lexical label의 canonical display-name policy는 아직 없다.
 
 ## Future cautions
 
 - extractor rule을 바꾸면서 `mention-v1`을 조용히 재작성하지 않는다.
 - raw string distinct count를 곧바로 LABEL count로 부르지 않는다.
+- T04 `ORG` evidence를 곧바로 현재 또는 과거 `ORG_NODE`로 승격하지 않는다.
 - co-occurrence만으로 person affiliation이나 규정 변경 관계를 만들지 않는다.
 - source rollup에서 동일 extraction이 여러 attachment에 연결될 수 있음을 보존한다.
 - RULE dictionary 변경 시 snapshot과 contract version을 함께 갱신한다.
@@ -247,6 +330,11 @@ T03은 다음을 만들지 않는다.
 - `tools/mentions/check_extraction_mention_contract.mjs`
 - `tools/mentions/verify_extraction_mentions.sql`
 - `reports/measurements/2026-09-17-extraction-mentions/`
+- `supabase/migrations/20260918000100_lexical_label_ledger.sql`
+- `tools/labels/backfill_lexical_labels.py`
+- `tools/labels/check_lexical_label_contract.mjs`
+- `tools/labels/verify_lexical_labels.sql`
+- `reports/measurements/2026-09-18-lexical-labels/`
 
 ## Decision history
 
@@ -260,3 +348,8 @@ T03은 다음을 만들지 않는다.
 | 2026-09-17 | T03 | 같은 contract 재실행은 deterministic ID와 immutable rows를 재사용한다. |
 | 2026-09-17 | T03 | 원격 writer는 기존 linked Supabase CLI OAuth와 service-role-only ingestion function을 재사용한다. |
 | 2026-09-17 | T03 | generated deterministic ID helper는 stored expression 평가를 위해 service_role에만 EXECUTE를 허용하고 public/anon/authenticated에는 허용하지 않는다. |
+| 2026-09-18 | T04 | `label-v1`은 NFC와 공백만 정규화하며 label identity에서 type을 분리한다. |
+| 2026-09-18 | T04 | T03 mention type만 type evidence이며 T01 residual은 type evidence가 아니다. |
+| 2026-09-18 | T04 | 복수 type은 AMBIGUOUS, evidence 없음은 UNTYPED로 두고 우선순위·NOISE heuristic을 금지한다. |
+| 2026-09-18 | T04 | timeline은 KODIT posted date, ALIO final modified date, T01 posted_at만 사용한다. |
+| 2026-09-18 | T04 | 동일 입력 재실행에서 신규 label/link와 identity 변화가 모두 0임을 원격에서 검증했다. |

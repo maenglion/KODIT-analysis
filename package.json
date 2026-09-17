@@ -18,6 +18,8 @@
     "check:mentions": "node tools/mentions/check_extraction_mention_contract.mjs",
     "test:mentions": "python tools/mentions/run_mention_unit_tests.py",
     "backfill:mentions": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/mentions/run_extraction_mention_backfill.ps1",
+    "check:labels": "node tools/labels/check_lexical_label_contract.mjs",
+    "backfill:labels": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/labels/run_lexical_label_backfill.ps1",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs",

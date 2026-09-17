@@ -1,0 +1,121 @@
+{
+  "label_contract_version": "label-v1",
+  "mode": "apply",
+  "writer": "supabase-cli-linked-oauth",
+  "started_at": "2026-09-17T23:48:08.069854+00:00",
+  "finished_at": "2026-09-17T23:48:53.978388+00:00",
+  "input_counts": {
+    "mentions": 20937,
+    "residuals": 1272
+  },
+  "deterministic_population": {
+    "labels": 2209,
+    "mention_links": 20937,
+    "residual_links": 1272,
+    "identity_sha256": "9cd2728af61fd732f6bd4b7771535abd71487ddddcd79617711df12c04d67407"
+  },
+  "persistence": {
+    "inserted": {
+      "labels": 0,
+      "mention_links": 0,
+      "residual_links": 0
+    },
+    "before": {
+      "expected_labels": 2209,
+      "existing_labels": 2209,
+      "missing_labels": 0,
+      "unexpected_labels": 0,
+      "changed_labels": 0,
+      "expected_mention_links": 20937,
+      "existing_mention_links": 20937,
+      "missing_mention_links": 0,
+      "unexpected_mention_links": 0,
+      "changed_mention_links": 0,
+      "expected_residual_links": 1272,
+      "existing_residual_links": 1272,
+      "missing_residual_links": 0,
+      "unexpected_residual_links": 0,
+      "changed_residual_links": 0
+    },
+    "after": {
+      "expected_labels": 2209,
+      "existing_labels": 2209,
+      "missing_labels": 0,
+      "unexpected_labels": 0,
+      "changed_labels": 0,
+      "expected_mention_links": 20937,
+      "existing_mention_links": 20937,
+      "missing_mention_links": 0,
+      "unexpected_mention_links": 0,
+      "changed_mention_links": 0,
+      "expected_residual_links": 1272,
+      "existing_residual_links": 1272,
+      "missing_residual_links": 0,
+      "unexpected_residual_links": 0,
+      "changed_residual_links": 0
+    }
+  },
+  "validation": {
+    "broken_label_fk": 0,
+    "date_coverage": {
+      "alio-internal-rules-preserved": {
+        "dated": 6588,
+        "null": 0,
+        "observations": 6588
+      },
+      "kodit-notice-residual": {
+        "dated": 1272,
+        "null": 0,
+        "observations": 1272
+      },
+      "kodit-preannouncement-preserved": {
+        "dated": 14417,
+        "null": 0,
+        "observations": 14417
+      }
+    },
+    "date_order_errors": 0,
+    "distinct_core_source_records": 2238,
+    "distinct_extractions": 2396,
+    "distinct_kodit_notices": 2071,
+    "distinct_source_records": 2276,
+    "duplicate_mappings": 0,
+    "invalid_normalized_label": 0,
+    "label_id_mismatch": 0,
+    "labels": 2209,
+    "mention_links": 20937,
+    "metric_sums": {
+      "first_seen_at": "2012-10-31",
+      "labels_with_dates": 2209,
+      "labels_without_dates": 0,
+      "last_seen_at": "2026-08-31",
+      "mention_occurrences": 20937,
+      "residual_occurrences": 1272
+    },
+    "parser_timestamp_source_dates": 0,
+    "raw_variant_distribution": {
+      "1": 2209
+    },
+    "residual_lexical_labels": 355,
+    "residual_links": 1272,
+    "residual_type_distribution": {
+      "ORG": 5,
+      "PERSON": 317,
+      "UNTYPED": 33
+    },
+    "type_distribution": {
+      "AMBIGUOUS": 1,
+      "EMAIL": 842,
+      "ORG": 40,
+      "PERSON": 527,
+      "RULE": 759,
+      "UNTYPED": 33,
+      "WORK": 7
+    },
+    "unknown_contract": 0
+  },
+  "protected_state_unchanged": true,
+  "person_role_created": false,
+  "entity_or_org_node_created": false,
+  "publish_or_ui_changed": false
+}
