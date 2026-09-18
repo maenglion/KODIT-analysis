@@ -1,0 +1,9 @@
+{
+  "contract_version": "predicate-v1",
+  "predicates": [
+    {"predicate_code":"MENTIONS_RULE","subject_grain":"MENTION_ID","object_grain":"REGULATION_ID","evidence_source":"T03 RULE span plus rule-label-regulation-v1","eligible_for_org_successor_rollup":false,"definition":"A document extraction contains an exact RULE span resolved to a regulation identity."},
+    {"predicate_code":"LINKED_TO_RULE","subject_grain":"NOTICE_ID","object_grain":"REGULATION_VERSION_ID","evidence_source":"publish.notices.linked_regulation_version_ids","eligible_for_org_successor_rollup":false,"definition":"The publish projection links a notice to a regulation version; this is not proposal evidence."},
+    {"predicate_code":"PROPOSES_CHANGE_TO","subject_grain":"NOTICE_ID","object_grain":"REGULATION_ID","evidence_source":"change-assertion-v1 direct title or body evidence","eligible_for_org_successor_rollup":false,"definition":"A notice directly proposes enactment, amendment, or repeal of a regulation."},
+    {"predicate_code":"FUNCTION_TRANSFERRED_TO","subject_grain":"ORG_NODE_ID","object_grain":"ORG_NODE_ID","evidence_source":"T05 official direct scoped function-transfer evidence","eligible_for_org_successor_rollup":false,"definition":"A specific function changed responsible organization; this is not organization succession."}
+  ]
+}

@@ -24,6 +24,7 @@
     "backfill:organizations": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/organizations/run_organization_lineage_backfill.ps1",
     "check:residual-analysis": "node tools/publish/check_department_residual_analysis_contract.mjs",
     "test:residual-analysis:http": "node tools/publish/check_department_residual_analysis_http.mjs",
+    "check:t065": "node tools/analytics/check_t065_contract.mjs",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs",

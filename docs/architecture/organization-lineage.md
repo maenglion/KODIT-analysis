@@ -47,6 +47,10 @@ identity와 `organization-v1` contract로 동일 backfill을 재현한다.
 `FUNCTION_TRANSFERRED_TO`는 `edge_scope`에 적힌 기능의 이동만 뜻한다. whole-organization
 rename, merger, succession을 뜻하지 않는다.
 
+T06.5 predicate contract는 이 경계를 machine-readable하게
+`eligible_for_org_successor_rollup=false`로 고정한다. T07 조직 통계는 이 edge를 따라
+관측을 후계 조직에 합산하지 않는다.
+
 ## Invariants
 
 1. `ORG_LABEL ≠ ORG_NODE`.
@@ -108,3 +112,4 @@ provenance, evidence text는 공개하지 않는다.
 | 2026-09-18 | 개인정보보호 담당 이동 2건은 whole-org succession이 아닌 scoped FUNCTION_TRANSFERRED_TO다. |
 | 2026-09-18 | T01 residual reproduction dictionary와 historical organization ontology를 분리한다. |
 | 2026-09-18 | T06는 T05 node/edge를 public-safe 설명으로만 투영하며 ontology를 수정하지 않는다. |
+| 2026-09-18 | T06.5 | FUNCTION_TRANSFERRED_TO를 조직 승계 roll-up에서 명시적으로 제외했다. |

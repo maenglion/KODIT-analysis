@@ -15,7 +15,7 @@ lexical label, 기존 type evidence, 기존 organization resolution을 분리해
 
 | Resolution | Labels | Occurrences |
 |---|---:|---:|
-| PERSON_EVIDENCE | 317 | 1,113 |
+| PERSON_EVIDENCE (display: 인물형 근거 있음) | 317 | 1,113 |
 | ORG_CURRENT | 3 | 30 |
 | ORG_HISTORICAL | 2 | 15 |
 | UNTYPED | 33 | 114 |
@@ -37,8 +37,9 @@ React는 이 분류를 재계산하지 않고 publish RPC를 읽는다.
 
 ## Resolution semantics
 
-- `PERSON_EVIDENCE`: 동일 lexical label이 T03에서 PERSON mention으로 관측됐다. 실제 사람,
-  직원, 기안자, 담당자 또는 소속을 확정하지 않는다.
+- `PERSON_EVIDENCE`: RPC 호환 code다. 공개 명칭은 `인물형 근거 있음`이며 담당 표기와
+  동일한 lexical 문자열이 다른 문서 본문에서 PERSON-type 문맥으로도 관측됐다는 뜻이다.
+  실제 인물 신원, 직원, 기안자, 담당자, 역할 또는 소속을 확정하지 않는다.
 - `ORG_CURRENT`: T05 `CURRENT_EXACT` assessment가 있다.
 - `ORG_HISTORICAL`: T05 `CONFIRMED_NODE`이며 current exact가 아니다.
 - `UNTYPED`: 현재 mention evidence로 lexical type을 확정하지 못했다.
@@ -98,3 +99,4 @@ T03/T04 row도 수정하지 않는다.
 | 2026-09-18 | 1,272를 조직 수가 아닌 담당 표기 residual occurrence로 표시한다. |
 | 2026-09-18 | label/occurrence count와 CSV grain을 분리한다. |
 | 2026-09-18 | T06는 기존 type/node assessment만 투영하고 새 entity inference를 금지한다. |
+| 2026-09-18 | T06.5 | PERSON category 공개 문구를 cross-channel lexical evidence 수준으로 낮추고 317/1,113 수량은 유지한다. |

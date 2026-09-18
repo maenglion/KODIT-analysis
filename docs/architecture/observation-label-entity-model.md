@@ -277,9 +277,20 @@ PERSON mention + ORG mention in same notice
 T06
 residual resolution UI
 
+T06.5
+source/entity/predicate/metric grain hardening
+
 T07
 topic analysis
 ```
+
+T06.5는 T04 type evidence를 `DEPT_STRING_OBSERVATION`, `MENTION_PERSON`,
+`MENTION_ORG`, `MENTION_RULE`, `MENTION_WORK`, `MENTION_EMAIL` 채널로 분리해 읽는다.
+동일 label의 cross-channel 관측은 실제 entity identity나 role을 뜻하지 않는다.
+
+mention의 notice 통계는 source-expanded row가 아니라 canonical
+`(release_id, mention_id, notice_id)` relation에서 distinct notice를 센다. RULE label은
+regulation identity까지만 exact resolve하며 regulation version을 이름으로 추측하지 않는다.
 
 ## T05 ORG_LABEL vs ORG_NODE
 
@@ -388,3 +399,4 @@ T04까지도 다음을 만들지 않는다.
 | 2026-09-18 | T04 | 동일 입력 재실행에서 신규 label/link와 identity 변화가 모두 0임을 원격에서 검증했다. |
 | 2026-09-18 | T05 | ORG label 40개를 현재 exact 19, 과거 confirmed 8, unresolved 13으로 전수 평가했다. |
 | 2026-09-18 | T05 | scoped function transfer 2건만 공식 direct evidence edge로 기록하고 person affiliation은 만들지 않았다. |
+| 2026-09-18 | T06.5 | evidence channel, mention→notice, RULE→regulation identity, predicate/metric grain을 별도 계약으로 고정했다. |

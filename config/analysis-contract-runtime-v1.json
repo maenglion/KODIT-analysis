@@ -1,0 +1,8 @@
+{
+  "contract_version": "analysis-runtime-v1",
+  "contracts": [
+    {"contract_code":"mention-v1","identity_components":["extraction_id","mention_contract_version","mention_type","span_start","span_end"],"normalization_form":"NONE_FOR_IDENTITY","runtime":"Python 3.13.7","unicode_data_version":"15.1.0","notes":"raw_text and normalized text are not mention_id components."},
+    {"contract_code":"label-v1","identity_components":["label_contract_version","normalized_label"],"normalization_form":"NFC_OUTER_TRIM_INTERNAL_WHITESPACE","runtime":"Python 3.13.7 and PostgreSQL normalize(..., NFC)","unicode_data_version":"15.1.0","notes":"Metadata is added without regenerating any existing label_id."},
+    {"contract_code":"t02c-v1.0","identity_components":["document_sha256","extract_hash","extraction_contract_version"],"normalization_form":"PARSER_OUTPUT_UTF8_AS_STORED","runtime":"Parser Runtime Contract v1.0 / Python 3.13.7","unicode_data_version":"15.1.0","notes":"Extraction text identity is the SHA-256 extract_hash of stored UTF-8 text."}
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06 COMPLETE — T07 NEXT**
+- Status: **T06.5 COMPLETE — T07 CONTRACT GATE**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -25,7 +25,8 @@ T03   extraction mention occurrence           완료
 T04   label aggregation + typing               완료
 T05   historical ORG_NODE + lineage           완료
 T06   residual resolution UI                  완료
-T07   topic analysis                          다음
+T06.5 analytics meaning/grain hardening       완료
+T07   topic analysis                          GO 조건 검토 후 다음
 ```
 
 ## Invariants
@@ -68,11 +69,20 @@ label-summary CSV는 grain이 다르므로 별도로 제공한다.
 T05의 lexical extraction contamination 13개는 T01 residual 모집단이 아니며 담당 표기
 잔차 통계에 합산하지 않는다. T06 UI는 graph, affiliation, role, topic을 만들지 않는다.
 
+## T06.5 boundary
+
+T06.5는 원장을 재작성하지 않고 channel evidence, canonical mention→notice relation,
+RULE label→regulation identity, rule predicate, metric grain/date/release를 고정한다. T07의
+모든 notice 통계는 distinct notice_id이며 분모는 current approved release 2,089 notices다.
+`LINKED_TO_RULE` 3,775건을 proposal로 해석하지 않는다. `PROPOSES_CHANGE_TO`는 직접
+title/body evidence만 허용하고 `FUNCTION_TRANSFERRED_TO`는 조직 승계 roll-up에서 제외한다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
 - `docs/architecture/document-extraction-ledger.md`
 - `docs/architecture/observation-label-entity-model.md`
+- `docs/architecture/topic-analysis-contract.md`
 
 ## Decision history
 
@@ -84,3 +94,4 @@ T05의 lexical extraction contamination 13개는 T01 residual 모집단이 아�
 | 2026-09-18 | T04 | lexical label과 type evidence를 집계하되 entity/node로 승격하지 않는다. |
 | 2026-09-18 | T05 | 공식 근거가 있는 ORG label만 time-aware node로 승격하고 scoped function-transfer edge만 기록한다. |
 | 2026-09-18 | T06 | 기존 occurrence/label/node 원장을 current-release public read model로 투영하고 두 CSV grain을 분리한다. |
+| 2026-09-18 | T06.5 | T07 전에 source resolution, entity resolution, predicate, metric grain을 machine-readable 계약으로 고정한다. |
