@@ -2,14 +2,14 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.5 IMPLEMENTED — T07 READINESS CONTRACT**
-- Parent checkpoint: `715122af204a71d82119d47b37387da944625e1f`
-- Contracts: `mention-notice-v1`, `rule-label-regulation-v1`, `change-assertion-v1`, `topic-metrics-v1`
+- Status: **T07-A IMPLEMENTED — DATA LAYER ONLY; UI NOT STARTED**
+- Parent checkpoint: `ab02b2a84cf09e6550db094dd14327d8e27d9e4f`
+- Contracts: `mention-notice-v1`, `rule-label-regulation-v1`, `change-assertion-v1`, `topic-metrics-v1`, `topic-v1`
 
 ## Purpose
 
-T07에 앞서 관측, source resolution, entity resolution, predicate, metric grain을 분리한다.
-이 문서는 topic을 분류하지 않으며 숫자가 무엇을 세는지만 고정한다.
+관측, source resolution, entity resolution, predicate, metric grain을 분리하고 T07-A의
+결정적 topic membership/evidence/read model을 고정한다. UI는 이 계약의 범위가 아니다.
 
 ```text
 같은 extraction ≠ 같은 notice
@@ -28,6 +28,7 @@ mention occurrence count ≠ notice count
 - metric contract: `config/topic-analysis-metrics-v1.json`
 - predicate contract: `config/analysis-predicates-v1.json`
 - runtime/Unicode metadata: `config/analysis-contract-runtime-v1.json`
+- topic membership seed: `config/topic-membership-v1.json`
 
 `analytics` 객체는 security-invoker derived read model이다. 원 source snapshot이 immutable한
 release/ledger이므로 결과가 결정적이며 별도 복제 row의 stale 위험을 만들지 않는다.
@@ -104,6 +105,36 @@ cue 충돌은 assertion 0으로 남긴다. target regulation version은 추측�
 추이는 historical release 비교가 아니라 현재 corpus 안 `posted_date` 연도다. WORK는
 7개 closed lexicon이므로 UI 명칭은 `선정 업무 키워드`다.
 
+## T07-A topic membership
+
+`topic-v1`은 `LITIGATION`과 `INVESTMENT_GUARANTEE` 두 topic을 non-exclusive하게 분류한다.
+membership grain은 `(contract, release, topic, notice)`이며 다음 네 evidence channel만 허용한다.
+
+```text
+TITLE_TERM
+MENTIONS_RULE
+PROPOSES_CHANGE_TO
+MENTIONS_WORK
+```
+
+`LINKED_TO_RULE`, PERSON, EMAIL, NOTICE_DEPARTMENT와 T06.x functional attribution/candidate는
+membership evidence가 아니다. 규정 언급과 개정예고도 각각 별도 evidence 및 read model로
+유지한다. current approved release 실측은 소송 21건, 투자·보증 18건, 양쪽 동시 0건,
+어느 topic에도 속하지 않은 notice 2,050건이다.
+
+membership/evidence ID는 입력 tuple의 canonical 문자열에 MD5 UUID 변환을 적용하므로 같은
+release와 같은 근거를 재투영하면 동일 ID가 생성된다. append-only unique constraint와
+`ON CONFLICT DO NOTHING`으로 동일 projection의 재실행은 no-op이다.
+
+## T07-A public read contract
+
+- `publish.public_topic_summary_v1()` — topic별 notice/year/evidence 및 분리된 regulation/org/work 집계
+- `publish.public_topic_notice_rows_v1(topic_code)` — topic-notice 1행 grain의 drill-down/CSV 원천
+
+두 RPC는 current approved release만 읽으며 anon/authenticated가 실행할 수 있다. underlying
+`core` ledger 및 `analytics` view는 공개 role이 직접 읽을 수 없다. 실제 PostgREST smoke에서
+두 RPC는 HTTP 200, anon의 `core` 직접 접근은 HTTP 406이었다.
+
 ## Organization inclusion and temporal rules
 
 T07 조직 통계에는 T05에서 node로 해소된 relation만 포함한다. `UNRESOLVED`와
@@ -149,7 +180,7 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 
 ## Non-goals
 
-- T07 topic membership 또는 dashboard
+- T07 UI/dashboard
 - PERSON entity, identity, role, affiliation
 - organization lineage 확대 또는 successor roll-up
 - evidence 없는 proposal assertion과 LLM 자유 추론
@@ -163,6 +194,12 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 - `config/topic-analysis-metrics-v1.json`
 - `config/analysis-predicates-v1.json`
 - `config/analysis-contract-runtime-v1.json`
+- `config/topic-membership-v1.json`
+- `supabase/migrations/20260919000100_topic_analysis_data_layer.sql`
+- `tools/analytics/check_topic_v1_contract.mjs`
+- `tools/analytics/check_topic_v1_http.mjs`
+- `tools/analytics/verify_topic_v1.sql`
+- `tools/analytics/report_topic_v1.sql`
 
 ## Decision history
 
@@ -173,3 +210,6 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 | 2026-09-18 | T06.5 | three rule predicates와 metric grain/date/release를 분리한다. |
 | 2026-09-18 | T06.5 | proposal assertion은 보수적 direct evidence만 허용한다. |
 | 2026-09-18 | T06.5 | function transfer는 successor roll-up에서 제외한다. |
+| 2026-09-19 | T07-A | topic은 non-exclusive `topic-v1` membership과 분리된 direct evidence channel로 고정한다. |
+| 2026-09-19 | T07-A | 규정 언급, 규정 개정예고, 직접 ORG mention, 선정 WORK keyword의 read model을 합치지 않는다. |
+| 2026-09-19 | T07-A | drill-down/CSV의 grain은 topic-notice 1행이며 UI는 후속 티켓으로 남긴다. |

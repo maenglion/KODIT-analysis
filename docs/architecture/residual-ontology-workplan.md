@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8.4 SELECTIVE RESOLUTION EVALUATED; AUTO_ACCEPT FALSE; T07 NOT STARTED**
+- Status: **T07-A TOPIC ANALYSIS DATA LAYER IMPLEMENTED; UI NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -33,7 +33,8 @@ T06.8.1 temporal gold/precision holdout          완료; AUTO_ACCEPT 불승인
 T06.8.2 temporal function profile/as-of control  완료; historical 시행본 부재
 T06.8.3 historical enacted organization corpus  완료; 2022~2025 시행 profile 추가
 T06.8.4 selective high-precision resolution     완료; 표본 부족으로 AUTO_ACCEPT 불승인
-T07   topic analysis                          다음 단계; 아직 시작하지 않음
+T07-A topic analysis data layer               완료; topic-v1/read model/RPC
+T07-B topic analysis UI                       아직 시작하지 않음
 ```
 
 ## Invariants
@@ -140,6 +141,15 @@ weights, threshold는 바꾸지 않았고 residual 1,272건에는 적용하지 �
 최소 accepted N 30을 충족하지 못해 `AUTO_ACCEPT=false`다. residual 1,272건에는 새 run을
 만들지 않았고 T07도 시작하지 않았다.
 
+## T07-A boundary
+
+T07-A는 current approved release 2,089 notices를 대상으로 소송과 투자·보증의 non-exclusive
+`topic-v1` membership을 생성한다. notice grain은 항상 distinct notice_id다. TITLE_TERM,
+MENTIONS_RULE, PROPOSES_CHANGE_TO, MENTIONS_WORK 근거를 분리 보존하고, LINKED_TO_RULE와
+T06.x attribution/candidate/residual 추론은 기본 통계에 넣지 않는다. 직접 관측된 ORG mention이
+확정 ORG_NODE로 해소된 경우만 조직 통계에 포함한다. public summary와 topic-notice drill-down
+RPC까지가 범위이며 UI는 만들지 않았다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -170,3 +180,4 @@ weights, threshold는 바꾸지 않았고 residual 1,272건에는 적용하지 �
 | 2026-09-18 | T06.8.2 | 42개 historical proposal을 enacted profile과 분리하고 683건을 no-profile로 재분류했다. |
 | 2026-09-18 | T06.8.3 | 31개 official enacted 문서와 12개 profile epoch를 추가하고 frozen scorer로 gold만 재평가했다. |
 | 2026-09-18 | T06.8.4 | holdout 정밀도뿐 아니라 최소 표본 30건 gate를 적용해 AUTO_ACCEPT를 불승인했다. |
+| 2026-09-19 | T07-A | 소송/투자·보증 topic-v1 membership, evidence, metric read model과 public-safe RPC를 추가하고 UI는 후속으로 분리했다. |

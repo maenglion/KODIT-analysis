@@ -1,0 +1,23 @@
+{
+  "contract_version": "topic-v1",
+  "release_scope": "CURRENT_APPROVED_RELEASE",
+  "notice_grain": "DISTINCT_NOTICE_ID",
+  "date_field": "publish.notices.posted_date",
+  "non_exclusive": true,
+  "topics": [
+    {
+      "topic_code": "LITIGATION",
+      "name": "소송",
+      "title_and_rule_terms": ["소송", "법률구조", "변호사", "법무사"],
+      "work_terms": ["소송대리"]
+    },
+    {
+      "topic_code": "INVESTMENT_GUARANTEE",
+      "name": "투자·보증",
+      "title_and_rule_terms": ["투자옵션부보증", "보증연계투자", "증자참여권", "퍼스트펭귄", "투자보증"],
+      "work_terms": ["투자옵션부보증", "보증연계투자", "증자참여권"]
+    }
+  ],
+  "membership_evidence": ["TITLE_TERM", "MENTIONS_RULE", "PROPOSES_CHANGE_TO", "MENTIONS_WORK"],
+  "excluded_evidence": ["LINKED_TO_RULE", "PERSON", "EMAIL", "NOTICE_DEPARTMENT", "T06_FUNCTIONAL_ATTRIBUTION"]
+}

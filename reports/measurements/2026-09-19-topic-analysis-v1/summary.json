@@ -1,0 +1,81 @@
+{
+  "contract_version": "topic-v1",
+  "release_scope": "CURRENT_APPROVED_RELEASE",
+  "population": 2089,
+  "membership_rows": 39,
+  "evidence_rows": 106,
+  "overlap": {
+    "only_one_topic": 39,
+    "both_topics": 0,
+    "neither_topic": 2050
+  },
+  "topics": {
+    "LITIGATION": {
+      "notice_count": 21,
+      "regulation_count": 5,
+      "direct_org_count": 1,
+      "period_start": "2015-06-18",
+      "period_end": "2025-09-17",
+      "yearly": {"2015": 3, "2016": 3, "2018": 2, "2019": 1, "2021": 1, "2022": 3, "2023": 3, "2024": 2, "2025": 3},
+      "evidence_basis": {"MENTIONS_RULE": 10, "MENTIONS_WORK": 1, "PROPOSES_CHANGE_TO": 10, "TITLE_TERM": 21},
+      "top_mentioned_regulations": [
+        {"name": "소송위임 변호사 선임 및 활용기준", "notice_count": 4},
+        {"name": "고문변호사 운영기준", "notice_count": 3},
+        {"name": "일반업무소송요령", "notice_count": 3},
+        {"name": "법무사 사건위임 및 보수지급 기준", "notice_count": 1},
+        {"name": "임직원 법률구조 운영기준", "notice_count": 1}
+      ],
+      "top_proposed_change_regulations": [
+        {"name": "고문변호사 운영기준", "notice_count": 3},
+        {"name": "일반업무소송요령", "notice_count": 3},
+        {"name": "소송위임 변호사 선임 및 활용기준", "notice_count": 2},
+        {"name": "소송업무 처리기준", "notice_count": 1},
+        {"name": "임직원 법률구조 운영기준", "notice_count": 1}
+      ],
+      "direct_organizations": [{"name": "기업개선부", "notice_count": 11}],
+      "selected_work_keywords": [{"keyword": "소송대리", "notice_count": 1}]
+    },
+    "INVESTMENT_GUARANTEE": {
+      "notice_count": 18,
+      "regulation_count": 2,
+      "direct_org_count": 5,
+      "period_start": "2016-01-05",
+      "period_end": "2026-06-24",
+      "yearly": {"2016": 2, "2017": 1, "2018": 2, "2019": 3, "2021": 3, "2023": 2, "2024": 1, "2025": 1, "2026": 3},
+      "evidence_basis": {"MENTIONS_RULE": 6, "MENTIONS_WORK": 18, "PROPOSES_CHANGE_TO": 6, "TITLE_TERM": 7},
+      "top_mentioned_regulations": [
+        {"name": "투자옵션부보증 운용기준", "notice_count": 6},
+        {"name": "투자옵션부보증기준", "notice_count": 1}
+      ],
+      "top_proposed_change_regulations": [
+        {"name": "투자옵션부보증 운용기준", "notice_count": 3},
+        {"name": "투자옵션부보증 업무처리방법", "notice_count": 2},
+        {"name": "투자옵션부보증 운영기준", "notice_count": 1}
+      ],
+      "direct_organizations": [
+        {"name": "자본시장부", "notice_count": 13},
+        {"name": "경영기획부", "notice_count": 2},
+        {"name": "4.0창업부", "notice_count": 1},
+        {"name": "빅데이터부", "notice_count": 1},
+        {"name": "스타트업금융부", "notice_count": 1}
+      ],
+      "selected_work_keywords": [
+        {"keyword": "투자옵션부보증", "notice_count": 12},
+        {"keyword": "보증연계투자", "notice_count": 6},
+        {"keyword": "증자참여권", "notice_count": 1}
+      ]
+    }
+  },
+  "invariants": {
+    "broken_evidence_fk": 0,
+    "duplicate_membership": 0,
+    "invalid_evidence_basis": 0,
+    "linked_to_rule_evidence": 0,
+    "nondeterministic_result": 0
+  },
+  "public_http": {
+    "summary": 200,
+    "drilldown": 200,
+    "direct_core_access": 406
+  }
+}
