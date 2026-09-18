@@ -1,0 +1,66 @@
+{
+  "contract_version": "historical-enacted-positive-control-v1",
+  "frozen_scorer_config_sha256": "8f6afc23abb923d32c881595fef3ff28697d77b34ab2da04d7a51163c93902da",
+  "profile_assignment_count": 1357,
+  "profile_epoch_count": 12,
+  "before": {
+    "asof_department_gold": 23,
+    "asof_function_gold": 45,
+    "complete_multi_org_gold": 27,
+    "no_matching_temporal_profile": 683
+  },
+  "after": {
+    "asof_department_gold": 23,
+    "asof_function_gold": 698,
+    "complete_multi_org_gold": 698,
+    "no_matching_temporal_profile": 119
+  },
+  "delta": {
+    "asof_department_gold": 0,
+    "asof_function_gold": 653,
+    "complete_multi_org_gold": 671,
+    "no_matching_temporal_profile": -564
+  },
+  "coverage_2022_2026": {
+    "2022": {
+      "notice_count": 123,
+      "function_gold": 74,
+      "complete_multi_org_gold": 74
+    },
+    "2023": {
+      "notice_count": 159,
+      "function_gold": 150,
+      "complete_multi_org_gold": 150
+    },
+    "2024": {
+      "notice_count": 219,
+      "function_gold": 208,
+      "complete_multi_org_gold": 208
+    },
+    "2025": {
+      "notice_count": 205,
+      "function_gold": 190,
+      "complete_multi_org_gold": 190
+    },
+    "2026": {
+      "notice_count": 111,
+      "function_gold": 76,
+      "complete_multi_org_gold": 76
+    }
+  },
+  "leakage_count": 0,
+  "frozen_resolver_re_evaluated": true,
+  "frozen_resolver_metrics": {
+    "population": 698,
+    "coverage_count": 625,
+    "coverage": 0.8954154727793696,
+    "top1_correct": 482,
+    "top1_accuracy": 0.6905444126074498,
+    "top3_correct": 614,
+    "top3_recall": 0.8796561604584527,
+    "ambiguous": 194,
+    "no_match": 73
+  },
+  "algorithm_weights_threshold_changed": false,
+  "residual_1272_applied": false
+}

@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8.2 TEMPORAL PROFILE AUDIT COMPLETE; HISTORICAL EVIDENCE GAP — T07 NOT STARTED**
+- Status: **T06.8.3 HISTORICAL ENACTED CORPUS COMPLETE; T07 NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -31,6 +31,7 @@ T06.7 official historical org evidence corpus/relationization 완료
 T06.8 function-assignment positive control      완료; residual 적용 보류
 T06.8.1 temporal gold/precision holdout          완료; AUTO_ACCEPT 불승인
 T06.8.2 temporal function profile/as-of control  완료; historical 시행본 부재
+T06.8.3 historical enacted organization corpus  완료; 2022~2025 시행 profile 추가
 T07   topic analysis                          다음 단계; 아직 시작하지 않음
 ```
 
@@ -123,6 +124,14 @@ date, version-chain link는 각각 0이다. 따라서 strict 683건을 2026 prof
 multi-org gold는 current 27건뿐이고 historical 18건은 개인정보 기능 하나의 scoped partial
 profile이므로 calibration/holdout과 residual 적용을 수행하지 않았다.
 
+## T06.8.3 boundary
+
+공식 ALIO 시행 archive에서 2022~2025 직제규정·본부점 세부운영기준·직무전결요령
+31개 시행본을 보존하고 12개 temporal function profile epoch를 추가했다. proposal 42건은
+별도 reconciliation 원장에 유지하며 시행본으로 승격하지 않는다. frozen scorer의 algorithm,
+weights, threshold는 바꾸지 않았고 residual 1,272건에는 적용하지 않았다. 2012~2014 공식
+시행본은 여전히 evidence gap이다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -150,3 +159,4 @@ profile이므로 calibration/holdout과 residual 적용을 수행하지 않았�
 | 2026-09-18 | T06.8 | 817건 positive control에서 leakage 0을 확인했으나 top-1 64.29%여서 residual 승격을 보류한다. |
 | 2026-09-18 | T06.8.1 | temporal gold를 분리하고 holdout precision을 측정했으나 50%로 95% AUTO_ACCEPT gate를 통과하지 못했다. |
 | 2026-09-18 | T06.8.2 | 42개 historical proposal을 enacted profile과 분리하고 683건을 no-profile로 재분류했다. |
+| 2026-09-18 | T06.8.3 | 31개 official enacted 문서와 12개 profile epoch를 추가하고 frozen scorer로 gold만 재평가했다. |

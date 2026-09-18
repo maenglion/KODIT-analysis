@@ -1,0 +1,44 @@
+{
+  "contract_version": "historical-enacted-org-corpus-v1",
+  "evidence_as_of": "2026-09-18T00:00:00+09:00",
+  "archives": {
+    "ORGANIZATION_RULE": {"rule_id": "11716", "file_no": "227950", "file_name": "직제규정(2017-2025).zip"},
+    "BRANCH_OPERATION": {"rule_id": "45568", "file_no": "200679", "file_name": "본부점 세부운영기준(2015년-2024년).zip"},
+    "DELEGATION": {"rule_id": "11713", "file_no": "201348", "file_name": "직무전결요령(2016년-2024년도).zip"}
+  },
+  "versions": [
+    {"series":"ORGANIZATION_RULE","archive_index":21,"revision_date":"2022-07-04","effective_date":"2022-07-04"},
+    {"series":"ORGANIZATION_RULE","archive_index":20,"revision_date":"2022-11-28","effective_date":null},
+    {"series":"ORGANIZATION_RULE","archive_index":19,"revision_date":"2022-12-30","effective_date":"2022-12-02"},
+    {"series":"ORGANIZATION_RULE","archive_index":18,"revision_date":"2023-01-18","effective_date":"2023-02-01"},
+    {"series":"ORGANIZATION_RULE","archive_index":17,"revision_date":"2023-12-29","effective_date":null},
+    {"series":"ORGANIZATION_RULE","archive_index":16,"revision_date":"2024-01-17","effective_date":"2024-01-30"},
+    {"series":"ORGANIZATION_RULE","archive_index":15,"revision_date":"2024-12-31","effective_date":"2025-01-31"},
+    {"series":"ORGANIZATION_RULE","archive_index":14,"revision_date":"2025-03-04","effective_date":"2025-03-04"},
+    {"series":"ORGANIZATION_RULE","archive_index":13,"revision_date":"2025-07-01","effective_date":"2025-07-23"},
+    {"series":"ORGANIZATION_RULE","file_no":"227951","file_name":"직제규정(2025년도 12월 31일 개정).hwp","revision_date":"2025-12-31","effective_date":null},
+
+    {"series":"BRANCH_OPERATION","archive_index":23,"revision_date":"2022-07-04","effective_date":"2022-07-04"},
+    {"series":"BRANCH_OPERATION","archive_index":21,"revision_date":"2022-11-28","effective_date":"2022-11-28"},
+    {"series":"BRANCH_OPERATION","archive_index":22,"revision_date":"2022-12-30","effective_date":"2022-12-30"},
+    {"series":"BRANCH_OPERATION","archive_index":25,"revision_date":"2023-01-18","effective_date":"2023-01-18"},
+    {"series":"BRANCH_OPERATION","archive_index":1,"revision_date":"2023-06-28","effective_date":"2023-06-28"},
+    {"series":"BRANCH_OPERATION","archive_index":24,"revision_date":"2023-12-29","effective_date":"2023-12-29"},
+    {"series":"BRANCH_OPERATION","archive_index":26,"revision_date":"2024-01-17","effective_date":"2024-01-30"},
+    {"series":"BRANCH_OPERATION","file_no":"200680","file_name":"본부점 세부운영기준(2024년도 6월 개정).hwp","revision_date":"2024-06-27","effective_date":"2024-07-24"},
+    {"series":"BRANCH_OPERATION","file_no":"209731","file_name":"본부점 세부운영기준(2024년도 12월 개정).hwp","revision_date":"2024-12-31","effective_date":"2025-01-31"},
+    {"series":"BRANCH_OPERATION","file_no":"212924","file_name":"본부점 세부운영기준(2025년도 3월 개정).hwp","revision_date":"2025-03-06","effective_date":"2025-03-06"},
+    {"series":"BRANCH_OPERATION","file_no":"218041","file_name":"본부점 세부운영기준(2025년도 7월 1일 개정).hwp","revision_date":"2025-07-01","effective_date":"2025-07-23"},
+    {"series":"BRANCH_OPERATION","file_no":"219730","file_name":"본부점 세부운영기준(2025년도 8월 7일 개정).hwp","revision_date":"2025-08-07","effective_date":"2025-08-07"},
+    {"series":"BRANCH_OPERATION","file_no":"227949","file_name":"본부점 세부운영기준(2025년도 12월 31일 개정).hwp","revision_date":"2025-12-31","effective_date":null},
+
+    {"series":"DELEGATION","archive_index":10,"revision_date":"2022-01-31","effective_date":"2022-01-31"},
+    {"series":"DELEGATION","archive_index":11,"revision_date":"2023-02-01","effective_date":"2023-02-01"},
+    {"series":"DELEGATION","archive_index":12,"revision_date":"2023-07-24","effective_date":"2023-07-24"},
+    {"series":"DELEGATION","archive_index":13,"revision_date":"2024-01-30","effective_date":"2024-01-30"},
+    {"series":"DELEGATION","file_no":"201349","file_name":"직무전결요령(2024년도 7월 개정).hwp","revision_date":"2024-07-17","effective_date":"2024-07-17"},
+    {"series":"DELEGATION","file_no":"211175","file_name":"직무전결요령(2025년도 1월 개정).hwp","revision_date":"2025-01-31","effective_date":"2025-01-31"},
+    {"series":"DELEGATION","file_no":"212922","file_name":"직무전결요령(2025년도 3월 개정).hwp","revision_date":"2025-03-06","effective_date":"2025-03-06"},
+    {"series":"DELEGATION","file_no":"218879","file_name":"직무전결요령(2025년도 7월 개정).hwp","revision_date":"2025-07-23","effective_date":"2025-07-23"}
+  ]
+}

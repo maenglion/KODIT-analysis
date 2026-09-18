@@ -1,0 +1,23 @@
+{
+  "contract": "historical-enacted-org-corpus-v1",
+  "mode": "preflight",
+  "state": {
+    "planned_documents": 31
+  },
+  "proposal_distribution": {},
+  "series_years": {
+    "ORGANIZATION_RULE:2022": 3,
+    "ORGANIZATION_RULE:2023": 2,
+    "ORGANIZATION_RULE:2024": 2,
+    "ORGANIZATION_RULE:2025": 3,
+    "BRANCH_OPERATION:2022": 3,
+    "BRANCH_OPERATION:2023": 3,
+    "BRANCH_OPERATION:2024": 3,
+    "BRANCH_OPERATION:2025": 4,
+    "DELEGATION:2022": 1,
+    "DELEGATION:2023": 2,
+    "DELEGATION:2024": 2,
+    "DELEGATION:2025": 3
+  },
+  "official_effective_dates": 27
+}

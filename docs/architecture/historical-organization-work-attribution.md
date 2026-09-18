@@ -161,6 +161,21 @@ snapshot/function/change 근거가 없다. 따라서 해당 기간 14개 표본�
 공식 from/to change event로 승격하지 않는다. temporal coverage는 2024·2026 개인정보
 기능 event와 2026 current snapshot/function에 한정된다.
 
+T06.8.3은 공식 ALIO 시행 archive에서 2022~2025 시행본 31개(직제규정 10,
+본부점 세부운영기준 13, 직무전결요령 8)를 추가했다. 공식 시행일은 27개 문서에서
+직접 확보했고, 본부점 세부운영기준의 시행일을 기준으로 12개 비중첩 temporal function
+profile epoch와 1,357개 assignment를 만들었다. 전체 기능 본문은 assignment에 보존하고,
+evidence span은 문서의 각 번호 항목 첫 줄과 실제 extraction 좌표를 보존한다.
+
+42 proposal의 reconciliation 결과는 proposal 단위 `ENACTED_MATCHED` 16,
+`NO_ENACTED_VERSION_FOUND` 26이다. proposal은 시행 evidence가 아니며, 매칭된 시행본도
+proposal 문구와 동일하다고 추정하지 않는다. 2012~2014 시행본은 확보되지 않아 GAP이다.
+
+Known-answer AS-OF gold는 function 45→698, complete multi-org 27→698로 증가했고,
+`NO_MATCHING_TEMPORAL_PROFILE`은 683→119로 감소했다. frozen resolver를 그대로 재평가한
+결과 coverage 625/698, top-1 482/698, top-3 614/698이었다. 이 측정은 residual 1,272건
+자동 attribution 승인이 아니며 weights/threshold도 변경하지 않았다.
+
 ## Future cautions
 
 - 공식 근거문서가 새로 확보되면 기존 row를 갱신하지 말고 새 evidence document/event를
@@ -179,6 +194,12 @@ snapshot/function/change 근거가 없다. 따라서 해당 기간 14개 표본�
 - `supabase/migrations/20260918000610_historical_organization_evidence_backfill.sql`
 - `supabase/migrations/20260918000620_historical_organization_evidence_attribution_audit.sql`
 - `supabase/migrations/20260918000630_historical_organization_function_integrity.sql`
+- `supabase/migrations/20260918000700_historical_enacted_org_corpus.sql`
+- `config/historical-enacted-org-corpus-v1.json`
+- `tools/organizations/backfill_historical_enacted_corpus.py`
+- `tools/organizations/evaluate_historical_enacted_profiles.py`
+- `reports/measurements/2026-09-18-historical-enacted-org-corpus-v1/`
+- `reports/measurements/2026-09-18-historical-enacted-positive-control-v1/`
 - `config/org-work-similarity-v1.json`
 - `tools/organizations/backfill_org_work_attribution.py`
 - `tools/organizations/run_org_work_attribution_backfill.ps1`
@@ -221,3 +242,5 @@ snapshot/function/change 근거가 없다. 따라서 해당 기간 14개 표본�
 | 2026-09-18 | 같은 연도 공식 문서는 attribution 검색 입력으로만 연결하며 확정 근거로 승격하지 않는다. |
 | 2026-09-18 | 2026 current snapshot/function을 관계화하고 개인정보 기능 epoch는 비중첩 v3 계약으로 고정했다. |
 | 2026-09-18 | 2012~2014 공식 snapshot/function/change evidence gap 때문에 before/after resolved delta는 0이다. |
+| 2026-09-18 | T06.8.3 공식 시행본만 temporal profile로 사용하고 proposal은 reconciliation 원장에 분리했다. |
+| 2026-09-18 | 시행 profile 확대로 gold를 재계산하되 frozen resolver 계약과 residual 원장은 변경하지 않았다. |
