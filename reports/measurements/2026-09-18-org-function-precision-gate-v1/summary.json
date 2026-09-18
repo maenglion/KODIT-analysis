@@ -1,0 +1,956 @@
+{
+  "contract_version": "org-function-precision-gate-v1",
+  "population": {
+    "known_answer": 817,
+    "strict_subset": 728
+  },
+  "gold_semantics": {
+    "CURRENT_FUNCTION_GOLD": 27,
+    "HISTORICAL_ASOF_GOLD": 18,
+    "OBSERVED_DEPARTMENT_ONLY": 683
+  },
+  "temporal_reclassification": {
+    "CURRENT_WINDOW_COMPATIBLE": 27,
+    "HISTORICAL_WINDOW_SUPPORTED": 18,
+    "NEITHER": 0,
+    "TEMPORAL_CONFLICT": 683
+  },
+  "temporal_overlap_audit": {
+    "current_and_historical_supported": 23,
+    "historical_supported_total_before_exclusive_precedence": 41,
+    "current_assignment_2026_applied_to_pre_2026_notice": 620,
+    "notice_2012_count": 0
+  },
+  "legacy_metric_semantics": {
+    "name": "2026_PROFILE_OBSERVED_DEPARTMENT_REPRODUCTION_DIAGNOSTIC",
+    "top1_correct": 468,
+    "denominator": 728,
+    "rate": 0.6428571428571429,
+    "not_current_function_accuracy": true
+  },
+  "split": {
+    "contract": {
+      "version": "sha256-notice-id-stratified-v1",
+      "holdout_fraction": 0.3
+    },
+    "calibration": 19,
+    "holdout": 8,
+    "overlap": 0,
+    "calibration_by_org": {
+      "기업개선부": 1,
+      "미래전략실": 1,
+      "성과관리부": 1,
+      "신용보증부": 7,
+      "신용보험부": 1,
+      "인재경영부": 5,
+      "인프라금융부": 2,
+      "자본시장부": 1
+    },
+    "holdout_by_org": {
+      "미래전략실": 1,
+      "신용보증부": 3,
+      "인재경영부": 2,
+      "인프라금융부": 1,
+      "자본시장부": 1
+    }
+  },
+  "current_gold_diagnostics": {
+    "population": 27,
+    "coverage_count": 25,
+    "coverage": 0.9259259259259259,
+    "top1_correct": 17,
+    "top1_accuracy": 0.6296296296296297,
+    "top3_correct": 22,
+    "top3_recall": 0.8148148148148148,
+    "ambiguous": 7,
+    "no_candidate": 2,
+    "confusion_matrix": [
+      {
+        "actual_org": "기업개선부",
+        "predicted_org": "기업개선부",
+        "count": 1
+      },
+      {
+        "actual_org": "미래전략실",
+        "predicted_org": "미래전략실",
+        "count": 2
+      },
+      {
+        "actual_org": "성과관리부",
+        "predicted_org": "성과관리부",
+        "count": 1
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "신용보증부",
+        "count": 7
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "경영기획부",
+        "count": 1
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "고객지원부",
+        "count": 1
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "홍보협력실",
+        "count": 1
+      },
+      {
+        "actual_org": "신용보험부",
+        "predicted_org": "자본시장부",
+        "count": 1
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "경영기획부",
+        "count": 3
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "인재경영부",
+        "count": 2
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "감사실",
+        "count": 1
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "업무지원부",
+        "count": 1
+      },
+      {
+        "actual_org": "인프라금융부",
+        "predicted_org": "인프라금융부",
+        "count": 3
+      },
+      {
+        "actual_org": "자본시장부",
+        "predicted_org": "기업개선부",
+        "count": 1
+      },
+      {
+        "actual_org": "자본시장부",
+        "predicted_org": "자본시장부",
+        "count": 1
+      }
+    ]
+  },
+  "policy_results": [
+    {
+      "precision_target": 0.9,
+      "selected_rules": [
+        {
+          "family": "REGULATION_TITLE_CORROBORATED",
+          "score_threshold": 0.1,
+          "margin_threshold": 0.04,
+          "calibration_accepted": 5,
+          "calibration_correct": 5,
+          "calibration_precision": 1.0
+        }
+      ],
+      "calibration": {
+        "population": 19,
+        "accepted": 5,
+        "correct": 5,
+        "precision": 1.0,
+        "coverage": 0.2631578947368421,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 5
+        }
+      },
+      "holdout": {
+        "population": 8,
+        "accepted": 2,
+        "correct": 1,
+        "precision": 0.5,
+        "coverage": 0.25,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 2
+        }
+      }
+    },
+    {
+      "precision_target": 0.95,
+      "selected_rules": [
+        {
+          "family": "REGULATION_TITLE_CORROBORATED",
+          "score_threshold": 0.1,
+          "margin_threshold": 0.04,
+          "calibration_accepted": 5,
+          "calibration_correct": 5,
+          "calibration_precision": 1.0
+        }
+      ],
+      "calibration": {
+        "population": 19,
+        "accepted": 5,
+        "correct": 5,
+        "precision": 1.0,
+        "coverage": 0.2631578947368421,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 5
+        }
+      },
+      "holdout": {
+        "population": 8,
+        "accepted": 2,
+        "correct": 1,
+        "precision": 0.5,
+        "coverage": 0.25,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 2
+        }
+      }
+    },
+    {
+      "precision_target": 0.98,
+      "selected_rules": [
+        {
+          "family": "REGULATION_TITLE_CORROBORATED",
+          "score_threshold": 0.1,
+          "margin_threshold": 0.04,
+          "calibration_accepted": 5,
+          "calibration_correct": 5,
+          "calibration_precision": 1.0
+        }
+      ],
+      "calibration": {
+        "population": 19,
+        "accepted": 5,
+        "correct": 5,
+        "precision": 1.0,
+        "coverage": 0.2631578947368421,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 5
+        }
+      },
+      "holdout": {
+        "population": 8,
+        "accepted": 2,
+        "correct": 1,
+        "precision": 0.5,
+        "coverage": 0.25,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 2
+        }
+      }
+    },
+    {
+      "precision_target": 1.0,
+      "selected_rules": [
+        {
+          "family": "REGULATION_TITLE_CORROBORATED",
+          "score_threshold": 0.1,
+          "margin_threshold": 0.04,
+          "calibration_accepted": 5,
+          "calibration_correct": 5,
+          "calibration_precision": 1.0
+        }
+      ],
+      "calibration": {
+        "population": 19,
+        "accepted": 5,
+        "correct": 5,
+        "precision": 1.0,
+        "coverage": 0.2631578947368421,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 5
+        }
+      },
+      "holdout": {
+        "population": 8,
+        "accepted": 2,
+        "correct": 1,
+        "precision": 0.5,
+        "coverage": 0.25,
+        "family_match_counts": {
+          "REGULATION_TITLE_CORROBORATED": 2
+        }
+      }
+    }
+  ],
+  "auto_accept": {
+    "authorized": false,
+    "reason": "HOLDOUT_GATE_NOT_MET",
+    "residual_run_created": false
+  },
+  "ambiguous_analysis": {
+    "total_ambiguous": 162,
+    "ambiguous_top1_correct": 67,
+    "ambiguous_top1_incorrect": 95,
+    "confusion_pairs": [
+      {
+        "actual_org": "기업개선부",
+        "predicted_org": "신용보증부",
+        "count": 16,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "보증",
+          "관리",
+          "규정",
+          "제규",
+          "기획",
+          "련제",
+          "운용",
+          "획및",
+          "관한",
+          "에관"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 16,
+          "body": 15,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.152808024375,
+          "body": 0.15902492625,
+          "regulation": 0.01242177875,
+          "proposal": 0.176319899375,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "인프라금융부",
+        "count": 10,
+        "shared_function_bigrams": [
+          "보증",
+          "업무",
+          "관련",
+          "신용",
+          "관리",
+          "용보",
+          "기획",
+          "운용",
+          "규정",
+          "련제",
+          "제규",
+          "기반"
+        ],
+        "evidence_presence": {
+          "regulation": 10,
+          "proposal": 9,
+          "body": 10,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.292356698,
+          "body": 0.297973029,
+          "regulation": 0.43266792,
+          "proposal": 0.389401128,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "기업개선부",
+        "predicted_org": "자본시장부",
+        "count": 8,
+        "shared_function_bigrams": [
+          "업무",
+          "관리",
+          "보증",
+          "관련",
+          "운용",
+          "관한",
+          "에관",
+          "규정",
+          "제규",
+          "기획",
+          "한업",
+          "구상"
+        ],
+        "evidence_presence": {
+          "regulation": 5,
+          "proposal": 6,
+          "body": 8,
+          "work": 5
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.32185625749999996,
+          "body": 0.32338888125,
+          "regulation": 0.24170593125,
+          "proposal": 0.28407101,
+          "work": 0.18215046875000002
+        }
+      },
+      {
+        "actual_org": "기업개선부",
+        "predicted_org": "고객지원부",
+        "count": 7,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "관리",
+          "운용",
+          "기획",
+          "관한",
+          "에관",
+          "획및",
+          "규정",
+          "제규",
+          "및운",
+          "보증"
+        ],
+        "evidence_presence": {
+          "regulation": 7,
+          "proposal": 7,
+          "body": 7,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.14072495857142855,
+          "body": 0.21578807428571428,
+          "regulation": 0.18225544999999999,
+          "proposal": 0.17519578142857142,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "경영기획부",
+        "count": 6,
+        "shared_function_bigrams": [
+          "업무",
+          "관리",
+          "관련",
+          "운용",
+          "규정",
+          "제규",
+          "계획",
+          "기획",
+          "련업",
+          "운영",
+          "총괄",
+          "경영"
+        ],
+        "evidence_presence": {
+          "regulation": 5,
+          "proposal": 5,
+          "body": 6,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.13959263,
+          "body": 0.25522352833333334,
+          "regulation": 0.10656262833333334,
+          "proposal": 0.12283543666666667,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "기업개선부",
+        "predicted_org": "경영기획부",
+        "count": 6,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "관리",
+          "규정",
+          "제규",
+          "보증",
+          "계획",
+          "관한",
+          "에관",
+          "운용",
+          "조정",
+          "련제"
+        ],
+        "evidence_presence": {
+          "regulation": 3,
+          "proposal": 5,
+          "body": 6,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.149599135,
+          "body": 0.24773603166666666,
+          "regulation": 0.068829865,
+          "proposal": 0.123797735,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "고객지원부",
+        "count": 4,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "보증",
+          "운용",
+          "기획",
+          "관리",
+          "획및",
+          "및운",
+          "총괄",
+          "규정",
+          "제규",
+          "기업"
+        ],
+        "evidence_presence": {
+          "regulation": 2,
+          "proposal": 4,
+          "body": 4,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.15911796,
+          "body": 0.1895861125,
+          "regulation": 0.052554180000000006,
+          "proposal": 0.18619993750000002,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "업무지원부",
+        "count": 3,
+        "shared_function_bigrams": [
+          "관리",
+          "업무",
+          "관련",
+          "운용",
+          "규정",
+          "련업",
+          "기획",
+          "제규",
+          "련제",
+          "운영",
+          "총괄",
+          "제도"
+        ],
+        "evidence_presence": {
+          "regulation": 3,
+          "proposal": 2,
+          "body": 3,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.15203251333333334,
+          "body": 0.16130544666666666,
+          "regulation": 0.17256786999999998,
+          "proposal": 0.10197963333333333,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "혁신금융부",
+        "count": 3,
+        "shared_function_bigrams": [
+          "보증",
+          "업무",
+          "관련",
+          "기획",
+          "관리",
+          "운용",
+          "및운",
+          "획및",
+          "규정",
+          "제규",
+          "련제",
+          "총괄"
+        ],
+        "evidence_presence": {
+          "regulation": 3,
+          "proposal": 2,
+          "body": 3,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.14464952,
+          "body": 0.3375897033333333,
+          "regulation": 0.20990790333333334,
+          "proposal": 0.09850675333333332,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "자본시장부",
+        "count": 3,
+        "shared_function_bigrams": [
+          "보증",
+          "업무",
+          "관리",
+          "관련",
+          "운용",
+          "기획",
+          "규정",
+          "제규",
+          "련제",
+          "및운",
+          "화보",
+          "획및"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 3,
+          "body": 3,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.14329164000000003,
+          "body": 0.2047211666666667,
+          "regulation": 0.12423355666666668,
+          "proposal": 0.15886277000000001,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보험부",
+        "predicted_org": "스타트업금융부",
+        "count": 3,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "기획",
+          "관리",
+          "운용",
+          "획및",
+          "및운",
+          "규정",
+          "제규",
+          "평가",
+          "련제",
+          "제정"
+        ],
+        "evidence_presence": {
+          "regulation": 3,
+          "proposal": 3,
+          "body": 3,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.15193796,
+          "body": 0.15647442,
+          "regulation": 0.18742883,
+          "proposal": 0.18742883,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "자본시장부",
+        "predicted_org": "신용보증부",
+        "count": 3,
+        "shared_function_bigrams": [
+          "보증",
+          "업무",
+          "관리",
+          "관련",
+          "운용",
+          "기획",
+          "규정",
+          "제규",
+          "련제",
+          "및운",
+          "화보",
+          "획및"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 3,
+          "body": 3,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.12624063,
+          "body": 0.15024463333333335,
+          "regulation": 0.04469966,
+          "proposal": 0.13409898,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "경영기획부",
+        "predicted_org": "비서실",
+        "count": 2,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "관리",
+          "규정",
+          "운영",
+          "제규",
+          "련업",
+          "임원",
+          "총괄",
+          "개정",
+          "기금",
+          "위원"
+        ],
+        "evidence_presence": {
+          "regulation": 2,
+          "proposal": 2,
+          "body": 2,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.172567855,
+          "body": 0.161770885,
+          "regulation": 0.19924199999999997,
+          "proposal": 0.19924199999999997,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보험부",
+        "predicted_org": "자본시장부",
+        "count": 2,
+        "shared_function_bigrams": [
+          "관리",
+          "업무",
+          "관련",
+          "운용",
+          "관한",
+          "규정",
+          "에관",
+          "제규",
+          "신용",
+          "기획",
+          "및운",
+          "용보"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 2,
+          "body": 2,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.12851954,
+          "body": 0.154414535,
+          "regulation": 0.06599291,
+          "proposal": 0.156842755,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보증부",
+        "predicted_org": "스타트업금융부",
+        "count": 2,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "보증",
+          "기획",
+          "관리",
+          "획및",
+          "운용",
+          "및운",
+          "규정",
+          "제규",
+          "련제",
+          "총괄"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 2,
+          "body": 2,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.15613111000000002,
+          "body": 0.193975375,
+          "regulation": 0.086092655,
+          "proposal": 0.175953545,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "자본시장부",
+        "predicted_org": "스타트업금융부",
+        "count": 1,
+        "shared_function_bigrams": [
+          "관리",
+          "업무",
+          "관련",
+          "보증",
+          "운용",
+          "기획",
+          "평가",
+          "규정",
+          "제규",
+          "및운",
+          "획및",
+          "련제"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 0,
+          "body": 1,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.11226389,
+          "body": 0.30675965,
+          "regulation": 0.31602116,
+          "proposal": 0.0,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "자본시장부",
+        "count": 1,
+        "shared_function_bigrams": [
+          "관리",
+          "업무",
+          "관련",
+          "운용",
+          "보증",
+          "기획",
+          "규정",
+          "제규",
+          "련제",
+          "및운",
+          "관한",
+          "련업"
+        ],
+        "evidence_presence": {
+          "regulation": 0,
+          "proposal": 1,
+          "body": 1,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.149588,
+          "body": 0.13879109,
+          "regulation": 0.0,
+          "proposal": 0.17776073,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보험부",
+        "predicted_org": "경영기획부",
+        "count": 1,
+        "shared_function_bigrams": [
+          "업무",
+          "관련",
+          "관리",
+          "계획",
+          "규정",
+          "신용",
+          "제규",
+          "용보",
+          "수립",
+          "운용",
+          "련업",
+          "예산"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 1,
+          "body": 1,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.11924162,
+          "body": 0.22525008,
+          "regulation": 0.1286514,
+          "proposal": 0.1286514,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "신용보험부",
+        "predicted_org": "업무지원부",
+        "count": 1,
+        "shared_function_bigrams": [
+          "업무",
+          "관리",
+          "관련",
+          "보험",
+          "운용",
+          "규정",
+          "련업",
+          "제규",
+          "회계",
+          "신용",
+          "관한",
+          "에관"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 1,
+          "body": 1,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.16889438,
+          "body": 0.18964186,
+          "regulation": 0.2261404,
+          "proposal": 0.22059199,
+          "work": 0.0
+        }
+      },
+      {
+        "actual_org": "인재경영부",
+        "predicted_org": "기업개선부",
+        "count": 1,
+        "shared_function_bigrams": [
+          "업무",
+          "관리",
+          "관련",
+          "운용",
+          "규정",
+          "기획",
+          "제규",
+          "관한",
+          "련제",
+          "에관",
+          "획및",
+          "및운"
+        ],
+        "evidence_presence": {
+          "regulation": 1,
+          "proposal": 0,
+          "body": 1,
+          "work": 0
+        },
+        "mean_top1_channel_scores": {
+          "title": 0.24574667,
+          "body": 0.24767522,
+          "regulation": 0.1509993,
+          "proposal": 0.0,
+          "work": 0.0
+        }
+      }
+    ],
+    "interpretation": "Shared bigrams are descriptive overlap only; they are not attribution evidence."
+  },
+  "coarse_assignment_impact": {
+    "canonical_coarse_assignments": 21,
+    "coarse_rows": 533,
+    "coarse_top1": 341,
+    "coarse_top1_rate": 0.6397748592870544,
+    "noncoarse_rows": 195,
+    "noncoarse_top1": 127,
+    "noncoarse_top1_rate": 0.6512820512820513,
+    "canonical_rows_modified": false
+  },
+  "regulation_backed_subset": {
+    "count": 696,
+    "top1_correct": 455,
+    "top1_rate": 0.6537356321839081,
+    "top3_correct": 581,
+    "official_regulation_to_function_relation_exists": false,
+    "relation_decision": "No relation created: the current ledger has lexical regulation/proposal evidence but no official regulation-to-function assignment evidence."
+  },
+  "leakage": {
+    "parent_leakage_count": 0,
+    "residual_rows_queried": false,
+    "holdout_used_for_rule_selection": false,
+    "leakage_count": 0
+  }
+}

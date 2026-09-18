@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8 POSITIVE CONTROL COMPLETE; RESIDUAL PROMOTION GATED — T07 NOT STARTED**
+- Status: **T06.8.1 PRECISION GATE COMPLETE; AUTO_ACCEPT REJECTED — T07 NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -29,6 +29,7 @@ T06.5 analytics meaning/grain hardening       완료
 T06.6 historical org evidence/work attribution 완료
 T06.7 official historical org evidence corpus/relationization 완료
 T06.8 function-assignment positive control      완료; residual 적용 보류
+T06.8.1 temporal gold/precision holdout          완료; AUTO_ACCEPT 불승인
 T07   topic analysis                          다음 단계; 아직 시작하지 않음
 ```
 
@@ -106,6 +107,13 @@ T06.8은 exact-department 817건을 known-answer control로 삼되 담당부서�
 측정되어 automatic attribution 계약으로는 불충분했다. residual 1,272건을 조회하거나
 threshold 조정에 사용하지 않았으며 새 attribution version도 적용하지 않았다.
 
+## T06.8.1 boundary
+
+T06.8.1은 strict 728건을 current gold 27, historical-only gold 18, observed-only 683으로
+분리했다. current gold를 SHA-256 stratified calibration 19 / holdout 8로 나누었고 overlap과
+leakage는 0이다. calibration 5/5 규칙은 holdout 1/2(50%)로 실패했으므로 AUTO_ACCEPT와
+residual 1,272건 versioned run을 생성하지 않았다. T07은 시작하지 않는다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -114,6 +122,7 @@ threshold 조정에 사용하지 않았으며 새 attribution version도 적용�
 - `docs/architecture/topic-analysis-contract.md`
 - `docs/architecture/historical-organization-work-attribution.md`
 - `docs/architecture/organization-function-positive-control.md`
+- `docs/architecture/organization-function-precision-gate.md`
 
 ## Decision history
 
@@ -129,3 +138,4 @@ threshold 조정에 사용하지 않았으며 새 attribution version도 적용�
 | 2026-09-18 | T06.6 | 1,272 residual notice 전부의 업무맥락·유사 후보·공식 조직근거·검색로그를 별도 append-only ledger로 보존하고 similarity-only 결과는 전부 미확정으로 유지한다. |
 | 2026-09-18 | T06.7 | 42개 역사 조직 사전예고와 2026 current snapshot/function을 relationize하고 evidence-r2 rerun을 추가했으나 공식 path가 없어 1,272건 모두 미확정으로 유지한다. |
 | 2026-09-18 | T06.8 | 817건 positive control에서 leakage 0을 확인했으나 top-1 64.29%여서 residual 승격을 보류한다. |
+| 2026-09-18 | T06.8.1 | temporal gold를 분리하고 holdout precision을 측정했으나 50%로 95% AUTO_ACCEPT gate를 통과하지 못했다. |

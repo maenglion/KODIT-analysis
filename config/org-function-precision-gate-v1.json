@@ -1,0 +1,27 @@
+{
+  "contract_version": "org-function-precision-gate-v1",
+  "parent_measurement": "org-function-positive-control-v4",
+  "split": {
+    "version": "sha256-notice-id-stratified-v1",
+    "holdout_fraction": 0.3
+  },
+  "calibration": {
+    "precision_targets": [0.9, 0.95, 0.98, 1.0],
+    "minimum_family_accepted": 2,
+    "minimum_holdout_accepted_for_auto_accept": 5,
+    "score_grid": [0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.7, 0.9, 0.999],
+    "margin_grid": [0.01, 0.02, 0.04, 0.06, 0.1, 0.15, 0.2]
+  },
+  "rule_families": [
+    "DUAL_REGULATION_SIGNAL",
+    "EXACT_ATOMIC_SIGNAL",
+    "REGULATION_TITLE_CORROBORATED",
+    "TITLE_BODY_WITHOUT_REGULATION"
+  ],
+  "auto_accept_precision": 0.95,
+  "leakage_policy": {
+    "department_is_label_only": true,
+    "residual_rows_queried": false,
+    "holdout_used_for_rule_selection": false
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8 POSITIVE CONTROL COMPLETE; RESIDUAL PROMOTION NOT AUTHORIZED**
+- Status: **T06.8 COMPLETE; T06.8.1 TEMPORAL GOLD REVIEW COMPLETE; RESIDUAL PROMOTION NOT AUTHORIZED**
 - Parent checkpoint: `3eb30af9b5a987fa4ae97d50aa217128b4871298`
 - Contract measured: `org-function-positive-control-v4`
 
@@ -77,6 +77,8 @@ confusion 편차가 크고, canonical exact label 중 4개 조직 85건은 curre
 - 조직명이나 legacy owning-department 필드를 feature로 넣으면 label leakage다.
 - current 2026 function assignment가 과거 notice의 당시 담당조직을 소급 증명하지 않는다.
 - 다음 버전은 새로운 config/evaluator/report hash로 append하고 v4 artifact를 덮어쓰지 않는다.
+- T06.8.1에서 728건은 current gold 27, historical-only gold 18, observed-only 683으로
+  분리됐다. 기존 64.29%는 current-function accuracy가 아니라 diagnostic으로만 유지한다.
 
 ## Related migrations / code paths
 
@@ -94,3 +96,4 @@ confusion 편차가 크고, canonical exact label 중 4개 조직 85건은 curre
 | 2026-09-18 | 조직명 첫 출현 대신 `부서명+1.` heading으로 별표3 block을 경계한다. |
 | 2026-09-18 | 134개 번호 직무와 3개 temporal assignment를 scorer profile로 사용한다. |
 | 2026-09-18 | v4 성능은 automatic attribution에 부족하므로 residual 적용을 보류한다. |
+| 2026-09-18 | T06.8.1 holdout precision이 50%(1/2)여서 AUTO_ACCEPT를 승인하지 않았다. |
