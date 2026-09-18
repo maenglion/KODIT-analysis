@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T05 IMPLEMENTED AND REMOTE VERIFIED**
+- Status: **T05 IMPLEMENTED; T06 PUBLIC-SAFE PROJECTION ADDED**
 - Parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 - Contract: `organization-v1`
 - Label input: `label-v1`
@@ -78,6 +78,18 @@ contamination이다. T05는 원 T03/T04 label을 재작성하지 않고 `UNRESOL
 - T06은 T01 residual을 삭제하지 말고 별도 resolution status로 표현한다.
 - current website snapshot이 바뀌면 기존 evidence를 갱신하지 말고 새 contract/run을 추가한다.
 
+## T06 public projection
+
+`publish.public_department_residual_analysis_rows()`는 current approved release의 residual
+occurrence 1,272건을 반환하고, `publish.public_department_residual_label_rows()`는 이를
+355개 label summary로 집계한다. 공개 필드는 원 notice, resolution class, 관측 수,
+공식 source URL과 확인된 조직 node/lineage 설명에 한정한다. 내부 extraction ID, parser
+provenance, evidence text는 공개하지 않는다.
+
+공개 UI의 `ORG_CURRENT`와 `ORG_HISTORICAL`은 T05 assessment를 읽은 결과이며 T06이 새
+조직을 추론한 결과가 아니다. `FUNCTION_TRANSFERRED_TO`는 edge scope와 함께 표시하고
+조직 전체의 명칭변경·승계가 아니라는 경고를 항상 동반한다.
+
 ## Related migrations / code paths
 
 - `supabase/migrations/20260918000200_organization_lineage_ledger.sql`
@@ -95,3 +107,4 @@ contamination이다. T05는 원 T03/T04 label을 재작성하지 않고 `UNRESOL
 | 2026-09-18 | current snapshot 19개와 official corpus historical 8개만 node로 승격한다. |
 | 2026-09-18 | 개인정보보호 담당 이동 2건은 whole-org succession이 아닌 scoped FUNCTION_TRANSFERRED_TO다. |
 | 2026-09-18 | T01 residual reproduction dictionary와 historical organization ontology를 분리한다. |
+| 2026-09-18 | T06는 T05 node/edge를 public-safe 설명으로만 투영하며 ontology를 수정하지 않는다. |

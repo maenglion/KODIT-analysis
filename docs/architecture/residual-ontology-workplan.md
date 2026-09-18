@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T05 COMPLETE — T06 NEXT**
+- Status: **T06 COMPLETE — T07 NEXT**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -24,8 +24,8 @@ T02-C corpus extraction backfill              완료
 T03   extraction mention occurrence           완료
 T04   label aggregation + typing               완료
 T05   historical ORG_NODE + lineage           완료
-T06   residual resolution UI                  다음
-T07   topic analysis
+T06   residual resolution UI                  완료
+T07   topic analysis                          다음
 ```
 
 ## Invariants
@@ -58,6 +58,16 @@ lexical extraction contamination으로 미해결 13개다. 동일 이름만으�
 뜻하지 않는다. T06은 이 원장을 읽을 수 있지만 T01 residual occurrence를 삭제하거나
 재작성해서는 안 된다.
 
+## T06 boundary
+
+T06은 T01의 1,272 occurrence와 T04/T05의 기존 evidence를 current approved release용
+public-safe read model로 투영한다. 355 lexical label은 인물 표기 317, 현재 조직 3,
+과거 조직 2, 미분류 33으로 표시하며 새 entity inference를 하지 않는다. occurrence CSV와
+label-summary CSV는 grain이 다르므로 별도로 제공한다.
+
+T05의 lexical extraction contamination 13개는 T01 residual 모집단이 아니며 담당 표기
+잔차 통계에 합산하지 않는다. T06 UI는 graph, affiliation, role, topic을 만들지 않는다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -73,3 +83,4 @@ lexical extraction contamination으로 미해결 13개다. 동일 이름만으�
 | 2026-09-17 | T03 | extraction exact span mention을 observation으로 보존한다. |
 | 2026-09-18 | T04 | lexical label과 type evidence를 집계하되 entity/node로 승격하지 않는다. |
 | 2026-09-18 | T05 | 공식 근거가 있는 ORG label만 time-aware node로 승격하고 scoped function-transfer edge만 기록한다. |
+| 2026-09-18 | T06 | 기존 occurrence/label/node 원장을 current-release public read model로 투영하고 두 CSV grain을 분리한다. |

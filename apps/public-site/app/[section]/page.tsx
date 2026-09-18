@@ -28,5 +28,5 @@ function TechnicalSpecs() {
 async function DepartmentStatisticsPage() {
   const dataset = await getPublishDataset();
   if (!dataset.available) return <main className="shell connection-state"><p className="eyebrow">부서별 통계</p><h1>공개 데이터 연결 확인이 필요합니다</h1><p>측정되지 않은 값을 0건으로 표시하지 않습니다.</p></main>;
-  return <DepartmentStatistics rows={dataset.rows} notices={dataset.notices} />;
+  return <DepartmentStatistics rows={dataset.rows} notices={dataset.notices} residuals={dataset.residuals} residualLabels={dataset.residualLabels} />;
 }

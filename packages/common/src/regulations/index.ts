@@ -7,6 +7,20 @@ export type PublishRegulationRow = {
   partial_attachment: boolean; is_new: boolean; is_updated: boolean;
 };
 export type PublishNoticeRow = { release_id: string; notice_number: string; title: string; notice_department: string | null; posted_date: string; source_location: string; linked_regulation_version_ids: string[] };
+export type ResidualResolutionClass = "PERSON_EVIDENCE" | "ORG_CURRENT" | "ORG_HISTORICAL" | "UNTYPED" | "AMBIGUOUS";
+export type DepartmentResidualOccurrenceRow = {
+  release_id:string; residual_id:string; notice_id:string; label_id:string; raw_label:string; normalized_label:string;
+  resolution_class:ResidualResolutionClass; label_type:string; posted_at:string; title:string; source_location:string;
+  first_seen_at:string|null; last_seen_at:string|null; label_occurrence_count:number; notice_count:number;
+  org_node_id:string|null; org_official_name:string|null; org_valid_from:string|null; org_valid_to:string|null; organization_assessment:string|null;
+};
+export type OrganizationLineagePublicEdge = { relation_type:string; direction:"INCOMING"|"OUTGOING"; from_name:string; to_name:string; effective_date:string; edge_scope:string; evidence_url:string };
+export type DepartmentResidualLabelRow = {
+  release_id:string; label_id:string; raw_label:string; normalized_label:string; resolution_class:ResidualResolutionClass; label_type:string;
+  first_seen_at:string|null; last_seen_at:string|null; residual_occurrence_count:number; notice_count:number; mention_occurrence_count:number;
+  extractor_rule_distribution:Record<string,number>; mention_source_locations:string[]; org_node_id:string|null; org_official_name:string|null;
+  org_valid_from:string|null; org_valid_to:string|null; organization_assessment:string|null; official_evidence_url:string|null; lineage_edges:OrganizationLineagePublicEdge[];
+};
 export type PublicRegulationSourceRow = { release_id: string; regulation_version_id: string; regulation_code: string; source_kind: string; evidence_role: string; source_location: string | null; attachment_name: string | null };
 export type PublishReleaseMetadata = { release_id: string; release_type: string; schema_version: string; evidence_as_of: string; generated_at: string; source_snapshot_hash: string; projection_hash: string; population: number };
 export type PublicRegulationFilters = { query: string; availability: Availability | "ALL"; currentness: string; partialType: "ALL" | "ALIO" | "KODIT_PAGE" | "ATTACHMENT" };
@@ -76,4 +90,10 @@ export function publishRowsToCsv(rows: PublishRegulationRow[], release?: Publish
 }
 export function publishNoticesToCsv(rows: PublishNoticeRow[], release: PublishReleaseMetadata) {
   return makeCsv(["row_number", "source_notice_number", "title", "posted_date", "notice_department", "source_url", "linked_regulation_count", "release_id", "evidence_as_of"], rows.map((row, index) => [index + 1, row.notice_number, row.title, row.posted_date, row.notice_department, row.source_location, row.linked_regulation_version_ids.length, row.release_id, release.evidence_as_of]));
+}
+export function residualOccurrencesToCsv(rows:DepartmentResidualOccurrenceRow[]){
+  return makeCsv(["notice_id","posted_at","title","raw_label","normalized_label","resolution_class","label_type","first_seen_at","last_seen_at","label_occurrence_count","notice_count","org_official_name","org_valid_from","org_valid_to","source_location"],rows.map(r=>[r.notice_id,r.posted_at,r.title,r.raw_label,r.normalized_label,r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.label_occurrence_count,r.notice_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.source_location]));
+}
+export function residualLabelsToCsv(rows:DepartmentResidualLabelRow[]){
+  return makeCsv(["normalized_label","raw_label","resolution_class","label_type","first_seen_at","last_seen_at","residual_occurrence_count","notice_count","mention_occurrence_count","org_official_name","org_valid_from","org_valid_to","official_evidence_url"],rows.map(r=>[r.normalized_label,r.raw_label,r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.residual_occurrence_count,r.notice_count,r.mention_occurrence_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.official_evidence_url]));
 }

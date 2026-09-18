@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publishNoticesToCsv, publishRowsToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
@@ -45,6 +45,12 @@ assert.equal(filterAndSortNotices(notices, noticeFilters)[0].notice_number, "10"
 assert.equal(filterAndSortNotices(notices, { ...noticeFilters, unmappedOnly: true }).length, 1);
 assert.ok(publishNoticesToCsv(notices, { release_id: manifest.correction_release_id, release_type: "baseline_correction", schema_version: "v0.6", evidence_as_of: "2026-09-14", generated_at: "2026-09-14", source_snapshot_hash: "", projection_hash: "", population: 1041 }).includes("linked_regulation_count"));
 
+const residualOccurrenceCsv = residualOccurrencesToCsv([{ release_id: manifest.correction_release_id, residual_id: "00000000-0000-0000-0000-000000000010", notice_id: "00000000-0000-0000-0000-000000000011", raw_label: "이경선", comparison_label: "이경선", posted_at: "2021-11-22", title: "예고", source_location: "https://example.test/notice", resolution_class: "PERSON_EVIDENCE", label_id: "00000000-0000-0000-0000-000000000012" }]);
+const residualLabelCsv = residualLabelsToCsv([{ release_id: manifest.correction_release_id, label_id: "00000000-0000-0000-0000-000000000012", raw_label: "이경선", comparison_label: "이경선", resolution_class: "PERSON_EVIDENCE", label_type: "PERSON", residual_occurrence_count: 1, notice_count: 1, first_posted_at: "2021-11-22", last_posted_at: "2021-11-22", org_node_id: null, org_official_name: null, org_valid_from: null, org_valid_to: null, org_evidence_url: null, org_lineage: [], mention_occurrence_count: 1, person_extractor_rules: { PERSON_CONTACT_BLOCK_PHONE: 1 }, mention_source_locations: ["https://example.test/notice"] }]);
+for (const output of [residualOccurrenceCsv, residualLabelCsv]) assert.ok(output.startsWith("\uFEFF") && output.endsWith("\r\n"));
+assert.ok(residualOccurrenceCsv.includes("notice_id") && residualOccurrenceCsv.includes("resolution_class") && residualOccurrenceCsv.includes("label_occurrence_count") && residualOccurrenceCsv.includes("source_location"));
+assert.ok(residualLabelCsv.includes("normalized_label") && residualLabelCsv.includes("resolution_class") && residualLabelCsv.includes("residual_occurrence_count"));
+
 assert.ok(loaderText.includes('"Content-Profile": "publish"'));
 for (const rpc of ["public_release_metadata", "public_regulation_rows", "public_notice_rows", "public_regulation_source_rows"]) assert.ok(loaderText.includes(`"${rpc}"`));
 assert.ok(!loaderText.includes("review-20260913-reconstructed"));
@@ -57,7 +63,8 @@ assert.ok(!explorerText.includes("인쇄"));
 assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
 assert.ok(!layoutText.includes('["홈", "/"]'));
 assert.ok(layoutText.includes("Soulspectrum Inc. · nanyoung이 만들었습니다."));
-assert.ok(departmentText.includes("organizationSnapshot") && departmentText.includes("개인·미매핑 표기"));
+assert.ok(departmentText.includes("organizationSnapshot") && departmentText.includes("담당 표기 잔차"));
+assert.ok(departmentText.includes("DepartmentResidualAnalysis"));
 assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha256") && !detailText.includes("checks"));
 
 console.log("public regulation UI contract: publish RPC, 1041 regulations, 2089 notices, public-safe CSV PASS");

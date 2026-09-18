@@ -6,7 +6,8 @@
   "exports": {
     "./regulations": "./src/regulations/index.ts",
     "./regulations/RegulationExplorer": "./src/regulations/RegulationExplorer.tsx",
-    "./regulations/DepartmentStatistics": "./src/regulations/DepartmentStatistics.tsx"
+    "./regulations/DepartmentStatistics": "./src/regulations/DepartmentStatistics.tsx",
+    "./regulations/DepartmentResidualAnalysis": "./src/regulations/DepartmentResidualAnalysis.tsx"
   },
   "peerDependencies": {
     "react": "19.1.2",
