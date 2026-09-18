@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8.3 HISTORICAL ENACTED CORPUS COMPLETE; T07 NOT STARTED**
+- Status: **T06.8.4 SELECTIVE RESOLUTION EVALUATED; AUTO_ACCEPT FALSE; T07 NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -32,6 +32,7 @@ T06.8 function-assignment positive control      완료; residual 적용 보류
 T06.8.1 temporal gold/precision holdout          완료; AUTO_ACCEPT 불승인
 T06.8.2 temporal function profile/as-of control  완료; historical 시행본 부재
 T06.8.3 historical enacted organization corpus  완료; 2022~2025 시행 profile 추가
+T06.8.4 selective high-precision resolution     완료; 표본 부족으로 AUTO_ACCEPT 불승인
 T07   topic analysis                          다음 단계; 아직 시작하지 않음
 ```
 
@@ -132,6 +133,13 @@ profile이므로 calibration/holdout과 residual 적용을 수행하지 않았�
 weights, threshold는 바꾸지 않았고 residual 1,272건에는 적용하지 않았다. 2012~2014 공식
 시행본은 여전히 evidence gap이다.
 
+## T06.8.4 boundary
+
+698 complete multi-org gold를 2022~2024 calibration과 2025~2026 temporal holdout으로
+분리하고 frozen retrieval 위에 공식 evidence gate만 평가했다. holdout union은 2/2였지만
+최소 accepted N 30을 충족하지 못해 `AUTO_ACCEPT=false`다. residual 1,272건에는 새 run을
+만들지 않았고 T07도 시작하지 않았다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -142,6 +150,7 @@ weights, threshold는 바꾸지 않았고 residual 1,272건에는 적용하지 �
 - `docs/architecture/organization-function-positive-control.md`
 - `docs/architecture/organization-function-precision-gate.md`
 - `docs/architecture/temporal-function-profiles.md`
+- `docs/architecture/selective-function-resolution.md`
 
 ## Decision history
 
@@ -160,3 +169,4 @@ weights, threshold는 바꾸지 않았고 residual 1,272건에는 적용하지 �
 | 2026-09-18 | T06.8.1 | temporal gold를 분리하고 holdout precision을 측정했으나 50%로 95% AUTO_ACCEPT gate를 통과하지 못했다. |
 | 2026-09-18 | T06.8.2 | 42개 historical proposal을 enacted profile과 분리하고 683건을 no-profile로 재분류했다. |
 | 2026-09-18 | T06.8.3 | 31개 official enacted 문서와 12개 profile epoch를 추가하고 frozen scorer로 gold만 재평가했다. |
+| 2026-09-18 | T06.8.4 | holdout 정밀도뿐 아니라 최소 표본 30건 gate를 적용해 AUTO_ACCEPT를 불승인했다. |

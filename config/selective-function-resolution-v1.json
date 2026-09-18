@@ -1,0 +1,19 @@
+{
+  "contract_version": "selective-function-resolution-v1",
+  "parent_checkpoint": "02b5f99423024e658e52abd544c6707cccd0824f",
+  "calibration_years": [2022, 2023, 2024],
+  "holdout_years": [2025, 2026],
+  "minimum_holdout_accepted": 30,
+  "minimum_holdout_precision": 0.95,
+  "generic_function_lexicon": ["지원", "관리", "운영", "업무", "기타", "총괄", "관련업무", "사항"],
+  "minimum_atomic_phrase_characters": 4,
+  "rule_families": [
+    "R1_UNIQUE_EXACT_FUNCTION",
+    "R2_MULTI_FUNCTION_SAME_ORG",
+    "R3_REGULATION_PLUS_FUNCTION",
+    "R4_PROPOSAL_RULE_PLUS_FUNCTION",
+    "R5_TITLE_BODY_FUNCTION_CONVERGENCE",
+    "R6_ANALOG_PLUS_OFFICIAL_FUNCTION",
+    "R7_TITLE_OR_SIMILARITY_ONLY"
+  ]
+}

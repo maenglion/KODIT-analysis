@@ -1,0 +1,648 @@
+{
+  "contract_version": "selective-function-resolution-v1",
+  "config_sha256": "3142436e8b65193c0a82b11caed08fd079e926495f0808712c7b42d46db63b74",
+  "mismatch_119": {
+    "count": 119,
+    "categories": {
+      "A_ORG_NOT_IN_PROFILE": 48,
+      "B_ORG_EXISTS_FUNCTION_MISSING": 0,
+      "C_FUNCTION_ASSIGNED_TO_DIFFERENT_ORG": 0,
+      "D_MULTI_ORG_FUNCTION": 0,
+      "E_DATE_BOUNDARY_CONFLICT": 70,
+      "F_ORG_ALIAS_OR_NAME_CHANGE": 0,
+      "G_PARSER_OR_EXTRACTION_GAP": 0,
+      "H_NOTICE_DEPARTMENT_IS_NOT_FUNCTION_OWNER": 1,
+      "I_OTHER_UNRESOLVED": 0
+    },
+    "examples": {
+      "A_ORG_NOT_IN_PROFILE": [
+        {
+          "notice_id": "010b5b70-43a1-5a79-a0d1-fac0a2fd4715",
+          "posted_date": "2026-02-12",
+          "answer": "빅데이터부",
+          "title": "「데이터 가치평가 운용기준」 개정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "063c5277-9996-5047-a255-014042202ee7",
+          "posted_date": "2025-08-26",
+          "answer": "빅데이터부",
+          "title": "「신용정보서비스 업무처리기준」 개정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "0c07b4b9-5c87-51b1-9dd9-5dc4dbc0ff6d",
+          "posted_date": "2025-06-23",
+          "answer": "빅데이터부",
+          "title": "「행정정보이용 업무처리기준」 개정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "0d228eff-4ad7-5e46-82d5-6eaadac2cf8a",
+          "posted_date": "2023-08-09",
+          "answer": "빅데이터부",
+          "title": "「데이터 가치평가 운용기준」 개정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "165526e1-3d65-578c-8ca5-46eed50e0d5f",
+          "posted_date": "2025-04-03",
+          "answer": "빅데이터부",
+          "title": "「조사자료 등 운용기준」 개정 사전예고",
+          "matched_orgs": []
+        }
+      ],
+      "E_DATE_BOUNDARY_CONFLICT": [
+        {
+          "notice_id": "03646378-65f2-5e2e-bb01-fac0f5993eff",
+          "posted_date": "2022-04-01",
+          "answer": "인재경영부",
+          "title": "「복지규정운영기준」 개정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "070b35e3-e048-5f5e-a6a0-b302feb9629a",
+          "posted_date": "2022-04-19",
+          "answer": "기업개선부",
+          "title": "재창업지원 프로그램 운용기준 개정 사전 예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "10d1e597-4647-523c-8857-c84d75b6dd5a",
+          "posted_date": "2022-06-29",
+          "answer": "4.0창업부",
+          "title": "「혁신스타트업 성장지원 프로그램 운용기준」 개정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "1738792a-3ddb-59b0-b268-f3bb28b42762",
+          "posted_date": "2026-07-13",
+          "answer": "인재경영부",
+          "title": "「계약직원 관리기준」 제정 사전예고",
+          "matched_orgs": []
+        },
+        {
+          "notice_id": "1818e5de-bcc3-5a97-9847-587b223931bd",
+          "posted_date": "2022-03-30",
+          "answer": "자본시장부",
+          "title": "「코로나 19 피해 대응 유동화회사보증 업무처리방법」 개정 사전 예고",
+          "matched_orgs": []
+        }
+      ],
+      "H_NOTICE_DEPARTMENT_IS_NOT_FUNCTION_OWNER": [
+        {
+          "notice_id": "32a478e0-70de-5620-9780-8e0195a14ce7",
+          "posted_date": "2022-11-01",
+          "answer": "플랫폼금융부",
+          "title": "「신용정보 활용 및 관리기준」 개정 사전예고",
+          "matched_orgs": [
+            "리스크관리실"
+          ]
+        }
+      ]
+    }
+  },
+  "gold": {
+    "complete_multi_org": 698,
+    "strict_function_owner": 4,
+    "epoch_counts": {
+      "2026": 76,
+      "2023": 150,
+      "2025": 190,
+      "2024": 208,
+      "2022": 74
+    },
+    "strict_epoch_counts": {
+      "2025": 2,
+      "2023": 1,
+      "2024": 1
+    }
+  },
+  "split": {
+    "calibration_years": [
+      2022,
+      2023,
+      2024
+    ],
+    "holdout_years": [
+      2025,
+      2026
+    ],
+    "same_notice_overlap": 0,
+    "regulation_family_overlap": 140,
+    "normalized_work_family_overlap": 3
+  },
+  "leakage": {
+    "department_input_count": 0,
+    "residual_rows_queried": false,
+    "count": 0
+  },
+  "function_phrase_audit": {
+    "assignments": 1357,
+    "distinct_atomic_phrases": 119,
+    "unique_org_phrases": 102,
+    "multi_org_phrases": 17,
+    "generic_phrases": 0
+  },
+  "rule_families": {
+    "R1_UNIQUE_EXACT_FUNCTION": {
+      "calibration": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      },
+      "selected_from_calibration": true,
+      "holdout": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      },
+      "holdout_coverage": 0.007518796992481203
+    },
+    "R2_MULTI_FUNCTION_SAME_ORG": {
+      "calibration": {
+        "accepted": 0,
+        "correct": 0,
+        "wrong": 0,
+        "precision": null,
+        "wilson95": [
+          null,
+          null
+        ]
+      },
+      "selected_from_calibration": false,
+      "holdout": {
+        "accepted": 0,
+        "correct": 0,
+        "wrong": 0,
+        "precision": null,
+        "wilson95": [
+          null,
+          null
+        ]
+      },
+      "holdout_coverage": 0.0
+    },
+    "R3_REGULATION_PLUS_FUNCTION": {
+      "calibration": {
+        "accepted": 0,
+        "correct": 0,
+        "wrong": 0,
+        "precision": null,
+        "wilson95": [
+          null,
+          null
+        ]
+      },
+      "selected_from_calibration": false,
+      "holdout": {
+        "accepted": 1,
+        "correct": 1,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.20654931437723745,
+          1
+        ]
+      },
+      "holdout_coverage": 0.0037593984962406013
+    },
+    "R4_PROPOSAL_RULE_PLUS_FUNCTION": {
+      "calibration": {
+        "accepted": 1,
+        "correct": 1,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.20654931437723745,
+          1
+        ]
+      },
+      "selected_from_calibration": true,
+      "holdout": {
+        "accepted": 1,
+        "correct": 1,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.20654931437723745,
+          1
+        ]
+      },
+      "holdout_coverage": 0.0037593984962406013
+    },
+    "R5_TITLE_BODY_FUNCTION_CONVERGENCE": {
+      "calibration": {
+        "accepted": 1,
+        "correct": 1,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.20654931437723745,
+          1
+        ]
+      },
+      "selected_from_calibration": true,
+      "holdout": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      },
+      "holdout_coverage": 0.007518796992481203
+    },
+    "R6_ANALOG_PLUS_OFFICIAL_FUNCTION": {
+      "calibration": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      },
+      "selected_from_calibration": true,
+      "holdout": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      },
+      "holdout_coverage": 0.007518796992481203
+    },
+    "R7_TITLE_OR_SIMILARITY_ONLY": {
+      "calibration": {
+        "accepted": 0,
+        "correct": 0,
+        "wrong": 0,
+        "precision": null,
+        "wilson95": [
+          null,
+          null
+        ]
+      },
+      "selected_from_calibration": false,
+      "holdout": {
+        "accepted": 0,
+        "correct": 0,
+        "wrong": 0,
+        "precision": null,
+        "wilson95": [
+          null,
+          null
+        ]
+      },
+      "holdout_coverage": 0.0
+    }
+  },
+  "selected_rules": [
+    "R1_UNIQUE_EXACT_FUNCTION",
+    "R4_PROPOSAL_RULE_PLUS_FUNCTION",
+    "R5_TITLE_BODY_FUNCTION_CONVERGENCE",
+    "R6_ANALOG_PLUS_OFFICIAL_FUNCTION"
+  ],
+  "holdout_union": {
+    "accepted": 2,
+    "correct": 2,
+    "wrong": 0,
+    "precision": 1.0,
+    "wilson95": [
+      0.34238022750665303,
+      1
+    ]
+  },
+  "auto_accept": false,
+  "precision_frontier": [
+    {
+      "precision_target": 0.9,
+      "rule_family": "R6_ANALOG_PLUS_OFFICIAL_FUNCTION",
+      "accepted": 2,
+      "coverage": 0.007518796992481203,
+      "observed": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      }
+    },
+    {
+      "precision_target": 0.95,
+      "rule_family": "R6_ANALOG_PLUS_OFFICIAL_FUNCTION",
+      "accepted": 2,
+      "coverage": 0.007518796992481203,
+      "observed": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      }
+    },
+    {
+      "precision_target": 0.98,
+      "rule_family": "R6_ANALOG_PLUS_OFFICIAL_FUNCTION",
+      "accepted": 2,
+      "coverage": 0.007518796992481203,
+      "observed": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      }
+    },
+    {
+      "precision_target": 1.0,
+      "rule_family": "R6_ANALOG_PLUS_OFFICIAL_FUNCTION",
+      "accepted": 2,
+      "coverage": 0.007518796992481203,
+      "observed": {
+        "accepted": 2,
+        "correct": 2,
+        "wrong": 0,
+        "precision": 1.0,
+        "wilson95": [
+          0.34238022750665303,
+          1
+        ]
+      }
+    }
+  ],
+  "top_confusions": [
+    {
+      "answer": "인재경영부",
+      "predicted": "경영기획부",
+      "count": 26,
+      "epochs": {
+        "2023": 7,
+        "2024": 6,
+        "2025": 7,
+        "2026": 4,
+        "2022": 2
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 21,
+      "with_proposal": 16,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "신용보증부",
+      "predicted": "경영기획부",
+      "count": 15,
+      "epochs": {
+        "2023": 3,
+        "2025": 5,
+        "2024": 4,
+        "2022": 2,
+        "2026": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 15,
+      "with_proposal": 14,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "기업개선부",
+      "predicted": "경영기획부",
+      "count": 12,
+      "epochs": {
+        "2022": 3,
+        "2025": 2,
+        "2023": 2,
+        "2026": 2,
+        "2024": 3
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 3,
+      "with_proposal": 5,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "신용보증부",
+      "predicted": "자본시장부",
+      "count": 9,
+      "epochs": {
+        "2023": 1,
+        "2026": 2,
+        "2024": 4,
+        "2022": 1,
+        "2025": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 5,
+      "with_proposal": 8,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "기업개선부",
+      "predicted": "신용보증부",
+      "count": 9,
+      "epochs": {
+        "2024": 4,
+        "2025": 3,
+        "2026": 1,
+        "2023": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 2,
+      "with_proposal": 9,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "기업개선부",
+      "predicted": "고객지원부",
+      "count": 9,
+      "epochs": {
+        "2024": 4,
+        "2025": 3,
+        "2022": 1,
+        "2023": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 6,
+      "with_proposal": 9,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "인재경영부",
+      "predicted": "업무지원부",
+      "count": 8,
+      "epochs": {
+        "2024": 3,
+        "2023": 1,
+        "2025": 3,
+        "2026": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 7,
+      "with_proposal": 7,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "신용보험부",
+      "predicted": "자본시장부",
+      "count": 8,
+      "epochs": {
+        "2023": 2,
+        "2026": 3,
+        "2022": 3
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 5,
+      "with_proposal": 8,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "신용보증부",
+      "predicted": "고객지원부",
+      "count": 8,
+      "epochs": {
+        "2024": 1,
+        "2025": 4,
+        "2026": 2,
+        "2023": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 2,
+      "with_proposal": 7,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "플랫폼금융부",
+      "predicted": "고객지원부",
+      "count": 6,
+      "epochs": {
+        "2023": 2,
+        "2024": 3,
+        "2025": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 3,
+      "with_proposal": 3,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "자본시장부",
+      "predicted": "신용보증부",
+      "count": 6,
+      "epochs": {
+        "2024": 4,
+        "2025": 2
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 4,
+      "with_proposal": 6,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "기업개선부",
+      "predicted": "4.0창업부",
+      "count": 6,
+      "epochs": {
+        "2024": 3,
+        "2022": 2,
+        "2025": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 2,
+      "with_proposal": 6,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "기업개선부",
+      "predicted": "자본시장부",
+      "count": 5,
+      "epochs": {
+        "2022": 2,
+        "2024": 1,
+        "2023": 2
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 5,
+      "with_proposal": 3,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "자본시장부",
+      "predicted": "경영기획부",
+      "count": 4,
+      "epochs": {
+        "2025": 2,
+        "2024": 1,
+        "2023": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 3,
+      "with_proposal": 3,
+      "pattern": "frozen_retrieval_top1"
+    },
+    {
+      "answer": "기업개선부",
+      "predicted": "신용보험부",
+      "count": 4,
+      "epochs": {
+        "2024": 2,
+        "2025": 1,
+        "2023": 1
+      },
+      "shared_official_phrase_count": 0,
+      "with_regulation": 3,
+      "with_proposal": 3,
+      "pattern": "frozen_retrieval_top1"
+    }
+  ],
+  "regulation_evidence": {
+    "resolved_regulation": {
+      "population": 477,
+      "top1_accuracy": 0.7023060796645703
+    },
+    "proposes_change_to": {
+      "population": 593,
+      "top1_accuracy": 0.7133220910623946
+    },
+    "neither": {
+      "population": 30,
+      "top1_accuracy": 0.4
+    }
+  },
+  "direct_regulation_stewardship_added": 0,
+  "residual_application": {
+    "performed": false,
+    "reason": "AUTO_ACCEPT gate not satisfied"
+  },
+  "protected": {
+    "parent_checkpoint": "02b5f99423024e658e52abd544c6707cccd0824f",
+    "retrieval_changed": false,
+    "weights_changed": false,
+    "threshold_changed": false
+  }
+}

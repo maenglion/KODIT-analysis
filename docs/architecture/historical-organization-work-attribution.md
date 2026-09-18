@@ -244,3 +244,4 @@ Known-answer AS-OF gold는 function 45→698, complete multi-org 27→698로 증
 | 2026-09-18 | 2012~2014 공식 snapshot/function/change evidence gap 때문에 before/after resolved delta는 0이다. |
 | 2026-09-18 | T06.8.3 공식 시행본만 temporal profile로 사용하고 proposal은 reconciliation 원장에 분리했다. |
 | 2026-09-18 | 시행 profile 확대로 gold를 재계산하되 frozen resolver 계약과 residual 원장은 변경하지 않았다. |
+| 2026-09-18 | T06.8.4 holdout evidence gate는 2/2였으나 최소 표본 30건을 못 채워 residual 적용을 승인하지 않았다. |
