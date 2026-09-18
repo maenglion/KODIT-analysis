@@ -1,0 +1,18 @@
+{
+  "contract_version": "org-work-similarity-v1",
+  "normalization": "NFKC_CASEFOLD_HANGUL_ALNUM_TOKENS",
+  "person_signal_weight": 0,
+  "raw_department_signal_weight": 0,
+  "candidate_limit": 5,
+  "minimum_candidate_score": 0.18,
+  "weights": {
+    "same_attachment": 1.0,
+    "same_regulation": 0.65,
+    "same_proposed_regulation": 0.75,
+    "title_jaccard": 0.30,
+    "exact_body_signature": 0.10,
+    "work_jaccard": 0.25
+  },
+  "priority": ["same_attachment", "same_proposed_regulation", "same_regulation", "title_jaccard", "exact_body_signature", "work_jaccard"],
+  "notes": "Scores identify analog candidates only. They never confirm historical or current organization attribution."
+}

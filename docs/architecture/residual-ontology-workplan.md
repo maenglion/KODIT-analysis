@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.5 COMPLETE — T07 CONTRACT GATE**
+- Status: **T06.6 COMPLETE — T07 NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -26,7 +26,8 @@ T04   label aggregation + typing               완료
 T05   historical ORG_NODE + lineage           완료
 T06   residual resolution UI                  완료
 T06.5 analytics meaning/grain hardening       완료
-T07   topic analysis                          GO 조건 검토 후 다음
+T06.6 historical org evidence/work attribution 완료
+T07   topic analysis                          다음 단계; 아직 시작하지 않음
 ```
 
 ## Invariants
@@ -77,12 +78,25 @@ RULE label→regulation identity, rule predicate, metric grain/date/release를 �
 `LINKED_TO_RULE` 3,775건을 proposal로 해석하지 않는다. `PROPOSES_CHANGE_TO`는 직접
 title/body evidence만 허용하고 `FUNCTION_TRANSFERRED_TO`는 조직 승계 roll-up에서 제외한다.
 
+## T06.6 boundary
+
+T06.6의 primary grain은 T01 residual occurrence/notice다. 사람 이름이나 355개 lexical
+label을 attribution key로 사용하지 않는다. 1,272개 notice work context와 audit run을
+append-only로 보존하고 evidence-backed anchor notice에서 current/historical analog
+candidate를 찾되, candidate similarity는 조직 귀속을 확정하지 않는다.
+
+historical organization에서 current functional equivalent로 이동하는 경로는 공식
+organization/function evidence만 허용한다. 기존 scoped `FUNCTION_TRANSFERRED_TO` 2건은
+reified event로 추가 표현하지만 whole-organization succession으로 승격하지 않는다.
+T07 UI와 topic analysis는 이 티켓에 포함하지 않는다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
 - `docs/architecture/document-extraction-ledger.md`
 - `docs/architecture/observation-label-entity-model.md`
 - `docs/architecture/topic-analysis-contract.md`
+- `docs/architecture/historical-organization-work-attribution.md`
 
 ## Decision history
 
@@ -95,3 +109,4 @@ title/body evidence만 허용하고 `FUNCTION_TRANSFERRED_TO`는 조직 승계 r
 | 2026-09-18 | T05 | 공식 근거가 있는 ORG label만 time-aware node로 승격하고 scoped function-transfer edge만 기록한다. |
 | 2026-09-18 | T06 | 기존 occurrence/label/node 원장을 current-release public read model로 투영하고 두 CSV grain을 분리한다. |
 | 2026-09-18 | T06.5 | T07 전에 source resolution, entity resolution, predicate, metric grain을 machine-readable 계약으로 고정한다. |
+| 2026-09-18 | T06.6 | 1,272 residual notice 전부의 업무맥락·유사 후보·공식 조직근거·검색로그를 별도 append-only ledger로 보존하고 similarity-only 결과는 전부 미확정으로 유지한다. |

@@ -1,0 +1,13 @@
+{
+  "contract": "org-work-attribution-v1",
+  "first_run": "PASS",
+  "second_identical_run": "PASS",
+  "counts_unchanged_after_second_run": true,
+  "contexts": 1272,
+  "runs": 1272,
+  "candidates": 4350,
+  "steps": 3816,
+  "evidence_links": 9387,
+  "confirmed_from_similarity": 0,
+  "residual_digest": "942718785d383b2a71a33d1c61a4c8df"
+}

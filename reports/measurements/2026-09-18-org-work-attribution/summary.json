@@ -1,0 +1,27 @@
+{
+  "contract": "org-work-attribution-v1",
+  "mode": "verify",
+  "state": {
+    "anchors": 862,
+    "candidates": 4350,
+    "change_events": 2,
+    "confirmed_from_similarity": 0,
+    "contexts": 1272,
+    "evidence": 9387,
+    "function_assignments": 2,
+    "label_count": 2209,
+    "mention_count": 20937,
+    "notices": 2089,
+    "org_documents": 6,
+    "org_node_count": 27,
+    "raw_residual_changed": 0,
+    "residuals": 1272,
+    "runs": 1272,
+    "steps": 3816
+  },
+  "population": {
+    "notices": 2089,
+    "residuals": 1272,
+    "anchors": 862
+  }
+}
