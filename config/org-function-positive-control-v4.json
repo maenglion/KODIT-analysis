@@ -1,0 +1,29 @@
+{
+  "contract_version": "org-function-positive-control-v4",
+  "assignment_read_contract": "analytics.canonical_organization_function_assignments",
+  "phrase_profile": "OFFICIAL_DETAILED_RULE_NUMBERED_DUTY",
+  "character_ngram_sizes": [2, 3],
+  "exact_containment_channels": ["title", "regulation", "proposal", "work"],
+  "minimum_exact_containment_characters": 4,
+  "minimum_candidate_score": 0.08,
+  "ambiguity_margin": 0.02,
+  "channel_weights": {
+    "title": 0.25,
+    "body": 0.15,
+    "regulation": 0.25,
+    "proposal": 0.25,
+    "work": 0.10
+  },
+  "strict_subset": {
+    "requires_unique_ground_truth_org_node": true,
+    "requires_atomic_assignment_for_ground_truth": true,
+    "requires_non_title_signal": true
+  },
+  "leakage_policy": {
+    "forbidden_feature_fields": ["notice_department", "raw_label", "comparison_label", "person_mentions", "org_mentions", "email_mentions"],
+    "remove_all_known_organization_names_from_text": true,
+    "remove_person_org_email_mentions_from_text": true,
+    "ground_truth_available_to_scorer": false
+  },
+  "notes": "Frozen before v4 outcomes. Exact containment is an evidence rule for title/regulation/proposal/work strings in an official numbered duty; otherwise character n-gram cosine is used. Residual rows are not queried."
+}

@@ -1,0 +1,638 @@
+{
+  "contract_version": "org-function-positive-control-v4",
+  "config_sha256": "ef35ee94a31489ab815a49fb4c036cf05c641fab4d18ee428168107304e58068",
+  "population": {
+    "known_answer_total": 817,
+    "strict_subset": 728,
+    "strict_excluded": 89,
+    "exclusion_reasons": {
+      "GROUND_TRUTH_HAS_NO_ATOMIC_ASSIGNMENT": 85,
+      "NO_NON_TITLE_SIGNAL": 4
+    }
+  },
+  "leakage": {
+    "forbidden_feature_key_count": 0,
+    "organization_name_after_scrub_count": 0,
+    "ground_truth_joined_after_prediction": true,
+    "residual_rows_queried": false,
+    "leakage_count": 0
+  },
+  "phrase_grain_audit": {
+    "canonical_assignment_count": 202,
+    "atomic_scorer_assignment_count": 137,
+    "coarse_assignment_count": 21,
+    "maximum_atomic_phrase_characters": 200,
+    "duplicate_phrase_group_count": 5,
+    "characters": {
+      "min": 4,
+      "p50": 17.0,
+      "p90": 258.6000000000013,
+      "max": 500
+    },
+    "coarse_assignments": [
+      {
+        "function_assignment_id": "1c0fcc95-a005-19bb-936a-690c714eab72",
+        "org_node_id": "00841f08-f8b0-eaf4-41ec-501307538bab",
+        "official_name": "인프라금융부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "1bf54fcd-d933-bcd7-3f02-c7aa0b97fca1",
+        "org_node_id": "0725c1d3-13ec-13ef-42fc-82288955e75a",
+        "official_name": "빅데이터부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "741e4b0e-7227-8d4e-bb31-3f530d97c10c",
+        "org_node_id": "127fd4ba-308c-345c-e78c-ab75785fcdf1",
+        "official_name": "인재경영부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "9e0bd253-6c28-5276-4667-c6f93a3691a5",
+        "org_node_id": "23861892-3b55-414b-3567-3423034ef09a",
+        "official_name": "미래전략실",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "9deb390a-48d3-de83-f661-1b3f368148a6",
+        "org_node_id": "27211da5-8ad0-0852-a3b2-f0b25ef45435",
+        "official_name": "업무지원부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "f989225c-74bf-86fa-5287-5106eab3ab7a",
+        "org_node_id": "2cf78b1b-12e7-bbad-e069-49826d0e491d",
+        "official_name": "기업개선부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "0f728bf4-5dfd-05ba-86ba-6f8c623e63c3",
+        "org_node_id": "37acd450-5d6a-2688-3463-c0b8d32cebe7",
+        "official_name": "비서실",
+        "phrase_char_count": 281
+      },
+      {
+        "function_assignment_id": "38c9154e-9536-e108-faac-586e2ebfb1f8",
+        "org_node_id": "5168a158-2b76-f4d8-b1c6-9f7b55666676",
+        "official_name": "리스크준법실",
+        "phrase_char_count": 379
+      },
+      {
+        "function_assignment_id": "8cb4beb8-a351-9b06-5520-dca264492f51",
+        "org_node_id": "5ca47412-d604-e57f-6d6b-9c74c00908df",
+        "official_name": "성과관리부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "838ef5c9-6c61-8046-0a7c-48e5708573e4",
+        "org_node_id": "69527de7-8a95-190e-e33b-45d6a7d38f62",
+        "official_name": "ICT전략부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "843a4374-c851-1497-f0ea-43588d6a8c72",
+        "org_node_id": "79c0caef-ea2f-8f6f-1c90-96be859d516e",
+        "official_name": "AI혁신부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "88e95dd6-128f-9490-d5f7-18eefe603e46",
+        "org_node_id": "7f075bb5-341c-da42-0c44-a174f3904b1b",
+        "official_name": "혁신금융부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "5ea72e4d-92e3-89dd-e134-1eb80f9c58a3",
+        "org_node_id": "9a57f29c-3397-9d9a-33f3-b3afbc04e674",
+        "official_name": "경영기획부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "fab7cb2c-7de0-b883-932c-a47caf98381b",
+        "org_node_id": "acbb30a4-d37d-d35c-2220-9bc2df83645d",
+        "official_name": "홍보협력실",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "4d55a127-1976-9e44-e9da-d885208a03f4",
+        "org_node_id": "bb3edf0b-2b77-725b-ff95-de5acf4f821f",
+        "official_name": "감사실",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "c9d5261c-2fce-31bf-0be9-22d890807391",
+        "org_node_id": "c49dd05e-5a9d-a86e-0ddd-653dace601a6",
+        "official_name": "안전전략실",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "3c193957-6953-29c0-c6f7-9627370f54ac",
+        "org_node_id": "d4cec454-6c5f-bc83-9f5e-5bd1c120ff44",
+        "official_name": "스타트업금융부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "3bbff947-990e-e7fa-e366-d9cc0fe73f63",
+        "org_node_id": "d69aa775-89bb-f46c-e27c-6ea830d9f158",
+        "official_name": "자본시장부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "2e9714e0-3f07-dad7-3f36-7bcbb4d14e59",
+        "org_node_id": "dd17b3fd-fdec-2c5f-c666-e84e770fe1c3",
+        "official_name": "신용보험부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "afae40cb-e33b-785a-3722-fab1145e4e9c",
+        "org_node_id": "e0e9e75b-971a-2303-c661-ba0b60151a08",
+        "official_name": "고객지원부",
+        "phrase_char_count": 500
+      },
+      {
+        "function_assignment_id": "bd259178-3d4c-7917-1f2d-d03ccdb2cd46",
+        "org_node_id": "e1df8aa2-9150-366e-df61-dd6a6a2a72ce",
+        "official_name": "비상계획부",
+        "phrase_char_count": 500
+      }
+    ],
+    "enrichment_audit": {
+      "detailed_block_count": 22,
+      "numbered_duty_count": 134,
+      "temporal_assignment_count": 3,
+      "organization_grain": [
+        {
+          "org_node_id": "23861892-3b55-414b-3567-3423034ef09a",
+          "official_name": "미래전략실",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "5168a158-2b76-f4d8-b1c6-9f7b55666676",
+          "official_name": "리스크준법실",
+          "marker_count": 11,
+          "selected_monotonic_duty_count": 11,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "org_node_id": "c49dd05e-5a9d-a86e-0ddd-653dace601a6",
+          "official_name": "안전전략실",
+          "marker_count": 3,
+          "selected_monotonic_duty_count": 3,
+          "selected_numbers": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "org_node_id": "acbb30a4-d37d-d35c-2220-9bc2df83645d",
+          "official_name": "홍보협력실",
+          "marker_count": 3,
+          "selected_monotonic_duty_count": 3,
+          "selected_numbers": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "org_node_id": "37acd450-5d6a-2688-3463-c0b8d32cebe7",
+          "official_name": "비서실",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "9a57f29c-3397-9d9a-33f3-b3afbc04e674",
+          "official_name": "경영기획부",
+          "marker_count": 11,
+          "selected_monotonic_duty_count": 11,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "org_node_id": "5ca47412-d604-e57f-6d6b-9c74c00908df",
+          "official_name": "성과관리부",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "69527de7-8a95-190e-e33b-45d6a7d38f62",
+          "official_name": "ICT전략부",
+          "marker_count": 7,
+          "selected_monotonic_duty_count": 7,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "org_node_id": "79c0caef-ea2f-8f6f-1c90-96be859d516e",
+          "official_name": "AI혁신부",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "b0dce328-9921-4e05-b6a6-d0f22fd190d5",
+          "official_name": "신용보증부",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "d69aa775-89bb-f46c-e27c-6ea830d9f158",
+          "official_name": "자본시장부",
+          "marker_count": 5,
+          "selected_monotonic_duty_count": 5,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "org_node_id": "d4cec454-6c5f-bc83-9f5e-5bd1c120ff44",
+          "official_name": "스타트업금융부",
+          "marker_count": 7,
+          "selected_monotonic_duty_count": 7,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "org_node_id": "7f075bb5-341c-da42-0c44-a174f3904b1b",
+          "official_name": "혁신금융부",
+          "marker_count": 8,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "org_node_id": "0725c1d3-13ec-13ef-42fc-82288955e75a",
+          "official_name": "빅데이터부",
+          "marker_count": 5,
+          "selected_monotonic_duty_count": 5,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "org_node_id": "dd17b3fd-fdec-2c5f-c666-e84e770fe1c3",
+          "official_name": "신용보험부",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "2cf78b1b-12e7-bbad-e069-49826d0e491d",
+          "official_name": "기업개선부",
+          "marker_count": 8,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "org_node_id": "00841f08-f8b0-eaf4-41ec-501307538bab",
+          "official_name": "인프라금융부",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "127fd4ba-308c-345c-e78c-ab75785fcdf1",
+          "official_name": "인재경영부",
+          "marker_count": 7,
+          "selected_monotonic_duty_count": 7,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "org_node_id": "27211da5-8ad0-0852-a3b2-f0b25ef45435",
+          "official_name": "업무지원부",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "e0e9e75b-971a-2303-c661-ba0b60151a08",
+          "official_name": "고객지원부",
+          "marker_count": 8,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "org_node_id": "e1df8aa2-9150-366e-df61-dd6a6a2a72ce",
+          "official_name": "비상계획부",
+          "marker_count": 3,
+          "selected_monotonic_duty_count": 3,
+          "selected_numbers": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "org_node_id": "bb3edf0b-2b77-725b-ff95-de5acf4f821f",
+          "official_name": "감사실",
+          "marker_count": 102,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ]
+    }
+  },
+  "metrics": {
+    "coverage_count": 670,
+    "coverage": 0.9203296703296703,
+    "top1_correct": 468,
+    "top1_accuracy": 0.6428571428571429,
+    "top3_correct": 607,
+    "top3_recall": 0.8337912087912088,
+    "selected_top1_correct": 375,
+    "ambiguous_count": 162,
+    "no_candidate_count": 58,
+    "margin_p10": 0.005254272999999993,
+    "margin_p50": 0.037332005,
+    "margin_p90": 0.23336548000000001
+  },
+  "organization_metrics": [
+    {
+      "organization": "ICT전략부",
+      "count": 8,
+      "top1_correct": 4,
+      "top3_correct": 4,
+      "selected_top1_correct": 3,
+      "ambiguous": 3,
+      "no_candidate": 0
+    },
+    {
+      "organization": "감사실",
+      "count": 14,
+      "top1_correct": 13,
+      "top3_correct": 14,
+      "selected_top1_correct": 10,
+      "ambiguous": 3,
+      "no_candidate": 1
+    },
+    {
+      "organization": "경영기획부",
+      "count": 42,
+      "top1_correct": 40,
+      "top3_correct": 42,
+      "selected_top1_correct": 32,
+      "ambiguous": 7,
+      "no_candidate": 3
+    },
+    {
+      "organization": "고객지원부",
+      "count": 14,
+      "top1_correct": 12,
+      "top3_correct": 13,
+      "selected_top1_correct": 11,
+      "ambiguous": 1,
+      "no_candidate": 1
+    },
+    {
+      "organization": "기업개선부",
+      "count": 121,
+      "top1_correct": 59,
+      "top3_correct": 83,
+      "selected_top1_correct": 51,
+      "ambiguous": 47,
+      "no_candidate": 6
+    },
+    {
+      "organization": "리스크준법실",
+      "count": 20,
+      "top1_correct": 18,
+      "top3_correct": 18,
+      "selected_top1_correct": 16,
+      "ambiguous": 2,
+      "no_candidate": 0
+    },
+    {
+      "organization": "미래전략실",
+      "count": 10,
+      "top1_correct": 9,
+      "top3_correct": 9,
+      "selected_top1_correct": 7,
+      "ambiguous": 3,
+      "no_candidate": 0
+    },
+    {
+      "organization": "비서실",
+      "count": 7,
+      "top1_correct": 4,
+      "top3_correct": 5,
+      "selected_top1_correct": 3,
+      "ambiguous": 1,
+      "no_candidate": 0
+    },
+    {
+      "organization": "빅데이터부",
+      "count": 37,
+      "top1_correct": 30,
+      "top3_correct": 31,
+      "selected_top1_correct": 29,
+      "ambiguous": 2,
+      "no_candidate": 0
+    },
+    {
+      "organization": "성과관리부",
+      "count": 8,
+      "top1_correct": 6,
+      "top3_correct": 7,
+      "selected_top1_correct": 6,
+      "ambiguous": 1,
+      "no_candidate": 0
+    },
+    {
+      "organization": "신용보증부",
+      "count": 195,
+      "top1_correct": 127,
+      "top3_correct": 183,
+      "selected_top1_correct": 91,
+      "ambiguous": 56,
+      "no_candidate": 4
+    },
+    {
+      "organization": "신용보험부",
+      "count": 53,
+      "top1_correct": 28,
+      "top3_correct": 42,
+      "selected_top1_correct": 24,
+      "ambiguous": 12,
+      "no_candidate": 3
+    },
+    {
+      "organization": "업무지원부",
+      "count": 30,
+      "top1_correct": 22,
+      "top3_correct": 25,
+      "selected_top1_correct": 14,
+      "ambiguous": 4,
+      "no_candidate": 11
+    },
+    {
+      "organization": "인재경영부",
+      "count": 88,
+      "top1_correct": 43,
+      "top3_correct": 65,
+      "selected_top1_correct": 26,
+      "ambiguous": 14,
+      "no_candidate": 27
+    },
+    {
+      "organization": "인프라금융부",
+      "count": 9,
+      "top1_correct": 9,
+      "top3_correct": 9,
+      "selected_top1_correct": 9,
+      "ambiguous": 0,
+      "no_candidate": 0
+    },
+    {
+      "organization": "자본시장부",
+      "count": 72,
+      "top1_correct": 44,
+      "top3_correct": 57,
+      "selected_top1_correct": 43,
+      "ambiguous": 6,
+      "no_candidate": 2
+    }
+  ]
+}
