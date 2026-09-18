@@ -2,8 +2,8 @@
 
 ## Status / 기준 commit
 
-- Status: **T04 COMPLETE — LEXICAL LABEL LEDGER VERIFIED**
-- Baseline checkpoint: `7f452f9ab03d1aa5eae4e9c42cd1dcff524e32c4`
+- Status: **T05 COMPLETE — ORGANIZATION NODE / LINEAGE VERIFIED**
+- Baseline checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 - Parent contracts:
   - `KODIT 잔차·관계 온톨로지 작업 티켓 기준 v1`
   - `docs/architecture/document-extraction-ledger.md`
@@ -274,15 +274,48 @@ PERSON mention + ORG mention in same notice
 ## Later layers
 
 ```text
-T05
-historical organization node / lineage
-
 T06
 residual resolution UI
 
 T07
 topic analysis
 ```
+
+## T05 ORG_LABEL vs ORG_NODE
+
+```text
+ORG_LABEL = lexical observation aggregate
+ORG_NODE  = official-evidence-backed institutional unit with temporal identity
+```
+
+같은 문자열은 같은 시대·제도상의 조직을 보장하지 않는다. `organization-v1`은 현재
+공식 부서별 업무·연락처 snapshot과 보존 공식 corpus의 exact mention을 이용하며,
+이름 유사성만으로 node나 lineage를 만들지 않는다.
+
+`AS_OF`는 label 관측 범위와 공식 evidence를 함께 가진 확정 관계다. node의 유효기간을
+증거로 확정할 수 없으면 `PARTIAL_WINDOW`와 NULL boundary를 유지한다. first/last mention
+날짜를 조직의 법적 신설·폐지일로 바꾸지 않는다.
+
+### Lineage semantics
+
+- `RENAMED_TO`: 공식 근거가 명칭 변경을 직접 명시한다.
+- `MERGED_INTO`: 둘 이상의 조직을 대상 조직으로 통합했다고 직접 명시한다.
+- `SPLIT_INTO`: 조직 분할을 직접 명시한다.
+- `FUNCTION_TRANSFERRED_TO`: 특정 업무·기능의 담당 이동을 직접 명시한다.
+- `SUCCEEDED_BY`: 포괄적 승계를 직접 명시할 때만 사용한다.
+
+근거 우선순위는 직제/업무배분 규정, 공식 조직도·업무 페이지, 공식 조직개편 자료,
+공식 변경이력, 공식 사규 예고, 공식 공시, 보존 공식 corpus 순이다. 이번 T05의 lineage
+2건은 개인정보 처리방침 전후표가 개인정보보호 기능 담당 부서 이동을 직접 보여주므로
+`FUNCTION_TRANSFERRED_TO`로만 기록했다.
+
+```text
+same 업무 이동 ≠ 조직 rename
+PERSON + ORG co-occurrence ≠ 소속관계
+```
+
+T01의 canonical 20개 값은 residual 재현 snapshot이지 T05 organization ontology의
+canonical source가 아니다.
 
 T05의 조직 node와 lineage, T07의 소송·투자 등 topic은 별도 근거와 계약을 가져야 한다.
 
@@ -353,3 +386,5 @@ T04까지도 다음을 만들지 않는다.
 | 2026-09-18 | T04 | 복수 type은 AMBIGUOUS, evidence 없음은 UNTYPED로 두고 우선순위·NOISE heuristic을 금지한다. |
 | 2026-09-18 | T04 | timeline은 KODIT posted date, ALIO final modified date, T01 posted_at만 사용한다. |
 | 2026-09-18 | T04 | 동일 입력 재실행에서 신규 label/link와 identity 변화가 모두 0임을 원격에서 검증했다. |
+| 2026-09-18 | T05 | ORG label 40개를 현재 exact 19, 과거 confirmed 8, unresolved 13으로 전수 평가했다. |
+| 2026-09-18 | T05 | scoped function transfer 2건만 공식 direct evidence edge로 기록하고 person affiliation은 만들지 않았다. |

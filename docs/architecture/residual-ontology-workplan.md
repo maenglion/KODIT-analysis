@@ -2,8 +2,8 @@
 
 ## Status / 기준 commit
 
-- Status: **T04 COMPLETE — T05 NEXT**
-- T04 parent checkpoint: `7f452f9ab03d1aa5eae4e9c42cd1dcff524e32c4`
+- Status: **T05 COMPLETE — T06 NEXT**
+- T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
 
@@ -23,8 +23,8 @@ T02-B extraction ledger                       완료
 T02-C corpus extraction backfill              완료
 T03   extraction mention occurrence           완료
 T04   label aggregation + typing               완료
-T05   historical ORG_NODE + lineage           다음
-T06   residual resolution UI
+T05   historical ORG_NODE + lineage           완료
+T06   residual resolution UI                  다음
 T07   topic analysis
 ```
 
@@ -46,6 +46,18 @@ T07   topic analysis
 - topic, 위험도, 소송·투자·보증 분석
 - OCR, embedding, public API, UI
 
+## T05 boundary
+
+T05는 40개 ORG lexical label을 공식 근거로 평가해 27개 조직 node와 27개 `AS_OF`
+관계를 생성했다. 현재 공식 조직 exact match 19개, 과거 공식 문서로 확인한 조직 8개,
+lexical extraction contamination으로 미해결 13개다. 동일 이름만으로 시대가 다른
+조직을 합치지 않으며, 근거 없는 승계 관계도 생성하지 않는다.
+
+공식 개인정보 처리방침 전후표가 특정 기능의 담당 부서 이동을 직접 보여주는 2건만
+`FUNCTION_TRANSFERRED_TO`로 남겼다. 이 edge는 조직 전체의 rename 또는 succession을
+뜻하지 않는다. T06은 이 원장을 읽을 수 있지만 T01 residual occurrence를 삭제하거나
+재작성해서는 안 된다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -60,3 +72,4 @@ T07   topic analysis
 | 2026-09-17 | T02 | binary/parser/extraction provenance를 immutable ledger로 고정한다. |
 | 2026-09-17 | T03 | extraction exact span mention을 observation으로 보존한다. |
 | 2026-09-18 | T04 | lexical label과 type evidence를 집계하되 entity/node로 승격하지 않는다. |
+| 2026-09-18 | T05 | 공식 근거가 있는 ORG label만 time-aware node로 승격하고 scoped function-transfer edge만 기록한다. |

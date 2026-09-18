@@ -1,0 +1,81 @@
+{
+  "org_contract_version": "organization-v1",
+  "mode": "apply",
+  "state": {
+    "assessments": 40,
+    "assessments_exact": 40,
+    "attachments": 2414,
+    "broken_fk": 0,
+    "duplicate_edges": 0,
+    "edge_types": {
+      "FUNCTION_TRANSFERRED_TO": 2
+    },
+    "edges": 2,
+    "edges_exact": 2,
+    "evidence": 29,
+    "evidence_exact": 29,
+    "extractions": 2397,
+    "labels": 2209,
+    "lineage_cycles": 0,
+    "mentions": 20937,
+    "nodes": 27,
+    "nodes_exact": 27,
+    "notice_links": 3775,
+    "observations": 2414,
+    "outcomes": {
+      "CONFIRMED_NODE": 8,
+      "CURRENT_EXACT": 19,
+      "UNRESOLVED": 13
+    },
+    "parser_runs": 2414,
+    "publish_notices": 2089,
+    "publish_regulations": 1041,
+    "relations": 27,
+    "relations_exact": 27,
+    "residuals": 1272,
+    "self_loops": 0,
+    "temporal_conflicts": 0
+  },
+  "residual_org_labels": [
+    {
+      "label_id": "c1da20d0-cf95-e9b7-1cd5-4ac731968d6c",
+      "outcome": "CONFIRMED_NODE",
+      "node_id": "1662bd77-c432-6c7a-0e25-80ab80cd2a5b",
+      "evidence_id": "bd002628-e8ab-8cbd-f7b9-ee9d7fcf33f5",
+      "first": "2020-06-24",
+      "last": "2022-09-29"
+    },
+    {
+      "label_id": "dbd725e8-c863-c60c-9dee-5ad54a4e4f57",
+      "outcome": "CONFIRMED_NODE",
+      "node_id": "a80aa9c1-eb0a-a81d-a6ed-9f8445617563",
+      "evidence_id": "b0910e07-0dba-a63f-70e6-b12fdfb993e3",
+      "first": "2021-03-02",
+      "last": "2024-01-17"
+    },
+    {
+      "label_id": "3a27db01-4e82-d690-45e4-02616cac01f5",
+      "outcome": "CURRENT_EXACT",
+      "node_id": "d4cec454-6c5f-bc83-9f5e-5bd1c120ff44",
+      "evidence_id": "2d4a0e72-57ee-36b0-bb38-dc1397cd5f8b",
+      "first": "2026-02-04",
+      "last": "2026-08-28"
+    },
+    {
+      "label_id": "4fd55c41-5faf-9125-96b5-13b558ecfcf1",
+      "outcome": "CURRENT_EXACT",
+      "node_id": "c49dd05e-5a9d-a86e-0ddd-653dace601a6",
+      "evidence_id": "e395d682-3a65-5d66-419a-4a76821e5f88",
+      "first": "2026-02-24",
+      "last": "2026-07-09"
+    },
+    {
+      "label_id": "4463b13d-4666-3ca7-c8fc-a9b1f5040e70",
+      "outcome": "CURRENT_EXACT",
+      "node_id": "7f075bb5-341c-da42-0c44-a174f3904b1b",
+      "evidence_id": "35fec081-7171-e91e-bc27-ae62547f0c3d",
+      "first": "2026-03-16",
+      "last": "2026-08-27"
+    }
+  ]
+}

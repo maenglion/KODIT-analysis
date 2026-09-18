@@ -1,0 +1,50 @@
+{
+  "org_contract_version": "organization-v1",
+  "label_contract_version": "label-v1",
+  "current_snapshot": {
+    "source_reference": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11150&mi=2457",
+    "evidence_date": "2026-09-18",
+    "names": [
+      "미래전략실", "리스크준법실", "안전전략실", "비서실", "경영기획부",
+      "성과관리부", "ICT전략부", "신용보증부", "자본시장부", "스타트업금융부",
+      "혁신금융부", "빅데이터부", "신용보험부", "기업개선부", "인프라금융부",
+      "인재경영부", "업무지원부", "고객지원부", "감사실"
+    ]
+  },
+  "historical_names": [
+    "4.0창업부", "기업컨설팅부", "리스크관리실", "안전관리관",
+    "자금운용부", "종합기획부", "플랫폼금융부", "홍보실"
+  ],
+  "unresolved_labels": {
+    "가따로정하는바에따름해외진출기업지원센터": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "분담업무등운영방안ESG추진센터": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "유동화보증과회사채보증부실": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소4.0창업부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소SOC보증부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소경영기획부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소기업지원부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소기업컨설팅부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소신용보험부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소업무지원부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소연구개발부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소자본시장부": "LEXICAL_EXTRACTION_CONTAMINATION",
+    "주소플랫폼금융부": "LEXICAL_EXTRACTION_CONTAMINATION"
+  },
+  "lineage_evidence": {
+    "source_reference": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=12324&mi=4134",
+    "edges": [
+      {
+        "from": "리스크관리실", "to": "리스크준법실",
+        "relation_type": "FUNCTION_TRANSFERRED_TO", "effective_date": "2024-04-24",
+        "edge_scope": "개인정보보호 책임·담당 기능",
+        "evidence_text": "개인정보 처리방침 전후 비교표에서 담당부서가 리스크관리실에서 리스크준법실로 변경됨"
+      },
+      {
+        "from": "리스크준법실", "to": "안전전략실",
+        "relation_type": "FUNCTION_TRANSFERRED_TO", "effective_date": "2026-01-29",
+        "edge_scope": "개인정보보호 책임·담당 기능",
+        "evidence_text": "개인정보 처리방침 전후 비교표에서 담당부서가 리스크준법실에서 안전전략실로 변경됨"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "kodit_mentions": 14349,
+  "kodit_source_expanded_mention_occurrences": 14417,
+  "mentions_linked_to_two_kodit_source_records": 68,
+  "excess_source_pairs": 68,
+  "all_document_extractions": 2397,
+  "mention_bearing_extractions": 2396,
+  "zero_mention_extractions": 1,
+  "conclusion": "Both differences are metric-grain differences; immutable T03/T04 observations are unchanged."
+}
