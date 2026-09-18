@@ -1,0 +1,735 @@
+{
+  "contract_version": "temporal-function-profile-v1",
+  "document_reclassification": {
+    "total_catalogued": 47,
+    "historical_t067_documents": 42,
+    "classification_counts": {
+      "ENACTED_FULL_TEXT": 1,
+      "AMENDMENT_ENACTED": 0,
+      "PROPOSED_AMENDMENT": 42,
+      "ORG_CHART": 1,
+      "FUNCTION_ASSIGNMENT": 1,
+      "DELEGATION_RULE": 1,
+      "UNCLASSIFIED": 1
+    },
+    "historical_enacted_fulltext": 0,
+    "historical_proposed_amendment": 42,
+    "proposal_with_effective_date_evidence": 0,
+    "version_chain_links": 0,
+    "proposal_promoted_to_enacted": 0
+  },
+  "profile_contract": {
+    "canonical_assignment_count": 202,
+    "atomic_profile_count": 137,
+    "atomic_audit": {
+      "detailed_block_count": 22,
+      "numbered_duty_count": 134,
+      "temporal_assignment_count": 3,
+      "organization_grain": [
+        {
+          "org_node_id": "23861892-3b55-414b-3567-3423034ef09a",
+          "official_name": "미래전략실",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "5168a158-2b76-f4d8-b1c6-9f7b55666676",
+          "official_name": "리스크준법실",
+          "marker_count": 11,
+          "selected_monotonic_duty_count": 11,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "org_node_id": "c49dd05e-5a9d-a86e-0ddd-653dace601a6",
+          "official_name": "안전전략실",
+          "marker_count": 3,
+          "selected_monotonic_duty_count": 3,
+          "selected_numbers": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "org_node_id": "acbb30a4-d37d-d35c-2220-9bc2df83645d",
+          "official_name": "홍보협력실",
+          "marker_count": 3,
+          "selected_monotonic_duty_count": 3,
+          "selected_numbers": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "org_node_id": "37acd450-5d6a-2688-3463-c0b8d32cebe7",
+          "official_name": "비서실",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "9a57f29c-3397-9d9a-33f3-b3afbc04e674",
+          "official_name": "경영기획부",
+          "marker_count": 11,
+          "selected_monotonic_duty_count": 11,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "org_node_id": "5ca47412-d604-e57f-6d6b-9c74c00908df",
+          "official_name": "성과관리부",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "69527de7-8a95-190e-e33b-45d6a7d38f62",
+          "official_name": "ICT전략부",
+          "marker_count": 7,
+          "selected_monotonic_duty_count": 7,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "org_node_id": "79c0caef-ea2f-8f6f-1c90-96be859d516e",
+          "official_name": "AI혁신부",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "b0dce328-9921-4e05-b6a6-d0f22fd190d5",
+          "official_name": "신용보증부",
+          "marker_count": 4,
+          "selected_monotonic_duty_count": 4,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "org_node_id": "d69aa775-89bb-f46c-e27c-6ea830d9f158",
+          "official_name": "자본시장부",
+          "marker_count": 5,
+          "selected_monotonic_duty_count": 5,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "org_node_id": "d4cec454-6c5f-bc83-9f5e-5bd1c120ff44",
+          "official_name": "스타트업금융부",
+          "marker_count": 7,
+          "selected_monotonic_duty_count": 7,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "org_node_id": "7f075bb5-341c-da42-0c44-a174f3904b1b",
+          "official_name": "혁신금융부",
+          "marker_count": 8,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "org_node_id": "0725c1d3-13ec-13ef-42fc-82288955e75a",
+          "official_name": "빅데이터부",
+          "marker_count": 5,
+          "selected_monotonic_duty_count": 5,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "org_node_id": "dd17b3fd-fdec-2c5f-c666-e84e770fe1c3",
+          "official_name": "신용보험부",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "2cf78b1b-12e7-bbad-e069-49826d0e491d",
+          "official_name": "기업개선부",
+          "marker_count": 8,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "org_node_id": "00841f08-f8b0-eaf4-41ec-501307538bab",
+          "official_name": "인프라금융부",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "127fd4ba-308c-345c-e78c-ab75785fcdf1",
+          "official_name": "인재경영부",
+          "marker_count": 7,
+          "selected_monotonic_duty_count": 7,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        {
+          "org_node_id": "27211da5-8ad0-0852-a3b2-f0b25ef45435",
+          "official_name": "업무지원부",
+          "marker_count": 6,
+          "selected_monotonic_duty_count": 6,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "org_node_id": "e0e9e75b-971a-2303-c661-ba0b60151a08",
+          "official_name": "고객지원부",
+          "marker_count": 8,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "org_node_id": "e1df8aa2-9150-366e-df61-dd6a6a2a72ce",
+          "official_name": "비상계획부",
+          "marker_count": 3,
+          "selected_monotonic_duty_count": 3,
+          "selected_numbers": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "org_node_id": "bb3edf0b-2b77-725b-ff95-de5acf4f821f",
+          "official_name": "감사실",
+          "marker_count": 102,
+          "selected_monotonic_duty_count": 8,
+          "selected_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        }
+      ]
+    },
+    "epochs": [
+      {
+        "epoch": "PRIVACY_RISK_MANAGEMENT",
+        "valid_from": null,
+        "valid_to": "2024-04-24",
+        "notice_count": 334,
+        "function_gold_count": 0,
+        "candidate_universe": "SCOPED_SINGLE_FUNCTION_PARTIAL",
+        "metrics": {
+          "population": 0,
+          "coverage_count": 0,
+          "coverage": 0.0,
+          "top1_correct": 0,
+          "top1_accuracy": 0.0,
+          "top3_correct": 0,
+          "top3_recall": 0.0,
+          "ambiguous": 0,
+          "no_match": 0,
+          "accepted": 0,
+          "accepted_correct": 0,
+          "accepted_precision": null
+        }
+      },
+      {
+        "epoch": "PRIVACY_RISK_COMPLIANCE",
+        "valid_from": "2024-04-24",
+        "valid_to": "2026-01-29",
+        "notice_count": 390,
+        "function_gold_count": 18,
+        "candidate_universe": "SCOPED_SINGLE_FUNCTION_PARTIAL",
+        "metrics": {
+          "population": 18,
+          "coverage_count": 3,
+          "coverage": 0.16666666666666666,
+          "top1_correct": 18,
+          "top1_accuracy": 1.0,
+          "top3_correct": 18,
+          "top3_recall": 1.0,
+          "ambiguous": 0,
+          "no_match": 15,
+          "accepted": 3,
+          "accepted_correct": 3,
+          "accepted_precision": 1.0
+        }
+      },
+      {
+        "epoch": "PRIVACY_SAFETY_PRE_CURRENT",
+        "valid_from": "2026-01-29",
+        "valid_to": "2026-07-02",
+        "notice_count": 66,
+        "function_gold_count": 0,
+        "candidate_universe": "SCOPED_SINGLE_FUNCTION_PARTIAL",
+        "metrics": {
+          "population": 0,
+          "coverage_count": 0,
+          "coverage": 0.0,
+          "top1_correct": 0,
+          "top1_accuracy": 0.0,
+          "top3_correct": 0,
+          "top3_recall": 0.0,
+          "ambiguous": 0,
+          "no_match": 0,
+          "accepted": 0,
+          "accepted_correct": 0,
+          "accepted_precision": null
+        }
+      },
+      {
+        "epoch": "CURRENT_MULTI_ORG",
+        "valid_from": "2026-07-02",
+        "valid_to": null,
+        "notice_count": 27,
+        "function_gold_count": 27,
+        "candidate_universe": "MULTI_ORG",
+        "metrics": {
+          "population": 27,
+          "coverage_count": 24,
+          "coverage": 0.8888888888888888,
+          "top1_correct": 17,
+          "top1_accuracy": 0.6296296296296297,
+          "top3_correct": 22,
+          "top3_recall": 0.8148148148148148,
+          "ambiguous": 7,
+          "no_match": 3,
+          "accepted": 17,
+          "accepted_correct": 12,
+          "accepted_precision": 0.7058823529411765
+        }
+      }
+    ],
+    "historical_complete_multi_org_epoch_count": 0,
+    "current_complete_multi_org_epoch_count": 1
+  },
+  "positive_control": {
+    "known_answer": 817,
+    "asof_department_gold": 23,
+    "asof_function_gold": 45,
+    "asof_function_gold_complete_multi_org": 27,
+    "asof_function_gold_scoped_partial": 18,
+    "no_matching_answer_profile": 772,
+    "strict_subset": 728,
+    "strict_no_matching_answer_profile": 683,
+    "former_temporal_conflict_reclassified_to_no_profile": 683,
+    "temporal_conflict_after_asof_filter": 0,
+    "asof_department_metrics": {
+      "population": 23,
+      "coverage_count": 20,
+      "coverage": 0.8695652173913043,
+      "top1_correct": 14,
+      "top1_accuracy": 0.6086956521739131,
+      "top3_correct": 18,
+      "top3_recall": 0.782608695652174,
+      "ambiguous": 6,
+      "no_match": 3,
+      "accepted": 14,
+      "accepted_correct": 10,
+      "accepted_precision": 0.7142857142857143
+    },
+    "asof_function_complete_universe_metrics": {
+      "population": 27,
+      "coverage_count": 24,
+      "coverage": 0.8888888888888888,
+      "top1_correct": 17,
+      "top1_accuracy": 0.6296296296296297,
+      "top3_correct": 22,
+      "top3_recall": 0.8148148148148148,
+      "ambiguous": 7,
+      "no_match": 3,
+      "accepted": 17,
+      "accepted_correct": 12,
+      "accepted_precision": 0.7058823529411765
+    },
+    "scoped_partial_function_retrieval": {
+      "population": 18,
+      "coverage_count": 3,
+      "coverage": 0.16666666666666666,
+      "top1_correct": 18,
+      "top1_accuracy": 1.0,
+      "top3_correct": 18,
+      "top3_recall": 1.0,
+      "ambiguous": 0,
+      "no_match": 15,
+      "accepted": 3,
+      "accepted_correct": 3,
+      "accepted_precision": 1.0,
+      "multiclass_accuracy_valid": false,
+      "reason": "Only the privacy-function assignee is represented in these historical epochs; rank top-1 is not a complete-universe accuracy."
+    },
+    "epoch_metrics": [
+      {
+        "epoch": "PRIVACY_RISK_MANAGEMENT",
+        "valid_from": null,
+        "valid_to": "2024-04-24",
+        "notice_count": 334,
+        "function_gold_count": 0,
+        "candidate_universe": "SCOPED_SINGLE_FUNCTION_PARTIAL",
+        "metrics": {
+          "population": 0,
+          "coverage_count": 0,
+          "coverage": 0.0,
+          "top1_correct": 0,
+          "top1_accuracy": 0.0,
+          "top3_correct": 0,
+          "top3_recall": 0.0,
+          "ambiguous": 0,
+          "no_match": 0,
+          "accepted": 0,
+          "accepted_correct": 0,
+          "accepted_precision": null
+        }
+      },
+      {
+        "epoch": "PRIVACY_RISK_COMPLIANCE",
+        "valid_from": "2024-04-24",
+        "valid_to": "2026-01-29",
+        "notice_count": 390,
+        "function_gold_count": 18,
+        "candidate_universe": "SCOPED_SINGLE_FUNCTION_PARTIAL",
+        "metrics": {
+          "population": 18,
+          "coverage_count": 3,
+          "coverage": 0.16666666666666666,
+          "top1_correct": 18,
+          "top1_accuracy": 1.0,
+          "top3_correct": 18,
+          "top3_recall": 1.0,
+          "ambiguous": 0,
+          "no_match": 15,
+          "accepted": 3,
+          "accepted_correct": 3,
+          "accepted_precision": 1.0
+        }
+      },
+      {
+        "epoch": "PRIVACY_SAFETY_PRE_CURRENT",
+        "valid_from": "2026-01-29",
+        "valid_to": "2026-07-02",
+        "notice_count": 66,
+        "function_gold_count": 0,
+        "candidate_universe": "SCOPED_SINGLE_FUNCTION_PARTIAL",
+        "metrics": {
+          "population": 0,
+          "coverage_count": 0,
+          "coverage": 0.0,
+          "top1_correct": 0,
+          "top1_accuracy": 0.0,
+          "top3_correct": 0,
+          "top3_recall": 0.0,
+          "ambiguous": 0,
+          "no_match": 0,
+          "accepted": 0,
+          "accepted_correct": 0,
+          "accepted_precision": null
+        }
+      },
+      {
+        "epoch": "CURRENT_MULTI_ORG",
+        "valid_from": "2026-07-02",
+        "valid_to": null,
+        "notice_count": 27,
+        "function_gold_count": 27,
+        "candidate_universe": "MULTI_ORG",
+        "metrics": {
+          "population": 27,
+          "coverage_count": 24,
+          "coverage": 0.8888888888888888,
+          "top1_correct": 17,
+          "top1_accuracy": 0.6296296296296297,
+          "top3_correct": 22,
+          "top3_recall": 0.8148148148148148,
+          "ambiguous": 7,
+          "no_match": 3,
+          "accepted": 17,
+          "accepted_correct": 12,
+          "accepted_precision": 0.7058823529411765
+        }
+      }
+    ],
+    "organization_metrics": [
+      {
+        "organization": "기업개선부",
+        "population": 1,
+        "coverage_count": 1,
+        "coverage": 1.0,
+        "top1_correct": 1,
+        "top1_accuracy": 1.0,
+        "top3_correct": 1,
+        "top3_recall": 1.0,
+        "ambiguous": 0,
+        "no_match": 0,
+        "accepted": 1,
+        "accepted_correct": 1,
+        "accepted_precision": 1.0
+      },
+      {
+        "organization": "리스크준법실",
+        "population": 18,
+        "coverage_count": 3,
+        "coverage": 0.16666666666666666,
+        "top1_correct": 18,
+        "top1_accuracy": 1.0,
+        "top3_correct": 18,
+        "top3_recall": 1.0,
+        "ambiguous": 0,
+        "no_match": 15,
+        "accepted": 3,
+        "accepted_correct": 3,
+        "accepted_precision": 1.0
+      },
+      {
+        "organization": "미래전략실",
+        "population": 2,
+        "coverage_count": 2,
+        "coverage": 1.0,
+        "top1_correct": 2,
+        "top1_accuracy": 1.0,
+        "top3_correct": 2,
+        "top3_recall": 1.0,
+        "ambiguous": 1,
+        "no_match": 0,
+        "accepted": 1,
+        "accepted_correct": 1,
+        "accepted_precision": 1.0
+      },
+      {
+        "organization": "성과관리부",
+        "population": 1,
+        "coverage_count": 1,
+        "coverage": 1.0,
+        "top1_correct": 1,
+        "top1_accuracy": 1.0,
+        "top3_correct": 1,
+        "top3_recall": 1.0,
+        "ambiguous": 0,
+        "no_match": 0,
+        "accepted": 1,
+        "accepted_correct": 1,
+        "accepted_precision": 1.0
+      },
+      {
+        "organization": "신용보증부",
+        "population": 10,
+        "coverage_count": 10,
+        "coverage": 1.0,
+        "top1_correct": 7,
+        "top1_accuracy": 0.7,
+        "top3_correct": 10,
+        "top3_recall": 1.0,
+        "ambiguous": 4,
+        "no_match": 0,
+        "accepted": 6,
+        "accepted_correct": 4,
+        "accepted_precision": 0.6666666666666666
+      },
+      {
+        "organization": "신용보험부",
+        "population": 1,
+        "coverage_count": 1,
+        "coverage": 1.0,
+        "top1_correct": 0,
+        "top1_accuracy": 0.0,
+        "top3_correct": 1,
+        "top3_recall": 1.0,
+        "ambiguous": 0,
+        "no_match": 0,
+        "accepted": 1,
+        "accepted_correct": 0,
+        "accepted_precision": 0.0
+      },
+      {
+        "organization": "인재경영부",
+        "population": 7,
+        "coverage_count": 5,
+        "coverage": 0.7142857142857143,
+        "top1_correct": 2,
+        "top1_accuracy": 0.2857142857142857,
+        "top3_correct": 3,
+        "top3_recall": 0.42857142857142855,
+        "ambiguous": 2,
+        "no_match": 2,
+        "accepted": 3,
+        "accepted_correct": 1,
+        "accepted_precision": 0.3333333333333333
+      },
+      {
+        "organization": "인프라금융부",
+        "population": 3,
+        "coverage_count": 3,
+        "coverage": 1.0,
+        "top1_correct": 3,
+        "top1_accuracy": 1.0,
+        "top3_correct": 3,
+        "top3_recall": 1.0,
+        "ambiguous": 0,
+        "no_match": 0,
+        "accepted": 3,
+        "accepted_correct": 3,
+        "accepted_precision": 1.0
+      },
+      {
+        "organization": "자본시장부",
+        "population": 2,
+        "coverage_count": 1,
+        "coverage": 0.5,
+        "top1_correct": 1,
+        "top1_accuracy": 0.5,
+        "top3_correct": 1,
+        "top3_recall": 0.5,
+        "ambiguous": 0,
+        "no_match": 1,
+        "accepted": 1,
+        "accepted_correct": 1,
+        "accepted_precision": 1.0
+      }
+    ]
+  },
+  "leakage": {
+    "notice_department_in_feature_payload": false,
+    "department_derived_feature_count": 0,
+    "organization_name_after_scrub_count": 0,
+    "residual_rows_queried": false,
+    "leakage_count": 0
+  },
+  "stewardship": {
+    "official_regulation_function_relations_added": 0,
+    "reason": "No official regulation-to-function relation evidence exists in the held corpus."
+  },
+  "validation_gate": {
+    "temporal_gold_sufficient": false,
+    "calibration_holdout_performed": false,
+    "auto_accept_authorized": false,
+    "residual_run_created": false,
+    "reason": "No historical enacted full text/version chain; historical candidate universe is a scoped privacy function only."
+  }
+}

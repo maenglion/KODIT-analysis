@@ -1,0 +1,20 @@
+{
+  "contract_version": "temporal-function-profile-v1",
+  "parent_checkpoint": "f406723f3f520c3f67641894738d95c130e4646e",
+  "minimum_candidate_score": 0.08,
+  "ambiguity_margin": 0.02,
+  "character_ngram_sizes": [2, 3],
+  "channel_weights": {
+    "title": 0.25,
+    "body": 0.15,
+    "regulation": 0.25,
+    "proposal": 0.25,
+    "work": 0.10
+  },
+  "historical_proposal_policy": "NEVER_PROMOTE_TO_ENACTED_PROFILE",
+  "leakage_policy": {
+    "notice_department_is_label_only": true,
+    "department_derived_features_forbidden": true,
+    "residual_rows_queried": false
+  }
+}

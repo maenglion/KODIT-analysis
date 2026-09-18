@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8.1 COMPLETE; AUTO_ACCEPT REJECTED; RESIDUAL NOT APPLIED**
+- Status: **T06.8.1 COMPLETE; T06.8.2 TEMPORAL PROFILE AUDIT COMPLETE; RESIDUAL NOT APPLIED**
 - Parent checkpoint: `80506b352e2445c83def57ab3430498b9aba9741`
 - Contract: `org-function-precision-gate-v1`
 
@@ -99,6 +99,8 @@ additive observation으로 승격하려면 별도 티켓과 provenance 검증이
 - holdout을 보고 threshold를 재조정하면 새 contract와 새 holdout이 필요하다.
 - historical evidence 확대 성과와 current-function resolver 성능을 한 metric으로 합치지 않는다.
 - snapshot epoch는 조직 존재 support이며, 별도 function assignment 없이 기능책임을 증명하지 않는다.
+- T06.8.2에서 historical 42건 모두 proposal로 확인됐다. enacted full text가 확보되기 전에는
+  historical calibration/holdout을 만들지 않는다.
 
 ## Related migrations / code paths
 
@@ -115,3 +117,4 @@ additive observation으로 승격하려면 별도 티켓과 provenance 검증이
 | 2026-09-18 | observed/as-of/current-function gold 의미를 분리했다. |
 | 2026-09-18 | deterministic stratified calibration/holdout split을 고정했다. |
 | 2026-09-18 | holdout precision 50%로 95% gate가 실패해 residual 적용을 중단했다. |
+| 2026-09-18 | T06.8.2는 683건을 no-profile로 분리하고 historical enacted evidence gap을 고정했다. |

@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T06.8.1 PRECISION GATE COMPLETE; AUTO_ACCEPT REJECTED — T07 NOT STARTED**
+- Status: **T06.8.2 TEMPORAL PROFILE AUDIT COMPLETE; HISTORICAL EVIDENCE GAP — T07 NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -30,6 +30,7 @@ T06.6 historical org evidence/work attribution 완료
 T06.7 official historical org evidence corpus/relationization 완료
 T06.8 function-assignment positive control      완료; residual 적용 보류
 T06.8.1 temporal gold/precision holdout          완료; AUTO_ACCEPT 불승인
+T06.8.2 temporal function profile/as-of control  완료; historical 시행본 부재
 T07   topic analysis                          다음 단계; 아직 시작하지 않음
 ```
 
@@ -114,6 +115,14 @@ T06.8.1은 strict 728건을 current gold 27, historical-only gold 18, observed-o
 leakage는 0이다. calibration 5/5 규칙은 holdout 1/2(50%)로 실패했으므로 AUTO_ACCEPT와
 residual 1,272건 versioned run을 생성하지 않았다. T07은 시작하지 않는다.
 
+## T06.8.2 boundary
+
+T06.7 historical 문서 42건은 모두 proposal이며 historical enacted full text, official effective
+date, version-chain link는 각각 0이다. 따라서 strict 683건을 2026 profile과 비교하지 않고
+`NO_MATCHING_TEMPORAL_PROFILE`로 분리해 temporal conflict를 0으로 만들었다. complete
+multi-org gold는 current 27건뿐이고 historical 18건은 개인정보 기능 하나의 scoped partial
+profile이므로 calibration/holdout과 residual 적용을 수행하지 않았다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -123,6 +132,7 @@ residual 1,272건 versioned run을 생성하지 않았다. T07은 시작하지 �
 - `docs/architecture/historical-organization-work-attribution.md`
 - `docs/architecture/organization-function-positive-control.md`
 - `docs/architecture/organization-function-precision-gate.md`
+- `docs/architecture/temporal-function-profiles.md`
 
 ## Decision history
 
@@ -139,3 +149,4 @@ residual 1,272건 versioned run을 생성하지 않았다. T07은 시작하지 �
 | 2026-09-18 | T06.7 | 42개 역사 조직 사전예고와 2026 current snapshot/function을 relationize하고 evidence-r2 rerun을 추가했으나 공식 path가 없어 1,272건 모두 미확정으로 유지한다. |
 | 2026-09-18 | T06.8 | 817건 positive control에서 leakage 0을 확인했으나 top-1 64.29%여서 residual 승격을 보류한다. |
 | 2026-09-18 | T06.8.1 | temporal gold를 분리하고 holdout precision을 측정했으나 50%로 95% AUTO_ACCEPT gate를 통과하지 못했다. |
+| 2026-09-18 | T06.8.2 | 42개 historical proposal을 enacted profile과 분리하고 683건을 no-profile로 재분류했다. |
