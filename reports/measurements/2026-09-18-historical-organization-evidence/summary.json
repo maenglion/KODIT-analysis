@@ -1,0 +1,60 @@
+{
+  "ticket": "T06.7",
+  "status": "REMOTE_VERIFIED",
+  "baseline_commit": "d929af3949d8a19366009dd86142294b6f0a5ffe",
+  "official_evidence": {
+    "catalog_total": 48,
+    "new_historical_documents": 42,
+    "new_historical_documents_parsed": 42,
+    "excluded_non_kodit_acsic_documents": 4,
+    "source_years": {"2015": 1, "2016": 2, "2017": 2, "2018": 5, "2019": 2, "2020": 7, "2021": 3, "2022": 5, "2023": 4, "2024": 4, "2025": 5, "2026": 2},
+    "document_versions": 45,
+    "version_series_links": 69,
+    "confirmed_previous_version_links": 0
+  },
+  "relationization": {
+    "snapshots": 1,
+    "snapshot_organizations": 22,
+    "function_observations": 200,
+    "detailed_rule_assignments": 22,
+    "privacy_function_epochs_v3": 3,
+    "change_events": 2,
+    "change_events_without_official_evidence": 0
+  },
+  "attribution_before_after": {
+    "before_unresolved": 1272,
+    "after_unresolved": 1272,
+    "candidate_bearing_runs": 1079,
+    "no_candidate_runs": 193,
+    "runs_with_same_year_official_corpus_input": 1219,
+    "official_corpus_audit_links": 4211,
+    "historical_org_confirmed": 0,
+    "current_functional_equivalent_confirmed": 0,
+    "official_path_runs": 0
+  },
+  "temporal_coverage": {
+    "2012_2014": "GAP: no held official snapshot/function/change evidence",
+    "2015_2025": "official preannouncement versions only; not promoted to snapshots or change events",
+    "2024_2026_privacy": "two scoped FUNCTION_TRANSFER events",
+    "2026_current": "one direct snapshot and direct function evidence"
+  },
+  "protected_invariants": {
+    "raw_residual_digest": "942718785d383b2a71a33d1c61a4c8df",
+    "mentions": 20937,
+    "labels": 2209,
+    "proposal_assertions": 1599,
+    "old_v1_runs": 1272,
+    "old_v1_candidates": 4350,
+    "similarity_only_confirmed": 0,
+    "idempotency_delta": 0
+  },
+  "public_contract": {
+    "catalog_rpc": "public_organization_evidence_catalog_v2",
+    "detail_rpc": "public_organization_evidence_document_detail",
+    "catalog_http": 200,
+    "detail_http": 200,
+    "core_direct_http": 406,
+    "publish_direct_http": 401
+  },
+  "t07_started": false
+}

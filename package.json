@@ -27,6 +27,8 @@
     "check:t065": "node tools/analytics/check_t065_contract.mjs",
     "check:t066": "node tools/organizations/check_org_work_attribution_contract.mjs",
     "backfill:t066": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/organizations/run_org_work_attribution_backfill.ps1",
+    "check:t067": "node tools/organizations/check_historical_org_evidence_contract.mjs",
+    "test:t067:http": "node tools/organizations/check_historical_org_evidence_http.mjs",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs",

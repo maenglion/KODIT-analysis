@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T05 IMPLEMENTED; T06 PUBLIC-SAFE PROJECTION; T06.6 EVIDENCE EVENTS ADDED**
+- Status: **T05 IMPLEMENTED; T06 PUBLIC-SAFE PROJECTION; T06.7 EVIDENCE CORPUS ADDED**
 - Parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 - Contract: `organization-v1`
 - Label input: `label-v1`
@@ -21,6 +21,8 @@ T04 lexical `ORG_LABEL`과 증거가 뒷받침하는 조직 단위 `ORG_NODE`를
 - nodes / AS_OF relations: 27 / 27
 - official evidence rows: 29
 - lineage edges: `FUNCTION_TRANSFERRED_TO` 2, 다른 유형 0
+- T06.7 evidence-r2 current nodes: 3 (`홍보협력실`, `AI혁신부`, `비상계획부`)
+- T06.7 current organization snapshot: 1 snapshot / 22 organizations
 - T04 preflight: unique KODIT mentions 14,349, source-expanded mention occurrences 14,417
 - mention-bearing extractions 2,396 / all extractions 2,397
 
@@ -55,6 +57,11 @@ T06.6은 기존 두 edge를 삭제·변경하지 않고 공식 개인정보 처�
 `FUNCTION_TRANSFER` event와 direct function assignment로 추가 표현한다. 이 event 역시
 해당 업무 scope만 설명하며 조직 전체의 후신 관계를 만들지 않는다.
 
+T06.7은 기존 `organization-v1` 27개 node를 수정하지 않고, 2026 직제규정에 직접 열거된
+세 current node를 `organization-v1-evidence-r2`로 추가했다. 2015~2026 사전예고의 이름
+출현이나 snapshot 차이는 node succession/event를 만들지 않는다. 공식 from/to·시행일·
+기능범위가 직접 확인된 event는 기존 개인정보보호 `FUNCTION_TRANSFER` 2개뿐이다.
+
 ## Invariants
 
 1. `ORG_LABEL ≠ ORG_NODE`.
@@ -85,6 +92,8 @@ contamination이다. T05는 원 T03/T04 label을 재작성하지 않고 `UNRESOL
   직접 근거 없이 rename/succession edge를 만들지 않는다.
 - T06은 T01 residual을 삭제하지 말고 별도 resolution status로 표현한다.
 - current website snapshot이 바뀌면 기존 evidence를 갱신하지 말고 새 contract/run을 추가한다.
+- preannouncement document version과 institutional node lineage를 혼동하지 않는다.
+- 2026 snapshot의 존재가 2012~2025 동일 조직의 존재·연속성을 소급 증명하지 않는다.
 
 ## T06 public projection
 
@@ -106,6 +115,9 @@ provenance, evidence text는 공개하지 않는다.
 - `tools/organizations/check_organization_lineage_contract.mjs`
 - `tools/organizations/verify_organization_lineage.sql`
 - `reports/measurements/2026-09-18-organization-lineage/`
+- `supabase/migrations/20260918000600_historical_organization_evidence_corpus.sql`
+- `supabase/migrations/20260918000610_historical_organization_evidence_backfill.sql`
+- `supabase/migrations/20260918000630_historical_organization_function_integrity.sql`
 
 ## Decision history
 
@@ -118,3 +130,5 @@ provenance, evidence text는 공개하지 않는다.
 | 2026-09-18 | T06는 T05 node/edge를 public-safe 설명으로만 투영하며 ontology를 수정하지 않는다. |
 | 2026-09-18 | T06.5 | FUNCTION_TRANSFERRED_TO를 조직 승계 roll-up에서 명시적으로 제외했다. |
 | 2026-09-18 | T06.6 | 기존 scoped function-transfer 2건을 공식 evidence document에 연결된 reified event/assignment로 추가 표현했다. |
+| 2026-09-18 | T06.7 | 2026 직제규정의 22개 조직 snapshot과 세 신규 current node를 evidence-r2로 추가했다. |
+| 2026-09-18 | T06.7 | snapshot diff와 사전예고 cue만으로 rename/merge/split/succession을 만들지 않았다. |
