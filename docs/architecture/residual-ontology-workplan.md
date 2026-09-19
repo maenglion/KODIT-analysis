@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T07-A TOPIC ANALYSIS DATA LAYER IMPLEMENTED; UI NOT STARTED**
+- Status: **T07-B TOPIC BOUNDARY/RECALL AUDITED; UI NOT STARTED**
 - T05 parent checkpoint: `a8d28a921a9400cf3f8cc7db3e3fd5574a8fb12f`
 
 ## Purpose
@@ -150,6 +150,15 @@ T06.x attribution/candidate/residual 추론은 기본 통계에 넣지 않는다
 확정 ORG_NODE로 해소된 경우만 조직 통계에 포함한다. public summary와 topic-notice drill-down
 RPC까지가 범위이며 UI는 만들지 않았다.
 
+## T07-B boundary
+
+T07-B는 T07-A membership 39행/evidence 106행을 동결한 채 실제 의미 범위와 recall 후보만
+감사한다. 직접 동일 regulation/proposal/work 누락은 0이며, 반복 title phrase 24건과 body-only
+11건을 candidate/review artifact로 남겼다. 후보는 membership이 아니고 DB/RPC/UI를 바꾸지 않는다.
+소송은 `SCOPE_CONFIRMED`, 투자·보증은 실제 구현 범위가 투자옵션부보증·보증연계투자 중심이라
+`SCOPE_TOO_NARROW_FOR_NAME` 및 `NEEDS_MANUAL_BOUNDARY_DECISION`이다. T07 UI 또는 membership-v2는
+사용자 경계 결정 전 시작하지 않는다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -181,3 +190,4 @@ RPC까지가 범위이며 UI는 만들지 않았다.
 | 2026-09-18 | T06.8.3 | 31개 official enacted 문서와 12개 profile epoch를 추가하고 frozen scorer로 gold만 재평가했다. |
 | 2026-09-18 | T06.8.4 | holdout 정밀도뿐 아니라 최소 표본 30건 gate를 적용해 AUTO_ACCEPT를 불승인했다. |
 | 2026-09-19 | T07-A | 소송/투자·보증 topic-v1 membership, evidence, metric read model과 public-safe RPC를 추가하고 UI는 후속으로 분리했다. |
+| 2026-09-19 | T07-B | topic-v1을 변경하지 않고 35개 false-negative 후보와 scope verdict를 재현 가능한 review artifact로 고정했다. |

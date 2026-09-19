@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **T07-A IMPLEMENTED — DATA LAYER ONLY; UI NOT STARTED**
+- Status: **T07-B BOUNDARY/RECALL AUDITED — TOPIC-V1 FROZEN; UI NOT STARTED**
 - Parent checkpoint: `ab02b2a84cf09e6550db094dd14327d8e27d9e4f`
 - Contracts: `mention-notice-v1`, `rule-label-regulation-v1`, `change-assertion-v1`, `topic-metrics-v1`, `topic-v1`
 
@@ -155,6 +155,30 @@ key에 org_node_id가 포함된다. 현재 27 relations에서 multi-node label�
 
 기존 mention/label/extraction ID는 재생성하지 않는다.
 
+## T07-B boundary and recall audit
+
+T07-B는 `topic-v1` membership 39행과 evidence 106행을 수정하지 않는 read-only candidate/review
+계층이다. repository에는 별도 사용자 Excel/CSV/manual topic seed가 없었다. 재사용 가능한 정본은
+`config/topic-membership-v1.json`, WORK lexicon, 투자옵션부보증 collector profile이다.
+
+현재 39개 member는 모두 허용된 직접 topic evidence를 하나 이상 가진다. 소송 21건은 전부
+`TITLE_TERM`, 투자·보증 18건은 전부 `MENTIONS_WORK`가 존재하며 `MEMBERSHIP_REVIEW_REQUIRED`는
+0이다. 같은 regulation, 같은 `PROPOSES_CHANGE_TO`, 같은 WORK label의 non-member 누락도 0이다.
+
+설명 가능한 phrase audit에서 membership이 아닌 candidate 35건을 보존했다. 반복 title phrase
+24건은 MEDIUM, member-derived body phrase만 있는 11건은 WEAK이며 STRONG은 0이다. candidate topic
+overlap도 0이다. `개정`, `사전예고`, `보증`, 일반적인 `운용기준` 같은 신호는 non-member에도
+광범위해 candidate seed에서 제외한다. ORG alone, PERSON, EMAIL, NOTICE_DEPARTMENT, T06 functional
+attribution은 candidate evidence가 아니다.
+
+`LITIGATION`은 현행 이름과 seed 범위가 일치해 `SCOPE_CONFIRMED`다. 반면
+`INVESTMENT_GUARANTEE`는 실제로 투자옵션부보증·보증연계투자·증자참여권 중심의 좁은 범위이므로
+`SCOPE_TOO_NARROW_FOR_NAME` 및 `NEEDS_MANUAL_BOUNDARY_DECISION`이다. 이를 투자·보증 일반으로
+확장할지, 좁은 이름으로 표시할지는 membership-v2 전에 사용자가 결정해야 한다.
+
+T07-B의 SQL/config/report는 후보를 membership으로 승격하지 않으며 DB 객체, RPC, UI를 변경하지
+않는다. deterministic review sample은 현재 member 39건과 candidate 35건 전부를 포함한다.
+
 ## Security contract
 
 analytics schema는 PostgREST 공개 schema가 아니며 public/anon/authenticated에 USAGE 또는
@@ -200,6 +224,11 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 - `tools/analytics/check_topic_v1_http.mjs`
 - `tools/analytics/verify_topic_v1.sql`
 - `tools/analytics/report_topic_v1.sql`
+- `config/topic-boundary-audit-v1.json`
+- `tools/analytics/audit_topic_boundary_v1.sql`
+- `tools/analytics/build_topic_boundary_review_v1.mjs`
+- `tools/analytics/check_topic_boundary_audit_v1.mjs`
+- `reports/measurements/2026-09-19-topic-boundary-audit-v1/`
 
 ## Decision history
 
@@ -213,3 +242,5 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 | 2026-09-19 | T07-A | topic은 non-exclusive `topic-v1` membership과 분리된 direct evidence channel로 고정한다. |
 | 2026-09-19 | T07-A | 규정 언급, 규정 개정예고, 직접 ORG mention, 선정 WORK keyword의 read model을 합치지 않는다. |
 | 2026-09-19 | T07-A | drill-down/CSV의 grain은 topic-notice 1행이며 UI는 후속 티켓으로 남긴다. |
+| 2026-09-19 | T07-B | topic-v1은 동결하고, 35개 후보를 설명 가능한 title/body evidence의 review layer로만 보존한다. |
+| 2026-09-19 | T07-B | 소송 범위는 확인됐지만 투자·보증은 실제 seed보다 이름이 넓어 membership-v2 전에 경계 결정이 필요하다. |

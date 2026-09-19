@@ -1,0 +1,31 @@
+{
+  "audit_contract_version": "topic-boundary-audit-v1",
+  "membership_contract_version": "topic-v1",
+  "release_scope": "CURRENT_APPROVED_RELEASE",
+  "membership_mutation_allowed": false,
+  "candidate_evidence_exclusions": ["ORG_ALONE", "PERSON", "EMAIL", "NOTICE_DEPARTMENT", "T06_FUNCTIONAL_ATTRIBUTION"],
+  "strength_contract": {
+    "STRONG": ["MANUAL_SEED_MISS", "SAME_PROPOSED_REGULATION", "SAME_REGULATION_AND_SAME_WORK"],
+    "MEDIUM": ["SAME_REGULATION_AS_TOPIC_MEMBER", "SAME_WORK_LABEL", "HIGHLY_RECURRENT_TITLE_PHRASE"],
+    "WEAK": ["MEMBER_DERIVED_BODY_PHRASE"]
+  },
+  "audited_phrases": {
+    "LITIGATION": {
+      "title": [],
+      "body": ["소송위임"]
+    },
+    "INVESTMENT_GUARANTEE": {
+      "title": ["투자규정", "투자업무", "M&A보증"],
+      "body": ["투자업무운용요령", "투자업무처리기준", "투자기업", "M&A보증운용기준"]
+    }
+  },
+  "negative_controls": ["보증", "투자", "개정", "사전예고"],
+  "scope_verdicts": {
+    "LITIGATION": ["SCOPE_CONFIRMED"],
+    "INVESTMENT_GUARANTEE": ["SCOPE_TOO_NARROW_FOR_NAME", "NEEDS_MANUAL_BOUNDARY_DECISION"]
+  },
+  "current_implemented_scope": {
+    "LITIGATION": "LITIGATION_REGULATION_AND_LEGAL_REPRESENTATION",
+    "INVESTMENT_GUARANTEE": "NARROW_INVESTMENT_OPTION_GUARANTEE_AND_GUARANTEE_LINKED_INVESTMENT"
+  }
+}

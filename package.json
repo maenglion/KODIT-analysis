@@ -31,6 +31,8 @@
     "test:t067:http": "node tools/organizations/check_historical_org_evidence_http.mjs",
     "check:t07a": "node tools/analytics/check_topic_v1_contract.mjs",
     "test:t07a:http": "node tools/analytics/check_topic_v1_http.mjs",
+    "build:t07b-review": "node tools/analytics/build_topic_boundary_review_v1.mjs",
+    "check:t07b": "node tools/analytics/check_topic_boundary_audit_v1.mjs",
     "check": "pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:remote-access": "node supabase/tests/remote_access_contract.mjs",

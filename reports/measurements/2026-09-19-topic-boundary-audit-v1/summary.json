@@ -1,0 +1,124 @@
+{
+  "audit_contract_version": "topic-boundary-audit-v1",
+  "membership_contract_version": "topic-v1",
+  "release_scope": "CURRENT_APPROVED_RELEASE",
+  "baseline": {
+    "population": 2089,
+    "membership_rows": 39,
+    "evidence_rows": 106,
+    "topic_notices": {"LITIGATION": 21, "INVESTMENT_GUARANTEE": 18},
+    "membership_overlap": 0,
+    "nonmembers": 2050
+  },
+  "seed_discovery": {
+    "user_excel_csv_or_manual_topic_seed_found": false,
+    "reused_sources": [
+      "config/topic-membership-v1.json",
+      "tools/mentions/mention-v1.json",
+      "workers/collector/profiles/investment_option_guarantee.json"
+    ],
+    "current_config_missing_from_discovered_manual_seed": [],
+    "current_config_added_beyond_discovered_manual_seed": []
+  },
+  "implemented_scope": {
+    "LITIGATION": "LITIGATION_REGULATION_AND_LEGAL_REPRESENTATION",
+    "INVESTMENT_GUARANTEE": "NARROW_INVESTMENT_OPTION_GUARANTEE_AND_GUARANTEE_LINKED_INVESTMENT"
+  },
+  "member_evidence_contribution": {
+    "LITIGATION": {
+      "primary_discovery": {"TITLE_TERM": 21},
+      "corroborated_members": 13,
+      "required_channel_in_current_v1": "TITLE_TERM"
+    },
+    "INVESTMENT_GUARANTEE": {
+      "primary_discovery": {"TITLE_TERM": 7, "MENTIONS_RULE": 4, "MENTIONS_WORK": 7},
+      "corroborated_by_primary_channel": {"TITLE_TERM": 7, "MENTIONS_RULE": 4, "MENTIONS_WORK": 0},
+      "required_channel_in_current_v1": "MENTIONS_WORK"
+    }
+  },
+  "precision_sanity": {
+    "reviewed_members": 39,
+    "direct_topic_evidence_present": 39,
+    "membership_review_required": 0
+  },
+  "direct_exact_candidate_counts": {
+    "SAME_REGULATION_AS_TOPIC_MEMBER": 0,
+    "SAME_PROPOSED_REGULATION": 0,
+    "SAME_WORK_LABEL": 0,
+    "LINKED_TO_RULE_AUDIT_ONLY": 0
+  },
+  "false_negative_candidates": {"STRONG": 0, "MEDIUM": 24, "WEAK": 11, "TOTAL": 35},
+  "candidate_by_topic": {
+    "LITIGATION": {"STRONG": 0, "MEDIUM": 0, "WEAK": 3, "TOTAL": 3},
+    "INVESTMENT_GUARANTEE": {"STRONG": 0, "MEDIUM": 24, "WEAK": 8, "TOTAL": 32}
+  },
+  "candidate_basis_counts": {
+    "HIGHLY_RECURRENT_TITLE_PHRASE": 24,
+    "MEMBER_DERIVED_BODY_PHRASE": 32,
+    "MANUAL_SEED_MISS": 0,
+    "SAME_REGULATION_AS_TOPIC_MEMBER": 0,
+    "SAME_PROPOSED_REGULATION": 0,
+    "SAME_WORK_LABEL": 0
+  },
+  "candidate_overlap": 0,
+  "negative_control_title_counts": {
+    "INVESTMENT_GUARANTEE": {
+      "M&A보증": {"member": 2, "nonmember": 6},
+      "개정": {"member": 16, "nonmember": 1851},
+      "보증": {"member": 8, "nonmember": 651},
+      "사전예고": {"member": 18, "nonmember": 1893},
+      "소송": {"member": 0, "nonmember": 16},
+      "투자": {"member": 13, "nonmember": 34},
+      "투자규정": {"member": 2, "nonmember": 3},
+      "투자업무": {"member": 4, "nonmember": 16}
+    },
+    "LITIGATION": {
+      "M&A보증": {"member": 0, "nonmember": 8},
+      "개정": {"member": 20, "nonmember": 1847},
+      "보증": {"member": 0, "nonmember": 659},
+      "사전예고": {"member": 16, "nonmember": 1895},
+      "소송": {"member": 16, "nonmember": 0},
+      "투자": {"member": 0, "nonmember": 47},
+      "투자규정": {"member": 0, "nonmember": 5},
+      "투자업무": {"member": 0, "nonmember": 20}
+    }
+  },
+  "selected_discriminative_title_signals": {
+    "INVESTMENT_GUARANTEE": ["투자규정", "투자업무", "M&A보증"],
+    "LITIGATION": ["소송", "활용기준", "고문변호사", "소송업무처리기준", "변호사", "소송위임", "법무사"]
+  },
+  "rejected_generic_signals": ["개정", "사전예고", "보증", "운용기준", "업무처리방법"],
+  "regulation_family_audit": {
+    "LITIGATION": {
+      "MENTIONS_RULE": ["고문변호사 운영기준", "법무사 사건위임 및 보수지급 기준", "소송위임 변호사 선임 및 활용기준", "일반업무소송요령", "임직원 법률구조 운영기준"],
+      "PROPOSES_CHANGE_TO": ["고문변호사 운영기준", "소송업무 처리기준", "소송위임 변호사 선임 및 활용기준", "일반업무소송요령", "임직원 법률구조 운영기준"],
+      "LINKED_TO_RULE": []
+    },
+    "INVESTMENT_GUARANTEE": {
+      "MENTIONS_RULE": ["투자옵션부보증 운용기준", "투자옵션부보증기준"],
+      "PROPOSES_CHANGE_TO": ["투자옵션부보증 업무처리방법", "투자옵션부보증 운영기준", "투자옵션부보증 운용기준"],
+      "LINKED_TO_RULE": []
+    }
+  },
+  "scope_verdicts": {
+    "LITIGATION": ["SCOPE_CONFIRMED"],
+    "INVESTMENT_GUARANTEE": ["SCOPE_TOO_NARROW_FOR_NAME", "NEEDS_MANUAL_BOUNDARY_DECISION"]
+  },
+  "review_artifacts": {
+    "candidate_json": "reports/measurements/2026-09-19-topic-boundary-audit-v1/candidate-notices.json",
+    "candidate_csv": "reports/measurements/2026-09-19-topic-boundary-audit-v1/candidate-notices.csv",
+    "deterministic_review_csv": "reports/measurements/2026-09-19-topic-boundary-audit-v1/review-sample.csv",
+    "review_policy": "all 39 current members plus all 35 candidates; empty STRONG and LITIGATION MEDIUM groups remain empty rather than being fabricated"
+  },
+  "invariants": {
+    "membership_rows_unchanged": 39,
+    "evidence_rows_unchanged": 106,
+    "candidate_membership_promotions": 0,
+    "candidate_topic_overlap": 0,
+    "org_alone_candidates": 0,
+    "person_email_candidates": 0,
+    "database_mutation": false,
+    "public_rpc_change": false,
+    "ui_change": false
+  }
+}
