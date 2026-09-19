@@ -2,9 +2,9 @@
 
 ## Status / 기준 commit
 
-- Status: **T07-B BOUNDARY/RECALL AUDITED — TOPIC-V1 FROZEN; UI NOT STARTED**
-- Parent checkpoint: `ab02b2a84cf09e6550db094dd14327d8e27d9e4f`
-- Contracts: `mention-notice-v1`, `rule-label-regulation-v1`, `change-assertion-v1`, `topic-metrics-v1`, `topic-v1`
+- Status: **T07-C MEMBERSHIP-V2 IMPLEMENTED — TOPIC-V1 FROZEN; UI NOT STARTED**
+- Parent checkpoint: `87138f9159b39deb7ad29099dc2600fd8f390f48`
+- Contracts: `mention-notice-v1`, `rule-label-regulation-v1`, `change-assertion-v1`, `topic-metrics-v1`, `topic-v1`, `topic-membership-v2`
 
 ## Purpose
 
@@ -179,6 +179,39 @@ attribution은 candidate evidence가 아니다.
 T07-B의 SQL/config/report는 후보를 membership으로 승격하지 않으며 DB 객체, RPC, UI를 변경하지
 않는다. deterministic review sample은 현재 member 39건과 candidate 35건 전부를 포함한다.
 
+## T07-C investment/guarantee membership v2
+
+`INVESTMENT_GUARANTEE`의 표시명은 유지하되 의미는 **신용보증기금의 투자·자본성 금융과 직접
+결합되거나 투자와 연계된 보증·투자제도 및 그 명시적 공식 product/regulation family**로
+한정한다. `보증 OR 투자`와 같은 lexical union은 계약 위반이다. parent membership은 오직
+승인된 child family membership의 `DISTINCT notice_id` union이다.
+
+승인 family는 투자옵션부보증, 보증연계투자·직접투자 업무, M&A보증, 문화콘텐츠 프로젝트투자,
+VC펀드 출자금보증, 투자브릿지 보증프로그램, 투자위험분담형보증, 국내동반 투자자금 보증,
+Start-up 신속투자 프로그램의 9개다. 퍼스트펭귄은 공식 설명상 창업기업 보증지원 프로그램이며
+투자·자본성 금융과의 직접 관계가 확인되지 않아 `RELATED_BUT_OUT_OF_SCOPE`로 보존한다.
+M&A보증은 합병·주식취득·영업양수 자금을 지원하는 공식 투융자복합금융 상품이므로
+`APPROVED_CHILD_FAMILY`다.
+
+공식 상품 URL의 정본은 append-only `core.topic_family_official_references_v2`다. 초기 family
+row의 denormalized URL은 evidence 정본으로 사용하지 않으며, 2026-09-19에 실제 KODIT 페이지를
+대조한 canonical reference relation만 family decision 근거로 사용한다.
+
+허용 evidence는 `TITLE_DIRECT`, `MENTIONS_RULE`, `PROPOSES_CHANGE_TO`, `WORK_DIRECT`,
+`MANUAL_APPROVED_SEED`, `OFFICIAL_PRODUCT_REFERENCE`이며 모든 evidence는 family_id에 귀속한다.
+ORG/PERSON/EMAIL/NOTICE_DEPARTMENT, T06 functional attribution/similarity, 일반 `보증`, `투자`,
+`운용기준`, `업무처리방법`, `개정`, `사전예고`는 단독 membership evidence가 아니다.
+
+Current approved release 실측은 v2 parent 62건, v1 18건 전부 retained, 44건 added, v2 contract상
+excluded 0이다. family count는 중복 가능하고 parent count와 합계가 같을 필요가 없다. T07-B 후보
+35건 중 direct family contract로 29건이 `AUTO_INCLUDED`, body-only generic 6건은
+`EXCLUDED_GENERIC`다. parent-without-child, member-without-evidence, direct false-negative,
+duplicate membership은 모두 0이고 재삽입 delta도 membership/evidence 각각 0이다.
+
+`LITIGATION`은 새 membership을 만들지 않고 v2 bundle RPC에서도 기존 topic-v1 21건을 그대로
+참조한다. 신규 `public_topic_summary_v2()`와 `public_topic_notice_rows_v2(topic_code)`만 추가하며
+v1 RPC와 원장 39 membership/106 evidence의 의미와 값은 변경하지 않는다. UI는 T07-C 범위가 아니다.
+
 ## Security contract
 
 analytics schema는 PostgREST 공개 schema가 아니며 public/anon/authenticated에 USAGE 또는
@@ -229,6 +262,14 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 - `tools/analytics/build_topic_boundary_review_v1.mjs`
 - `tools/analytics/check_topic_boundary_audit_v1.mjs`
 - `reports/measurements/2026-09-19-topic-boundary-audit-v1/`
+- `config/topic-membership-v2.json`
+- `supabase/migrations/20260919000200_topic_membership_v2.sql`
+- `supabase/migrations/20260919000210_topic_family_official_references_v2.sql`
+- `tools/analytics/check_topic_v2_contract.mjs`
+- `tools/analytics/check_topic_v2_http.mjs`
+- `tools/analytics/verify_topic_v2.sql`
+- `tools/analytics/build_topic_v2_review.mjs`
+- `reports/measurements/2026-09-19-topic-membership-v2/`
 
 ## Decision history
 
@@ -244,3 +285,5 @@ read, service writer, role-scoped authenticated read로 분류하며 writer는 a
 | 2026-09-19 | T07-A | drill-down/CSV의 grain은 topic-notice 1행이며 UI는 후속 티켓으로 남긴다. |
 | 2026-09-19 | T07-B | topic-v1은 동결하고, 35개 후보를 설명 가능한 title/body evidence의 review layer로만 보존한다. |
 | 2026-09-19 | T07-B | 소송 범위는 확인됐지만 투자·보증은 실제 seed보다 이름이 넓어 membership-v2 전에 경계 결정이 필요하다. |
+| 2026-09-19 | T07-C | 투자·보증 parent를 9개 승인 child family의 distinct union으로 재정의하고 topic-membership-v2를 별도 보존한다. |
+| 2026-09-19 | T07-C | 퍼스트펭귄은 out-of-scope, M&A보증은 공식 투융자복합금융 child family로 판정한다. |

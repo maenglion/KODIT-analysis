@@ -1,0 +1,1708 @@
+[
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "96e4a9d4-a3a4-5a92-bd6a-fb9e67df761a",
+    "notice_number": "2047",
+    "title": "「투자규정」 등 제·개정 사전예고",
+    "posted_date": "2026-06-24",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "CULTURE_CONTENT_PROJECT_INVESTMENT",
+      "GUARANTEE_LINKED_INVESTMENT",
+      "INVESTMENT_OPTION_GUARANTEE",
+      "STARTUP_RAPID_INVESTMENT",
+      "VC_FUND_CONTRIBUTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "Start-up 신속투자 프로그램 운용기준",
+      "VC펀드 출자금보증 업무처리방법",
+      "문화콘텐츠 프로젝트투자 프로그램 운용기준",
+      "투자계약 관리기준",
+      "투자규정",
+      "투자기업 사후관리 운용기준",
+      "투자업무 운용요령",
+      "투자업무 처리기준",
+      "투자옵션부보증 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "투자규정"
+    ],
+    "direct_organizations": [
+      "스타트업금융부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "37183bb7-2e94-562a-bc50-46cebd97d632",
+    "notice_number": "2040",
+    "title": "「신용조사 운용기준」 등 개정 사전예고",
+    "posted_date": "2026-06-12",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "빅데이터부"
+    ],
+    "work_keywords": [
+      "보증연계투자"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "33275128-e021-5a5d-90a5-782b3e496e0b",
+    "notice_number": "2026",
+    "title": "「보증사업심사위원회 운영요령」 등 제규정 개정 사전예고",
+    "posted_date": "2026-06-02",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "신용보증부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "53850ef3-2658-5546-88cf-be33de394329",
+    "notice_number": "1943",
+    "title": "「투자업무 운용요령」 등 개정 사전예고",
+    "posted_date": "2026-01-06",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "CULTURE_CONTENT_PROJECT_INVESTMENT",
+      "GUARANTEE_LINKED_INVESTMENT",
+      "INVESTMENT_OPTION_GUARANTEE",
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "M&A보증 운용기준",
+      "문화콘텐츠 프로젝트투자 프로그램 운용기준",
+      "중소·중견기업 M&A 활성화를 위한 협약보증 업무처리방법",
+      "투자기업 사후관리 운용기준",
+      "투자업무 운용요령",
+      "투자업무 처리기준",
+      "투자옵션부보증 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "투자업무 운용요령"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "40a500cb-dd08-55f3-9f1c-c3197056b77d",
+    "notice_number": "1940",
+    "title": "「투자업무 운용요령」 개정 사전예고",
+    "posted_date": "2026-01-02",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 운용요령"
+    ],
+    "proposed_change_regulations": [
+      "투자업무 운용요령"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "e5b5ee27-117f-5412-8381-619c05ad05ec",
+    "notice_number": "1933",
+    "title": "「보증운용요령」 등 제규정 개정 사전예고",
+    "posted_date": "2025-12-23",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "DOMESTIC_COINVESTMENT_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "국내동반 투자자금 보증 업무처리방법"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "신용보증부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "6b731dfd-6368-58e1-acdc-27210e48b688",
+    "notice_number": "1902",
+    "title": "「VC펀드 출자금보증 업무처리방법」 개정 사전예고",
+    "posted_date": "2025-11-06",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "VC_FUND_CONTRIBUTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "VC펀드 출자금보증 업무처리방법"
+    ],
+    "proposed_change_regulations": [
+      "VC펀드 출자금보증 업무처리방법"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "eabc5810-e358-5512-9f31-fa33da5ba24a",
+    "notice_number": "1834",
+    "title": "「Start-up 신속투자 프로그램 운용기준」 개정 사전예고",
+    "posted_date": "2025-07-08",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "STARTUP_RAPID_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "Start-up 신속투자 프로그램 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "200e8324-9a7b-5612-9f9f-ac8447e1520e",
+    "notice_number": "1830",
+    "title": "「투자업무 운용요령」 등 개정 사전예고",
+    "posted_date": "2025-07-03",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자계약서",
+      "투자기업 사후관리 운용기준",
+      "투자업무 운용요령",
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [
+      "투자업무 운용요령"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "df1d8091-3104-5c08-9167-c61b0675f897",
+    "notice_number": "1819",
+    "title": "「혁신성장 분야 정책지원 보증프로그램 운용기준」 등 개정 사전예고",
+    "posted_date": "2025-06-20",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "DOMESTIC_COINVESTMENT_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "국내동반 투자자금 보증 업무처리방법"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "신용보증부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "9fd7b7fc-636b-594a-8b22-f5a7135874d2",
+    "notice_number": "1780",
+    "title": "「문화콘텐츠 프로젝트투자 프로그램 운용기준」 제정 사전예고",
+    "posted_date": "2025-04-15",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "CULTURE_CONTENT_PROJECT_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "문화콘텐츠 프로젝트투자 프로그램 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "문화콘텐츠 프로젝트투자 프로그램 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "3a2d0ee8-b786-5853-b49c-08d69713d408",
+    "notice_number": "1769",
+    "title": "「M&A보증 운용기준」 등 개정 사전예고",
+    "posted_date": "2025-04-01",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE",
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "M&A보증 운용기준",
+      "투자옵션부보증 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "증자참여권",
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "15083d05-8c63-5eb9-b263-0dece1ae98cb",
+    "notice_number": "1737",
+    "title": "「혁신스타트업 성장지원 프로그램 운용기준」 등 개정(사전예고)",
+    "posted_date": "2025-01-16",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "INVESTMENT_BRIDGE_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "투자브릿지 보증프로그램 운용기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "4.0창업부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "6bc0b000-382f-511f-92e8-aa0843b3fbb5",
+    "notice_number": "1727",
+    "title": "「M&A보증 운용기준」 개정 사전예고",
+    "posted_date": "2024-12-31",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "5198f861-a582-5a7e-a305-46e9bcd84c28",
+    "notice_number": "1689",
+    "title": "「투자기업 사후관리 운용기준」 개정 사전예고",
+    "posted_date": "2024-12-05",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자기업 사후관리 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "투자기업 사후관리 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "a8a133ee-6fa7-5b38-84b0-20960f24ce2d",
+    "notice_number": "1688",
+    "title": "「투자업무 처리기준」 개정 사전예고",
+    "posted_date": "2024-12-05",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [
+      "투자업무 처리기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "ed2683ba-1715-5314-a82e-ab8dfa2bb86e",
+    "notice_number": "1690",
+    "title": "「Start-up 신속투자 프로그램 운용기준」 개정 사전예고",
+    "posted_date": "2024-12-05",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "STARTUP_RAPID_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "Start-up 신속투자 프로그램 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "Start-up 신속투자 프로그램 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "fdbe64c8-3e69-596b-ba30-7590d419038f",
+    "notice_number": "1687",
+    "title": "「투자업무 운용요령」 개정 사전예고",
+    "posted_date": "2024-12-05",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 운용요령"
+    ],
+    "proposed_change_regulations": [
+      "투자업무 운용요령"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "f3dbded7-8abe-5542-836e-91ee0f0ae245",
+    "notice_number": "1682",
+    "title": "「혁신스타트업 성장지원 프로그램 운용기준」등 계정 사전예고",
+    "posted_date": "2024-11-22",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "INVESTMENT_BRIDGE_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "투자브릿지 보증프로그램 운용기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "4.0창업부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "90e459cc-3f03-5024-8d3a-c06888c859f0",
+    "notice_number": "1669",
+    "title": "「VC펀드 출자금보증 업무처리방법」 개정 사전예고",
+    "posted_date": "2024-10-30",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "VC_FUND_CONTRIBUTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "VC펀드 출자금보증 업무처리방법"
+    ],
+    "proposed_change_regulations": [
+      "VC펀드 출자금보증 업무처리방법"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "7527bfdb-5f72-523f-ac10-c4a479bfd298",
+    "notice_number": "1604",
+    "title": "「투자기업 사후관리 운용기준」개정 사전예고",
+    "posted_date": "2024-07-18",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자기업 사후관리 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "투자기업 사후관리 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "b1365bfc-b059-50f2-abc8-5d65b3c0b4aa",
+    "notice_number": "1603",
+    "title": "「국내동반 투자자금 보증 업무처리방법」 개정 사전예고",
+    "posted_date": "2024-07-15",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+    "child_families": [
+      "DOMESTIC_COINVESTMENT_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "국내동반 투자자금 보증 업무처리방법"
+    ],
+    "direct_organizations": [],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "447521fd-290f-5bb6-bb2b-0f0fadc48308",
+    "notice_number": "1574",
+    "title": "「Start-up 신속투자 프로그램 운용기준」 등 개정 사전예고",
+    "posted_date": "2024-05-28",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT",
+      "STARTUP_RAPID_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 운용요령",
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [
+      "Start-up 신속투자 프로그램 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "39ee912a-83b2-5b53-99f3-5c5a06a25570",
+    "notice_number": "1568",
+    "title": "「 투자업무 운용요령」 등 개정 사전예고",
+    "posted_date": "2024-05-14",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 운용요령",
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "3ba76170-a375-5e53-ae00-0a8cf0025797",
+    "notice_number": "1528",
+    "title": "「혁신스타트업 성장지원 프로그램 운용기준」등 개정 사전예고",
+    "posted_date": "2024-02-14",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "INVESTMENT_BRIDGE_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "투자브릿지 보증프로그램 운용기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "4.0창업부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "1b18363d-17b0-547e-95b7-6c41014126cf",
+    "notice_number": "1526",
+    "title": "「투자옵션부보증 운용기준」 등 개정 사전예고",
+    "posted_date": "2024-02-06",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE",
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "M&A보증 운용기준",
+      "투자옵션부보증 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "투자옵션부보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "feea4a7a-8250-5cae-ab6f-ff649805f5bf",
+    "notice_number": "1515",
+    "title": "「Start-up 신속투자 프로그램 운용기준」 제정 사전예고",
+    "posted_date": "2024-01-16",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "STARTUP_RAPID_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "Start-up 신속투자 프로그램 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "effaee45-d96e-5e60-83aa-f833aa0bda7a",
+    "notice_number": "1422",
+    "title": "「투자옵션부보증 운용기준」 등 개정 사전예고",
+    "posted_date": "2023-08-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE",
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "M&A보증 운용기준",
+      "투자옵션부보증 운용기준"
+    ],
+    "proposed_change_regulations": [
+      "투자옵션부보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "fab8ca51-e83a-53d5-9df1-5ce8e91ef247",
+    "notice_number": "1417",
+    "title": "「투자운용업무요령」 등 개정 사전예고",
+    "posted_date": "2023-07-28",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자기업 사후관리 운용기준",
+      "투자업무 운용요령",
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [
+      "투자운용업무요령"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "보증연계투자"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "8526c7d5-e28d-515b-82c1-349b2409eec0",
+    "notice_number": "1294",
+    "title": "투자브릿지 보증프로그램 기준 제정 사전예고",
+    "posted_date": "2022-11-30",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "INVESTMENT_BRIDGE_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "투자브릿지 보증프로그램 기준"
+    ],
+    "direct_organizations": [
+      "4.0창업부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "0b04a9a8-79a1-5564-abdc-1aee2d238051",
+    "notice_number": "1254",
+    "title": "제규정 제개정 사전예고",
+    "posted_date": "2022-09-21",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "투자기업 사후관리 운용기준",
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "ea6be746-48bb-5bd1-b3a7-6a6c249b376a",
+    "notice_number": "1187",
+    "title": "'투자업무 운용요령' 개정",
+    "posted_date": "2022-04-21",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 운용요령"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "c581608f-2385-5729-b18e-9afe327c48bd",
+    "notice_number": "1182",
+    "title": "'투자업무 처리기준' 개정 사전예고",
+    "posted_date": "2022-04-06",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 처리기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "081e3766-7f92-53a7-99cb-39ec351948b2",
+    "notice_number": "1171",
+    "title": "「투자규정」 개정 사전예고",
+    "posted_date": "2022-03-21",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자규정"
+    ],
+    "proposed_change_regulations": [
+      "투자규정"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "0691fcc9-3eb0-5b9d-8968-1924e8a3619c",
+    "notice_number": "1077",
+    "title": "「투자규정」, 「투자업무 운용요령」, 「투자업무 처리기준」 개정 사전예고",
+    "posted_date": "2021-07-20",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자규정"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "보증연계투자"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "b3f950b3-8ad9-5c12-9a4c-636f39343404",
+    "notice_number": "1068",
+    "title": "「업무방법서」 개정 사전예고",
+    "posted_date": "2021-07-14",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "경영기획부"
+    ],
+    "work_keywords": [
+      "보증연계투자"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "02f31614-f6f9-5ed8-b9e0-adea1aac6199",
+    "notice_number": "1012",
+    "title": "「투자옵션부보증 운용기준」및 「M&A보증 운용기준」 개정 사전예고",
+    "posted_date": "2021-04-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE",
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "d1e96a14-de0d-57b9-b444-04f6e7398159",
+    "notice_number": "1011",
+    "title": "「투자업무 운용요령」, 「투자업무 처리기준」,「투자기업 사후관리 운용기준」 개정 사전예고",
+    "posted_date": "2021-04-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "1c653faf-d1cc-5c68-9fac-926e8c853947",
+    "notice_number": "967",
+    "title": "「투자업무 운용요령, 투자업무 처리기준」개정 사전예고",
+    "posted_date": "2021-01-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "e993263a-d72d-548e-bab7-5e00481d7ee3",
+    "notice_number": "773",
+    "title": "「M&A보증 운용기준」 개정 사전예고",
+    "posted_date": "2020-03-05",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "76e7fc3e-9f1c-5da2-8138-b70a1a5dbe2f",
+    "notice_number": "748",
+    "title": "투자업무 운용요령 등 개정 사전예고",
+    "posted_date": "2019-12-26",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT",
+      "INVESTMENT_OPTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "9aa530d5-f758-51af-8f64-7674f73bcc0f",
+    "notice_number": "687",
+    "title": "투자업무 운용요령 등 개정 사전예고",
+    "posted_date": "2019-08-21",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "0360267e-3626-5f64-a229-452b0ec667f8",
+    "notice_number": "678",
+    "title": "투자위험분담형보증기준 등 제ㆍ개정 사전예고",
+    "posted_date": "2019-07-25",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "INVESTMENT_RISK_SHARING_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자위험분담형보증기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "fed8ad68-ce31-5e6c-9dd2-c5918fbcacd5",
+    "notice_number": "677",
+    "title": "M&A보증 운용기준 개정 사전예고",
+    "posted_date": "2019-07-22",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "7a126060-6f4c-5d03-b49a-6fe869cc0c55",
+    "notice_number": "632",
+    "title": "혁신아이콘 지원 프로그램 운용기준 제정에 따른 사전예고",
+    "posted_date": "2019-05-13",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "4.0창업부"
+    ],
+    "work_keywords": [
+      "보증연계투자"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "1a38ef7c-3e1c-57d2-8956-04b75a896527",
+    "notice_number": "614",
+    "title": "투자계약서 및 자산관리심의위원회 운영기준 개정에 따른 사전예고",
+    "posted_date": "2019-04-02",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE"
+    ],
+    "mentioned_regulations": [
+      "투자계약서"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "af0c1d6d-b5d9-51d2-8291-e1fc7d67a659",
+    "notice_number": "596",
+    "title": "예산관리요령 개정에 따른 사전예고",
+    "posted_date": "2019-03-08",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "경영기획부"
+    ],
+    "work_keywords": [
+      "보증연계투자"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "bf2a3a17-3448-5eb2-bdc8-418a9c4be19b",
+    "notice_number": "598",
+    "title": "투자업무 운용요령 및 투자업무 처리기준 개정 사전예고",
+    "posted_date": "2019-03-08",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "19fc2fba-3a3b-5901-ad51-6383458ffcf8",
+    "notice_number": "580",
+    "title": "투자옵션부보증 운영기준 개정 사전예고",
+    "posted_date": "2018-12-21",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "투자옵션부보증 운영기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "016d11e6-966c-5d04-8be1-7d4dbe358084",
+    "notice_number": "545",
+    "title": "M&A보증 운용기준 개정 사전예고",
+    "posted_date": "2018-07-20",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "M&A보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "7f1955f8-7ebc-511f-a3d8-82056f684b93",
+    "notice_number": "483",
+    "title": "투자업무 운용요령 외 2개 기준 개정 사전예고",
+    "posted_date": "2018-02-21",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT",
+      "INVESTMENT_OPTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자업무 운용요령",
+      "투자업무 처리기준",
+      "투자옵션부보증 운용기준",
+      "투자옵션부보증기준"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "4c3df4f2-0546-5d01-9936-55a82d8b35e7",
+    "notice_number": "425",
+    "title": "M&A보증 운영기준 개정 사전예고",
+    "posted_date": "2017-11-06",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "M&A보증 운영기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "dab77ecb-5fea-5dca-affb-d37e3bcb6193",
+    "notice_number": "405",
+    "title": "투자옵션부보증 운용기준 개정 사전예고",
+    "posted_date": "2017-08-29",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "투자옵션부보증 운용기준"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "5651f7d8-64d6-50fb-b0e3-a631f1bd40e9",
+    "notice_number": "356",
+    "title": "투자업무 운용요령 개정 사전예고",
+    "posted_date": "2017-05-23",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "투자업무 운용요령"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "a49e0518-90da-5da4-a01a-b8718ffe9fe8",
+    "notice_number": "302",
+    "title": "투자업무 운용요령 외 4개 규정 개정 사전예고",
+    "posted_date": "2017-01-17",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "b26e1d6b-513e-5a98-bded-09558cb6a922",
+    "notice_number": "273",
+    "title": "투자업무 운용요령, 투자업무 처리기준, 투자계약서 개정 사전예고",
+    "posted_date": "2016-11-28",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자계약서"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "8fb12243-512d-5a33-9eee-1d0ba156c842",
+    "notice_number": "242",
+    "title": "M&A보증 운용기준(가칭) 개정 사전예고",
+    "posted_date": "2016-09-12",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "MNA_GUARANTEE_RELATED"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "34179f21-dcec-56a1-af82-a4272e35cbea",
+    "notice_number": "233",
+    "title": "투자옵션부보증 업무처리방법 개정 사전예고",
+    "posted_date": "2016-08-16",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "투자옵션부보증 업무처리방법"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "dcdababa-ba77-5b60-990a-3c0835d23983",
+    "notice_number": "195",
+    "title": "투자규정, 투자업무 운용요령, 투자업무 처리기준 개정 사전예고",
+    "posted_date": "2016-06-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "MENTIONS_RULE",
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [
+      "투자규정"
+    ],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "a8064a41-cbff-5800-9c8c-63f4baf466a4",
+    "notice_number": "131",
+    "title": "투자옵션부보증 업무처리방법 제정 사전예고",
+    "posted_date": "2016-01-05",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "INVESTMENT_OPTION_GUARANTEE"
+    ],
+    "evidence_basis": [
+      "PROPOSES_CHANGE_TO",
+      "TITLE_DIRECT",
+      "WORK_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [
+      "투자옵션부보증 업무처리방법"
+    ],
+    "direct_organizations": [
+      "자본시장부"
+    ],
+    "work_keywords": [
+      "투자옵션부보증"
+    ],
+    "v1_member": true,
+    "v2_delta": "RETAINED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "5df85254-3281-5bce-9c2d-7d46367ad1b6",
+    "notice_number": "116",
+    "title": "투자업무 처리기준 개정에 따른 규정 개정 사전예고",
+    "posted_date": "2015-12-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [
+      "신용보험부",
+      "자본시장부"
+    ],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  },
+  {
+    "topic_code": "INVESTMENT_GUARANTEE",
+    "membership_contract": "topic-membership-v2",
+    "notice_id": "dfece6e2-0be3-5e5a-b1f3-0d0d4a19286b",
+    "notice_number": "25",
+    "title": "투자규정등 제.개정 사전예고",
+    "posted_date": "2014-04-07",
+    "source_location": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=5",
+    "child_families": [
+      "GUARANTEE_LINKED_INVESTMENT"
+    ],
+    "evidence_basis": [
+      "TITLE_DIRECT"
+    ],
+    "mentioned_regulations": [],
+    "proposed_change_regulations": [],
+    "direct_organizations": [],
+    "work_keywords": [],
+    "v1_member": false,
+    "v2_delta": "ADDED"
+  }
+]

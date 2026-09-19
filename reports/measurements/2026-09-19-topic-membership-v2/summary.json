@@ -1,0 +1,303 @@
+{
+  "contract_version": "topic-membership-v2",
+  "scope_wording": "신용보증기금의 투자·자본성 금융과 직접 결합되거나 투자와 연계된 보증·투자제도 및 그 명시적 공식 product/regulation family",
+  "v1_notices": 18,
+  "v2_notices": 62,
+  "retained": 18,
+  "added": 44,
+  "v2_excluded": 0,
+  "litigation_overlap": 0,
+  "evidence_basis": {
+    "WORK_DIRECT": 18,
+    "TITLE_DIRECT": 49,
+    "MENTIONS_RULE": 35,
+    "PROPOSES_CHANGE_TO": 32
+  },
+  "child_families": [
+    {
+      "family_code": "GUARANTEE_LINKED_INVESTMENT",
+      "family_name": "보증연계투자·직접투자 업무",
+      "notice_count": 33
+    },
+    {
+      "family_code": "INVESTMENT_OPTION_GUARANTEE",
+      "family_name": "투자옵션부보증",
+      "notice_count": 12
+    },
+    {
+      "family_code": "MNA_GUARANTEE_RELATED",
+      "family_name": "M&A보증",
+      "notice_count": 12
+    },
+    {
+      "family_code": "STARTUP_RAPID_INVESTMENT",
+      "family_name": "Start-up 신속투자 프로그램",
+      "notice_count": 5
+    },
+    {
+      "family_code": "INVESTMENT_BRIDGE_GUARANTEE",
+      "family_name": "투자브릿지 보증프로그램",
+      "notice_count": 4
+    },
+    {
+      "family_code": "CULTURE_CONTENT_PROJECT_INVESTMENT",
+      "family_name": "문화콘텐츠 프로젝트투자",
+      "notice_count": 3
+    },
+    {
+      "family_code": "DOMESTIC_COINVESTMENT_GUARANTEE",
+      "family_name": "국내동반 투자자금 보증",
+      "notice_count": 3
+    },
+    {
+      "family_code": "VC_FUND_CONTRIBUTION_GUARANTEE",
+      "family_name": "VC펀드 출자금보증",
+      "notice_count": 3
+    },
+    {
+      "family_code": "INVESTMENT_RISK_SHARING_GUARANTEE",
+      "family_name": "투자위험분담형보증",
+      "notice_count": 1
+    }
+  ],
+  "period_start": "2014-04-07",
+  "period_end": "2026-06-24",
+  "regulation_count": 16,
+  "direct_org_count": 7,
+  "yearly": {
+    "2014": 1,
+    "2015": 1,
+    "2016": 5,
+    "2017": 4,
+    "2018": 3,
+    "2019": 8,
+    "2020": 1,
+    "2021": 5,
+    "2022": 5,
+    "2023": 2,
+    "2024": 14,
+    "2025": 8,
+    "2026": 5
+  },
+  "top_mentioned_regulations": [
+    {
+      "notice_count": 10,
+      "regulation_id": "3a385a83-6d1e-4bcc-bc2f-872220b4cc3c",
+      "canonical_name": "투자업무 운용요령"
+    },
+    {
+      "notice_count": 10,
+      "regulation_id": "d7dab414-ec05-4c07-8836-7ee39c6170ef",
+      "canonical_name": "투자업무 처리기준"
+    },
+    {
+      "notice_count": 7,
+      "regulation_id": "c3bd4774-1666-40b7-9d12-88ceb52fde8d",
+      "canonical_name": "투자기업 사후관리 운용기준"
+    },
+    {
+      "notice_count": 6,
+      "regulation_id": "23e97474-63f0-4156-b677-f306c0347541",
+      "canonical_name": "M&A보증 운용기준"
+    },
+    {
+      "notice_count": 6,
+      "regulation_id": "ec942891-5dfe-434c-9854-bd2dabaf6139",
+      "canonical_name": "투자옵션부보증 운용기준"
+    },
+    {
+      "notice_count": 4,
+      "regulation_id": "fed7b4e4-12f0-4d28-8bc3-bb65297652f7",
+      "canonical_name": "투자규정"
+    },
+    {
+      "notice_count": 3,
+      "regulation_id": "dc310fdb-547c-4116-9aaf-d2fa9ca5a440",
+      "canonical_name": "VC펀드 출자금보증 업무처리방법"
+    },
+    {
+      "notice_count": 3,
+      "regulation_id": "cc86a5fa-9583-4365-8139-75bbbb6d862f",
+      "canonical_name": "문화콘텐츠 프로젝트투자 프로그램 운용기준"
+    },
+    {
+      "notice_count": 3,
+      "regulation_id": "a38055c6-91f0-408a-b158-f9e5da956485",
+      "canonical_name": "투자계약서"
+    },
+    {
+      "notice_count": 3,
+      "regulation_id": "1809f9b7-4948-49b5-9d83-5007e2acf771",
+      "canonical_name": "투자브릿지 보증프로그램 운용기준"
+    },
+    {
+      "notice_count": 2,
+      "regulation_id": "4dd1d9ee-eebe-4de0-b594-ca68493ef03e",
+      "canonical_name": "Start-up 신속투자 프로그램 운용기준"
+    },
+    {
+      "notice_count": 2,
+      "regulation_id": "2bd01cbb-d525-4474-88d3-43ba767e97c9",
+      "canonical_name": "국내동반 투자자금 보증 업무처리방법"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "766cb453-5baa-4d8b-b73f-e19098dfc1a1",
+      "canonical_name": "중소·중견기업 M&A 활성화를 위한 협약보증 업무처리방법"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "64cb6dfe-a3a7-4106-a3dd-22cc500b0328",
+      "canonical_name": "투자계약 관리기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "808bd8a6-32c7-473a-8eed-29d79402d7fc",
+      "canonical_name": "투자옵션부보증기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "217c113d-6b10-4966-bfe7-20b7386cf10b",
+      "canonical_name": "투자위험분담형보증기준"
+    }
+  ],
+  "top_proposed_change_regulations": [
+    {
+      "notice_count": 5,
+      "regulation_id": "23e97474-63f0-4156-b677-f306c0347541",
+      "canonical_name": "M&A보증 운용기준"
+    },
+    {
+      "notice_count": 5,
+      "regulation_id": "3a385a83-6d1e-4bcc-bc2f-872220b4cc3c",
+      "canonical_name": "투자업무 운용요령"
+    },
+    {
+      "notice_count": 4,
+      "regulation_id": "4dd1d9ee-eebe-4de0-b594-ca68493ef03e",
+      "canonical_name": "Start-up 신속투자 프로그램 운용기준"
+    },
+    {
+      "notice_count": 3,
+      "regulation_id": "ec942891-5dfe-434c-9854-bd2dabaf6139",
+      "canonical_name": "투자옵션부보증 운용기준"
+    },
+    {
+      "notice_count": 2,
+      "regulation_id": "dc310fdb-547c-4116-9aaf-d2fa9ca5a440",
+      "canonical_name": "VC펀드 출자금보증 업무처리방법"
+    },
+    {
+      "notice_count": 2,
+      "regulation_id": "fed7b4e4-12f0-4d28-8bc3-bb65297652f7",
+      "canonical_name": "투자규정"
+    },
+    {
+      "notice_count": 2,
+      "regulation_id": "c3bd4774-1666-40b7-9d12-88ceb52fde8d",
+      "canonical_name": "투자기업 사후관리 운용기준"
+    },
+    {
+      "notice_count": 2,
+      "regulation_id": "8087d688-4044-496d-935f-412f5e30f114",
+      "canonical_name": "투자옵션부보증 업무처리방법"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "e87f3f35-5917-40be-8ec7-43180ce2ec19",
+      "canonical_name": "M&A보증 운영기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "2bd01cbb-d525-4474-88d3-43ba767e97c9",
+      "canonical_name": "국내동반 투자자금 보증 업무처리방법"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "cc86a5fa-9583-4365-8139-75bbbb6d862f",
+      "canonical_name": "문화콘텐츠 프로젝트투자 프로그램 운용기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "0869bf33-64a5-4178-b75a-2ed15139b41c",
+      "canonical_name": "투자브릿지 보증프로그램 기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "d7dab414-ec05-4c07-8836-7ee39c6170ef",
+      "canonical_name": "투자업무 처리기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "210e5939-5f42-486b-96c7-6965857f46d2",
+      "canonical_name": "투자옵션부보증 운영기준"
+    },
+    {
+      "notice_count": 1,
+      "regulation_id": "8df2005a-9cab-4fc5-a44c-4a031a48c339",
+      "canonical_name": "투자운용업무요령"
+    }
+  ],
+  "top_direct_organizations": [
+    {
+      "org_node_id": "d69aa775-89bb-f46c-e27c-6ea830d9f158",
+      "notice_count": 47,
+      "official_name": "자본시장부"
+    },
+    {
+      "org_node_id": "06bd2f9f-81df-0765-b4d5-28beb0be1dba",
+      "notice_count": 5,
+      "official_name": "4.0창업부"
+    },
+    {
+      "org_node_id": "b0dce328-9921-4e05-b6a6-d0f22fd190d5",
+      "notice_count": 3,
+      "official_name": "신용보증부"
+    },
+    {
+      "org_node_id": "9a57f29c-3397-9d9a-33f3-b3afbc04e674",
+      "notice_count": 2,
+      "official_name": "경영기획부"
+    },
+    {
+      "org_node_id": "0725c1d3-13ec-13ef-42fc-82288955e75a",
+      "notice_count": 1,
+      "official_name": "빅데이터부"
+    },
+    {
+      "org_node_id": "d4cec454-6c5f-bc83-9f5e-5bd1c120ff44",
+      "notice_count": 1,
+      "official_name": "스타트업금융부"
+    },
+    {
+      "org_node_id": "dd17b3fd-fdec-2c5f-c666-e84e770fe1c3",
+      "notice_count": 1,
+      "official_name": "신용보험부"
+    }
+  ],
+  "selected_work_keywords": [
+    {
+      "notice_count": 12,
+      "work_keyword": "투자옵션부보증"
+    },
+    {
+      "notice_count": 6,
+      "work_keyword": "보증연계투자"
+    },
+    {
+      "notice_count": 1,
+      "work_keyword": "증자참여권"
+    }
+  ],
+  "candidate_disposition": {
+    "AUTO_INCLUDED": 29,
+    "REVIEW_REQUIRED": 0,
+    "EXCLUDED_GENERIC": 6,
+    "OUT_OF_SCOPE": 0
+  },
+  "invariants": {
+    "parent_without_child": 0,
+    "member_without_direct_evidence": 0,
+    "false_negative_direct_candidate": 0
+  }
+}

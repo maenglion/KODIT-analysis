@@ -1,0 +1,653 @@
+[
+  {
+    "notice_id": "40a500cb-dd08-55f3-9f1c-c3197056b77d",
+    "posted_date": "2026-01-02",
+    "title": "「투자업무 운용요령」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "200e8324-9a7b-5612-9f9f-ac8447e1520e",
+    "posted_date": "2025-07-03",
+    "title": "「투자업무 운용요령」 등 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자기업",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "6bc0b000-382f-511f-92e8-aa0843b3fbb5",
+    "posted_date": "2024-12-31",
+    "title": "「M&A보증 운용기준」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증",
+      "M&A보증운용기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "a8a133ee-6fa7-5b38-84b0-20960f24ce2d",
+    "posted_date": "2024-12-05",
+    "title": "「투자업무 처리기준」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "fdbe64c8-3e69-596b-ba30-7590d419038f",
+    "posted_date": "2024-12-05",
+    "title": "「투자업무 운용요령」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "39ee912a-83b2-5b53-99f3-5c5a06a25570",
+    "posted_date": "2024-05-14",
+    "title": "「 투자업무 운용요령」 등 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "ea6be746-48bb-5bd1-b3a7-6a6c249b376a",
+    "posted_date": "2022-04-21",
+    "title": "'투자업무 운용요령' 개정",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "c581608f-2385-5729-b18e-9afe327c48bd",
+    "posted_date": "2022-04-06",
+    "title": "'투자업무 처리기준' 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "081e3766-7f92-53a7-99cb-39ec351948b2",
+    "posted_date": "2022-03-21",
+    "title": "「투자규정」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자규정"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "d1e96a14-de0d-57b9-b444-04f6e7398159",
+    "posted_date": "2021-04-07",
+    "title": "「투자업무 운용요령」, 「투자업무 처리기준」,「투자기업 사후관리 운용기준」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자기업",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "1c653faf-d1cc-5c68-9fac-926e8c853947",
+    "posted_date": "2021-01-07",
+    "title": "「투자업무 운용요령, 투자업무 처리기준」개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "e993263a-d72d-548e-bab7-5e00481d7ee3",
+    "posted_date": "2020-03-05",
+    "title": "「M&A보증 운용기준」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증",
+      "M&A보증운용기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "9aa530d5-f758-51af-8f64-7674f73bcc0f",
+    "posted_date": "2019-08-21",
+    "title": "투자업무 운용요령 등 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "fed8ad68-ce31-5e6c-9dd2-c5918fbcacd5",
+    "posted_date": "2019-07-22",
+    "title": "M&A보증 운용기준 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증",
+      "M&A보증운용기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "bf2a3a17-3448-5eb2-bdc8-418a9c4be19b",
+    "posted_date": "2019-03-08",
+    "title": "투자업무 운용요령 및 투자업무 처리기준 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "016d11e6-966c-5d04-8be1-7d4dbe358084",
+    "posted_date": "2018-07-20",
+    "title": "M&A보증 운용기준 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "4c3df4f2-0546-5d01-9936-55a82d8b35e7",
+    "posted_date": "2017-11-06",
+    "title": "M&A보증 운영기준 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증",
+      "M&A보증운용기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "5651f7d8-64d6-50fb-b0e3-a631f1bd40e9",
+    "posted_date": "2017-05-23",
+    "title": "투자업무 운용요령 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "a49e0518-90da-5da4-a01a-b8718ffe9fe8",
+    "posted_date": "2017-01-17",
+    "title": "투자업무 운용요령 외 4개 규정 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "M&A보증운용기준",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "b26e1d6b-513e-5a98-bded-09558cb6a922",
+    "posted_date": "2016-11-28",
+    "title": "투자업무 운용요령, 투자업무 처리기준, 투자계약서 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "8fb12243-512d-5a33-9eee-1d0ba156c842",
+    "posted_date": "2016-09-12",
+    "title": "M&A보증 운용기준(가칭) 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증",
+      "M&A보증운용기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "dcdababa-ba77-5b60-990a-3c0835d23983",
+    "posted_date": "2016-06-07",
+    "title": "투자규정, 투자업무 운용요령, 투자업무 처리기준 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자규정",
+      "투자업무",
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "5df85254-3281-5bce-9c2d-7d46367ad1b6",
+    "posted_date": "2015-12-07",
+    "title": "투자업무 처리기준 개정에 따른 규정 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE",
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "dfece6e2-0be3-5e5a-b1f3-0d0d4a19286b",
+    "posted_date": "2014-04-07",
+    "title": "투자규정등 제.개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "HIGHLY_RECURRENT_TITLE_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자규정"
+    ],
+    "candidate_strength_class": "MEDIUM",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "33275128-e021-5a5d-90a5-782b3e496e0b",
+    "posted_date": "2026-06-02",
+    "title": "「보증사업심사위원회 운영요령」 등 제규정 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "M&A보증운용기준"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "c7e569d5-a9c8-5825-a433-5b5136342531",
+    "posted_date": "2026-02-23",
+    "title": "「지역산업 지원프로그램 운용기준」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자기업"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "EXCLUDED_GENERIC"
+  },
+  {
+    "notice_id": "5198f861-a582-5a7e-a305-46e9bcd84c28",
+    "posted_date": "2024-12-05",
+    "title": "「투자기업 사후관리 운용기준」 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자기업"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "7527bfdb-5f72-523f-ac10-c4a479bfd298",
+    "posted_date": "2024-07-18",
+    "title": "「투자기업 사후관리 운용기준」개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자기업"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "447521fd-290f-5bb6-bb2b-0f0fadc48308",
+    "posted_date": "2024-05-28",
+    "title": "「Start-up 신속투자 프로그램 운용기준」 등 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무운용요령",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "fdade53a-2dc6-5718-8963-e2a4755fc556",
+    "posted_date": "2023-10-10",
+    "title": "'출자전환증권 관리업무처리기준' 등 개정 사전 예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "EXCLUDED_GENERIC"
+  },
+  {
+    "notice_id": "0b04a9a8-79a1-5564-abdc-1aee2d238051",
+    "posted_date": "2022-09-21",
+    "title": "제규정 제개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자기업",
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "AUTO_INCLUDED"
+  },
+  {
+    "notice_id": "4798a605-0728-5d9a-a13c-6ee7c2a3f05f",
+    "posted_date": "2017-04-25",
+    "title": "유동화회사보증 관리요령 외 3개 규정 개정 사전예고",
+    "candidate_topic": "INVESTMENT_GUARANTEE",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "투자업무처리기준"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "EXCLUDED_GENERIC"
+  },
+  {
+    "notice_id": "ea4df6c9-9ea2-55c7-a02a-120f27f9b00b",
+    "posted_date": "2025-02-20",
+    "title": "「유동화회사보증 관리요령」 등 개정 사전예고",
+    "candidate_topic": "LITIGATION",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "소송위임"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "EXCLUDED_GENERIC"
+  },
+  {
+    "notice_id": "181479f6-a894-5a7e-8874-28ae805bf849",
+    "posted_date": "2022-10-31",
+    "title": "「보험금지급 업무기준」 개정 사전예고",
+    "candidate_topic": "LITIGATION",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "소송위임"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "EXCLUDED_GENERIC"
+  },
+  {
+    "notice_id": "721002bd-f6a5-5bea-8ebb-ae8f6a446b99",
+    "posted_date": "2016-09-29",
+    "title": "재도전지원 프로그램 운영기준 개정 사전 예고",
+    "candidate_topic": "LITIGATION",
+    "candidate_basis": [
+      "MEMBER_DERIVED_BODY_PHRASE"
+    ],
+    "matching_regulation_ids": [],
+    "matching_work_labels": [],
+    "matching_phrases": [
+      "소송위임"
+    ],
+    "candidate_strength_class": "WEAK",
+    "current_membership": false,
+    "v2_disposition": "EXCLUDED_GENERIC"
+  }
+]

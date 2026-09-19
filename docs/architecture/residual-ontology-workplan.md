@@ -159,6 +159,14 @@ T07-B는 T07-A membership 39행/evidence 106행을 동결한 채 실제 의미 �
 `SCOPE_TOO_NARROW_FOR_NAME` 및 `NEEDS_MANUAL_BOUNDARY_DECISION`이다. T07 UI 또는 membership-v2는
 사용자 경계 결정 전 시작하지 않는다.
 
+## T07-C boundary
+
+T07-C는 기존 topic-v1을 동결하고 투자·보증 parent를 승인된 공식 product/regulation child family의
+union으로 구성한 `topic-membership-v2`를 별도 추가한다. generic `보증 OR 투자` 조건은 금지하고,
+각 membership은 승인 family와 직접 evidence를 모두 가져야 한다. current release는 62건이며 v1
+18건을 모두 포함하고 44건을 추가한다. LITIGATION은 topic-v1을 그대로 canonical로 참조한다.
+신규 versioned read RPC까지만 제공하며 UI는 시작하지 않는다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -191,3 +199,4 @@ T07-B는 T07-A membership 39행/evidence 106행을 동결한 채 실제 의미 �
 | 2026-09-18 | T06.8.4 | holdout 정밀도뿐 아니라 최소 표본 30건 gate를 적용해 AUTO_ACCEPT를 불승인했다. |
 | 2026-09-19 | T07-A | 소송/투자·보증 topic-v1 membership, evidence, metric read model과 public-safe RPC를 추가하고 UI는 후속으로 분리했다. |
 | 2026-09-19 | T07-B | topic-v1을 변경하지 않고 35개 false-negative 후보와 scope verdict를 재현 가능한 review artifact로 고정했다. |
+| 2026-09-19 | T07-C | 투자·보증을 9개 승인 child family의 distinct union으로 구현하고 v1과 v2를 함께 재현 가능하게 보존했다. |

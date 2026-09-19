@@ -1,0 +1,112 @@
+{
+  "contract_version": "topic-membership-v2",
+  "parent_topic_code": "INVESTMENT_GUARANTEE",
+  "parent_scope": "신용보증기금의 투자·자본성 금융과 직접 결합되거나 투자와 연계된 보증·투자제도 및 그 명시적 공식 product/regulation family",
+  "release_scope": "CURRENT_APPROVED_RELEASE",
+  "notice_grain": "DISTINCT_NOTICE_ID",
+  "parent_membership": "UNION_OF_APPROVED_CHILD_FAMILY_MEMBERSHIPS",
+  "allowed_evidence": [
+    "TITLE_DIRECT",
+    "MENTIONS_RULE",
+    "PROPOSES_CHANGE_TO",
+    "WORK_DIRECT",
+    "MANUAL_APPROVED_SEED",
+    "OFFICIAL_PRODUCT_REFERENCE"
+  ],
+  "prohibited_standalone_evidence": [
+    "보증",
+    "투자",
+    "운용기준",
+    "업무처리방법",
+    "개정",
+    "사전예고",
+    "ORG",
+    "PERSON",
+    "EMAIL",
+    "NOTICE_DEPARTMENT",
+    "T06_FUNCTIONAL_ATTRIBUTION",
+    "SIMILARITY_CANDIDATE"
+  ],
+  "families": [
+    {
+      "family_code": "INVESTMENT_OPTION_GUARANTEE",
+      "name": "투자옵션부보증",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11080&mi=2542",
+      "regulation_names": ["투자옵션부보증 업무처리방법", "투자옵션부보증 운영기준", "투자옵션부보증 운용기준", "투자옵션부보증기준"],
+      "direct_terms": ["투자옵션부보증", "증자참여권"]
+    },
+    {
+      "family_code": "GUARANTEE_LINKED_INVESTMENT",
+      "name": "보증연계투자·직접투자 업무",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11079&mi=2541",
+      "regulation_names": ["투자규정", "투자업무 운용요령", "투자업무 처리기준", "투자기업 사후관리 운용기준", "투자계약 관리기준", "투자계약서", "투자운용업무요령"],
+      "direct_terms": ["보증연계투자", "투자규정", "투자업무 운용요령", "투자업무 처리기준", "투자기업 사후관리 운용기준"]
+    },
+    {
+      "family_code": "MNA_GUARANTEE_RELATED",
+      "name": "M&A보증",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11081&mi=2543",
+      "regulation_names": ["M&A보증 운영기준", "M&A보증 운용기준", "중소·중견기업 M&A 활성화를 위한 협약보증 업무처리방법"],
+      "direct_terms": ["M&A보증"]
+    },
+    {
+      "family_code": "CULTURE_CONTENT_PROJECT_INVESTMENT",
+      "name": "문화콘텐츠 프로젝트투자",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=12242&mi=3992",
+      "regulation_names": ["문화콘텐츠 프로젝트투자 프로그램 운용기준"],
+      "direct_terms": ["문화콘텐츠 프로젝트투자"]
+    },
+    {
+      "family_code": "VC_FUND_CONTRIBUTION_GUARANTEE",
+      "name": "VC펀드 출자금보증",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=12624&mi=4553",
+      "regulation_names": ["VC펀드 출자금보증 업무처리방법"],
+      "direct_terms": ["VC펀드 출자금보증"]
+    },
+    {
+      "family_code": "INVESTMENT_BRIDGE_GUARANTEE",
+      "name": "투자브릿지 보증프로그램",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": null,
+      "regulation_names": ["투자브릿지 보증프로그램 기준", "투자브릿지 보증프로그램 운용기준"],
+      "direct_terms": ["투자브릿지 보증프로그램"]
+    },
+    {
+      "family_code": "INVESTMENT_RISK_SHARING_GUARANTEE",
+      "name": "투자위험분담형보증",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": null,
+      "regulation_names": ["투자위험분담형보증기준"],
+      "direct_terms": ["투자위험분담형보증"]
+    },
+    {
+      "family_code": "DOMESTIC_COINVESTMENT_GUARANTEE",
+      "name": "국내동반 투자자금 보증",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": null,
+      "regulation_names": ["국내동반 투자자금 보증 업무처리방법"],
+      "direct_terms": ["국내동반 투자자금 보증"]
+    },
+    {
+      "family_code": "STARTUP_RAPID_INVESTMENT",
+      "name": "Start-up 신속투자 프로그램",
+      "status": "APPROVED_CHILD_FAMILY",
+      "official_reference_url": null,
+      "regulation_names": ["Start-up 신속투자 프로그램 운용기준"],
+      "direct_terms": ["Start-up 신속투자"]
+    },
+    {
+      "family_code": "FIRST_PENGUIN_RELATED",
+      "name": "퍼스트펭귄 창업기업 보증지원",
+      "status": "RELATED_BUT_OUT_OF_SCOPE",
+      "official_reference_url": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11097&mi=2567",
+      "regulation_names": [],
+      "direct_terms": []
+    }
+  ]
+}
