@@ -1,5 +1,5 @@
 import "server-only";
-import type { DepartmentResidualLabelRow, DepartmentResidualOccurrenceRow, PublicRegulationSourceRow, PublishNoticeRow, PublishRegulationRow, PublishReleaseMetadata } from "@kodit/common/regulations";
+import { canonicalDepartment,type DepartmentAttributionExplanationRow, type DepartmentResidualLabelRow, type DepartmentResidualOccurrenceRow, type PublicRegulationSourceRow, type PublishNoticeRow, type PublishRegulationRow, type PublishReleaseMetadata } from "@kodit/common/regulations";
 
 type RawRegulationSourceRow = PublicRegulationSourceRow & {
   document_sha256?: unknown;
@@ -52,25 +52,34 @@ async function paged<T>(name: string) {
   throw new Error(`${name}_pagination_limit`);
 }
 
+async function optionalPaged<T>(name:string){
+  try{return await paged<T>(name);}catch(error){safeWarning(name,error);return [] as T[];}
+}
+
 export async function getPublishDataset(): Promise<
-  | { available: true; release: PublishReleaseMetadata; rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; residuals:DepartmentResidualOccurrenceRow[]; residualLabels:DepartmentResidualLabelRow[] }
+  | { available: true; release: PublishReleaseMetadata; rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; residuals:DepartmentResidualOccurrenceRow[]; residualLabels:DepartmentResidualLabelRow[]; attributionExplanations:DepartmentAttributionExplanationRow[] }
   | { available: false }
 > {
   try {
-    const [metadata, rows, notices, rawSources, residuals, residualLabels] = await Promise.all([
+    const [metadata, rows, notices, rawSources, residuals, residualLabels, attributionExplanations] = await Promise.all([
       callPublishRpc<PublishReleaseMetadata[]>("public_release_metadata"),
       paged<PublishRegulationRow>("public_regulation_rows"),
       paged<PublishNoticeRow>("public_notice_rows"),
       paged<RawRegulationSourceRow>("public_regulation_source_rows"),
-      paged<DepartmentResidualOccurrenceRow>("public_department_residual_analysis_rows"),
-      paged<DepartmentResidualLabelRow>("public_department_residual_label_rows"),
+      paged<DepartmentResidualOccurrenceRow>("public_department_residual_analysis_rows_safe"),
+      paged<DepartmentResidualLabelRow>("public_department_residual_label_rows_safe"),
+      optionalPaged<DepartmentAttributionExplanationRow>("public_department_attribution_explanation_rows_safe"),
     ]);
     const release = metadata[0];
     if (!release || rows.length !== release.population) throw new Error("publish_release_population_mismatch");
     if (rows.some((row) => row.release_id !== release.release_id) || notices.some((row) => row.release_id !== release.release_id)) throw new Error("publish_mixed_release_rows");
+    const publicDepartment=(value:string|null)=>canonicalDepartment(value)??(value?.trim()?"개인·미매핑 표기":null);
+    const safeRows=rows.map(row=>({...row,notice_department:publicDepartment(row.notice_department)}));
+    const safeNotices=notices.map(row=>({...row,notice_department:publicDepartment(row.notice_department)}));
     const sources = rawSources.map(({ release_id, regulation_version_id, regulation_code, source_kind, evidence_role, source_location, attachment_name }) => ({ release_id, regulation_version_id, regulation_code, source_kind, evidence_role, source_location, attachment_name }));
     if(residuals.length!==1272||residualLabels.length!==355||residuals.some(row=>row.release_id!==release.release_id)||residualLabels.some(row=>row.release_id!==release.release_id)) throw new Error("publish_residual_population_mismatch");
-    return { available: true, release, rows, notices, sources, residuals, residualLabels };
+    if(attributionExplanations.some(row=>row.release_id!==release.release_id)) throw new Error("publish_attribution_mixed_release_rows");
+    return { available: true, release, rows:safeRows, notices:safeNotices, sources, residuals, residualLabels, attributionExplanations };
   } catch (error) {
     safeWarning("publish_read_model", error);
     return { available: false };

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { SiteNavigation } from "@/components/SiteNavigation";
 import "./styles.css";
 
@@ -34,17 +35,27 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body>
-        <header className="site-header">
-          <div className="header-inner">
-            <Link className="brand" href="/regulations" aria-label="KODIT 규정 공개현황">
-              <span className="brand-mark">K</span>
-              <span><b>KODIT</b><small>규정 공개·검증 시스템</small></span>
-            </Link>
-            <SiteNavigation />
-          </div>
-        </header>
-        {children}
-        <footer><span>KODIT 규정 공개현황</span><span>Soulspectrum Inc. · nanyoung이 만들었습니다.</span></footer>
+        <div className="mobile-unsupported" role="status">
+          <strong>PC 화면에서만 지원합니다.</strong>
+          <span>규정 표와 근거 데이터를 정확히 표시하기 위해 데스크톱 환경에서 열어 주세요.</span>
+        </div>
+        <div className="desktop-application">
+          <header className="site-header">
+            <div className="utility-bar"><div className="utility-inner">
+              <Link href="/data-purpose">데이터 수집 및 활용목적</Link>
+              <Link href="/methodology">검증 방법론</Link>
+              <Link href="/technical-specs">기술 사양</Link>
+            </div></div>
+            <div className="header-blue">
+              <div className="header-inner">
+                <Link className="brand" href="/regulations" aria-label="KODIT 규정 공개현황">KODIT - 규정 공개·검증 시스템</Link>
+                <Suspense fallback={null}><SiteNavigation /></Suspense>
+              </div>
+            </div>
+          </header>
+          {children}
+          <footer><span>KODIT 규정 공개현황</span><span>Soulspectrum Inc. · nanyoung이 만들었습니다.</span></footer>
+        </div>
       </body>
     </html>
   );

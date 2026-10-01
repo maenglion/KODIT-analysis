@@ -1,24 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export function SiteNavigation() {
-  const [pendingOpen, setPendingOpen] = useState(false);
+  const pathname = usePathname();
+  const search = useSearchParams();
+  const scope = search.get("scope") ?? "master";
+  const isRegulations = pathname === "/regulations";
+  const isDepartment = pathname === "/department-statistics";
 
   return <>
-    <nav aria-label="주 메뉴">
+    <nav className="main-navigation" aria-label="주 메뉴">
+      <Link className={isRegulations ? "active" : ""} href="/regulations">HOME</Link>
       <Link href="/regulations">규정·법령</Link>
-      <Link href="/department-statistics">부서별 통계</Link>
-      <button className="nav-pending" type="button" onClick={() => setPendingOpen(true)}>투자·보증 통계</button>
-      <Link href="/technical-specs">기술 스펙</Link>
+      <Link className={isDepartment ? "active" : ""} href="/department-statistics">부서별 통계</Link>
+      <Link className={pathname === "/investment-statistics" ? "active" : ""} href="/investment-statistics">사업별 통계</Link>
     </nav>
-    {pendingOpen && <div className="nav-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setPendingOpen(false); }}>
-      <section className="nav-modal" role="dialog" aria-modal="true" aria-labelledby="pending-title">
-        <button className="nav-modal-close" type="button" aria-label="닫기" onClick={() => setPendingOpen(false)}>×</button>
-        <p className="eyebrow">투자·보증 통계</p>
-        <h2 id="pending-title">준비중입니다.</h2>
-      </section>
-    </div>}
+    {isRegulations && <nav className="sub-navigation" aria-label="규정 하위 메뉴">
+      <Link className={scope === "master" ? "active" : ""} href="/regulations?scope=master">내부규정(분석)</Link>
+      <Link className={scope === "notice" ? "active" : ""} href="/regulations?scope=notice">사규예고</Link>
+      <Link href="/department-statistics">조직도</Link>
+    </nav>}
+    {isDepartment && <nav className="sub-navigation" aria-label="부서 통계 하위 메뉴">
+      <a className="active" href="#summary">요약</a>
+      <a href="#residual-analysis">시맨틱 매칭방식</a>
+      <a href="#organization-history">조직 히스토리</a>
+    </nav>}
   </>;
 }

@@ -21,6 +21,23 @@ export type DepartmentResidualLabelRow = {
   extractor_rule_distribution:Record<string,number>; mention_source_locations:string[]; org_node_id:string|null; org_official_name:string|null;
   org_valid_from:string|null; org_valid_to:string|null; organization_assessment:string|null; official_evidence_url:string|null; lineage_edges:OrganizationLineagePublicEdge[];
 };
+export type DepartmentAttributionPathStep = {
+  step_order:number; from_name:string; to_name:string; relation_type:string; effective_date:string|null;
+  work_scope_match:boolean|null; evidence_title:string; evidence_url:string;
+};
+export type DepartmentAttributionReasoningStep = {
+  step_order:number; step_type:string; result_description:string; step_status:string;
+};
+export type DepartmentAttributionEvidence = {
+  evidence_kind:string; document_title:string|null; document_type:string|null; evidence_date:string|null; source_url:string|null;
+};
+export type DepartmentAttributionExplanationRow = {
+  release_id:string; residual_id:string; notice_id:string; masked_label:string; label_type:string;
+  posted_at:string; title:string; source_location:string; inference_basis_code:string; inference_basis_label:string;
+  responsible_org_as_of_notice:string|null; current_functional_equivalent:string|null; current_org_candidate:string|null;
+  work_context:string[]; path_steps:DepartmentAttributionPathStep[]; reasoning_steps:DepartmentAttributionReasoningStep[];
+  official_evidence:DepartmentAttributionEvidence[];
+};
 export type PublicRegulationSourceRow = { release_id: string; regulation_version_id: string; regulation_code: string; source_kind: string; evidence_role: string; source_location: string | null; attachment_name: string | null };
 export type PublishReleaseMetadata = { release_id: string; release_type: string; schema_version: string; evidence_as_of: string; generated_at: string; source_snapshot_hash: string; projection_hash: string; population: number };
 export type PublicRegulationFilters = { query: string; availability: Availability | "ALL"; currentness: string; partialType: "ALL" | "ALIO" | "KODIT_PAGE" | "ATTACHMENT" };
@@ -92,8 +109,16 @@ export function publishNoticesToCsv(rows: PublishNoticeRow[], release: PublishRe
   return makeCsv(["row_number", "source_notice_number", "title", "posted_date", "notice_department", "source_url", "linked_regulation_count", "release_id", "evidence_as_of"], rows.map((row, index) => [index + 1, row.notice_number, row.title, row.posted_date, row.notice_department, row.source_location, row.linked_regulation_version_ids.length, row.release_id, release.evidence_as_of]));
 }
 export function residualOccurrencesToCsv(rows:DepartmentResidualOccurrenceRow[]){
-  return makeCsv(["notice_id","posted_at","title","raw_label","normalized_label","resolution_class","label_type","first_seen_at","last_seen_at","label_occurrence_count","notice_count","org_official_name","org_valid_from","org_valid_to","source_location"],rows.map(r=>[r.notice_id,r.posted_at,r.title,r.raw_label,r.normalized_label,r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.label_occurrence_count,r.notice_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.source_location]));
+  return makeCsv(["notice_id","posted_at","title","display_label","resolution_class","label_type","first_seen_at","last_seen_at","label_occurrence_count","notice_count","org_official_name","org_valid_from","org_valid_to","source_location"],rows.map(r=>[r.notice_id,r.posted_at,r.title,publicResidualLabel(r.raw_label,r.label_type),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.label_occurrence_count,r.notice_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.source_location]));
 }
 export function residualLabelsToCsv(rows:DepartmentResidualLabelRow[]){
-  return makeCsv(["normalized_label","raw_label","resolution_class","label_type","first_seen_at","last_seen_at","residual_occurrence_count","notice_count","mention_occurrence_count","org_official_name","org_valid_from","org_valid_to","official_evidence_url"],rows.map(r=>[r.normalized_label,r.raw_label,r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.residual_occurrence_count,r.notice_count,r.mention_occurrence_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.official_evidence_url]));
+  return makeCsv(["display_label","resolution_class","label_type","first_seen_at","last_seen_at","residual_occurrence_count","notice_count","mention_occurrence_count","org_official_name","org_valid_from","org_valid_to","official_evidence_url"],rows.map(r=>[publicResidualLabel(r.raw_label,r.label_type),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.residual_occurrence_count,r.notice_count,r.mention_occurrence_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.official_evidence_url]));
 }
+
+export function maskPersonLabel(value:string){
+  const chars=Array.from(value.trim());
+  if(chars.length<=1)return "*";
+  if(chars.length===2)return `${chars[0]}*`;
+  return `${chars[0]}${"*".repeat(chars.length-2)}${chars.at(-1)}`;
+}
+export function publicResidualLabel(value:string,labelType:string){return labelType==="PERSON"?maskPersonLabel(value):value||"미기재";}
