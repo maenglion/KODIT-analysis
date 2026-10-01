@@ -5,7 +5,6 @@ export const dynamic = "force-dynamic";
 
 export default async function RegulationPage() {
   const dataset = await getPublishDataset();
-  if (!dataset.available) return <main className="shell connection-state"><p className="eyebrow">규정·법령</p><h1>공개 데이터 연결 확인이 필요합니다</h1><p>승인된 publish read model에서 확인된 값만 표시합니다.</p></main>;
   const row = dataset.rows.find((item) => item.display_name === "투자옵션부보증 운용기준");
   if (!row) return <main className="shell connection-state"><p className="eyebrow">규정·법령</p><h1>승인본에서 규정을 찾을 수 없습니다</h1></main>;
   const url = validPublicUrl(row.source_location);

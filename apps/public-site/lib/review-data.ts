@@ -1,87 +1,58 @@
 import "server-only";
-import { canonicalDepartment,type DepartmentAttributionExplanationRow, type DepartmentResidualLabelRow, type DepartmentResidualOccurrenceRow, type PublicRegulationSourceRow, type PublishNoticeRow, type PublishRegulationRow, type PublishReleaseMetadata } from "@kodit/common/regulations";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { gunzipSync } from "node:zlib";
+import type {
+  DepartmentAttributionExplanationRow,
+  DepartmentResidualLabelRow,
+  DepartmentResidualOccurrenceRow,
+  PublicRegulationSourceRow,
+  PublishNoticeRow,
+  PublishRegulationRow,
+  PublishReleaseMetadata,
+} from "@kodit/common/regulations";
 
-type RawRegulationSourceRow = PublicRegulationSourceRow & {
-  document_sha256?: unknown;
-  representation_format?: unknown;
-  is_primary?: unknown;
-  fulltext_verified?: unknown;
-  drm_classification?: unknown;
+type PublicSnapshot = {
+  snapshot_contract: "public-static-snapshot-v1";
+  release: PublishReleaseMetadata;
+  rows: PublishRegulationRow[];
+  notices: PublishNoticeRow[];
+  sources: PublicRegulationSourceRow[];
+  residuals: DepartmentResidualOccurrenceRow[];
+  residualLabels: DepartmentResidualLabelRow[];
+  attributionExplanations: DepartmentAttributionExplanationRow[];
 };
 
-function publicApiConfig() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  return url && key ? { url: url.replace(/\/$/, ""), key } : null;
-}
+let cachedSnapshot: PublicSnapshot | undefined;
 
-function safeWarning(rpc: string, error: unknown) {
-  const reason = error instanceof DOMException && error.name === "TimeoutError" ? "timeout" : error instanceof Error ? error.name : "unknown_error";
-  console.warn("[publish] public RPC unavailable", { rpc, reason });
-}
-
-async function callPublishRpc<T>(name: string, range?: { from: number; to: number }): Promise<T> {
-  const config = publicApiConfig();
-  if (!config) throw new Error("publish_api_not_configured");
-  const query = range ? `?limit=${range.to - range.from + 1}&offset=${range.from}` : "";
-  const response = await fetch(`${config.url}/rest/v1/rpc/${name}${query}`, {
-    method: "POST",
-    headers: {
-      apikey: config.key,
-      Authorization: `Bearer ${config.key}`,
-      "Content-Type": "application/json",
-      "Content-Profile": "publish",
-      "Accept-Profile": "publish",
-    },
-    body: "{}",
-    cache: "no-store",
-    signal: AbortSignal.timeout(7000),
-  });
-  if (!response.ok) throw new Error(`publish_rpc_http_${response.status}`);
-  return await response.json() as T;
-}
-
-async function paged<T>(name: string) {
-  const pageSize = 1000;
-  const result: T[] = [];
-  for (let from = 0; from < 100_000; from += pageSize) {
-    const page = await callPublishRpc<T[]>(name, { from, to: from + pageSize - 1 });
-    result.push(...page);
-    if (page.length < pageSize) return result;
+async function readSnapshot() {
+  if (!cachedSnapshot) {
+    const packageRoot = process.cwd().endsWith(path.join("apps", "public-site")) ? process.cwd() : path.join(process.cwd(), "apps", "public-site");
+    const compressed = await fs.readFile(path.join(packageRoot, "data", "public-snapshot-v1.json.gz"));
+    cachedSnapshot = JSON.parse(gunzipSync(compressed).toString("utf8")) as PublicSnapshot;
   }
-  throw new Error(`${name}_pagination_limit`);
+  return cachedSnapshot;
 }
 
-async function optionalPaged<T>(name:string){
-  try{return await paged<T>(name);}catch(error){safeWarning(name,error);return [] as T[];}
-}
-
-export async function getPublishDataset(): Promise<
-  | { available: true; release: PublishReleaseMetadata; rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; residuals:DepartmentResidualOccurrenceRow[]; residualLabels:DepartmentResidualLabelRow[]; attributionExplanations:DepartmentAttributionExplanationRow[] }
-  | { available: false }
-> {
-  try {
-    const [metadata, rows, notices, rawSources, residuals, residualLabels, attributionExplanations] = await Promise.all([
-      callPublishRpc<PublishReleaseMetadata[]>("public_release_metadata"),
-      paged<PublishRegulationRow>("public_regulation_rows"),
-      paged<PublishNoticeRow>("public_notice_rows"),
-      paged<RawRegulationSourceRow>("public_regulation_source_rows"),
-      paged<DepartmentResidualOccurrenceRow>("public_department_residual_analysis_rows_safe"),
-      paged<DepartmentResidualLabelRow>("public_department_residual_label_rows_safe"),
-      optionalPaged<DepartmentAttributionExplanationRow>("public_department_attribution_explanation_rows_safe"),
-    ]);
-    const release = metadata[0];
-    if (!release || rows.length !== release.population) throw new Error("publish_release_population_mismatch");
-    if (rows.some((row) => row.release_id !== release.release_id) || notices.some((row) => row.release_id !== release.release_id)) throw new Error("publish_mixed_release_rows");
-    const publicDepartment=(value:string|null)=>canonicalDepartment(value)??(value?.trim()?"개인·미매핑 표기":null);
-    const safeRows=rows.map(row=>({...row,notice_department:publicDepartment(row.notice_department)}));
-    const safeNotices=notices.map(row=>({...row,notice_department:publicDepartment(row.notice_department)}));
-    const sources = rawSources.map(({ release_id, regulation_version_id, regulation_code, source_kind, evidence_role, source_location, attachment_name }) => ({ release_id, regulation_version_id, regulation_code, source_kind, evidence_role, source_location, attachment_name }));
-    if(residuals.length!==1272||residualLabels.length!==355||residuals.some(row=>row.release_id!==release.release_id)||residualLabels.some(row=>row.release_id!==release.release_id)) throw new Error("publish_residual_population_mismatch");
-    if(attributionExplanations.some(row=>row.release_id!==release.release_id)) throw new Error("publish_attribution_mixed_release_rows");
-    return { available: true, release, rows:safeRows, notices:safeNotices, sources, residuals, residualLabels, attributionExplanations };
-  } catch (error) {
-    safeWarning("publish_read_model", error);
-    return { available: false };
-  }
+export async function getPublishDataset(): Promise<{
+  available: true;
+  release: PublishReleaseMetadata;
+  rows: PublishRegulationRow[];
+  notices: PublishNoticeRow[];
+  sources: PublicRegulationSourceRow[];
+  residuals: DepartmentResidualOccurrenceRow[];
+  residualLabels: DepartmentResidualLabelRow[];
+  attributionExplanations: DepartmentAttributionExplanationRow[];
+}> {
+  const snapshot = await readSnapshot();
+  return {
+    available: true,
+    release: snapshot.release,
+    rows: snapshot.rows,
+    notices: snapshot.notices,
+    sources: snapshot.sources,
+    residuals: snapshot.residuals,
+    residualLabels: snapshot.residualLabels,
+    attributionExplanations: snapshot.attributionExplanations,
+  };
 }

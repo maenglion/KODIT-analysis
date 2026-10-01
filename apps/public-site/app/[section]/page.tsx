@@ -3,7 +3,7 @@ import { getPublishDataset } from "@/lib/review-data";
 import technicalSpecs from "@/data/technical-specs.json";
 
 const pendingLabels: Record<string, { title: string; reason: string }> = {
-  "investment-statistics": { title: "투자·보증 통계", reason: "현재 공개 RPC에는 투자·보증 분류 근거가 포함되어 있지 않아 후속 공개 범위로 남겨둡니다." },
+  "investment-statistics": { title: "투자·보증 통계", reason: "현재 공개 snapshot에 포함할 통계 계약을 정리하고 있어 후속 공개 범위로 남겨둡니다." },
 };
 export default async function SectionPage({ params }: { params: Promise<{ section: string }> }) {
   const { section } = await params;
@@ -66,6 +66,5 @@ function TechnicalSpecs() {
 }
 async function DepartmentStatisticsPage() {
   const dataset = await getPublishDataset();
-  if (!dataset.available) return <main className="shell connection-state"><p className="eyebrow">부서별 통계</p><h1>공개 데이터 연결 확인이 필요합니다</h1><p>측정되지 않은 값을 0건으로 표시하지 않습니다.</p></main>;
   return <DepartmentStatistics rows={dataset.rows} notices={dataset.notices} residuals={dataset.residuals} residualLabels={dataset.residualLabels} attributionExplanations={dataset.attributionExplanations} />;
 }

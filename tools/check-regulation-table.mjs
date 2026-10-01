@@ -49,22 +49,22 @@ const residualOccurrenceCsv = residualOccurrencesToCsv([{ release_id: manifest.c
 const residualLabelCsv = residualLabelsToCsv([{ release_id: manifest.correction_release_id, label_id: "00000000-0000-0000-0000-000000000012", raw_label: "이경선", comparison_label: "이경선", resolution_class: "PERSON_EVIDENCE", label_type: "PERSON", residual_occurrence_count: 1, notice_count: 1, first_posted_at: "2021-11-22", last_posted_at: "2021-11-22", org_node_id: null, org_official_name: null, org_valid_from: null, org_valid_to: null, org_evidence_url: null, org_lineage: [], mention_occurrence_count: 1, person_extractor_rules: { PERSON_CONTACT_BLOCK_PHONE: 1 }, mention_source_locations: ["https://example.test/notice"] }]);
 for (const output of [residualOccurrenceCsv, residualLabelCsv]) assert.ok(output.startsWith("\uFEFF") && output.endsWith("\r\n"));
 assert.ok(residualOccurrenceCsv.includes("notice_id") && residualOccurrenceCsv.includes("resolution_class") && residualOccurrenceCsv.includes("label_occurrence_count") && residualOccurrenceCsv.includes("source_location"));
-assert.ok(residualLabelCsv.includes("normalized_label") && residualLabelCsv.includes("resolution_class") && residualLabelCsv.includes("residual_occurrence_count"));
+assert.ok(residualLabelCsv.includes("display_label") && residualLabelCsv.includes("resolution_class") && residualLabelCsv.includes("residual_occurrence_count"));
 
-assert.ok(loaderText.includes('"Content-Profile": "publish"'));
-for (const rpc of ["public_release_metadata", "public_regulation_rows", "public_notice_rows", "public_regulation_source_rows"]) assert.ok(loaderText.includes(`"${rpc}"`));
-assert.ok(!loaderText.includes("review-20260913-reconstructed"));
+assert.ok(loaderText.includes('public-snapshot-v1.json.gz'));
+assert.ok(!loaderText.includes('/rest/v1/rpc/'));
+assert.ok(!loaderText.includes('NEXT_PUBLIC_SUPABASE_'));
 assert.ok(!loaderText.includes("service_role"));
 for (const forbidden of ["SHA-256", "parser", "identity", "residual", "confidence", "human confirmation", "evaluation provenance", "평가 근거 원장"]) assert.ok(!explorerText.toLowerCase().includes(forbidden.toLowerCase()));
 assert.ok(explorerText.includes("상세검색"));
 assert.ok(explorerText.includes("현재 목록 CSV"));
-assert.ok(explorerText.includes("통합검색") && explorerText.includes("최근 사규예고일 최신순"));
+assert.ok(explorerText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
 assert.ok(!explorerText.includes("인쇄"));
 assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
 assert.ok(!layoutText.includes('["홈", "/"]'));
 assert.ok(layoutText.includes("Soulspectrum Inc. · nanyoung이 만들었습니다."));
-assert.ok(departmentText.includes("organizationSnapshot") && departmentText.includes("담당 표기 잔차"));
+assert.ok(departmentText.includes("organizationSnapshot") && departmentText.includes("별도 잔차 원장"));
 assert.ok(departmentText.includes("DepartmentResidualAnalysis"));
 assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha256") && !detailText.includes("checks"));
 
-console.log("public regulation UI contract: publish RPC, 1041 regulations, 2089 notices, public-safe CSV PASS");
+console.log("public regulation UI contract: static approved snapshot, 1041 regulations, 2089 notices, public-safe CSV PASS");

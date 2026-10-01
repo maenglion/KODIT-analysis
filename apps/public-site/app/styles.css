@@ -270,8 +270,8 @@ body { background:var(--figma-page); color:var(--figma-navy); }
 .main-navigation a { padding:10px 13px; border-radius:0; color:rgba(255,255,255,.8); font-size:18px; font-weight:500; text-decoration:none; }
 .main-navigation a.active,.main-navigation a:hover { color:#fff; background:transparent; font-weight:700; }
 .sub-navigation { position:absolute; left:0; bottom:0; width:1296px; height:60px; display:flex; align-items:stretch; gap:0; border-top:1px solid rgba(255,255,255,.6); }
-.sub-navigation a { min-width:198px; display:grid; place-items:center; padding:0 26px; color:rgba(255,255,255,.8); font-size:20px; font-weight:500; text-decoration:none; }
-.sub-navigation a.active { color:#fff; border-top:3px solid #fff; font-weight:700; margin-top:-2px; }
+.sub-navigation a { min-width:198px; display:grid; place-items:center; padding:0 26px; border-radius:0; color:rgba(255,255,255,.8); font-size:20px; font-weight:500; text-decoration:none; }
+.sub-navigation a.active { color:#fff; border-top:3px solid #fff; border-radius:0; background:rgba(255,255,255,.08); font-weight:700; margin-top:-2px; }
 
 .public-page-intro { height:216px; background:#fff; }
 .intro-inner { height:216px; position:relative; display:flex; justify-content:space-between; align-items:flex-start; padding-top:35px; }
@@ -543,8 +543,9 @@ footer { width:1296px; }
 }
 
 /* Public search, department snapshot, and lightweight transition feedback. */
-.scope-tabs { display:flex; gap:6px; padding:14px 16px 0; }
-.scope-tabs button { border:1px solid var(--line); border-radius:999px; background:#fff; padding:7px 13px; color:var(--muted); font-weight:750; cursor:pointer; }
+.scope-tabs { display:flex; gap:0; padding:14px 16px 0; }
+.scope-tabs button { border:1px solid var(--line); border-radius:0; background:#fff; padding:7px 13px; color:var(--muted); font-weight:750; cursor:pointer; }
+.scope-tabs button+button { border-left:0; }
 .scope-tabs button.active { background:var(--primary-dark); border-color:var(--primary-dark); color:#fff; }
 .result-group + .result-group { margin-top:28px; border-top:8px solid var(--paper); }
 .table-actions { display:flex; align-items:center; gap:8px; }
