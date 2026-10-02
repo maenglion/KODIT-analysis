@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { gunzipSync } from "node:zlib";
 import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
@@ -79,7 +81,10 @@ assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSub
 assert.ok(homeText.includes("redirect(`/regulations") && regulationsText.includes("<RegulationExplorer") && regulationsText.includes("getPublishDataset"));
 assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.includes('href="/">HOME'));
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
-assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') < residualAnalysisText.indexOf('<div className="table-scroll">'));
+assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAnalysisText.indexOf('<div className="table-scroll">'));
+assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
+assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
+assert.ok(residualAnalysisText.includes('RESIDUAL_PAGE_SIZE') && residualAnalysisText.includes('담당 표기 관측 게시물') && residualAnalysisText.includes('근거 게시물과 이동 설명'));
 assert.ok(residualAnalysisText.includes('id="residual-selected-detail"') && residualAnalysisText.includes('aria-expanded={selected===row.label_id}') && residualAnalysisText.includes('scrollIntoView('));
 assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
@@ -101,6 +106,41 @@ assert.ok(topicStyleText.includes('color:#217a39') && topicStyleText.includes('b
 assert.ok(helpText.includes('>i</button>') && !helpText.includes('>ⓘ</button>'));
 assert.ok(!departmentText.includes("DepartmentResidualAnalysis"));
 assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha256") && !detailText.includes("checks"));
+
+const residualSnapshot = JSON.parse(gunzipSync(await readFile(new URL("../apps/public-site/data/public-snapshot-v1.json.gz", import.meta.url))));
+const residualCategories = ["PERSON_EVIDENCE", "ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
+const allResiduals = selectResidualLabels(residualSnapshot.residualLabels, residualCategories, "OCCURRENCE_DESC");
+assert.equal(allResiduals.length, 355);
+assert.equal(RESIDUAL_PAGE_SIZE, 10);
+assert.equal(Math.ceil(allResiduals.length / RESIDUAL_PAGE_SIZE), 36);
+const personAndHistorical = selectResidualLabels(residualSnapshot.residualLabels, ["PERSON_EVIDENCE", "ORG_HISTORICAL"], "LABEL_ASC");
+assert.equal(personAndHistorical.length, 319);
+assert.ok(personAndHistorical.slice(1).every((row, index) =>
+  new Intl.Collator("ko-KR", { numeric: true }).compare(publicResidualLabel(personAndHistorical[index].raw_label, personAndHistorical[index].label_type), publicResidualLabel(row.raw_label, row.label_type)) <= 0,
+));
+const personLabels = selectResidualLabels(residualSnapshot.residualLabels, ["PERSON_EVIDENCE"], "NOTICE_DESC");
+const personOccurrences = residualOccurrencesForLabels(residualSnapshot.residuals, personLabels);
+assert.equal(personLabels.length, 317);
+assert.equal(personOccurrences.length, 1113);
+assert.equal(residualLabelsToCsv(personLabels).split("\r\n").length, 319);
+assert.equal(residualOccurrencesToCsv(personOccurrences).split("\r\n").length, 1115);
+assert.ok(personOccurrences.every(row => /^[ㄱ-ㅎ]+\(\d{4}\)$/.test(row.raw_label)));
+assert.deepEqual(mentionSourceLinks(["https://example.test/a", "https://example.test/b"], [
+  { source_location: "https://example.test/a", title: "공식 공고" },
+  { source_location: "https://example.test/b", title: "공식 공고" },
+]).map(link => link.label), ["공식 공고 (1)", "공식 공고 (2)"]);
+assert.deepEqual(mentionSourceLinks(["https://example.test/a", "https://example.test/b"], [
+  { source_location: "https://example.test/a", title: "서로 다른 제목 A" },
+  { source_location: "https://example.test/a", title: "서로 다른 제목 B" },
+]).map(link => link.label), ["본문 근거 원문 (1)", "본문 근거 원문 (2)"]);
+const officialListPages = [1, 2].map(number => `https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=${number}`);
+assert.deepEqual(mentionSourceLinks(officialListPages, [
+  { source_location: officialListPages[0], title: "개별 게시물 제목 A" },
+  { source_location: officialListPages[1], title: "개별 게시물 제목 B" },
+]).map(link => link.label), ["사규 제개정 예고 (1)", "사규 제개정 예고 (2)"]);
+assert.ok(!residualAnalysisText.includes('>본문 근거 원문 ↗</a>') && residualAnalysisText.includes("공개된 근거 링크는 신보의 사규 제개정 예고"));
+assert.ok(residualAnalysisText.includes('row.resolution_class!=="PERSON_EVIDENCE"&&activeAttribution&&<AttributionExplanation'));
+assert.ok(residualAnalysisText.includes("const evidenceUrl=validPublicUrl(step.evidence_url)"));
 
 const topicNames = new Map(topicSnapshot.families.map((item) => [item.code, item.name]));
 const allTopics = filterTopicNotices(topicSnapshot.notices, { family: "ALL", year: "", query: "" }, topicNames);

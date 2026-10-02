@@ -12,7 +12,7 @@ pnpm --filter @kodit/public-site dev
 - 규정·법령 시작 화면: `http://localhost:3000/regulations` (기존 `/` 접근은 같은 화면으로 리디렉션하며 허용된 검색 쿼리를 유지)
 - 사업별 통계(정적 주제 검증본): `/investment-statistics` 요약, `/investment-statistics/yearly-notices` 연도별 사규예고, `/investment-statistics/evidence-notices` 근거 사규예고. 요약 카드·연도를 누르면 선택한 하위군 또는 연도를 URL 매개변수로 근거 목록에 전달합니다. 목록에서 하위군을 바꾸거나 해제하면 주소도 갱신되어 새로고침·공유 후에도 동일한 선택 상태를 유지하며, CSV는 현재 필터 결과만 내보냅니다.
 - 부서별 통계: `/department-statistics` 요약, `/department-statistics/semantic-matching` 시맨틱 매칭방식, `/department-statistics/organization-history` 조직 히스토리. 각 화면은 상단 메뉴로 이동하며 한 화면의 긴 앵커가 아닙니다.
-- 담당 표기 잔차 데이터: `http://localhost:3000/residual-data`
+- 담당 표기 잔차 데이터: `http://localhost:3000/residual-data`. 공개 표기 355개를 관측 분류 복수 선택·표시명/관련 사규예고 수 정렬·10개 단위 페이지로 살펴보고 클릭한 행 바로 아래에서 상세를 펼칩니다. 두 CSV는 현재 페이지 10행이 아니라 **선택한 분류 전체 표기 및 연결 관측 전체**를 내보냅니다. PERSON은 공급된 한글 초성+4자리 공개 별칭만 사용하며 원문 신원·소속을 추정하지 않습니다. 본문 근거 링크는 개별 문서 원문이 아니라 신보의 공식 `사규 제개정 예고` **목록 페이지**이며, 같은 페이지 제목은 화면에서 순번으로 구별합니다.
 - 상단 1그룹: `/data-purpose`, `/methodology`, `/technical-specs`
 - 규정 상세 예시: `http://localhost:3000/regulations/investment-option-guarantee`
 
