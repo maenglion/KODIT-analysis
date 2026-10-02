@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, personInitials, publicPersonAliasCode, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
@@ -65,6 +65,11 @@ const residualLabelCsv = residualLabelsToCsv([{ release_id: manifest.correction_
 for (const output of [residualOccurrenceCsv, residualLabelCsv]) assert.ok(output.startsWith("\uFEFF") && output.endsWith("\r\n"));
 assert.ok(residualOccurrenceCsv.includes("notice_id") && residualOccurrenceCsv.includes("resolution_class") && residualOccurrenceCsv.includes("label_occurrence_count") && residualOccurrenceCsv.includes("source_location"));
 assert.ok(residualLabelCsv.includes("display_label") && residualLabelCsv.includes("resolution_class") && residualLabelCsv.includes("residual_occurrence_count"));
+assert.equal(personInitials("이경선"), "ㅇㄱㅅ");
+assert.equal(publicPersonAliasCode("00000000-0000-0000-0000-000000000012").length, 4);
+assert.match(publicResidualLabel("이경선", "PERSON", "00000000-0000-0000-0000-000000000012"), /^ㅇㄱㅅ\(\d{4}\)$/);
+assert.match(publicResidualLabel("이*선", "PERSON", "00000000-0000-0000-0000-000000000012"), /^인물\(\d{4}\)$/);
+assert.equal(publicResidualLabel("ㅇㄱㅅ(1525)", "PERSON", "00000000-0000-0000-0000-000000000012"), "ㅇㄱㅅ(1525)");
 
 assert.ok(loaderText.includes('public-snapshot-v1.json.gz'));
 assert.ok(!loaderText.includes('/rest/v1/rpc/'));

@@ -64,6 +64,12 @@ assert.equal(regulations.length, Number(release.population));
 assert.equal(notices.length, 2089);
 assert.equal(residuals.length, 1272);
 assert.equal(residualLabels.length, 355);
+const personLabels = residualLabels.filter((row) => row.label_type === "PERSON");
+const personExplanations = attributionExplanations.filter((row) => row.label_type === "PERSON");
+const personAliasPattern = /^(?:[ㄱ-ㅎ]+|인물)\(\d{4}\)$/;
+assert.ok(personLabels.every((row) => personAliasPattern.test(row.raw_label)), "PERSON label must use initials plus a four-digit public alias");
+assert.ok(personExplanations.every((row) => personAliasPattern.test(row.masked_label)), "PERSON explanation must use the same public alias contract");
+assert.equal(new Set(personLabels.map((row) => row.raw_label.match(/\((\d{4})\)$/)?.[1])).size, personLabels.length, "current PERSON aliases must be collision-free");
 
 const publicDepartment = (value) => {
   const exact = typeof value === "string" ? value.trim() : "";

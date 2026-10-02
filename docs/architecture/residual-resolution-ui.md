@@ -69,6 +69,10 @@ text, extraction/parser provenance, local path는 반환하지 않는다.
 4. PERSON evidence는 entity 또는 affiliation으로 승격하지 않는다.
 5. T05 `FUNCTION_TRANSFERRED_TO`는 특정 기능 이관으로만 표시한다.
 6. T01~T05 immutable row를 UI에서 재작성하지 않는다.
+7. PERSON 공개 표기는 `한글 초성 + 공개용 4자리 번호`만 사용한다. 번호는 이름이 아니라
+   기존 opaque `label_id`에서 결정론적으로 만들며 신원번호나 내부 PK의 공개 표현이 아니다.
+8. raw label과 canonical evidence는 변경하지 않고 public read model, 화면, CSV에서만 비식별
+   별칭을 사용한다.
 
 ## Extraction contamination boundary
 
@@ -100,3 +104,4 @@ T03/T04 row도 수정하지 않는다.
 | 2026-09-18 | label/occurrence count와 CSV grain을 분리한다. |
 | 2026-09-18 | T06는 기존 type/node assessment만 투영하고 새 entity inference를 금지한다. |
 | 2026-09-18 | T06.5 | PERSON category 공개 문구를 cross-channel lexical evidence 수준으로 낮추고 317/1,113 수량은 유지한다. |
+| 2026-10-03 | PERSON 공개 표기를 `이*선` 방식에서 `ㅇㄱㅅ(4자리)` 방식으로 강화했다. 희귀 성씨와 이름 조합에 따른 재식별 가능성을 보호하기 위한 변경이며, 번호는 `label_id` 기반 공개용 별칭이다. |
