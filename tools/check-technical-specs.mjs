@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 
 const specs = JSON.parse(await readFile("apps/public-site/data/technical-specs.json", "utf8"));
-const page = await readFile("apps/public-site/app/[section]/page.tsx", "utf8");
+const page = await readFile("apps/public-site/components/InformationPages.tsx", "utf8");
 
 assert.equal(specs.length, 9);
 assert.match(page, /technicalSpecs\.map/);

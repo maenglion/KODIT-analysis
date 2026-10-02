@@ -30,6 +30,7 @@
 - [`historical-organization-work-attribution.md`](historical-organization-work-attribution.md): 시점별 조직·업무 귀속 근거
 - [`topic-analysis-contract.md`](topic-analysis-contract.md): 주제 분석의 membership과 집계 grain
 - [`residual-resolution-ui.md`](residual-resolution-ui.md): 공개 가능한 잔차 설명 UI 경계
+- [`public-ui-runtime-contract.md`](public-ui-runtime-contract.md): 정적 공개 UI, RPC 보존, 서로 다른 승인 시점의 표시 경계
 
 ## 공개 범위
 

@@ -1,0 +1,9 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Inter, Noto Sans KR, sans-serif","fontSize":"16px","primaryColor":"#e3f1ff","primaryTextColor":"#0b1b3c","primaryBorderColor":"#83c1fa","lineColor":"#0f7ee5","secondaryColor":"#f5f5f5","tertiaryColor":"#ffffff"}}}%%
+flowchart LR
+  source["SOURCE<br/>공식 원문"] --> observation["OBSERVATION<br/>관측값"]
+  observation --> label["LABEL<br/>문자열 묶음"]
+  label --> entity["ENTITY / NODE<br/>검증된 대상"]
+  entity --> relation["RELATION<br/>근거 관계"]
+  relation --> analysis["ANALYSIS<br/>공개 분석"]
+  observation -. "미해결" .-> residual["RESIDUAL<br/>원장에 보존"]
+  residual -. "공식 근거 재검토" .-> entity

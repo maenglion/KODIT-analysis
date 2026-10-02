@@ -1,0 +1,959 @@
+{
+  "contract": "topic-public-static-v2",
+  "measuredAt": "2026-09-19",
+  "membershipContract": "topic-membership-v2",
+  "scope": "신용보증기금의 투자·자본성 금융과 직접 결합되거나 투자와 연계된 보증·투자제도 및 그 명시적 공식 product/regulation family",
+  "noticeCount": 62,
+  "period": {
+    "start": "2014-04-07",
+    "end": "2026-06-24"
+  },
+  "regulationCount": 16,
+  "yearly": {
+    "2014": 1,
+    "2015": 1,
+    "2016": 5,
+    "2017": 4,
+    "2018": 3,
+    "2019": 8,
+    "2020": 1,
+    "2021": 5,
+    "2022": 5,
+    "2023": 2,
+    "2024": 14,
+    "2025": 8,
+    "2026": 5
+  },
+  "families": [
+    {
+      "code": "GUARANTEE_LINKED_INVESTMENT",
+      "name": "보증연계투자·직접투자 업무",
+      "noticeCount": 33,
+      "referenceUrl": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11079&mi=2541"
+    },
+    {
+      "code": "INVESTMENT_OPTION_GUARANTEE",
+      "name": "투자옵션부보증",
+      "noticeCount": 12,
+      "referenceUrl": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11080&mi=2542"
+    },
+    {
+      "code": "MNA_GUARANTEE_RELATED",
+      "name": "M&A보증",
+      "noticeCount": 12,
+      "referenceUrl": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=11081&mi=2543"
+    },
+    {
+      "code": "STARTUP_RAPID_INVESTMENT",
+      "name": "Start-up 신속투자 프로그램",
+      "noticeCount": 5,
+      "referenceUrl": null
+    },
+    {
+      "code": "INVESTMENT_BRIDGE_GUARANTEE",
+      "name": "투자브릿지 보증프로그램",
+      "noticeCount": 4,
+      "referenceUrl": null
+    },
+    {
+      "code": "CULTURE_CONTENT_PROJECT_INVESTMENT",
+      "name": "문화콘텐츠 프로젝트투자",
+      "noticeCount": 3,
+      "referenceUrl": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=12242&mi=3992"
+    },
+    {
+      "code": "DOMESTIC_COINVESTMENT_GUARANTEE",
+      "name": "국내동반 투자자금 보증",
+      "noticeCount": 3,
+      "referenceUrl": null
+    },
+    {
+      "code": "VC_FUND_CONTRIBUTION_GUARANTEE",
+      "name": "VC펀드 출자금보증",
+      "noticeCount": 3,
+      "referenceUrl": "https://www.kodit.or.kr/kodit/cm/cntnts/cntntsView.do?cntntsId=12624&mi=4553"
+    },
+    {
+      "code": "INVESTMENT_RISK_SHARING_GUARANTEE",
+      "name": "투자위험분담형보증",
+      "noticeCount": 1,
+      "referenceUrl": null
+    }
+  ],
+  "mostMentioned": [
+    {
+      "name": "투자업무 운용요령",
+      "count": 10
+    },
+    {
+      "name": "투자업무 처리기준",
+      "count": 10
+    },
+    {
+      "name": "투자기업 사후관리 운용기준",
+      "count": 7
+    },
+    {
+      "name": "M&A보증 운용기준",
+      "count": 6
+    },
+    {
+      "name": "투자옵션부보증 운용기준",
+      "count": 6
+    }
+  ],
+  "mostProposed": [
+    {
+      "name": "M&A보증 운용기준",
+      "count": 5
+    },
+    {
+      "name": "투자업무 운용요령",
+      "count": 5
+    },
+    {
+      "name": "Start-up 신속투자 프로그램 운용기준",
+      "count": 4
+    },
+    {
+      "name": "투자옵션부보증 운용기준",
+      "count": 3
+    },
+    {
+      "name": "VC펀드 출자금보증 업무처리방법",
+      "count": 2
+    }
+  ],
+  "notices": [
+    {
+      "number": "2047",
+      "title": "「투자규정」 등 제·개정 사전예고",
+      "date": "2026-06-24",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "CULTURE_CONTENT_PROJECT_INVESTMENT",
+        "GUARANTEE_LINKED_INVESTMENT",
+        "INVESTMENT_OPTION_GUARANTEE",
+        "STARTUP_RAPID_INVESTMENT",
+        "VC_FUND_CONTRIBUTION_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "2040",
+      "title": "「신용조사 운용기준」 등 개정 사전예고",
+      "date": "2026-06-12",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "2026",
+      "title": "「보증사업심사위원회 운영요령」 등 제규정 개정 사전예고",
+      "date": "2026-06-02",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1943",
+      "title": "「투자업무 운용요령」 등 개정 사전예고",
+      "date": "2026-01-06",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "CULTURE_CONTENT_PROJECT_INVESTMENT",
+        "GUARANTEE_LINKED_INVESTMENT",
+        "INVESTMENT_OPTION_GUARANTEE",
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1940",
+      "title": "「투자업무 운용요령」 개정 사전예고",
+      "date": "2026-01-02",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1933",
+      "title": "「보증운용요령」 등 제규정 개정 사전예고",
+      "date": "2025-12-23",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "DOMESTIC_COINVESTMENT_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1902",
+      "title": "「VC펀드 출자금보증 업무처리방법」 개정 사전예고",
+      "date": "2025-11-06",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "VC_FUND_CONTRIBUTION_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1834",
+      "title": "「Start-up 신속투자 프로그램 운용기준」 개정 사전예고",
+      "date": "2025-07-08",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "STARTUP_RAPID_INVESTMENT"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1830",
+      "title": "「투자업무 운용요령」 등 개정 사전예고",
+      "date": "2025-07-03",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1819",
+      "title": "「혁신성장 분야 정책지원 보증프로그램 운용기준」 등 개정 사전예고",
+      "date": "2025-06-20",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "DOMESTIC_COINVESTMENT_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1780",
+      "title": "「문화콘텐츠 프로젝트투자 프로그램 운용기준」 제정 사전예고",
+      "date": "2025-04-15",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "CULTURE_CONTENT_PROJECT_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1769",
+      "title": "「M&A보증 운용기준」 등 개정 사전예고",
+      "date": "2025-04-01",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE",
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1737",
+      "title": "「혁신스타트업 성장지원 프로그램 운용기준」 등 개정(사전예고)",
+      "date": "2025-01-16",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "INVESTMENT_BRIDGE_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1727",
+      "title": "「M&A보증 운용기준」 개정 사전예고",
+      "date": "2024-12-31",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1689",
+      "title": "「투자기업 사후관리 운용기준」 개정 사전예고",
+      "date": "2024-12-05",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1688",
+      "title": "「투자업무 처리기준」 개정 사전예고",
+      "date": "2024-12-05",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1690",
+      "title": "「Start-up 신속투자 프로그램 운용기준」 개정 사전예고",
+      "date": "2024-12-05",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "STARTUP_RAPID_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1687",
+      "title": "「투자업무 운용요령」 개정 사전예고",
+      "date": "2024-12-05",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1682",
+      "title": "「혁신스타트업 성장지원 프로그램 운용기준」등 계정 사전예고",
+      "date": "2024-11-22",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "INVESTMENT_BRIDGE_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1669",
+      "title": "「VC펀드 출자금보증 업무처리방법」 개정 사전예고",
+      "date": "2024-10-30",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "VC_FUND_CONTRIBUTION_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1604",
+      "title": "「투자기업 사후관리 운용기준」개정 사전예고",
+      "date": "2024-07-18",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1603",
+      "title": "「국내동반 투자자금 보증 업무처리방법」 개정 사전예고",
+      "date": "2024-07-15",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "families": [
+        "DOMESTIC_COINVESTMENT_GUARANTEE"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1574",
+      "title": "「Start-up 신속투자 프로그램 운용기준」 등 개정 사전예고",
+      "date": "2024-05-28",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT",
+        "STARTUP_RAPID_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1568",
+      "title": "「 투자업무 운용요령」 등 개정 사전예고",
+      "date": "2024-05-14",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1528",
+      "title": "「혁신스타트업 성장지원 프로그램 운용기준」등 개정 사전예고",
+      "date": "2024-02-14",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "INVESTMENT_BRIDGE_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1526",
+      "title": "「투자옵션부보증 운용기준」 등 개정 사전예고",
+      "date": "2024-02-06",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE",
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1515",
+      "title": "「Start-up 신속투자 프로그램 운용기준」 제정 사전예고",
+      "date": "2024-01-16",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "STARTUP_RAPID_INVESTMENT"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1422",
+      "title": "「투자옵션부보증 운용기준」 등 개정 사전예고",
+      "date": "2023-08-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE",
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1417",
+      "title": "「투자운용업무요령」 등 개정 사전예고",
+      "date": "2023-07-28",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1294",
+      "title": "투자브릿지 보증프로그램 기준 제정 사전예고",
+      "date": "2022-11-30",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "INVESTMENT_BRIDGE_GUARANTEE"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1254",
+      "title": "제규정 제개정 사전예고",
+      "date": "2022-09-21",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "1187",
+      "title": "'투자업무 운용요령' 개정",
+      "date": "2022-04-21",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1182",
+      "title": "'투자업무 처리기준' 개정 사전예고",
+      "date": "2022-04-06",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1171",
+      "title": "「투자규정」 개정 사전예고",
+      "date": "2022-03-21",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=2",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "1077",
+      "title": "「투자규정」, 「투자업무 운용요령」, 「투자업무 처리기준」 개정 사전예고",
+      "date": "2021-07-20",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1068",
+      "title": "「업무방법서」 개정 사전예고",
+      "date": "2021-07-14",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1012",
+      "title": "「투자옵션부보증 운용기준」및 「M&A보증 운용기준」 개정 사전예고",
+      "date": "2021-04-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE",
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "1011",
+      "title": "「투자업무 운용요령」, 「투자업무 처리기준」,「투자기업 사후관리 운용기준」 개정 사전예고",
+      "date": "2021-04-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "967",
+      "title": "「투자업무 운용요령, 투자업무 처리기준」개정 사전예고",
+      "date": "2021-01-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "773",
+      "title": "「M&A보증 운용기준」 개정 사전예고",
+      "date": "2020-03-05",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "748",
+      "title": "투자업무 운용요령 등 개정 사전예고",
+      "date": "2019-12-26",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT",
+        "INVESTMENT_OPTION_GUARANTEE"
+      ],
+      "evidence": [
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "687",
+      "title": "투자업무 운용요령 등 개정 사전예고",
+      "date": "2019-08-21",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "678",
+      "title": "투자위험분담형보증기준 등 제ㆍ개정 사전예고",
+      "date": "2019-07-25",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "INVESTMENT_RISK_SHARING_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "677",
+      "title": "M&A보증 운용기준 개정 사전예고",
+      "date": "2019-07-22",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "632",
+      "title": "혁신아이콘 지원 프로그램 운용기준 제정에 따른 사전예고",
+      "date": "2019-05-13",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "614",
+      "title": "투자계약서 및 자산관리심의위원회 운영기준 개정에 따른 사전예고",
+      "date": "2019-04-02",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE"
+      ]
+    },
+    {
+      "number": "596",
+      "title": "예산관리요령 개정에 따른 사전예고",
+      "date": "2019-03-08",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "598",
+      "title": "투자업무 운용요령 및 투자업무 처리기준 개정 사전예고",
+      "date": "2019-03-08",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=3",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "580",
+      "title": "투자옵션부보증 운영기준 개정 사전예고",
+      "date": "2018-12-21",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "545",
+      "title": "M&A보증 운용기준 개정 사전예고",
+      "date": "2018-07-20",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "483",
+      "title": "투자업무 운용요령 외 2개 기준 개정 사전예고",
+      "date": "2018-02-21",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT",
+        "INVESTMENT_OPTION_GUARANTEE"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "425",
+      "title": "M&A보증 운영기준 개정 사전예고",
+      "date": "2017-11-06",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "405",
+      "title": "투자옵션부보증 운용기준 개정 사전예고",
+      "date": "2017-08-29",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "356",
+      "title": "투자업무 운용요령 개정 사전예고",
+      "date": "2017-05-23",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "302",
+      "title": "투자업무 운용요령 외 4개 규정 개정 사전예고",
+      "date": "2017-01-17",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "273",
+      "title": "투자업무 운용요령, 투자업무 처리기준, 투자계약서 개정 사전예고",
+      "date": "2016-11-28",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "242",
+      "title": "M&A보증 운용기준(가칭) 개정 사전예고",
+      "date": "2016-09-12",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "MNA_GUARANTEE_RELATED"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "233",
+      "title": "투자옵션부보증 업무처리방법 개정 사전예고",
+      "date": "2016-08-16",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "195",
+      "title": "투자규정, 투자업무 운용요령, 투자업무 처리기준 개정 사전예고",
+      "date": "2016-06-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "MENTIONS_RULE",
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "131",
+      "title": "투자옵션부보증 업무처리방법 제정 사전예고",
+      "date": "2016-01-05",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "INVESTMENT_OPTION_GUARANTEE"
+      ],
+      "evidence": [
+        "PROPOSES_CHANGE_TO",
+        "TITLE_DIRECT",
+        "WORK_DIRECT"
+      ]
+    },
+    {
+      "number": "116",
+      "title": "투자업무 처리기준 개정에 따른 규정 개정 사전예고",
+      "date": "2015-12-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=4",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    },
+    {
+      "number": "25",
+      "title": "투자규정등 제.개정 사전예고",
+      "date": "2014-04-07",
+      "sourceUrl": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=5",
+      "families": [
+        "GUARANTEE_LINKED_INVESTMENT"
+      ],
+      "evidence": [
+        "TITLE_DIRECT"
+      ]
+    }
+  ]
+}

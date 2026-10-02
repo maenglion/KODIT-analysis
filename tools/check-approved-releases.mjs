@@ -24,13 +24,13 @@ for (const input of ["release_id", "confirmation", "approval_note"]) assert.matc
 assert.match(workflow, /test "\$CONFIRMATION" = "PUBLISH"/);
 assert.doesNotMatch(scheduleWorkflow, /publish_regulation_release|publish_release\.py/);
 assert.doesNotMatch(publicLoader, /KODIT_SUPABASE_SERVICE_ROLE_KEY|service_role/i);
-assert.match(publicLoader, /NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY/);
-assert.match(publicLoader, /"Content-Profile": "publish"/);
-assert.match(publicLoader, /AbortSignal\.timeout\(7000\)/);
-assert.match(publicLoader, /`\?limit=\$\{range\.to - range\.from \+ 1\}&offset=\$\{range\.from\}`/);
-assert.match(publicLoader, /const pageSize = 1000/);
-assert.match(publicLoader, /console\.warn\("\[publish\] public RPC unavailable"/);
-assert.doesNotMatch(publicLoader, /console\.(?:warn|error|log)\([^\n]*(?:config\.key|config\.url|SUPABASE_PUBLISHABLE)/i);
+assert.match(publicLoader, /import "server-only"/);
+assert.match(publicLoader, /public-snapshot-v1\.json\.gz/);
+assert.match(publicLoader, /gunzipSync\(compressed\)/);
+assert.match(publicLoader, /snapshot\.release/);
+assert.match(publicLoader, /snapshot\.rows/);
+assert.match(publicLoader, /snapshot\.notices/);
+assert.doesNotMatch(publicLoader, /NEXT_PUBLIC_SUPABASE|fetch\(|rpc\(|Content-Profile|console\.(?:warn|error|log)/i);
 
 const publicRow = { regulation_code: "approved", display_name: "승인 규정", availability: "FULLTEXT_PUBLIC", currentness: "unknown", revision_date: null, notice_department: null, source_location: "https://example.test/rule", is_new: false, is_updated: false };
 const publicCsv = publishRowsToCsv([publicRow]);
@@ -39,4 +39,4 @@ assert.ok(publicCsv.endsWith("\r\n"));
 assert.match(publicCsv, /승인 규정/);
 assert.doesNotMatch(publicCsv.split("\r\n", 1)[0], /confidence|human|sha256|provenance/i);
 
-console.log("approved release contract: service-only legacy approval and publish read-model loader PASS");
+console.log("approved release contract: service-only approval RPC preserved, static public snapshot loader PASS");

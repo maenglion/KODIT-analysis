@@ -1,0 +1,56 @@
+{
+  "contract": "public-parser-measurements-v1",
+  "measuredAt": "2026-09-17",
+  "runtime": {
+    "contract": "1.0.0",
+    "python": "CPython 3.13.7",
+    "olefile": "0.47",
+    "pypdf": "6.0.0",
+    "hwpxEngine": "stdlib zipfile + ElementTree"
+  },
+  "formats": [
+    {
+      "format": "HWP",
+      "parser": "kodit-hwp-ole",
+      "version": "0.1.1",
+      "engine": "olefile 0.47",
+      "documents": 326,
+      "attempts": 652,
+      "parsedAndIdentified": 298,
+      "parsedIdentityUnresolved": 28,
+      "parserFailed": 0,
+      "report": "reports/measurements/2026-09-13-runtime-v1-reproduction/hwp/batch-run.json"
+    },
+    {
+      "format": "HWPX",
+      "parser": "kodit-hwpx-zipxml",
+      "version": "0.1.0",
+      "engine": "stdlib zipfile + ElementTree",
+      "documents": 358,
+      "attempts": 716,
+      "parsedAndIdentified": 353,
+      "parsedIdentityUnresolved": 5,
+      "parserFailed": 0,
+      "report": "reports/measurements/2026-09-13-runtime-v1-reproduction/hwpx/batch-run.json"
+    },
+    {
+      "format": "PDF",
+      "parser": "kodit-pdf-pypdf",
+      "version": "0.1.0",
+      "engine": "pypdf 6.0.0",
+      "documents": 1730,
+      "attempts": 3460,
+      "extracted": 1719,
+      "noText": 1,
+      "readFailed": 10,
+      "report": "reports/measurements/2026-09-13-pdf-full-corpus/batch-run.json"
+    }
+  ],
+  "ledger": {
+    "parserRuns": 2414,
+    "uniqueBinaries": 2408,
+    "nonemptyOccurrences": 2403,
+    "uniqueExtractions": 2397,
+    "report": "reports/measurements/2026-09-17-document-extraction-backfill/summary.json"
+  }
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { SiteNavigation } from "@/components/SiteNavigation";
+import { UtilityNavigation } from "@/components/UtilityNavigation";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -35,20 +36,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body>
-        <div className="mobile-unsupported" role="status">
-          <strong>PC 화면에서만 지원합니다.</strong>
-          <span>규정 표와 근거 데이터를 정확히 표시하기 위해 데스크톱 환경에서 열어 주세요.</span>
-        </div>
         <div className="desktop-application">
           <header className="site-header">
-            <div className="utility-bar"><div className="utility-inner">
-              <Link href="/data-purpose">데이터 수집 및 활용목적</Link>
-              <Link href="/methodology">검증 방법론</Link>
-              <Link href="/technical-specs">기술 사양</Link>
-            </div></div>
+            <div className="utility-bar"><UtilityNavigation /></div>
             <div className="header-blue">
               <div className="header-inner">
-                <Link className="brand" href="/regulations" aria-label="KODIT 규정 공개현황">KODIT - 규정 공개·검증 시스템</Link>
+                <Link className="brand" href="/" aria-label="KODIT 규정 공개·검증 시스템 홈">KODIT - 규정 공개·검증 시스템</Link>
                 <Suspense fallback={null}><SiteNavigation /></Suspense>
               </div>
             </div>

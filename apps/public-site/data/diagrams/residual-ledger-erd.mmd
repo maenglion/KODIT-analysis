@@ -1,0 +1,162 @@
+erDiagram
+    direction LR
+
+    RELEASE ||--o{ NOTICE : publishes
+    NOTICE ||--o| DEPARTMENT_RESIDUAL : yields
+    DEPARTMENT_RESIDUAL ||--|| RESIDUAL_LABEL_LINK : groups_as
+    LEXICAL_LABEL ||--o{ RESIDUAL_LABEL_LINK : receives
+    DOCUMENT_EXTRACTION ||--o{ EXTRACTION_MENTION : contains
+    EXTRACTION_MENTION ||--|| MENTION_LABEL_LINK : groups_as
+    LEXICAL_LABEL ||--o{ MENTION_LABEL_LINK : receives
+    LEXICAL_LABEL ||--o| ORG_LABEL_ASSESSMENT : assessed_by
+    ORG_NODE ||--o{ ORG_LABEL_ASSESSMENT : confirmed_when
+    ORG_EVIDENCE ||--o{ ORG_LABEL_ASSESSMENT : supports
+    DEPARTMENT_RESIDUAL ||--o{ NOTICE_WORK_CONTEXT : contextualized_as
+    NOTICE_WORK_CONTEXT ||--o{ ATTRIBUTION_RUN : evaluated_by
+    ATTRIBUTION_RUN ||--o{ ATTRIBUTION_CANDIDATE : ranks
+    ATTRIBUTION_RUN ||--o{ ATTRIBUTION_EVIDENCE : cites
+    ATTRIBUTION_RUN ||--o{ ATTRIBUTION_PATH_STEP : follows
+    ORG_NODE ||--o{ ATTRIBUTION_CANDIDATE : candidate_org
+    ORG_NODE ||--o{ ATTRIBUTION_PATH_STEP : path_endpoint
+    ORG_CHANGE_EVENT ||--o{ ATTRIBUTION_PATH_STEP : authorizes
+    ORG_EVIDENCE_DOCUMENT ||--o{ ORG_CHANGE_EVENT : proves
+    ORG_EVIDENCE_DOCUMENT ||--o{ FUNCTION_ASSIGNMENT : proves
+    ORG_NODE ||--o{ FUNCTION_ASSIGNMENT : owns_function
+
+    RELEASE {
+        uuid release_id PK
+        string status
+        string schema_version
+    }
+    NOTICE {
+        uuid release_id PK, FK
+        uuid notice_id PK
+        date posted_date
+        string notice_department
+        string title
+        string source_location
+    }
+    DEPARTMENT_RESIDUAL {
+        uuid residual_id PK
+        uuid release_id FK
+        uuid notice_id FK
+        string residual_code
+        string raw_label
+        string comparison_label
+    }
+    LEXICAL_LABEL {
+        uuid label_id PK
+        string label_contract_version
+        string normalized_label
+    }
+    RESIDUAL_LABEL_LINK {
+        uuid residual_id PK, FK
+        uuid label_id FK
+        string label_contract_version
+    }
+    DOCUMENT_EXTRACTION {
+        uuid extraction_id PK
+        string document_sha256 FK
+        string extract_hash
+        string extraction_contract_version
+        text extracted_text
+    }
+    EXTRACTION_MENTION {
+        uuid mention_id PK
+        uuid extraction_id FK
+        string mention_type
+        int span_start
+        int span_end
+        string raw_text
+    }
+    MENTION_LABEL_LINK {
+        uuid mention_id PK, FK
+        uuid label_id FK
+        string label_contract_version
+    }
+    ORG_LABEL_ASSESSMENT {
+        uuid label_id PK, FK
+        string mapping_outcome
+        uuid org_node_id FK
+        uuid evidence_id FK
+        string unresolved_reason
+    }
+    ORG_NODE {
+        uuid org_node_id PK
+        string official_name
+        date valid_from
+        date valid_to
+        string node_status
+    }
+    ORG_EVIDENCE {
+        uuid organization_evidence_id PK
+        string source_kind
+        string observed_name
+        date evidence_date
+        string evidence_strength
+    }
+    NOTICE_WORK_CONTEXT {
+        uuid notice_work_context_id PK
+        uuid residual_id FK
+        uuid notice_id FK
+        string_array work_strings
+        uuid_array regulation_ids
+        string body_signature
+    }
+    ATTRIBUTION_RUN {
+        uuid run_id PK
+        uuid residual_id FK
+        uuid notice_id FK
+        string contract_version
+        string final_status
+        uuid historical_org_node_id FK
+        uuid current_org_node_id FK
+        uuid candidate_org_node_id FK
+    }
+    ATTRIBUTION_CANDIDATE {
+        uuid candidate_id PK
+        uuid run_id FK
+        uuid candidate_org_node_id FK
+        decimal combined_score
+        int rank
+        string candidate_status
+    }
+    ATTRIBUTION_EVIDENCE {
+        uuid attribution_evidence_id PK
+        uuid run_id FK
+        string evidence_kind
+        uuid extraction_id FK
+        uuid mention_id FK
+        uuid organization_document_id FK
+    }
+    ATTRIBUTION_PATH_STEP {
+        uuid path_step_id PK
+        uuid run_id FK
+        uuid from_org_node_id FK
+        uuid to_org_node_id FK
+        uuid change_event_id FK
+        string relation_type
+    }
+    ORG_EVIDENCE_DOCUMENT {
+        uuid organization_document_id PK
+        string document_type
+        date source_date
+        date effective_date
+        string official_title
+        string source_url
+    }
+    ORG_CHANGE_EVENT {
+        uuid change_event_id PK
+        uuid organization_document_id FK
+        string relation_type
+        date effective_date
+        string event_scope
+    }
+    FUNCTION_ASSIGNMENT {
+        uuid function_assignment_id PK
+        uuid org_node_id FK
+        uuid organization_document_id FK
+        string work_string
+        date valid_from
+        date valid_to
+    }
