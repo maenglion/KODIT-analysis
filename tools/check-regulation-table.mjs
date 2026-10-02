@@ -81,6 +81,7 @@ assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSub
 assert.ok(homeText.includes("redirect(`/regulations") && regulationsText.includes("<RegulationExplorer") && regulationsText.includes("getPublishDataset"));
 assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.includes('href="/">HOME'));
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
+assert.ok(residualPageText.includes('row.resolution_class !== "PERSON_EVIDENCE"') && residualPageText.includes('attributions={publicAttributions}'));
 assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAnalysisText.indexOf('<div className="table-scroll">'));
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
@@ -109,6 +110,8 @@ assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha2
 
 const residualSnapshot = JSON.parse(gunzipSync(await readFile(new URL("../apps/public-site/data/public-snapshot-v1.json.gz", import.meta.url))));
 const residualCategories = ["PERSON_EVIDENCE", "ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
+const nonPersonIds = new Set(residualSnapshot.residuals.filter(row => row.resolution_class !== "PERSON_EVIDENCE").map(row => row.residual_id));
+assert.equal(residualSnapshot.attributionExplanations.filter(row => nonPersonIds.has(row.residual_id)).length, 159);
 const allResiduals = selectResidualLabels(residualSnapshot.residualLabels, residualCategories, "OCCURRENCE_DESC");
 assert.equal(allResiduals.length, 355);
 assert.equal(RESIDUAL_PAGE_SIZE, 10);

@@ -151,4 +151,6 @@
 
 읽기 전용 독립 검토에서 PERSON 선택 게시물에 공통 조직 추론 패널이 열려 `현재 부서 후보`가 공개 별칭에 결합되는 문제를 발견했다. 승인 snapshot의 PERSON 설명 1,113건 중 886건에 해당 후보 필드가 채워져 있음을 재현했다. 이는 신원·소속 비확정 경계와 혼동되므로 **PERSON에서는 조직 후보·업무 경로 패널을 표시하지 않고**, 선택한 사규예고 담당 표기와 다른 문서 본문의 인물형 문자열 관측 사이의 공개 범위만 설명한다. 조직형에는 기존 판정 패널을 유지한다. 이동 근거 `path_steps.evidence_url`도 `validPublicUrl` 검사 후 http/https 링크만 렌더링한다.
 
+Next 정적 페이지가 전체 설명 1,272행을 클라이언트 props로 직렬화하면 PERSON의 비표시 조직 후보도 전송되므로, 공개 페이지 UI 경계에서 PERSON 설명 1,113행을 제외하고 비PERSON 설명 159행만 컴포넌트에 전달한다. 승인 snapshot·공개 read contract는 바꾸지 않는다. 최종 프로덕션 HTML에서 `current_org_candidate`·`masked_label` 필드 출현이 각각 159회인 것을 확인했고, PERSON 화면·CSV 및 조직형 상세/근거 링크의 브라우저 회귀를 다시 통과했다.
+
 최종 검증: `pnpm check`, `check:approved`, `check:technical-specs`, `check:t07c`, `pnpm test`를 먼저 통과했고, 위 보정 후 `check:regulations`, TypeScript, `check:residual-analysis`, Next 프로덕션 빌드 및 `git diff --check`를 다시 통과했다. Chromium 1440/800px에서 안내 여백 32px·상태 제목 파란색·기본 10행/36쪽·복수 분류/페이지 전환·PERSON+과거 조직 319개·필터 전체 CSV BOM/행 수·행 바로 아래 상세와 초점 복귀를 확인했다. 별칭 `ㅇㄷㅎ(8053)`의 실제 연결 게시물 18건, 목록 링크 `사규 제개정 예고 (1)`~`(4)`, 목록 페이지 안내·날짜 한 줄·상태 칩을 확인했고 0건 분류도 안전하게 표시했다. PERSON 게시물 선택 후 조직 후보 그리드가 DOM에 없으며, ORG_CURRENT의 기존 판정·공식 근거와 대화상자 Escape/초점 복귀는 유지된다.
