@@ -9,8 +9,8 @@ pnpm install --frozen-lockfile
 pnpm --filter @kodit/public-site dev
 ```
 
-- 홈: `http://localhost:3000/`
-- 규정 공개현황: `http://localhost:3000/regulations`
+- 홈·전체규정 직접 검색: `http://localhost:3000/` (상단 하위 메뉴에서 사규예고로 바로 전환)
+- 기존 규정 공개현황 URL: `http://localhost:3000/regulations` (같은 승인 자료를 보여 주는 호환 경로)
 - 사업별 통계(정적 주제 검증본): `http://localhost:3000/investment-statistics`
 - 조직·잔차 통계: `http://localhost:3000/department-statistics`
 - 상단 1그룹: `/data-purpose`, `/methodology`, `/technical-specs`
@@ -26,7 +26,12 @@ node tools/publish/build_topic_public_snapshot.mjs
 
 ```sh
 node tools/publish/build_public_parser_measurements.mjs
+node tools/publish/build_public_parser_measurements.mjs --check
 ```
+
+기술 사양에는 HWP/HWPX의 처리 단계·신원 미해결 이유·확장자/실제 형식 불일치, PDF 읽기 실패·OCR 미수행, 2026-09-13 재현 시도와 2026-09-17 원장 적재의 구분을 표시합니다. 검토 근거는 [`docs/architecture/parser-operation-review-20261003.md`](../../docs/architecture/parser-operation-review-20261003.md)에 기록했습니다. 개별 문서 로그·실행 ID·파일 해시는 공개 번들에 포함하지 않습니다.
+
+시각 체계는 `app/styles.css`의 공통 토큰·헤더와 `app/styles/{regulations,department,residual,topic,information,detail}.css`의 화면별 규칙으로 나눕니다. 제공된 시안처럼 HOME에서 검색창과 표로 바로 이어지고, 검색어는 **검색 버튼/Enter 제출 후** 적용합니다. 상단 정보 링크는 각각의 페이지로 바로 이동합니다. 본문은 [한국출판인회의 KoPubWorld 돋움](https://www.kopus.org/biz-electronic-font2/) 공식 2026 TTF 묶음의 Medium(400), Bold(700)를 웹폰트 임베딩 승인에 따라 **바이트 변경 없이** `public/fonts/`에 사용합니다. 일부 제목에만 기존 Paperlogy를 씁니다. KoPub의 글리프를 수정하거나 서브셋·포맷 변환하지 않았습니다.
 
 다이어그램의 정본은 `data/diagrams/*.mmd`이고 화면용 SVG는 `public/diagrams/*.svg`입니다. 잔차 ERD는 제공된 Mermaid 원문을 유지하고, 기술·방법론에는 독립적인 작은 그림을 배치했습니다. SVG를 다시 생성할 때는 Mermaid CLI `mmdc -c data/diagrams/mermaid-theme.json -i data/diagrams/residual-ledger-erd.mmd -o public/diagrams/residual-ledger-erd.svg`처럼 실행하되, 실행 환경에 Chromium/Puppeteer 경로를 지정해야 합니다. 확대 패널과 새 창 원본 보기를 지원합니다.
 

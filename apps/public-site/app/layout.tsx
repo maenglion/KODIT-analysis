@@ -4,6 +4,12 @@ import { Suspense } from "react";
 import { SiteNavigation } from "@/components/SiteNavigation";
 import { UtilityNavigation } from "@/components/UtilityNavigation";
 import "./styles.css";
+import "./styles/regulations.css";
+import "./styles/department.css";
+import "./styles/residual.css";
+import "./styles/topic.css";
+import "./styles/information.css";
+import "./styles/detail.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://letscheck-sinbo.netlify.app"),

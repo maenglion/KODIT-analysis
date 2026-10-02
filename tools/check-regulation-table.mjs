@@ -4,6 +4,7 @@ import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, norm
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
+const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", import.meta.url), "utf8");
 const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
 const layoutText = await readFile(new URL("../apps/public-site/app/layout.tsx", import.meta.url), "utf8");
 const detailText = await readFile(new URL("../apps/public-site/app/regulations/investment-option-guarantee/page.tsx", import.meta.url), "utf8");
@@ -56,7 +57,8 @@ assert.ok(!loaderText.includes('/rest/v1/rpc/'));
 assert.ok(!loaderText.includes('NEXT_PUBLIC_SUPABASE_'));
 assert.ok(!loaderText.includes("service_role"));
 for (const forbidden of ["SHA-256", "parser", "identity", "residual", "confidence", "human confirmation", "evaluation provenance", "평가 근거 원장"]) assert.ok(!explorerText.toLowerCase().includes(forbidden.toLowerCase()));
-assert.ok(explorerText.includes("상세검색"));
+assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSubmit=") && explorerText.includes("setQuery(draft.trim())"));
+assert.ok(homeText.includes("<RegulationExplorer") && homeText.includes("getPublishDataset"));
 assert.ok(explorerText.includes("현재 목록 CSV"));
 assert.ok(explorerText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
 assert.ok(!explorerText.includes("인쇄"));

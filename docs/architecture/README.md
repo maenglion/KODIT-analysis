@@ -23,6 +23,7 @@
 - [`regulation-version-availability-contract.md`](regulation-version-availability-contract.md): 규정 버전 단위 공개 판정
 - [`parser-runtime-contract.md`](parser-runtime-contract.md): parser runtime과 실행 provenance
 - [`parser-failure-taxonomy.md`](parser-failure-taxonomy.md): 실패 domain/code 계약
+- [`parser-operation-review-20261003.md`](parser-operation-review-20261003.md): HWP·HWPX·PDF 코드·재현 로그 대조와 기술 사양 UI의 공개 경계
 - [`document-extraction-ledger.md`](document-extraction-ledger.md): attachment, binary, parser run, extraction 원장
 - [`observation-label-entity-model.md`](observation-label-entity-model.md): observation → label → entity 계층
 - [`residual-ontology-workplan.md`](residual-ontology-workplan.md): 잔차·관계 온톨로지 작업 순서

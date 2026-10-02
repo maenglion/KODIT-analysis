@@ -8,5 +8,6 @@ export default async function RegulationsPage({ searchParams }: { searchParams: 
   const query = await searchParams;
   const scope = ["master", "notice", "all"].includes(String(query.scope)) ? String(query.scope) as "master" | "notice" | "all" : "master";
   const category = ["ALL", "FULLTEXT_PUBLIC", "PARTIAL_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(String(query.category)) ? String(query.category) as "ALL" | "FULLTEXT_PUBLIC" | "PARTIAL_PUBLIC" | "NOTICE_ONLY" | "SOURCE_UNKNOWN" : "ALL";
-  return <RegulationExplorer rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={typeof query.q === "string" ? query.q : ""} initialCategory={category} />;
+  const q = typeof query.q === "string" ? query.q : "";
+  return <RegulationExplorer key={`${scope}:${category}:${q}`} rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={q} initialCategory={category} />;
 }
