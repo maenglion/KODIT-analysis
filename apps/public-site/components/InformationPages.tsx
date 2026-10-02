@@ -20,7 +20,7 @@ function DiagramPanel({ title, src, alt, caption }: { title: string; src: string
 }
 
 function InformationNext({ text }: { text: string }) {
-  return <div className="info-next"><div><h2>자료와 근거를 함께 보세요</h2><p>{text}</p></div><div><Link href="/regulations">규정 공개현황 →</Link><Link href="/department-statistics#residual-analysis">잔차 공개현황 →</Link></div></div>;
+  return <div className="info-next"><div><h2>자료와 근거를 함께 보세요</h2><p>{text}</p></div><div><Link href="/regulations">규정 공개현황 →</Link><Link href="/residual-data">담당 표기 잔차 →</Link></div></div>;
 }
 
 export async function DataPurposePage() {

@@ -8,6 +8,7 @@ const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", impo
 const regulationsText = await readFile(new URL("../apps/public-site/app/regulations/page.tsx", import.meta.url), "utf8");
 const residualPageText = await readFile(new URL("../apps/public-site/app/residual-data/page.tsx", import.meta.url), "utf8");
 const navigationText = await readFile(new URL("../apps/public-site/components/SiteNavigation.tsx", import.meta.url), "utf8");
+const informationText = await readFile(new URL("../apps/public-site/components/InformationPages.tsx", import.meta.url), "utf8");
 const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
 const layoutText = await readFile(new URL("../apps/public-site/app/layout.tsx", import.meta.url), "utf8");
 const detailText = await readFile(new URL("../apps/public-site/app/regulations/investment-option-guarantee/page.tsx", import.meta.url), "utf8");
@@ -64,6 +65,7 @@ assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSub
 assert.ok(homeText.includes("redirect(`/regulations") && regulationsText.includes("<RegulationExplorer") && regulationsText.includes("getPublishDataset"));
 assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.includes('href="/">HOME'));
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
+assert.ok(informationText.includes('href="/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(explorerText.includes("현재 목록 CSV"));
 assert.ok(explorerText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
 assert.ok(!explorerText.includes("인쇄"));
