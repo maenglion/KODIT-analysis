@@ -2,5 +2,11 @@
   "contract": "data-purpose-editorial-history-v1",
   "baselineEstablishedOn": "2026-10-03",
   "baselineSha256": "adeac753a31a050ede6ae8aa9aac5849fe2e3f45247c28f36f45464574f4a305",
-  "revisions": []
+  "revisions": [
+    {
+      "date": "2026-10-03",
+      "summary": "3.2 문의 채널 확정 및 PERSON 초성·공개용 별칭 표시 기준 반영",
+      "contentSha256": "b2f272c1434562cf3873f5f28a726d1883701c72d9b75e3f831b11050ffec2f0"
+    }
+  ]
 }
