@@ -8,6 +8,7 @@ const explorerText = await readFile(new URL("../packages/common/src/regulations/
 const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", import.meta.url), "utf8");
 const regulationsText = await readFile(new URL("../apps/public-site/app/regulations/page.tsx", import.meta.url), "utf8");
 const residualPageText = await readFile(new URL("../apps/public-site/app/residual-data/page.tsx", import.meta.url), "utf8");
+const residualAnalysisText = await readFile(new URL("../packages/common/src/regulations/DepartmentResidualAnalysis.tsx", import.meta.url), "utf8");
 const navigationText = await readFile(new URL("../apps/public-site/components/SiteNavigation.tsx", import.meta.url), "utf8");
 const informationText = await readFile(new URL("../apps/public-site/components/InformationPages.tsx", import.meta.url), "utf8");
 const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
@@ -74,6 +75,8 @@ assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSub
 assert.ok(homeText.includes("redirect(`/regulations") && regulationsText.includes("<RegulationExplorer") && regulationsText.includes("getPublishDataset"));
 assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.includes('href="/">HOME'));
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
+assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') < residualAnalysisText.indexOf('<div className="table-scroll">'));
+assert.ok(residualAnalysisText.includes('id="residual-selected-detail"') && residualAnalysisText.includes('aria-expanded={selected===row.label_id}') && residualAnalysisText.includes('scrollIntoView('));
 assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
 assert.ok(diagramText.includes('id="residual-ledger-erd"') && residualPageText.includes('/methodology#residual-ledger-erd'));
