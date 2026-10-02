@@ -77,6 +77,10 @@
 .residual-meta div { padding:10px; border-top:1px solid var(--line); }
 .residual-meta dt { color:var(--muted); font-size:11px; font-weight:800; }
 .residual-meta dd { margin:5px 0 0; font-size:13px; font-weight:700; }
+.residual-grain-note { margin:10px 10px 0; color:#536278; font-size:12px; line-height:1.65; }
+.residual-grain-note b { color:#315477; }
+.residual-mention-count { margin:12px 0 3px; color:#155e9d !important; font-weight:800; }
+.residual-mention-note { margin:4px 0 12px; color:#536278 !important; font-size:12px; line-height:1.65 !important; }
 .residual-detail ul { list-style:none; margin:0; padding:0; }
 .residual-detail section>ul:not(.residual-notices) li { display:flex; justify-content:space-between; gap:12px; padding:5px 0; }
 .residual-source-note { margin:14px 0 4px; color:#536278; font-size:12px; line-height:1.6; }

@@ -154,3 +154,11 @@
 Next 정적 페이지가 전체 설명 1,272행을 클라이언트 props로 직렬화하면 PERSON의 비표시 조직 후보도 전송되므로, 공개 페이지 UI 경계에서 PERSON 설명 1,113행을 제외하고 비PERSON 설명 159행만 컴포넌트에 전달한다. 승인 snapshot·공개 read contract는 바꾸지 않는다. 최종 프로덕션 HTML에서 `current_org_candidate`·`masked_label` 필드 출현이 각각 159회인 것을 확인했고, PERSON 화면·CSV 및 조직형 상세/근거 링크의 브라우저 회귀를 다시 통과했다.
 
 최종 검증: `pnpm check`, `check:approved`, `check:technical-specs`, `check:t07c`, `pnpm test`를 먼저 통과했고, 위 보정 후 `check:regulations`, TypeScript, `check:residual-analysis`, Next 프로덕션 빌드 및 `git diff --check`를 다시 통과했다. Chromium 1440/800px에서 안내 여백 32px·상태 제목 파란색·기본 10행/36쪽·복수 분류/페이지 전환·PERSON+과거 조직 319개·필터 전체 CSV BOM/행 수·행 바로 아래 상세와 초점 복귀를 확인했다. 별칭 `ㅇㄷㅎ(8053)`의 실제 연결 게시물 18건, 목록 링크 `사규 제개정 예고 (1)`~`(4)`, 목록 페이지 안내·날짜 한 줄·상태 칩을 확인했고 0건 분류도 안전하게 표시했다. PERSON 게시물 선택 후 조직 후보 그리드가 DOM에 없으며, ORG_CURRENT의 기존 판정·공식 근거와 대화상자 Escape/초점 복귀는 유지된다.
+
+### 잔차 ‘관측 / 게시물 / 본문 언급’ 집계 단위 설명 (2026-10-03, PR #7 후속)
+
+[담당 표기 잔차 원장](../../supabase/migrations/20260917000100_notice_department_residual_occurrences.sql)은 승인 release의 사규예고 `notice_id`별 담당 칸이 기준 조직명과 정확히 일치하지 않으면 잔차 행을 기록한다. 제약 `unique (release_id, notice_id, residual_code)` 때문에 이 분류의 잔차는 **해당 게시물당 최대 1행**이다. [공개 라벨 요약 함수](../../supabase/migrations/20260918000300_department_residual_analysis_read_model.sql)는 라벨별 `count(*)`를 **담당 표기 관측** 수, `count(distinct notice_id)`를 **서로 다른 사규예고 게시물** 수로 반환한다. 현재 승인 snapshot의 355개 표기에서는 두 값이 전부 같지만 서로 다른 집계 단위다.
+
+본문 **mention** 수는 별도로 연결된 `core.extraction_mentions`의 해당 라벨 행 `count(*)`이다. [본문 추출기](../../tools/mentions/mention_extractor.py)는 추출 텍스트에서 발견한 인물형 문자열마다 시작/끝 위치를 남기며, [mention 원장](../../supabase/migrations/20260917000300_extraction_mention_ledger.sql)은 동일 추출 문서·계약·유형·위치의 중복만 제거한다. 따라서 한 추출 문서에서 서로 다른 위치에 반복 등장하면 여러 mention이 될 수 있고, mention 건수는 게시물 수나 서로 다른 문서 수가 아니다. PERSON 공개 별칭 `ㅇㄷㅎ(8053)`의 공개 집계는 **담당 표기 잔차 18행 / 고유 사규예고 18건 / 본문 인물형 언급 24개 위치**다. 이 집계만으로 24개 mention이 위 사규예고 18건에서 각각 몇 번 나왔는지, 또는 차이 6건이 그 게시물의 반복 언급인지 알 수 없다. UI의 항목 이름과 인접 설명만 바로잡고 원장·read contract·승인 snapshot은 그대로 보존한다.
+
+표기 상세의 `관측 / 게시물`을 `담당 표기 관측 / 사규예고`로 구체화하고 바로 아래에 원장 행/중복 제거 게시물의 정의를 배치했다. PERSON의 `mention 관측`도 `본문 인물형 언급`으로 바꾸고 위치별 추출·동일 추출 위치 중복 제거·게시물별 횟수는 공개 집계만으로 확인할 수 없다는 설명을 인접 배치했다. UI 회귀·TypeScript·잔차 공급 계약·Next 프로덕션 빌드 및 Chromium 1440/800px에서 `ㅇㄷㅎ(8053)`의 18/18/24 표시, 필터/CSV/상세 동작을 재검증했다.

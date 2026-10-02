@@ -86,6 +86,7 @@ assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAna
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
 assert.ok(residualAnalysisText.includes('RESIDUAL_PAGE_SIZE') && residualAnalysisText.includes('담당 표기 관측 게시물') && residualAnalysisText.includes('근거 게시물과 이동 설명'));
+assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('본문 언급(mention)은 담당 칸과 별도로'));
 assert.ok(residualAnalysisText.includes('id="residual-selected-detail"') && residualAnalysisText.includes('aria-expanded={selected===row.label_id}') && residualAnalysisText.includes('scrollIntoView('));
 assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
@@ -114,6 +115,10 @@ const nonPersonIds = new Set(residualSnapshot.residuals.filter(row => row.resolu
 assert.equal(residualSnapshot.attributionExplanations.filter(row => nonPersonIds.has(row.residual_id)).length, 159);
 const allResiduals = selectResidualLabels(residualSnapshot.residualLabels, residualCategories, "OCCURRENCE_DESC");
 assert.equal(allResiduals.length, 355);
+assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
+const picturedResidual = allResiduals.find(row => row.raw_label === "ㅇㄷㅎ(8053)");
+assert.ok(picturedResidual);
+assert.deepEqual([picturedResidual.residual_occurrence_count, picturedResidual.notice_count, picturedResidual.mention_occurrence_count], [18, 18, 24]);
 assert.equal(RESIDUAL_PAGE_SIZE, 10);
 assert.equal(Math.ceil(allResiduals.length / RESIDUAL_PAGE_SIZE), 36);
 const personAndHistorical = selectResidualLabels(residualSnapshot.residualLabels, ["PERSON_EVIDENCE", "ORG_HISTORICAL"], "LABEL_ASC");
