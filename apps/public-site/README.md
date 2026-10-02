@@ -30,7 +30,7 @@ node tools/publish/build_public_parser_measurements.mjs
 
 다이어그램의 정본은 `data/diagrams/*.mmd`이고 화면용 SVG는 `public/diagrams/*.svg`입니다. 잔차 ERD는 제공된 Mermaid 원문을 유지하고, 기술·방법론에는 독립적인 작은 그림을 배치했습니다. SVG를 다시 생성할 때는 Mermaid CLI `mmdc -c data/diagrams/mermaid-theme.json -i data/diagrams/residual-ledger-erd.mmd -o public/diagrams/residual-ledger-erd.svg`처럼 실행하되, 실행 환경에 Chromium/Puppeteer 경로를 지정해야 합니다. 확대 패널과 새 창 원본 보기를 지원합니다.
 
-운영 공개는 기존 저장소와 Netlify 연결을 사용합니다. 이 작업은 별도 영구 웹사이트나 새로운 호스팅을 만들지 않으며, 원격 저장소 쓰기 권한이 확인되기 전에는 로컬 미리보기와 패치가 검수본입니다.
+운영 공개는 기존 GitHub 저장소 `maenglion/KODIT-analysis`의 `main`과 연결된 `https://letscheck-sinbo.netlify.app`을 사용합니다. 별도 영구 웹사이트나 새로운 호스팅은 만들지 않았습니다. 2026-10-03 PR #1 병합 후 이 주소에서 새 방법론·기술 사양·잔차 ERD 자산을 확인했으며 Netlify 설정은 직접 변경하지 않았습니다.
 
 기존 `review-20260908`과 `review-20260913-reconstructed`는 provenance 재현 자료로 변경하지 않습니다. 규정·사규예고 다운로드 CSV는 화면과 동일한 공개 snapshot 배열에서 UTF-8 BOM으로 생성합니다. 새 승인 release를 공개할 때만 `node tools/publish/export_public_snapshot.mjs`로 규정 snapshot을 다시 생성하고 검증·커밋합니다. 이 export 작업은 기존 public credential을 런타임에만 사용하며 키를 파일에 복사하지 않습니다.
 
