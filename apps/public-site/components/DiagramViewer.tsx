@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 
 const svgPath = "/diagrams/residual-ledger-erd.svg";
-const originalWidth = 2632;
+const originalWidth = 2454; // Mermaid viewBox width at 13px text, rounded to CSS pixels.
 const accessibleDescription = "승인 공개본과 사규예고는 담당 표기 잔차를 낳고, 잔차는 문자열 라벨과 연결됩니다. 문서 추출의 언급도 별도 라벨과 연결됩니다. 공식 조직 근거는 조직 라벨의 평가를 뒷받침합니다. 잔차의 업무 문맥은 귀속 실행·후보·근거·경로와 연결되지만, 후보만으로 확정 조직이 되지 않습니다.";
 
 export function DiagramViewer() {

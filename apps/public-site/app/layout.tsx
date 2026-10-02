@@ -3,7 +3,14 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { SiteNavigation } from "@/components/SiteNavigation";
 import { UtilityNavigation } from "@/components/UtilityNavigation";
+import { MobileViewingNotice } from "@/components/MobileViewingNotice";
 import "./styles.css";
+import "./styles/regulations.css";
+import "./styles/department.css";
+import "./styles/residual.css";
+import "./styles/topic.css";
+import "./styles/information.css";
+import "./styles/detail.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://letscheck-sinbo.netlify.app"),
@@ -41,7 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <div className="utility-bar"><UtilityNavigation /></div>
             <div className="header-blue">
               <div className="header-inner">
-                <Link className="brand" href="/" aria-label="KODIT 규정 공개·검증 시스템 홈">KODIT - 규정 공개·검증 시스템</Link>
+                <Link className="brand" href="/regulations" aria-label="KODIT 규정 공개·검증 시스템 규정 목록">KODIT - 규정 공개·검증 시스템</Link>
                 <Suspense fallback={null}><SiteNavigation /></Suspense>
               </div>
             </div>
@@ -49,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
           <footer><span>KODIT 규정 공개현황</span><span>Soulspectrum Inc. · nanyoung이 만들었습니다.</span></footer>
         </div>
+        <MobileViewingNotice />
       </body>
     </html>
   );

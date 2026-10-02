@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { DepartmentStatistics } from "@kodit/common/regulations/DepartmentStatistics";
 import { DataPurposePage, MethodologyPage, TechnicalSpecsPage } from "@/components/InformationPages";
 import { getPublishDataset } from "@/lib/review-data";
+import history from "@/data/organization-public-history-v1.json";
 
 export default async function SectionPage({ params }: { params: Promise<{ section: string }> }) {
   const { section } = await params;
@@ -14,5 +15,5 @@ export default async function SectionPage({ params }: { params: Promise<{ sectio
 
 async function DepartmentStatisticsPage() {
   const dataset = await getPublishDataset();
-  return <DepartmentStatistics rows={dataset.rows} notices={dataset.notices} residuals={dataset.residuals} residualLabels={dataset.residualLabels} attributionExplanations={dataset.attributionExplanations} />;
+  return <DepartmentStatistics rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} history={history} />;
 }
