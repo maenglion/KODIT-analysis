@@ -12,6 +12,7 @@
     "check:approved": "node --experimental-strip-types tools/check-approved-releases.mjs",
     "check:reconstructed": "node tools/check-reconstructed-evaluation.mjs",
     "check:technical-specs": "node tools/check-technical-specs.mjs",
+    "check:purpose": "node tools/check-data-purpose-content.mjs",
     "check:extractions": "node tools/extractions/check_document_extraction_contract.mjs",
     "test:extractions:integration": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/extractions/run_document_extraction_integration.ps1",
     "backfill:extractions": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/extractions/run_document_extraction_backfill.ps1",
