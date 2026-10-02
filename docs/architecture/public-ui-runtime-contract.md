@@ -4,6 +4,7 @@
 
 - 2026-10-02 UI 구현 기준. 기준 commit: `b5bbd33`.
 - 공개 사이트의 주 실행 경로는 승인된 정적 snapshot이다. 조직·잔차 관련 의미 계약은 변경하지 않는다.
+- 2026-10-03 사용자 요청으로 [PR #2](https://github.com/maenglion/KODIT-analysis/pull/2)를 `main`의 `ebe1904`로 병합했다. 기존 Git 연동 운영 URL에서 새 UI 반영을 확인했다.
 
 ## Purpose
 
@@ -51,6 +52,7 @@
 | 2026-10-03 | 중복 HOME 메뉴를 제거하고 `/`를 `/regulations`로 리디렉션한다. 담당 표기 잔차는 부서 화면에서 독립한 `/residual-data`로 승격한다. 768~1296px 웹 레이아웃을 유지하고, 모바일에서는 768px 태블릿 폭의 웹 화면을 가로로 볼 수 있게 하되 세션당 한 번 PC·태블릿 최적화 안내를 보여 준다. 다른 모바일 앱 UI는 만들지 않는다. |
 | 2026-10-03 | 조직 히스토리의 2024-04-24, 2026-01-29 경로는 개인정보보호 **기능 이관**만 뜻한다. 2026 현행 조직명이나 사규예고 제목만으로 신설·전체 조직 승계를 주장하지 않는다. 기존 사규예고·공개 시행본은 유형·연도로 찾아보되 신설조직 탭은 근거 미확정 안내를 보여 준다. 부서 위의 `부서 목록`은 ㄱㄴㄷ 검색 모달로 열고 하단으로 강제 이동하지 않는다. |
 | 2026-10-03 | Codex가 확인한 현재 원장에는 규정 버전 단위 `검증 중단`/`검증 불가` 판정·공개 필드와 크론별 변경이력 공개 계약이 없다. PDF/HWP(X) 실행 실패는 그 상태로 자동 승격하지 않으며, 미래전략실 목업의 `검증 중단·불가(2)`는 재현 불가다. 예약 탭의 안내/도움말만 유지하고 수치·배지·변경이력 0건을 표시하지 않는다. |
+| 2026-10-03 | 사용자의 운영 반영 요청에 따라 검증된 [PR #2](https://github.com/maenglion/KODIT-analysis/pull/2)를 `main`에 merge commit `ebe19040d8ea88fe59c91b339b772c927b73e8c8`로 병합했다. 기존 Git→Netlify 자동 배포에서 `department-statistics`, `residual-data`, 13px ERD SVG를 확인했다. Netlify API/설정에는 직접 변경을 가하지 않았다. |
 
 ## Department and organization evidence (2026-10-03)
 
@@ -80,3 +82,9 @@
 - 1440px 시안 비교에서 헤더 높이 219px, HOME 검색 상단 584px, 상단 정보 페이지의 첫 카드 상단 465px 확인. 390/768/1440px의 HOME·목적·기술 사양·부서·주제 화면에서 문서 가로 넘침 없음.
 - 실제 Chromium에서 KoPub 400/700 로딩, 입력만으로 검색 결과가 바뀌지 않다가 검색 제출 후 4건 표시, 사규예고 탭에서 2,089건 표시, HOME 복귀, 전문 공개 필터 205건, parser 단계 펼침, 잔차 ERD 대화상자 열림을 확인했다.
 - 기존 승인 공개본, 수집/DB 권한, 조직·잔차 판정 로직, Netlify API와 설정은 변경하지 않았다. 사용자가 중간 검수를 마치기 전에는 새 변경을 운영 `main`에 병합하지 않는다.
+
+## Department UI release verification (2026-10-03)
+
+- PR #2의 5개 GitHub/Netlify 검사에서 Header rules, Redirect rules, deploy-preview는 SUCCESS, Pages changed는 NEUTRAL, Supabase Preview는 SKIPPED였다. PR의 마지막 head `4cd30b0`에서 타입·빌드와 `pnpm check`, `check:approved`, `check:regulations`, `check:technical-specs`, `check:residual-analysis`, `check:t07c`, `pnpm test`, 조직 공개 이력 `--check`를 통과했다.
+- Netlify PR 미리보기에서 실제 Chromium으로 1440/800/390px의 부서 목록 ㄱㄴㄷ 모달, 미래전략실 연결 규정 6건, 검증 상태 미제공 도움말, 연도별 기능 이동, 신설 확정 미제공, 새 잔차 경로, 모바일 PC 안내를 확인했다. 기존 규정·사업별 통계·상단 정보 3페이지도 800px에서 HTTP 200과 ERD 로딩을 확인했다.
+- 운영 [KODIT 공개 사이트](https://letscheck-sinbo.netlify.app/)에서 병합 약 90초 뒤 `/department-statistics`의 기능 이동 UI, `/residual-data`의 독립 잔차 화면, `/diagrams/residual-ledger-erd.svg`의 13px 서체가 실제 제공됨을 확인했다. 이는 기존 Git 기반 자동 배포이며 별도 호스팅 생성이나 Netlify 설정 변경이 아니다.
