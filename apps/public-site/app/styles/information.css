@@ -132,31 +132,3 @@ body:has(.information-hero) .header-inner { min-height:137px; }
   .parser-result-card>p { min-height:0; }
   .information-metric-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
-@media(max-width:760px) {
-  body:has(.information-hero) .header-inner { min-height:0; }
-  .methodology-hero.information-hero { padding:22px 0; }
-  .information-hero h1 { font-size:26px; }
-  .information-hero span { font-size:14px; }
-  .methodology-page.information-page { padding-top:24px; }
-  .information-section { margin-bottom:22px; }
-  .information-section-title { min-height:56px; padding:14px 17px; }
-  .information-section-title h2 { font-size:18px; }
-  .information-section-content { padding:20px 17px 24px; }
-  .information-section-content>p { font-size:14px; }
-  .information-use-grid,.information-identity-grid,.information-runtime-grid { grid-template-columns:1fr; }
-  .information-table { min-width:600px; }
-  .information-diagram { padding:12px; }
-  .information-diagram-image img { min-width:680px; }
-  .information-metric-grid { gap:7px; }
-  .information-metric-grid>div { padding:12px; }
-  .information-metric-grid strong { font-size:17px; }
-  .info-next,.full-erd-panel { display:block; padding:17px; }
-  .info-next>div:last-child { margin-top:14px; }
-  .full-erd-thumbnail { margin:15px 0; }
-  .diagram-toolbar { padding:10px; }
-  .parser-audit-strip { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .parser-audit-strip>div { border-bottom:1px solid #4b5d79; }
-  .parser-audit-strip strong { font-size:17px; }
-  .parser-findings { padding:16px; }
-  .spec-grid { grid-template-columns:1fr; }
-}

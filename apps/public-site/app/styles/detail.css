@@ -20,4 +20,3 @@
 .interpretation p:last-child { color:#c9d8e9; line-height:1.7; }
 .connection-state { min-height:60vh; padding:80px 0; }
 .connection-state h1 { font:700 30px var(--display-font); }
-@media(max-width:760px) { .hero-grid,.content { display:block; } .source-link { margin-top:18px; } .interpretation { margin-top:15px; } .facts-panel dl div { grid-template-columns:1fr; gap:4px; } }

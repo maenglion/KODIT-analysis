@@ -50,7 +50,7 @@ export function TopicDashboard() {
 
   return <>
     <section className="public-page-intro topic-intro"><div className="shell intro-inner"><div className="intro-copy">
-      <p className="breadcrumb">HOME &gt; <b>사업별 통계</b></p>
+      <p className="breadcrumb"><Link href="/regulations">규정·법령</Link> &gt; <b>사업별 통계</b></p>
       <h1>투자·보증 주제 분석</h1>
       <p>투자·자본성 금융과 직접 연결된 보증·투자제도 9개 하위군의 사규예고를 살펴봅니다. 일반 보증 전체의 통계가 아닙니다.</p>
     </div><span className="topic-date-pill">정적 검증본 · 2026.09.19</span></div></section>

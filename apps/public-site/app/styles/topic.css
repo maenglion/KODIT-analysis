@@ -74,26 +74,3 @@
 .topic-more { display:block; width:100%; margin-top:16px; padding:12px; border:1px solid var(--action-border); border-radius:8px; background:#eff7ff; color:#0968bd; font-weight:750; }
 .topic-source-note { margin:28px 0 0; color:#677188; font-size:13px; line-height:1.6; }
 .topic-source-note code { padding:2px 5px; border-radius:4px; background:#e6edf7; }
-
-@media(max-width:760px) {
-  .topic-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .topic-overview .topic-lead-stat { grid-column:1/-1; }
-  .topic-family-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .topic-rank-grid { grid-template-columns:1fr; }
-  .topic-heading { display:block; }
-  .topic-heading>p { margin-top:8px; text-align:left; }
-  .topic-list-tools { flex-wrap:wrap; }
-  .topic-list-tools label { flex:1 0 100%; }
-  .topic-list-tools select { flex:1; width:auto; }
-  .topic-table { min-width:750px; }
-}
-@media(max-width:520px) {
-  .topic-boundary { display:block; }
-  .topic-boundary span { display:block; margin-top:8px; }
-  .topic-overview strong { font-size:30px; }
-  .topic-family-grid { grid-template-columns:1fr; }
-  .topic-notices-section { padding:16px; }
-  .topic-list-tools select,.topic-list-tools .csv-button { width:100%; flex-basis:100%; }
-  .topic-year-chart { overflow-x:auto; }
-  .topic-year-chart li { min-width:45px; }
-}

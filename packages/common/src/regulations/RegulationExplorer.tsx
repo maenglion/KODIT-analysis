@@ -99,7 +99,7 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
     <section className="public-page-intro">
       <div className="shell intro-inner">
         <div className="intro-copy">
-          <p className="breadcrumb"><a href="/">HOME</a> &gt; <b>{scope === "notice" ? "사규예고" : "내부규정(분석)"}</b></p>
+          <p className="breadcrumb"><a href="/regulations">규정·법령</a> &gt; <b>{scope === "notice" ? "사규예고" : "내부규정(분석)"}</b></p>
           <h1>{scope === "notice" ? "신용보증기금 사규예고" : "신용보증기금 규정 공개현황"}</h1>
           <p>전체 사규예고 {notices.length.toLocaleString("ko-KR")}건의 공식 관찰값을 규정에 연결해 보여줍니다. 동일 규정의 여러 예고는 하나의 규정 버전으로 묶으며, 공개 범위와 공식 원문은 승인된 근거를 따릅니다.</p>
         </div>
