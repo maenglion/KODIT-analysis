@@ -1,10 +1,8 @@
 "use client";
 
 import { useMemo, useState, type CSSProperties } from "react";
-import { DepartmentEvidenceGuide } from "./DepartmentEvidenceGuide";
 import { DepartmentSelectorDialog } from "./DepartmentSelectorDialog";
 import { MetricHelp } from "./MetricHelp";
-import { OrganizationHistory, type OrganizationPublicHistory } from "./OrganizationHistory";
 import { availabilityLabels, canonicalDepartment, organizationSnapshot, validPublicUrl, type Availability, type PublicRegulationSourceRow, type PublishNoticeRow, type PublishRegulationRow } from "./index";
 
 type Sort = "NONPUBLIC_RATE" | "NONPUBLIC_COUNT" | "NOTICE_COUNT" | "FULLTEXT_RATE";
@@ -13,7 +11,6 @@ type Props = {
   rows: PublishRegulationRow[];
   notices: PublishNoticeRow[];
   sources: PublicRegulationSourceRow[];
-  history: OrganizationPublicHistory;
 };
 
 function availabilityCounts(rows: PublishRegulationRow[]): Record<Availability, number> {
@@ -22,7 +19,7 @@ function availabilityCounts(rows: PublishRegulationRow[]): Record<Availability, 
   return counts;
 }
 
-export function DepartmentStatistics({ rows, notices, sources, history }: Props) {
+export function DepartmentStatistics({ rows, notices, sources }: Props) {
   const [sort, setSort] = useState<Sort>("NONPUBLIC_RATE");
   const [selected, setSelected] = useState<string | null>(null);
   const [tab, setTab] = useState<"regulations" | "validation" | "changes">("regulations");
@@ -92,8 +89,6 @@ export function DepartmentStatistics({ rows, notices, sources, history }: Props)
         {tab === "validation" && <div className="department-summary-panel department-unavailable-panel" role="tabpanel" id="dept-panel-validation" aria-labelledby="dept-tab-validation"><h3>검증 중단·불가 집계는 아직 공개되지 않았습니다</h3><p>현재 규정 버전의 공개 플래그는 전문 공개·일부 공개·사전예고만·출처불명 네 가지입니다. 검증 작업의 중단과 불가 여부는 이 네 가지에서 자동으로 산출할 수 없습니다.</p><p>상태 정의와 안전한 공개 필드가 확인되면 같은 자리에 검증 단계별 수치와 공식 근거 링크를 표시합니다.</p></div>}
         {tab === "changes" && <div className="department-summary-panel department-unavailable-panel" role="tabpanel" id="dept-panel-changes" aria-labelledby="dept-tab-changes"><h3>승인된 공개본 간 변경이력은 후속 공개 범위입니다</h3><p>현재 분석 변경이력의 공개 RPC와 스냅샷 필드가 없어, 크론 실행별 변경 여부를 이 화면에서 보여주지 않습니다. 공개본에 기록된 변경행이 없다는 사실만으로 ‘기간 내 변경 없음’이라고 해석하지 않습니다.</p><small>향후 수집 주기 완료 → 후보/이전 승인본 비교 → 규정 버전별 변경 기록 → 새 공개본 승인 → 공개용 투영이 준비되면 이 탭에 근거 링크와 함께 표시합니다.</small></div>}
       </section>}
-      {active && <DepartmentEvidenceGuide department={active.department} availability={count} />}
-      <OrganizationHistory history={history} />
       <section className="department-index" id="department-index"><h2>담당부서별 목록</h2><p>표는 정렬 기준대로 표시합니다. 상단의 ‘부서 목록’은 가나다순 검색 모달입니다.</p><div className="table-scroll"><table className="regulations-table department-table"><thead><tr><th>사규예고 담당부서</th><th>연결 규정</th><th>전문 공개</th><th>일부 공개</th><th>사전예고만</th><th>출처불명</th><th>사규예고</th></tr></thead><tbody>{calculation.result.map((row) => <tr className={department === row.department ? "selected" : ""} key={row.department}><td><button type="button" className="department-link" onClick={() => { setSelected(row.department); document.querySelector(".department-summary-card")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>{row.department}</button></td><td>{row.total}</td><td>{row.fulltext}</td><td>{row.partial}</td><td>{row.noticeOnly}</td><td>{row.sourceUnknown}</td><td>{row.notices}</td></tr>)}</tbody></table></div></section>
     </div></main>
   </>;

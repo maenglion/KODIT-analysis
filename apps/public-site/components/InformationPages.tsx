@@ -19,8 +19,8 @@ function DiagramPanel({ title, src, alt, caption }: { title: string; src: string
   return <figure className="information-diagram"><h3>{title}</h3><div className="information-diagram-image"><img src={src} alt={alt} loading="lazy" /></div><figcaption>{caption}</figcaption></figure>;
 }
 
-function InformationNext({ text }: { text: string }) {
-  return <div className="info-next"><div><h2>자료와 근거를 함께 보세요</h2><p>{text}</p></div><div><Link href="/regulations">규정 공개현황 →</Link><Link href="/residual-data">담당 표기 잔차 →</Link></div></div>;
+function InformationRelated({ links }: { links: { href: string; label: string }[] }) {
+  return <nav className="purpose-related" aria-label="관련 페이지"><h2>관련 페이지</h2><ul>{links.map((link) => <li key={link.href}><Link href={link.href}>{link.label}</Link></li>)}</ul></nav>;
 }
 
 export { DataPurposePage } from "./DataPurposeContent";
@@ -62,7 +62,7 @@ export async function MethodologyPage() {
       <InformationSection number="05" title="검증 계약을 통과하지 못하면 자동 적용하지 않습니다" id="method-stop">
         <p>known-answer positive control과 시점에 맞는 공식 조직·업무 profile, calibration, 독립 holdout을 함께 평가합니다. 정답을 누설할 수 있는 담당부서 원문이나 사람 이름을 resolver 입력으로 사용하지 않습니다.</p><p>표본 수, coverage, top-1 accuracy, top-3 recall, 모호성, 후보 없음 비중까지 살핍니다. 최소 표본과 독립 검증 기준을 충족하지 못하면 잔차 1,272건에 자동 귀속 결과를 적용하지 않습니다. 단일 ‘신뢰도 1~5’ 점수로 이 경계를 감추지 않습니다.</p>
       </InformationSection>
-      <InformationNext text="방법론 설명은 개별 규정에 대한 법적 판단이 아닙니다. 원문 출처와 조직 잔차를 별도로 확인해 주세요." />
+      <InformationRelated links={[{ href: "/regulations", label: "규정 공개 현황" }, { href: "/residual-data", label: "담당 표기 잔차" }, { href: "/technical-specs", label: "기술 사양" }]} />
     </div></main>
   </>;
 }
@@ -97,7 +97,7 @@ export async function TechnicalSpecsPage() {
         <p>현재 브라우저는 공개본의 <code>public-snapshot-v1.json.gz</code>를 읽으며 매 요청마다 Supabase RPC를 호출하지 않습니다. 기존 승인 release와 RPC 계약은 외부 검증·추후 갱신을 위해 보존합니다. parser 원장의 2026-09-17 관측 수치와 위 공개본의 2026-09-13 기준 수치를 같은 시점의 집계로 합산하지 않습니다.</p>
         <p className="information-note">parser 원장 {parserMeasurements.ledger.parserRuns.toLocaleString("ko-KR")}회 실행 중 본문이 있는 occurrence {parserMeasurements.ledger.nonemptyOccurrences.toLocaleString("ko-KR")}건은 고유 추출 artifact {parserMeasurements.ledger.uniqueExtractions.toLocaleString("ko-KR")}건으로 보존됐습니다. 로그 출처: <code>{parserMeasurements.ledger.report}</code></p>
       </InformationSection>
-      <InformationNext text="기술 사양은 재현 가능한 저장소 artifact와 집계에 한정합니다. 개별 문서의 내부 실행 정보는 공개하지 않습니다." />
+      <InformationRelated links={[{ href: "/data-purpose", label: "데이터 수집 및 활용목적" }, { href: "/methodology", label: "검증 방법론" }, { href: "/regulations", label: "규정 공개 현황" }]} />
     </div></main>
   </>;
 }
