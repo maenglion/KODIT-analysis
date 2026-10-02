@@ -11,6 +11,7 @@
 .residual-cards button.active,.residual-cards button:hover { border-color:var(--primary); background:var(--primary-soft); }
 .residual-cards span,.residual-cards strong,.residual-cards small { display:block; }.residual-cards span { color:var(--muted); font-size:11px; font-weight:750; }.residual-cards strong { margin-top:5px; font-size:20px; }.residual-cards small { margin-top:3px; color:var(--muted); }
 .residual-controls { display:flex; gap:8px; margin:14px 0 10px; }.residual-controls input { flex:1; min-width:180px; }.residual-controls input,.residual-controls select,.residual-controls button { padding:9px 11px; border:1px solid var(--line); border-radius:7px; background:#fff; }.residual-controls button { background:var(--primary-dark); color:#fff; cursor:pointer; }
+.residual-alias-note { margin:0 0 14px; padding:10px 13px; border-left:3px solid var(--figma-blue); background:var(--primary-soft); color:#315477; font-size:13px; line-height:1.6; }
 .residual-table { table-layout:fixed; font-size:14px; }.residual-table th:nth-child(1){width:31%}.residual-table th:nth-child(2){width:16%}.residual-table th:nth-child(3){width:12%}.residual-table th:nth-child(4),.residual-table th:nth-child(5){width:15%}.residual-table th:nth-child(6){width:11%}
 .residual-table th:not(:first-child),.residual-table td:not(:first-child){text-align:center}.residual-table th,.residual-table td{white-space:normal;overflow-wrap:anywhere}
 .residual-table tr.is-selected { background:var(--primary-soft); }

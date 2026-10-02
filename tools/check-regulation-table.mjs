@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, personInitials, publicPersonAliasCode, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
@@ -60,16 +60,15 @@ assert.equal(filterAndSortNotices(notices, noticeFilters)[0].notice_number, "10"
 assert.equal(filterAndSortNotices(notices, { ...noticeFilters, unmappedOnly: true }).length, 1);
 assert.ok(publishNoticesToCsv(notices, { release_id: manifest.correction_release_id, release_type: "baseline_correction", schema_version: "v0.6", evidence_as_of: "2026-09-14", generated_at: "2026-09-14", source_snapshot_hash: "", projection_hash: "", population: 1041 }).includes("linked_regulation_count"));
 
-const residualOccurrenceCsv = residualOccurrencesToCsv([{ release_id: manifest.correction_release_id, residual_id: "00000000-0000-0000-0000-000000000010", notice_id: "00000000-0000-0000-0000-000000000011", raw_label: "이경선", comparison_label: "이경선", posted_at: "2021-11-22", title: "예고", source_location: "https://example.test/notice", resolution_class: "PERSON_EVIDENCE", label_id: "00000000-0000-0000-0000-000000000012" }]);
-const residualLabelCsv = residualLabelsToCsv([{ release_id: manifest.correction_release_id, label_id: "00000000-0000-0000-0000-000000000012", raw_label: "이경선", comparison_label: "이경선", resolution_class: "PERSON_EVIDENCE", label_type: "PERSON", residual_occurrence_count: 1, notice_count: 1, first_posted_at: "2021-11-22", last_posted_at: "2021-11-22", org_node_id: null, org_official_name: null, org_valid_from: null, org_valid_to: null, org_evidence_url: null, org_lineage: [], mention_occurrence_count: 1, person_extractor_rules: { PERSON_CONTACT_BLOCK_PHONE: 1 }, mention_source_locations: ["https://example.test/notice"] }]);
+const residualOccurrenceCsv = residualOccurrencesToCsv([{ release_id: manifest.correction_release_id, residual_id: "00000000-0000-0000-0000-000000000010", notice_id: "00000000-0000-0000-0000-000000000011", raw_label: "ㅇㄱㅅ(7135)", comparison_label: "ㅇㄱㅅ(7135)", posted_at: "2021-11-22", title: "예고", source_location: "https://example.test/notice", resolution_class: "PERSON_EVIDENCE", label_type: "PERSON", label_id: "00000000-0000-0000-0000-000000000012" }]);
+const residualLabelCsv = residualLabelsToCsv([{ release_id: manifest.correction_release_id, label_id: "00000000-0000-0000-0000-000000000012", raw_label: "ㅇㄱㅅ(7135)", comparison_label: "ㅇㄱㅅ(7135)", resolution_class: "PERSON_EVIDENCE", label_type: "PERSON", residual_occurrence_count: 1, notice_count: 1, first_posted_at: "2021-11-22", last_posted_at: "2021-11-22", org_node_id: null, org_official_name: null, org_valid_from: null, org_valid_to: null, org_evidence_url: null, org_lineage: [], mention_occurrence_count: 1, person_extractor_rules: { PERSON_CONTACT_BLOCK_PHONE: 1 }, mention_source_locations: ["https://example.test/notice"] }]);
 for (const output of [residualOccurrenceCsv, residualLabelCsv]) assert.ok(output.startsWith("\uFEFF") && output.endsWith("\r\n"));
 assert.ok(residualOccurrenceCsv.includes("notice_id") && residualOccurrenceCsv.includes("resolution_class") && residualOccurrenceCsv.includes("label_occurrence_count") && residualOccurrenceCsv.includes("source_location"));
 assert.ok(residualLabelCsv.includes("display_label") && residualLabelCsv.includes("resolution_class") && residualLabelCsv.includes("residual_occurrence_count"));
-assert.equal(personInitials("이경선"), "ㅇㄱㅅ");
-assert.equal(publicPersonAliasCode("00000000-0000-0000-0000-000000000012").length, 4);
-assert.match(publicResidualLabel("이경선", "PERSON", "00000000-0000-0000-0000-000000000012"), /^ㅇㄱㅅ\(\d{4}\)$/);
-assert.match(publicResidualLabel("이*선", "PERSON", "00000000-0000-0000-0000-000000000012"), /^인물\(\d{4}\)$/);
-assert.equal(publicResidualLabel("ㅇㄱㅅ(1525)", "PERSON", "00000000-0000-0000-0000-000000000012"), "ㅇㄱㅅ(1525)");
+for (const label of ["ㅇㅅ(1234)", "ㅇㄱㅅ(7135)", "ㄱㅁㅅㅌ(0000)"]) assert.equal(publicResidualLabel(label, "PERSON"), label);
+for (const unsafe of ["이경선", "이*선", "인물(0000)", "ㅇㄱㅅ(123)", " ㅇㄱㅅ(7135)", "ㅇㄱㅅ(7135) "]) assert.throws(() => publicResidualLabel(unsafe, "PERSON"), /공개 별칭 형식 오류/);
+for (const output of [residualOccurrenceCsv, residualLabelCsv]) assert.ok(output.includes("ㅇㄱㅅ(7135)") && !output.includes("이*선") && !output.includes("이경선"));
+assert.ok(residualAnalysisText.includes('publicResidualLabel(detail.masked_label,detail.label_type)'));
 
 assert.ok(loaderText.includes('public-snapshot-v1.json.gz'));
 assert.ok(!loaderText.includes('/rest/v1/rpc/'));

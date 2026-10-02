@@ -109,31 +109,17 @@ export function publishNoticesToCsv(rows: PublishNoticeRow[], release: PublishRe
   return makeCsv(["row_number", "source_notice_number", "title", "posted_date", "notice_department", "source_url", "linked_regulation_count", "release_id", "evidence_as_of"], rows.map((row, index) => [index + 1, row.notice_number, row.title, row.posted_date, row.notice_department, row.source_location, row.linked_regulation_version_ids.length, row.release_id, release.evidence_as_of]));
 }
 export function residualOccurrencesToCsv(rows:DepartmentResidualOccurrenceRow[]){
-  return makeCsv(["notice_id","posted_at","title","display_label","resolution_class","label_type","first_seen_at","last_seen_at","label_occurrence_count","notice_count","org_official_name","org_valid_from","org_valid_to","source_location"],rows.map(r=>[r.notice_id,r.posted_at,r.title,publicResidualLabel(r.raw_label,r.label_type,r.label_id),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.label_occurrence_count,r.notice_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.source_location]));
+  return makeCsv(["notice_id","posted_at","title","display_label","resolution_class","label_type","first_seen_at","last_seen_at","label_occurrence_count","notice_count","org_official_name","org_valid_from","org_valid_to","source_location"],rows.map(r=>[r.notice_id,r.posted_at,r.title,publicResidualLabel(r.raw_label,r.label_type),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.label_occurrence_count,r.notice_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.source_location]));
 }
 export function residualLabelsToCsv(rows:DepartmentResidualLabelRow[]){
-  return makeCsv(["display_label","resolution_class","label_type","first_seen_at","last_seen_at","residual_occurrence_count","notice_count","mention_occurrence_count","org_official_name","org_valid_from","org_valid_to","official_evidence_url"],rows.map(r=>[publicResidualLabel(r.raw_label,r.label_type,r.label_id),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.residual_occurrence_count,r.notice_count,r.mention_occurrence_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.official_evidence_url]));
+  return makeCsv(["display_label","resolution_class","label_type","first_seen_at","last_seen_at","residual_occurrence_count","notice_count","mention_occurrence_count","org_official_name","org_valid_from","org_valid_to","official_evidence_url"],rows.map(r=>[publicResidualLabel(r.raw_label,r.label_type),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.residual_occurrence_count,r.notice_count,r.mention_occurrence_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.official_evidence_url]));
 }
 
-const hangulInitials = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
-const publicPersonAliasPattern = /^(?:[ㄱ-ㅎ]+|인물)\(\d{4}\)$/;
-export function personInitials(value:string){
-  const initials=Array.from(value.trim()).flatMap(char=>{
-    const code=char.codePointAt(0)??0;
-    return code>=0xac00&&code<=0xd7a3?[hangulInitials[Math.floor((code-0xac00)/588)]]:[];
-  }).join("");
-  return initials||"인물";
+const publicPersonAliasPattern = /^[ㄱ-ㅎ]+\(\d{4}\)$/;
+export function publicResidualLabel(value:string,labelType:string){
+  if(labelType==="PERSON"){
+    if(!publicPersonAliasPattern.test(value))throw new Error("PERSON 공개 별칭 형식 오류: 승인된 공개 표시값이 필요합니다");
+    return value;
+  }
+  return value.trim()||"미기재";
 }
-export function publicPersonAliasCode(opaqueId:string){
-  let hash=174;
-  for(const char of opaqueId.trim().toLowerCase())hash=(Math.imul(hash,707)+char.charCodeAt(0))>>>0;
-  return String(hash%10000).padStart(4,"0");
-}
-export function maskPersonLabel(value:string,opaqueId=""){
-  const trimmed=value.trim();
-  if(publicPersonAliasPattern.test(trimmed))return trimmed;
-  const code=opaqueId?publicPersonAliasCode(opaqueId):"0000";
-  // Legacy starred values cannot recover omitted initials; do not retain the visible surname.
-  return `${trimmed.includes("*")?"인물":personInitials(trimmed)}(${code})`;
-}
-export function publicResidualLabel(value:string,labelType:string,opaqueId=""){return labelType==="PERSON"?maskPersonLabel(value,opaqueId):value||"미기재";}
