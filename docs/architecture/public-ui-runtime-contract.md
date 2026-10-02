@@ -162,3 +162,9 @@ Next 정적 페이지가 전체 설명 1,272행을 클라이언트 props로 직�
 본문 **mention** 수는 별도로 연결된 `core.extraction_mentions`의 해당 라벨 행 `count(*)`이다. [본문 추출기](../../tools/mentions/mention_extractor.py)는 추출 텍스트에서 발견한 인물형 문자열마다 시작/끝 위치를 남기며, [mention 원장](../../supabase/migrations/20260917000300_extraction_mention_ledger.sql)은 동일 추출 문서·계약·유형·위치의 중복만 제거한다. 따라서 한 추출 문서에서 서로 다른 위치에 반복 등장하면 여러 mention이 될 수 있고, mention 건수는 게시물 수나 서로 다른 문서 수가 아니다. PERSON 공개 별칭 `ㅇㄷㅎ(8053)`의 공개 집계는 **담당 표기 잔차 18행 / 고유 사규예고 18건 / 본문 인물형 언급 24개 위치**다. 이 집계만으로 24개 mention이 위 사규예고 18건에서 각각 몇 번 나왔는지, 또는 차이 6건이 그 게시물의 반복 언급인지 알 수 없다. UI의 항목 이름과 인접 설명만 바로잡고 원장·read contract·승인 snapshot은 그대로 보존한다.
 
 표기 상세의 `관측 / 게시물`을 `담당 표기 관측 / 사규예고`로 구체화하고 바로 아래에 원장 행/중복 제거 게시물의 정의를 배치했다. PERSON의 `mention 관측`도 `본문 인물형 언급`으로 바꾸고 위치별 추출·동일 추출 위치 중복 제거·게시물별 횟수는 공개 집계만으로 확인할 수 없다는 설명을 인접 배치했다. UI 회귀·TypeScript·잔차 공급 계약·Next 프로덕션 빌드 및 Chromium 1440/800px에서 `ㅇㄷㅎ(8053)`의 18/18/24 표시, 필터/CSV/상세 동작을 재검증했다.
+
+### PR #7 잔차 UI 운영 반영 (2026-10-03)
+
+사용자가 `푸쉬해죠`로 운영 반영을 요청해 [PR #7](https://github.com/maenglion/KODIT-analysis/pull/7)의 고정 UI head `35350088f4c9da47431396095eaad4f4cf73b3eb`를 검수한 뒤 `main`의 merge commit `f8ff989843487bc6a126a6ee00cf41c6139a3562`로 병합했다. PR의 Netlify deploy-preview·Header rules·Redirect rules 검사는 성공했고 Pages changed·Supabase Preview는 건너뛰었다. 기존 Git→Netlify 자동 연결이 제공하는 [운영 잔차 페이지](https://letscheck-sinbo.netlify.app/residual-data)에서 `ㅇㄷㅎ(8053)`의 **담당 표기 관측 18건 / 사규예고 18건 / 본문 인물형 언급 24건**과 집계 단위·반복 위치 설명을 실제로 열어 확인했다. Chromium 1440px·800px에서 10개 단위 페이지, 분류 필터·CSV·클릭 행 바로 아래 상세·PERSON 조직 후보 비노출을, 조직형에서는 근거 링크·키보드 조작을 검증했다. Netlify API·설정은 변경하지 않았다.
+
+merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `public_department_attribution_explanation_rows already exists with same argument types (SQLSTATE 42723)` migration 재생 오류로 실패 상태로 남았다. 이는 정적 사이트의 확인된 운영 화면과 다른 검사이며 Codex 소관 migration·공개 read contract·승인 snapshot에 손대지 않았다. 본 기록만 추가하는 후속 커밋은 UI/데이터를 변경하지 않는다.
