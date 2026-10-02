@@ -1,1 +1,3 @@
 *.csv text eol=crlf
+# The supplied manuscript uses an intentional Markdown hard break after its basis date.
+apps/public-site/content/data-purpose.md whitespace=-blank-at-eol

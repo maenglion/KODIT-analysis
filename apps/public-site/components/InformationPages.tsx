@@ -23,37 +23,7 @@ function InformationNext({ text }: { text: string }) {
   return <div className="info-next"><div><h2>자료와 근거를 함께 보세요</h2><p>{text}</p></div><div><Link href="/regulations">규정 공개현황 →</Link><Link href="/residual-data">담당 표기 잔차 →</Link></div></div>;
 }
 
-export async function DataPurposePage() {
-  const { release } = await getPublishDataset();
-  return <>
-    <InformationHero eyebrow="서비스 정보 / 01" title="데이터 수집 및 활용목적" description="흩어진 규정 원문, 사규예고와 변경 근거를 한곳에서 찾을 수 있도록 연결합니다. 누구나 공개 여부와 공식 출처를 직접 확인할 수 있는 재현 가능한 안내를 제공하는 것이 목적입니다." asOf={release.evidence_as_of} principle="공식 자료를 연결하고, 확인되지 않은 값은 임의로 채우지 않으며, 공개에 불필요한 개인정보는 노출하지 않습니다." />
-    <main className="methodology-page information-page"><div className="shell">
-      <InformationSection number="01" title="공식 원문과 변경 이력을 찾기 쉽게 만듭니다" id="purpose-source">
-        <p>신용보증기금의 규정과 사규예고는 공식 홈페이지, ALIO 게시물과 여러 형식의 첨부파일에 나뉘어 공개됩니다. 규정 버전, 사규예고, 원문과 변경 근거의 관계를 정리해 이용자가 필요한 출처에 도달하도록 돕습니다.</p>
-        <p>이 화면은 원문을 대체하지 않습니다. 검증된 공식 URL만 연결하며, 주소가 없는 자료에는 임의 링크를 만들지 않습니다. 자료의 존재와 현행 효력도 별개의 질문으로 다룹니다.</p>
-        <DiagramPanel title="공식 자료가 공개 화면에 이르는 과정" src="/diagrams/purpose-flow.svg" alt="공식 게시물과 원문을 수집·보존하고 규정·예고·근거를 연결해 출처와 공개 범위를 검증한 뒤 검색, 통계와 공식 링크로 제공합니다." caption="도식의 각 단계는 서로 다른 근거와 시점을 갖습니다. 공개 화면은 마지막 승인 단계만 사용합니다." />
-      </InformationSection>
-      <InformationSection number="02" title="결론과 근거를 함께 확인할 수 있게 합니다" id="purpose-use">
-        <p>공개 규정을 찾는 시민, 정책과 제도를 검토하는 국회·연구자·언론, 조직별 공개 현황을 살펴보는 이용자에게 출처와 해석 범위를 같이 제공합니다. 이 서비스는 개인 평가나 법적 결론을 내리지 않습니다.</p>
-        <div className="information-use-grid"><article><span>01</span><h3>규정 찾기</h3><p>규정명·부서·개정일로 검색하고 확인된 공식 원문으로 이동합니다.</p></article><article><span>02</span><h3>사규예고 확인</h3><p>게시일·제목·담당 표기와 규정의 연결을 구별해 살펴봅니다.</p></article><article><span>03</span><h3>공개 범위 구분</h3><p>전문 공개, 일부 공개, 예고만 확인, 출처불명을 다른 결론으로 표시합니다.</p></article><article><span>04</span><h3>변경 근거 확인</h3><p>현재 표시값뿐 아니라 그 결론을 만든 공식 자료와 기준일을 확인합니다.</p></article></div>
-      </InformationSection>
-      <InformationSection number="03" title="공식 경로에서 공개된 자료를 수집합니다" id="purpose-data">
-        <div className="information-table-scroll"><table className="information-table"><thead><tr><th scope="col">대상</th><th scope="col">예시</th><th scope="col">연결 목적</th></tr></thead><tbody><tr><th scope="row">규정·법령</th><td>공식 PDF, HWP, HWPX, HTML 본문</td><td>규정 버전과 전문 공개 범위 확인</td></tr><tr><th scope="row">사규예고</th><td>공식 게시물, 제목, 게시일, 담당 표기</td><td>예고 이력과 규정 연결 확인</td></tr><tr><th scope="row">첨부자료</th><td>원문, 별표·별지, 개정 관련 문서</td><td>본문 추출과 근거 연결</td></tr><tr><th scope="row">조직 근거문서</th><td>직제, 조직도, 업무분장, 조직변경 문서</td><td>게시 당시 조직과 업무귀속 설명</td></tr><tr><th scope="row">공개 메타데이터</th><td>공식 URL, 게시일, 형식</td><td>출처·시점 재현</td></tr></tbody></table></div>
-        <p className="information-note">공식 자료에서 문자열이 발견됐다는 사실만으로 그 문자열의 의미나 현재 조직을 확정하지 않습니다. 원문, 관측, 라벨, 관계는 서로 다른 단계입니다.</p>
-      </InformationSection>
-      <InformationSection number="04" title="개인정보는 필요한 범위에서만 다룹니다" id="purpose-privacy">
-        <p>공식 문서에 포함된 성명은 조직명과 인물형 표기를 구분하거나 동일 문서 맥락을 확인하는 범위에서 다룹니다. 이름만으로 소속, 기안자 여부 또는 업무담당 관계를 만들지 않습니다.</p>
-        <p>공개 화면과 CSV에서는 불필요한 이름을 표시하지 않거나 가운데 글자를 마스킹합니다. 원장에 보존된 관측값과 공개용 표현은 분리합니다.</p>
-        <aside className="information-note"><strong>하지 않는 일</strong><ul><li>공개자료에 없는 개인 소속·역할 추정</li><li>이름만을 이용한 담당부서 확정</li><li>내부 parser 실행 이력이나 원문 관측값의 무가공 공개</li><li>확인되지 않은 값을 0건 또는 확정값으로 바꾸기</li></ul></aside>
-      </InformationSection>
-      <InformationSection number="05" title="오류를 숨기지 않고 다음 공개본에 반영합니다" id="purpose-corrections">
-        <p>원문 변경, 링크 오류, 명칭 불일치와 개인정보 정정 필요를 확인하면 검증된 근거를 다음 승인 공개본에 반영합니다. 이미 공개한 값을 조용히 덮어쓰지 않고 기준일과 공개본을 구분합니다.</p>
-        <p className="information-note">문의 및 정정 요청 채널은 운영 정책이 정해진 후 안내합니다. 이 페이지에서 존재하지 않는 이메일이나 전화번호를 만들지 않습니다.</p>
-      </InformationSection>
-      <InformationNext text="설명은 원문을 대체하지 않습니다. 승인된 공개본의 출처와 미해결 상태를 직접 확인할 수 있습니다." />
-    </div></main>
-  </>;
-}
+export { DataPurposePage } from "./DataPurposeContent";
 
 const availability = [
   ["FULLTEXT_PUBLIC", "공식 경로에서 해당 규정 버전의 전문 확인"],
