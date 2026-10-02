@@ -141,3 +141,24 @@
 사용자가 검수본 운영 반영을 승인하여 [PR #6](https://github.com/maenglion/KODIT-analysis/pull/6)의 고정된 UI head `9f796e9f1bb0ba9ffcf9d15e241a8a3dc4db26f0`을 merge commit `c3c4824298a67f4a45a87386e916b2d25d95856d`로 `main`에 병합했다. 기존 Git→Netlify 자동 배포가 제공하는 [운영 목적 페이지](https://letscheck-sinbo.netlify.app/data-purpose)와 [잔차 페이지](https://letscheck-sinbo.netlify.app/residual-data)에서 Chromium 1440px·800px로 문의 채널·편집 이력 1건, PERSON 공개 별칭 목록 317개·검색·상단 상세·근거·두 CSV를 검증했다. 운영 목적 HTML과 PR #6 미리보기 HTML도 동일했다. Netlify 설정/API는 직접 변경하지 않았다.
 
 별도 GitHub `Supabase Preview` 검사는 Codex 선행 커밋 `43148af`와 이번 merge commit 모두에서 `SQLSTATE 42723: function "public_department_attribution_explanation_rows" already exists with same argument types`로 실패한다. 정적 운영 화면 검증 통과와 이 migration 재생 오류를 혼동하지 않으며, DB migration/공개 read contract 소유자인 Codex가 별도 해결할 문제로 남긴다. Manus는 해당 migration·snapshot·Supabase 설정을 수정하지 않았다.
+
+### 잔차 목록 제어·행 내부 상세 재구성 (2026-10-03, 검수 전)
+
+- `/residual-data`는 승인 정적 snapshot **표기 355개·관측 1,272건**을 그대로 소비한다. 검색 상자 대신 목록 표시명/관련 사규예고 건수 정렬과 표 머리의 관측 분류 **복수 체크박스**를 제공한다. 10개 단위 페이지, 전체/필터 후 표기 수·관련 관측 건수 및 현재 페이지를 표시한다. 이전 목록 위 공용 상세 패널은 사용자 스크린샷의 맥락을 따라 **클릭한 표 행 바로 다음 행**의 펼침으로 바꾼다. 선택 표기의 실제 연결 게시물 건수를 표시하며 날짜는 한 줄, 처리 상태는 절제된 단일 파란 칩으로 정리한다. 필터 CSV는 현재 화면의 10행이 아니라 **필터 전체 표기 및 해당 연결 관측 전체**를 각각 내보낸다.
+- PERSON 표기 317개·연결 관측 1,113개는 Codex 제공 `^[ㄱ-ㅎ]+\(\d{4}\)$` 별칭만 렌더링·내보내고 신원/소속 확정으로 해석하지 않는다. `ORG_CURRENT`/`ORG_HISTORICAL`/`UNTYPED`/`AMBIGUOUS` 등 원장 판정값을 UI에서 재계산·승격하지 않는다. 해당 분류의 처리 기준은 상단 펼침 설명으로 제공한다.
+- 현재 공개본 `mention_source_locations` 473개는 고유 URL 5개이며 모두 [신보 공식 사규 제개정 예고 목록](https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1)의 `selectNttList.do` 1~5쪽이다. 공식 HTML 제목은 `정보공개>사규 공개 및 제개정 예고>사규 제개정 예고`이고 `og:title`은 일반 사이트명 `신용보증기금`이다(1·3쪽 직접 확인). **개별 게시물 원문 URL이나 제목으로 오인하지 않도록** 링크는 페이지 제목 `사규 제개정 예고`로 표시하고 같은 제목이 여러 곳이면 `(1)`, `(2)` 순번을 붙인다. 상세에도 해당 링크가 개별 문서가 아닌 공식 목록 페이지임을 밝힌다. 승인본 이외의 문서 제목/연결을 역산하지 않는다.
+- 작업 범위는 공개 UI·스타일·UI 필터/출처 라벨 헬퍼·화면 회귀 검사와 이 문서에 한정한다. Codex 소관 migration·공개 read contract·승인 snapshot·공급 데이터 검증을 건드리지 않으며, 운영 배포는 사용자 중간 검수 전까지 보류한다.
+
+읽기 전용 독립 검토에서 PERSON 선택 게시물에 공통 조직 추론 패널이 열려 `현재 부서 후보`가 공개 별칭에 결합되는 문제를 발견했다. 승인 snapshot의 PERSON 설명 1,113건 중 886건에 해당 후보 필드가 채워져 있음을 재현했다. 이는 신원·소속 비확정 경계와 혼동되므로 **PERSON에서는 조직 후보·업무 경로 패널을 표시하지 않고**, 선택한 사규예고 담당 표기와 다른 문서 본문의 인물형 문자열 관측 사이의 공개 범위만 설명한다. 조직형에는 기존 판정 패널을 유지한다. 이동 근거 `path_steps.evidence_url`도 `validPublicUrl` 검사 후 http/https 링크만 렌더링한다.
+
+Next 정적 페이지가 전체 설명 1,272행을 클라이언트 props로 직렬화하면 PERSON의 비표시 조직 후보도 전송되므로, 공개 페이지 UI 경계에서 PERSON 설명 1,113행을 제외하고 비PERSON 설명 159행만 컴포넌트에 전달한다. 승인 snapshot·공개 read contract는 바꾸지 않는다. 최종 프로덕션 HTML에서 `current_org_candidate`·`masked_label` 필드 출현이 각각 159회인 것을 확인했고, PERSON 화면·CSV 및 조직형 상세/근거 링크의 브라우저 회귀를 다시 통과했다.
+
+최종 검증: `pnpm check`, `check:approved`, `check:technical-specs`, `check:t07c`, `pnpm test`를 먼저 통과했고, 위 보정 후 `check:regulations`, TypeScript, `check:residual-analysis`, Next 프로덕션 빌드 및 `git diff --check`를 다시 통과했다. Chromium 1440/800px에서 안내 여백 32px·상태 제목 파란색·기본 10행/36쪽·복수 분류/페이지 전환·PERSON+과거 조직 319개·필터 전체 CSV BOM/행 수·행 바로 아래 상세와 초점 복귀를 확인했다. 별칭 `ㅇㄷㅎ(8053)`의 실제 연결 게시물 18건, 목록 링크 `사규 제개정 예고 (1)`~`(4)`, 목록 페이지 안내·날짜 한 줄·상태 칩을 확인했고 0건 분류도 안전하게 표시했다. PERSON 게시물 선택 후 조직 후보 그리드가 DOM에 없으며, ORG_CURRENT의 기존 판정·공식 근거와 대화상자 Escape/초점 복귀는 유지된다.
+
+### 잔차 ‘관측 / 게시물 / 본문 언급’ 집계 단위 설명 (2026-10-03, PR #7 후속)
+
+[담당 표기 잔차 원장](../../supabase/migrations/20260917000100_notice_department_residual_occurrences.sql)은 승인 release의 사규예고 `notice_id`별 담당 칸이 기준 조직명과 정확히 일치하지 않으면 잔차 행을 기록한다. 제약 `unique (release_id, notice_id, residual_code)` 때문에 이 분류의 잔차는 **해당 게시물당 최대 1행**이다. [공개 라벨 요약 함수](../../supabase/migrations/20260918000300_department_residual_analysis_read_model.sql)는 라벨별 `count(*)`를 **담당 표기 관측** 수, `count(distinct notice_id)`를 **서로 다른 사규예고 게시물** 수로 반환한다. 현재 승인 snapshot의 355개 표기에서는 두 값이 전부 같지만 서로 다른 집계 단위다.
+
+본문 **mention** 수는 별도로 연결된 `core.extraction_mentions`의 해당 라벨 행 `count(*)`이다. [본문 추출기](../../tools/mentions/mention_extractor.py)는 추출 텍스트에서 발견한 인물형 문자열마다 시작/끝 위치를 남기며, [mention 원장](../../supabase/migrations/20260917000300_extraction_mention_ledger.sql)은 동일 추출 문서·계약·유형·위치의 중복만 제거한다. 따라서 한 추출 문서에서 서로 다른 위치에 반복 등장하면 여러 mention이 될 수 있고, mention 건수는 게시물 수나 서로 다른 문서 수가 아니다. PERSON 공개 별칭 `ㅇㄷㅎ(8053)`의 공개 집계는 **담당 표기 잔차 18행 / 고유 사규예고 18건 / 본문 인물형 언급 24개 위치**다. 이 집계만으로 24개 mention이 위 사규예고 18건에서 각각 몇 번 나왔는지, 또는 차이 6건이 그 게시물의 반복 언급인지 알 수 없다. UI의 항목 이름과 인접 설명만 바로잡고 원장·read contract·승인 snapshot은 그대로 보존한다.
+
+표기 상세의 `관측 / 게시물`을 `담당 표기 관측 / 사규예고`로 구체화하고 바로 아래에 원장 행/중복 제거 게시물의 정의를 배치했다. PERSON의 `mention 관측`도 `본문 인물형 언급`으로 바꾸고 위치별 추출·동일 추출 위치 중복 제거·게시물별 횟수는 공개 집계만으로 확인할 수 없다는 설명을 인접 배치했다. UI 회귀·TypeScript·잔차 공급 계약·Next 프로덕션 빌드 및 Chromium 1440/800px에서 `ㅇㄷㅎ(8053)`의 18/18/24 표시, 필터/CSV/상세 동작을 재검증했다.
