@@ -43,9 +43,18 @@
 | 2026-10-02 | 공개 UI는 RPC 장애와 분리된 정적 승인본으로 실행하고, 검증·증명용 RPC 계약은 보존한다. 상단 1차 메뉴 및 누락 주제 화면을 검증된 공개 자료와 별도 기준일 표기로 보완한다. |
 | 2026-10-02 | 전체 통합검색의 첫 50건 뒤 결과 접근 불가를 규정·예고 독립 페이지 이동으로 해소한다. 무동작 상세설정 버튼은 제거하고, 공개 집계 CSV와 도움말 버튼은 실제로 동작시킨다. 조직·잔차의 계산 및 확정 규칙은 유지한다. |
 | 2026-10-02 | 모바일에서 앱 전체가 숨겨진 기존 규칙을 수정하고, 390px에서 홈·규정·주제·목적·조직 화면의 문서 가로 넘침이 없는지 검사한다. 기술 사양 3개 runner 파일의 표시 해시와 마지막 변경일을 실제 커밋 파일로 정정한다. `check-approved-releases`는 과거 브라우저 RPC 기대 대신 정적 공개 로더를 검사하되 RPC 권한·불변성 검사를 유지한다. |
+| 2026-10-02 | 상단 1그룹 세 페이지를 수집 목적·판정 단위·원장·실제 parser 측정 로그로 확장한다. 제공된 잔차 ERD 162줄을 수정 없이 Mermaid 원본으로 보존하고 19개 엔티티 SVG로 렌더링해 확대 뷰어로 제공한다. 코드·실행 환경·공개본 기준일을 구별하고 내부 실행 ID나 개별 문서 해시 값은 화면에 노출하지 않는다. 기존 Git→Netlify 연결을 유지하며 별도 영구 호스팅을 만들지 않는다. |
 
 ## Verification (2026-10-02)
 
 - `pnpm --filter @kodit/public-site check`, `pnpm --filter @kodit/public-site build`, `pnpm check`, `pnpm check:regulations`, `pnpm check:technical-specs`, `pnpm check:approved`, `pnpm check:residual-analysis`, `pnpm check:t07c`, `pnpm test`: 통과.
 - 390px 브라우저에서 5개 공개 경로가 모두 HTTP 200, 앱 표시 및 전체 문서 가로 넘침 없음. 주제 하위군 33건 필터와 제목 검색 5건, 규정 용어 펼침, 통합검색 규정·사규예고 51번 항목 이동 확인.
 - 서비스별 독립적인 시점과 원문 식별 정보는 아직 통합 승격하지 않았다. 이력 검토 후 필요한 경우 별도 공개본으로 다룬다.
+
+## Information-page evidence (2026-10-02)
+
+- `reports/measurements/2026-09-13-runtime-v1-reproduction/{hwp,hwpx}/batch-run.json`: HWP 326건(추출·신원 확인 298, 신원 미해결 28), HWPX 358건(353, 5). 각 입력 두 번 재현했고 parser 실패 0건, 추출 해시 이상 0건이다. 신원 미해결은 parser 실패가 아니다.
+- `reports/measurements/2026-09-13-pdf-full-corpus/batch-run.json`: strict PDF 1,730건 중 SUCCESS 1,719, NO_EXTRACTABLE_TEXT 1, DOCUMENT/PDF_READ_FAILED 10. 개별 PDF의 기술 결과는 규정 버전의 공개 availability를 변경하지 않는다.
+- `reports/measurements/2026-09-17-document-extraction-backfill/summary.json`: 2,414 parser run, 2,408 고유 바이너리, 2,397 고유 추출 artifact. 화면 자료는 `tools/publish/build_public_parser_measurements.mjs`에서 검증·공개 필드 투영 후 생성하며 내부 원장의 행별 값은 브라우저에 싣지 않는다.
+- 축약 흐름도 4개와 제공 ERD 1개는 `apps/public-site/data/diagrams/*.mmd`가 재현 가능한 원본이고 `apps/public-site/public/diagrams/*.svg`가 공개 화면 자산이다. 큰 ERD는 기본 화면에 축소 미리보기로만 놓고 확대·원본 크기·SVG 새 창 보기를 제공한다. 텍스트 설명이 도식의 유일한 대체 수단이 되지 않도록 각 영역에 설명을 함께 둔다.
+- GitHub `maenglion/KODIT-analysis` 쓰기 권한은 현재 연결 계정에서 403이다. 로컬 브랜치/패치 상태로 보존하며 원격 배포 여부를 주장하지 않는다.

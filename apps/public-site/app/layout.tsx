@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { SiteNavigation } from "@/components/SiteNavigation";
+import { UtilityNavigation } from "@/components/UtilityNavigation";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -37,11 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <div className="desktop-application">
           <header className="site-header">
-            <div className="utility-bar"><div className="utility-inner">
-              <Link href="/data-purpose">데이터 수집 및 활용목적</Link>
-              <Link href="/methodology">검증 방법론</Link>
-              <Link href="/technical-specs">기술 사양</Link>
-            </div></div>
+            <div className="utility-bar"><UtilityNavigation /></div>
             <div className="header-blue">
               <div className="header-inner">
                 <Link className="brand" href="/" aria-label="KODIT 규정 공개·검증 시스템 홈">KODIT - 규정 공개·검증 시스템</Link>
