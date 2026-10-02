@@ -135,3 +135,9 @@
 - 사용자 요청대로 안내 원고 3.2의 문의 채널을 맹난영, `nanyoung@soulspectrum.kr`, 카카오톡 `@soulspectrum`으로 확정하고 별도 개인정보 담당자 항목을 표기하지 않는다. 기존 기준본 이후의 첫 편집 이력으로 기록하며 규정·수집 데이터의 변경 이력과 혼동하지 않는다.
 
 검증: Codex 공급 snapshot의 PERSON 라벨 317개·관측 1,113건과 해당 설명 1,113건이 모두 같은 공개 별칭을 사용하고, 별칭 번호 충돌은 0건이었다. UI 공통 표시 함수와 관측/표기 CSV가 동일 값을 변경 없이 반환하는지 전체 공개 행으로 비교했다. `pnpm check:purpose`, `pnpm check:regulations`, 전체 타입 검사·승인 공개본/잔차/기술사양/T07C 검사, `pnpm test`, Next 프로덕션 빌드를 통과했다. 실제 Chromium 1440px·800px에서 문의 메일 링크·카카오톡 표기·편집 이력 1건과 PERSON 목록 317건·번호 검색·상단 상세·두 CSV·근거 설명을 확인했다. 독립 검토에서 별도 개인정보 담당자에 대한 원고 문장을 제거하고 앞뒤 공백을 포함한 계약 외 별칭도 차단하도록 수정했다.
+
+### PR #6 운영 반영 및 별도 데이터 검사 상태 (2026-10-03)
+
+사용자가 검수본 운영 반영을 승인하여 [PR #6](https://github.com/maenglion/KODIT-analysis/pull/6)의 고정된 UI head `9f796e9f1bb0ba9ffcf9d15e241a8a3dc4db26f0`을 merge commit `c3c4824298a67f4a45a87386e916b2d25d95856d`로 `main`에 병합했다. 기존 Git→Netlify 자동 배포가 제공하는 [운영 목적 페이지](https://letscheck-sinbo.netlify.app/data-purpose)와 [잔차 페이지](https://letscheck-sinbo.netlify.app/residual-data)에서 Chromium 1440px·800px로 문의 채널·편집 이력 1건, PERSON 공개 별칭 목록 317개·검색·상단 상세·근거·두 CSV를 검증했다. 운영 목적 HTML과 PR #6 미리보기 HTML도 동일했다. Netlify 설정/API는 직접 변경하지 않았다.
+
+별도 GitHub `Supabase Preview` 검사는 Codex 선행 커밋 `43148af`와 이번 merge commit 모두에서 `SQLSTATE 42723: function "public_department_attribution_explanation_rows" already exists with same argument types`로 실패한다. 정적 운영 화면 검증 통과와 이 migration 재생 오류를 혼동하지 않으며, DB migration/공개 read contract 소유자인 Codex가 별도 해결할 문제로 남긴다. Manus는 해당 migration·snapshot·Supabase 설정을 수정하지 않았다.
