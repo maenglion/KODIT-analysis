@@ -15,12 +15,13 @@
 .topic-overview p { margin:14px 0 0; color:#68758b; font-size:13px; line-height:1.5; }
 .topic-overview .topic-lead-stat p { color:#bfd1e9; }
 .topic-section { margin-top:54px; }
+.topic-first-section { margin-top:28px; }
 .topic-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:30px; margin-bottom:20px; }
 .topic-heading h2,.topic-panel h2 { margin:0; font-family:Inter,"Noto Sans KR",sans-serif; font-size:24px; font-weight:800; letter-spacing:-.04em; }
 .topic-heading>.eyebrow,.topic-heading .eyebrow { margin-bottom:8px; color:var(--action-blue); }
 .topic-heading>p { max-width:530px; margin:0; color:#617085; font-size:14px; line-height:1.5; text-align:right; }
 .topic-family-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-.topic-family-card { min-height:142px; display:flex; flex-direction:column; align-items:flex-start; padding:20px 22px; border:1px solid var(--line); border-radius:10px; background:#fff; text-align:left; color:var(--figma-navy); box-shadow:var(--shadow); }
+.topic-family-card { min-height:142px; display:flex; flex-direction:column; align-items:flex-start; padding:20px 22px; border:1px solid var(--line); border-radius:10px; background:#fff; text-align:left; text-decoration:none; color:var(--figma-navy); box-shadow:var(--shadow); }
 .topic-family-card:hover,.topic-family-card.active { border-color:var(--action-blue); background:#f1f8ff; }
 .topic-family-card.active { box-shadow:inset 0 0 0 1px var(--action-blue); }
 .topic-family-card>span:first-child { font-size:15px; font-weight:750; }
@@ -31,10 +32,12 @@
 .topic-exclusion { padding:12px 2px; color:#677188; font-size:13px; line-height:1.65; }
 .topic-year-chart { display:grid; grid-template-columns:repeat(13,minmax(0,1fr)); gap:8px; align-items:end; min-height:218px; margin:0; padding:22px 24px; border:1px solid var(--line); border-radius:12px; background:#fff; list-style:none; }
 .topic-year-chart li { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:174px; gap:6px; min-width:0; font-size:12px; }
-.topic-year-chart li>span { order:3; color:#64738b; }
+.topic-year-chart li>.topic-year-link { order:3; color:#176cad; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
+.topic-year-chart li>.topic-year-link:hover { color:#084f87; }
 .topic-year-chart li strong { order:1; font-size:12px; }
 .topic-year-track { order:2; height:118px; width:100%; max-width:36px; display:flex; flex-direction:column; justify-content:flex-end; border-radius:4px 4px 0 0; background:#eef4fa; }
 .topic-year-track span { display:block; width:100%!important; min-height:8px; border-radius:4px 4px 0 0; background:var(--action-blue); height:var(--year-height,0%); }
+.topic-year-guide { margin:15px 0 0; color:#566f85; font-size:13px; line-height:1.6; }
 .topic-rank-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:54px; }
 .topic-panel { overflow:hidden; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:var(--shadow); }
 .topic-panel-head { padding:23px 26px; border-bottom:1px solid var(--line); }
@@ -53,10 +56,13 @@
 .topic-list-tools label { flex:1; }
 .topic-list-tools input,.topic-list-tools select { width:100%; height:44px; padding:0 12px; border:1px solid #c8d7e5; border-radius:8px; background:#fff; color:var(--figma-navy); }
 .topic-list-tools select { width:255px; }
-.topic-list-tools .csv-button { margin:0; background:var(--action-blue); border:1px solid var(--action-blue); font-size:14px; }
+.topic-list-tools .csv-button { min-height:44px; margin:0; padding-inline:15px; border:1px solid var(--figma-green); background:#fff; color:#217a39; font-size:14px; }
+.topic-list-tools .csv-button:hover { background:#effaf0; }
 .topic-list-count { margin:16px 0 10px; color:#64738b; font-size:13px; }
 .topic-list-count strong { color:var(--figma-navy); font-size:16px; }
 .topic-list-count button { margin-left:14px; padding:3px 8px; border:0; border-radius:5px; background:#e7f2ff; color:#0968bd; font-size:12px; }
+.topic-year-filter { margin-left:14px; color:#315f87; }
+.topic-year-filter a { margin-left:4px; color:#0968bd; font-weight:700; }
 .topic-table-scroll { overflow-x:auto; }
 .topic-table { width:100%; border-collapse:collapse; font-size:14px; }
 .topic-table th { padding:13px; background:var(--figma-navy); color:#fff; text-align:left; font-size:13px; }

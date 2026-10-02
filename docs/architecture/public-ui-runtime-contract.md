@@ -97,3 +97,21 @@
 - PR #2의 5개 GitHub/Netlify 검사에서 Header rules, Redirect rules, deploy-preview는 SUCCESS, Pages changed는 NEUTRAL, Supabase Preview는 SKIPPED였다. PR의 마지막 head `4cd30b0`에서 타입·빌드와 `pnpm check`, `check:approved`, `check:regulations`, `check:technical-specs`, `check:residual-analysis`, `check:t07c`, `pnpm test`, 조직 공개 이력 `--check`를 통과했다.
 - Netlify PR 미리보기에서 실제 Chromium으로 1440/800/390px의 부서 목록 ㄱㄴㄷ 모달, 미래전략실 연결 규정 6건, 검증 상태 미제공 도움말, 연도별 기능 이동, 신설 확정 미제공, 새 잔차 경로, 모바일 PC 안내를 확인했다. 기존 규정·사업별 통계·상단 정보 3페이지도 800px에서 HTTP 200과 ERD 로딩을 확인했다.
 - 운영 [KODIT 공개 사이트](https://letscheck-sinbo.netlify.app/)에서 병합 약 90초 뒤 `/department-statistics`의 기능 이동 UI, `/residual-data`의 독립 잔차 화면, `/diagrams/residual-ledger-erd.svg`의 13px 서체가 실제 제공됨을 확인했다. 이는 기존 Git 기반 자동 배포이며 별도 호스팅 생성이나 Netlify 설정 변경이 아니다.
+
+## Editorial navigation follow-up (2026-10-03)
+
+- 사용자가 승인한 [PR #3](https://github.com/maenglion/KODIT-analysis/pull/3)을 `main`의 merge commit `e1fae13`로 병합했다. 기존 Git 연동 운영 주소의 `/data-purpose`에서 새 원고가 병합 약 26초 뒤 제공됨을 확인했다. Netlify API·설정은 직접 변경하지 않았다.
+- 방법론·기술 사양 페이지 하단의 ‘자료와 근거를 함께 보세요’ 홍보 블록은 원고 페이지의 간결한 ‘관련 페이지’ 링크 목록처럼 교체한다. 목적 원고의 본문·수정이력은 바꾸지 않는다.
+- `/residual-data` 안내에서는 사규예고 담당 표기와 당시 기준 조직명의 exact match 실패로 잔차가 생성되는 점, 이후 라벨 분류·공식 조직 근거·업무 경로 평가·미확정 보존 과정을 구분해 설명한다. 원장의 관계를 확인하는 링크는 `/methodology#residual-ledger-erd`로 직접 이동하며, 기존 ERD의 판정 데이터나 관계는 수정하지 않는다.
+- 부서 요약의 지표 도움말은 테두리 있는 원형 글리프 `ⓘ`를 다시 원으로 감싼 이중 아이콘 대신 단일 테두리 `i`를 사용한다. 긴 요약 아래의 시맨틱·조직 앵커를 `/department-statistics/semantic-matching`과 `/department-statistics/organization-history`의 독립 페이지로 분리하지만, 공개 플래그 원천·기능 이관 경로·신설 미확정 상태는 그대로 유지한다. 시맨틱 페이지의 공개 상태 건수는 승인본의 전체 규정 버전 범위로 표시하고 부서 선택 집계와 섞지 않는다.
+- 사업별 통계는 내부 긴 페이지 대신 `/investment-statistics`(요약), `/investment-statistics/yearly-notices`(게시일 연도 분포), `/investment-statistics/evidence-notices`(승인된 근거 목록)로 분리한다. 하위군 카드와 연도 링크가 근거 목록의 URL 필터를 전달하고, CSV는 현재 필터 결과만 내려받는다. 2026-09-19 주제 승인본은 변하지 않으며 2026-09-13 규정 공개본과 합산하지 않는다. 근거 CSV의 버튼은 기존 규정 CSV와 같은 녹색 테두리·녹색 글씨로 표시한다.
+
+### Follow-up validation
+
+- `pnpm --filter @kodit/public-site build`가 신규 정적·동적 경로 전체에서 성공했고, `pnpm check`, `pnpm check:purpose`, `pnpm check:approved`, `pnpm check:regulations`, `pnpm check:technical-specs`, `pnpm check:residual-analysis`, `pnpm check:t07c`, 조직 이력 투영 `--check`, `pnpm test`를 통과했다.
+- 실제 Chromium 1440px/800px에서 부서 3개·사업 3개 URL의 활성 메뉴와 레이아웃을 확인했다. 부서 정보 버튼 7개의 단일 원형과 툴팁, 2026 기능 이동, 요약 하위군 클릭→근거 33건, 연도 클릭→해당 연도 목록, 잔차 설명→방법론 ERD 해시 링크가 정상이다. 390px에서는 PC·태블릿 최적화 모달을 닫은 뒤 768px 웹 레이아웃과 독립 URL 이동을 확인했다.
+- 근거 CSV는 필터 결과 33행과 헤더 1행, UTF-8 BOM 바이트 `EF BB BF`, 승인 하위군 표기를 확인했다. 녹색 보더 `#239638`과 진녹색 텍스트 `#217a39`/흰 배경(계산 대비 5.37:1)을 검증했다. 방법론·기술 사양 하단의 `관련 페이지` 링크만 보이는 실제 화면을 확인했고, 옛 홍보 문구는 나타나지 않았다.
+
+### Independent review corrections
+
+읽기 전용 독립 검토에서 선택한 하위군의 표시 결과를 초기 URL에 반영하지 않아 공유·새로고침 시 필터가 되돌아가던 문제와, 상위 섹션·하위 페이지를 동시에 `aria-current="page"`로 안내하던 문제를 확인했다. 하위군 선택·해제 시 `topicEvidenceUrl`의 정규화된 경로를 `history.replaceState`와 즉시 표시 상태에 함께 적용하고, 연도 해제 링크는 선택한 하위군만 유지한다. 부서·사업의 상위 메뉴는 시각 강조만 유지하고 하위 메뉴 한 곳만 실제 현재 페이지를 선언한다. 승인된 62건과 원본 CSV 데이터는 바꾸지 않았다. 필터·연도·URL·CSV 문자열 변환을 순수 함수로 분리해 기존 규정 UI 계약에서 실제 주제 스냅샷의 건수·BOM·행 수·해제 URL을 검사하도록 보강했다.

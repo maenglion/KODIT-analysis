@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
@@ -13,6 +14,14 @@ const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.t
 const layoutText = await readFile(new URL("../apps/public-site/app/layout.tsx", import.meta.url), "utf8");
 const detailText = await readFile(new URL("../apps/public-site/app/regulations/investment-option-guarantee/page.tsx", import.meta.url), "utf8");
 const departmentText = await readFile(new URL("../packages/common/src/regulations/DepartmentStatistics.tsx", import.meta.url), "utf8");
+const semanticText = await readFile(new URL("../apps/public-site/app/department-statistics/semantic-matching/page.tsx", import.meta.url), "utf8");
+const historyText = await readFile(new URL("../apps/public-site/app/department-statistics/organization-history/page.tsx", import.meta.url), "utf8");
+const topicText = await readFile(new URL("../apps/public-site/components/TopicDashboard.tsx", import.meta.url), "utf8");
+const evidenceText = await readFile(new URL("../apps/public-site/app/investment-statistics/evidence-notices/page.tsx", import.meta.url), "utf8");
+const diagramText = await readFile(new URL("../apps/public-site/components/DiagramViewer.tsx", import.meta.url), "utf8");
+const helpText = await readFile(new URL("../packages/common/src/regulations/MetricHelp.tsx", import.meta.url), "utf8");
+const topicStyleText = await readFile(new URL("../apps/public-site/app/styles/topic.css", import.meta.url), "utf8");
+const topicSnapshot = JSON.parse(await readFile(new URL("../apps/public-site/data/topic-public-v2.json", import.meta.url), "utf8"));
 
 const base = {
   release_id: manifest.correction_release_id, regulation_version_id: "00000000-0000-0000-0000-000000000001", regulation_code: "A", display_name: "투자옵션부보증 운용기준", normalized_name: "투자옵션부보증운용기준", availability: "FULLTEXT_PUBLIC", currentness: "unknown", revision_date: "2024-02-23", notice_department: "보증부", official_source_available: true, source_location: "https://www.kodit.or.kr/rule.pdf", partial_alio: false, partial_kodit_page: false, partial_attachment: false, is_new: false, is_updated: false,
@@ -65,7 +74,9 @@ assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSub
 assert.ok(homeText.includes("redirect(`/regulations") && regulationsText.includes("<RegulationExplorer") && regulationsText.includes("getPublishDataset"));
 assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.includes('href="/">HOME'));
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
-assert.ok(informationText.includes('href="/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
+assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
+assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
+assert.ok(diagramText.includes('id="residual-ledger-erd"') && residualPageText.includes('/methodology#residual-ledger-erd'));
 assert.ok(explorerText.includes("현재 목록 CSV"));
 assert.ok(explorerText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
 assert.ok(!explorerText.includes("인쇄"));
@@ -73,8 +84,36 @@ assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
 assert.ok(!layoutText.includes('["홈", "/"]'));
 assert.ok(layoutText.includes("Soulspectrum Inc. · nanyoung이 만들었습니다."));
 assert.ok(departmentText.includes("organizationSnapshot") && departmentText.includes("별도 잔차 원장"));
-assert.ok(departmentText.includes("OrganizationHistory") && departmentText.includes("DepartmentEvidenceGuide") && departmentText.includes("DepartmentSelectorDialog"));
+assert.ok(departmentText.includes("DepartmentSelectorDialog") && !departmentText.includes("<OrganizationHistory") && !departmentText.includes("<DepartmentEvidenceGuide"));
+assert.ok(semanticText.includes("DepartmentEvidenceGuide") && historyText.includes("OrganizationHistory"));
+assert.ok(navigationText.includes('href="/department-statistics/semantic-matching"') && navigationText.includes('href="/department-statistics/organization-history"'));
+assert.ok(navigationText.includes('href="/investment-statistics/yearly-notices"') && navigationText.includes('href="/investment-statistics/evidence-notices"'));
+assert.ok(topicText.includes('view === "summary"') && topicText.includes('view === "yearly"') && topicText.includes('view === "evidence"') && evidenceText.includes('initialFamily={family}') && evidenceText.includes('initialYear={year}'));
+assert.ok(topicText.includes('onClick={() => saveCsv(filtered)}') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
+assert.ok(topicStyleText.includes('color:#217a39') && topicStyleText.includes('border:1px solid var(--figma-green)'));
+assert.ok(helpText.includes('>i</button>') && !helpText.includes('>ⓘ</button>'));
 assert.ok(!departmentText.includes("DepartmentResidualAnalysis"));
 assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha256") && !detailText.includes("checks"));
+
+const topicNames = new Map(topicSnapshot.families.map((item) => [item.code, item.name]));
+const allTopics = filterTopicNotices(topicSnapshot.notices, { family: "ALL", year: "", query: "" }, topicNames);
+const firstFamily = topicSnapshot.families[0];
+const familyTopics = filterTopicNotices(topicSnapshot.notices, { family: firstFamily.code, year: "", query: "" }, topicNames);
+const yearTopics = filterTopicNotices(topicSnapshot.notices, { family: "ALL", year: "2014", query: "" }, topicNames);
+const combinedTopics = filterTopicNotices(topicSnapshot.notices, { family: firstFamily.code, year: "2014", query: "" }, topicNames);
+assert.equal(allTopics.length, topicSnapshot.noticeCount);
+assert.equal(familyTopics.length, firstFamily.noticeCount);
+assert.ok(familyTopics.every((notice) => notice.families.includes(firstFamily.code)));
+assert.equal(yearTopics.length, topicSnapshot.yearly["2014"]);
+assert.ok(yearTopics.every((notice) => notice.date.startsWith("2014")));
+assert.equal(combinedTopics.length, topicSnapshot.notices.filter((notice) => notice.date.startsWith("2014") && notice.families.includes(firstFamily.code)).length);
+assert.equal(topicEvidenceUrl({ family: firstFamily.code }), `/investment-statistics/evidence-notices?family=${firstFamily.code}`);
+assert.equal(topicEvidenceUrl({ family: "ALL", year: "2014" }), "/investment-statistics/evidence-notices?year=2014");
+assert.equal(topicEvidenceUrl({ family: firstFamily.code, year: "2014" }), `/investment-statistics/evidence-notices?family=${firstFamily.code}&year=2014`);
+assert.equal(topicEvidenceUrl(), "/investment-statistics/evidence-notices");
+const filteredCsv = topicNoticesToCsv(familyTopics, topicNames);
+assert.ok(filteredCsv.startsWith('\uFEFF"게시번호"') && filteredCsv.endsWith("\r\n"));
+assert.equal(filteredCsv.split("\r\n").length, familyTopics.length + 2);
+assert.ok(filteredCsv.split("\r\n").slice(1, -1).every((line) => line.includes(firstFamily.name)));
 
 console.log("public regulation UI contract: static approved snapshot, 1041 regulations, 2089 notices, public-safe CSV PASS");

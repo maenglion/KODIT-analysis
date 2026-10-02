@@ -7,7 +7,9 @@
     "./regulations": "./src/regulations/index.ts",
     "./regulations/RegulationExplorer": "./src/regulations/RegulationExplorer.tsx",
     "./regulations/DepartmentStatistics": "./src/regulations/DepartmentStatistics.tsx",
-    "./regulations/DepartmentResidualAnalysis": "./src/regulations/DepartmentResidualAnalysis.tsx"
+    "./regulations/DepartmentResidualAnalysis": "./src/regulations/DepartmentResidualAnalysis.tsx",
+    "./regulations/DepartmentEvidenceGuide": "./src/regulations/DepartmentEvidenceGuide.tsx",
+    "./regulations/OrganizationHistory": "./src/regulations/OrganizationHistory.tsx"
   },
   "peerDependencies": {
     "react": "19.1.2",
