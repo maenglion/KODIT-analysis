@@ -2,10 +2,11 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
 import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, organizationSnapshot, personResidualObservationsToCsv, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
-import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
+import * as residualUi from "../packages/common/src/regulations/residual-ui.ts";
 import { addDetailTerm, defaultDetailSettings, departmentRegulationCount, detailDateRange, filterDetailedNotices, filterDetailedRegulations, officialDepartmentCounts, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
+const { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } = residualUi;
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
 const advancedText = await readFile(new URL("../packages/common/src/regulations/RegulationAdvancedSearch.tsx", import.meta.url), "utf8");
@@ -15,6 +16,7 @@ const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", impo
 const regulationsText = await readFile(new URL("../apps/public-site/app/regulations/page.tsx", import.meta.url), "utf8");
 const residualPageText = await readFile(new URL("../apps/public-site/app/residual-data/page.tsx", import.meta.url), "utf8");
 const residualAnalysisText = await readFile(new URL("../packages/common/src/regulations/DepartmentResidualAnalysis.tsx", import.meta.url), "utf8");
+const residualUiText = await readFile(new URL("../packages/common/src/regulations/residual-ui.ts", import.meta.url), "utf8");
 const personObservationText = await readFile(new URL("../packages/common/src/regulations/PersonResidualObservations.tsx", import.meta.url), "utf8");
 const navigationText = await readFile(new URL("../apps/public-site/components/SiteNavigation.tsx", import.meta.url), "utf8");
 const informationText = await readFile(new URL("../apps/public-site/components/InformationPages.tsx", import.meta.url), "utf8");
@@ -108,6 +110,10 @@ assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.in
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
 assert.ok(residualPageText.includes("PersonResidualObservations") && residualPageText.includes("organizationAttributionExplanations"));
 assert.ok(personObservationText.includes("personResidualObservationsToCsv") && !personObservationText.includes("org_") && !personObservationText.includes("reasoning"));
+assert.deepEqual(Object.keys(residualUi).sort(), ["RESIDUAL_PAGE_SIZE", "mentionSourceLinks", "residualOccurrencesForLabels", "selectResidualLabels"]);
+for (const removed of ["PersonObservation", "PersonObservationSummary", "publicPersonObservation", "publicPersonSummary", "publicResidualOccurrencesToCsv", "publicResidualLabelsToCsv", "mention_count", "official_source_urls", "residualLabelsToCsv", "residualOccurrencesToCsv"]) {
+  assert.ok(!residualUiText.includes(removed), `residual-ui.ts에 구 PERSON 혼합 계약 잔존: ${removed}`);
+}
 assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAnalysisText.indexOf('<div className="table-scroll">'));
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
