@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
-import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
-import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
-import { addDetailTerm, defaultDetailSettings, detailDateRange, filterDetailedNotices, filterDetailedRegulations, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
+import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, organizationSnapshot, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { PUBLIC_PERSON_NOTICE_BASIS, RESIDUAL_PAGE_SIZE, mentionSourceLinks, publicPersonNoticeBasis, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
+import { addDetailTerm, defaultDetailSettings, departmentRegulationCount, detailDateRange, filterDetailedNotices, filterDetailedRegulations, officialDepartmentCounts, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
@@ -74,11 +74,18 @@ assert.deepEqual(filterDetailedRegulations(rows, "투자 옵션", detailDefault,
 assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, fields: ["ATTACHMENT_NAME"], includes: ["첨부"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["B"]);
 assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, excludes: ["투자"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["B"]);
 assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, evidenceGroups: ["ALIO"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, availabilityStatuses: ["FULLTEXT_PUBLIC"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, availabilityStatuses: ["FULLTEXT_PUBLIC", "PARTIAL_PUBLIC"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["A", "B"]);
 assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, dateField: "REVISION", startDate: "2024-01-01", endDate: "2024-12-31" }, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
 assert.deepEqual(filterDetailedNotices(notices, "투자", { ...defaultDetailSettings("notice"), fields: ["LINKED_REGULATION_NAME"] }, new Map([[base.regulation_version_id, base.display_name]])).map(row => row.notice_number), ["9"]);
 assert.deepEqual(detailDateRange("2026-09-13", 1), { startDate: "2026-08-13", endDate: "2026-09-13" });
 assert.equal(addDetailTerm(["투자", "보증", "규정"], "네 번째").length, 3);
 assert.deepEqual(settingsForScope({ ...detailDefault, fields: ["TITLE", "ATTACHMENT_NAME"], evidenceGroups: ["ALIO"], dateField: "REVISION" }, "notice"), { ...detailDefault, fields: ["TITLE"], evidenceGroups: [], dateField: "POSTED" });
+assert.deepEqual(settingsForScope({ ...detailDefault, fields: ["ATTACHMENT_NAME"], availabilityStatuses: ["FULLTEXT_PUBLIC"] }, "notice").fields, defaultDetailSettings("notice").fields);
+assert.deepEqual(settingsForScope({ ...detailDefault, availabilityStatuses: ["FULLTEXT_PUBLIC"] }, "notice").availabilityStatuses, []);
+const departmentFixture = officialDepartmentCounts(["보증부", "신용보증부", "현재 일치 없음"], rows, notices);
+assert.deepEqual(departmentFixture.map(row => [row.name, departmentRegulationCount(row, []), row.notices]), [["보증부", 2, 0], ["신용보증부", 0, 1], ["현재 일치 없음", 0, 0]]);
+assert.deepEqual(departmentFixture.map(row => departmentRegulationCount(row, ["PARTIAL_PUBLIC"])), [1, 0, 0]);
 const noticeFilters = { query: "", startDate: "", endDate: "", year: "", department: "", unmappedOnly: false };
 assert.equal(filterAndSortNotices(notices, noticeFilters)[0].notice_number, "10");
 assert.equal(filterAndSortNotices(notices, { ...noticeFilters, unmappedOnly: true }).length, 1);
@@ -118,9 +125,17 @@ assert.ok(explorerText.includes('onToggleSettings={toggleSettings}') && explorer
 assert.ok(explorerText.includes('aria-controls="advanced-search-panel"') && advancedText.includes('id="advanced-search-panel"'));
 assert.ok(advancedText.includes('panelRef.current?.focus()') && advancedText.includes('handleEscape') && advancedText.includes('aria-labelledby="advanced-search-title"'));
 assert.ok(explorerText.includes('partial-filter-clear') && explorerText.includes('부분공개 속성:') && explorerText.includes('onClearPartial={() => updateRegulations({ partialType: "ALL" })}'));
-for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", "현재 설정 적용"]) assert.ok(advancedText.includes(field));
-assert.ok(advancedText.includes('과거 부서 자동 매칭 (미제공)') && advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
+for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", "공개결론"]) assert.ok(advancedText.includes(field));
+assert.ok(advancedText.includes('disabled={unsupported}') && advancedText.includes('aria-describedby={unsupported ?') && advancedText.includes('내부규정 단독 검색에서만 사용') && advancedText.includes('사규예고 단독 검색에서만 사용'));
+assert.ok(advancedText.includes('공식 근거 없는 과거→현재 조직 자동 매칭은 제공하지 않습니다') && !advancedText.includes('과거 부서 자동 매칭 (미제공)'));
+assert.ok(advancedText.includes('availabilityOrder.map(status => <label') && !advancedText.includes('공개 자료 상태<select'));
+assert.ok(advancedText.includes('전체 선택') && advancedText.includes('선택 해제') && advancedText.includes('0건도 표시') && advancedText.includes('오늘 기준 아님') && advancedText.includes('className="apply-button" onClick={apply}>적용</button>'));
+assert.ok(advancedText.includes('<p className="detail-department-mode"><strong>담당 표기 정확 일치</strong></p>') && !advancedText.includes('name="department-match"'));
+assert.ok(advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
 assert.ok(explorerText.includes('ALIO 출처 연결') && explorerText.includes('승인 공개본 전체 규정') && explorerText.includes('전체 사규예고'));
+assert.ok(explorerText.indexOf('<span>전체 사규예고</span>') < explorerText.indexOf('<span>승인 공개본 전체 규정</span>'));
+assert.ok(explorerText.indexOf('<span>승인 공개본 전체 규정</span>') < explorerText.indexOf('<span>ALIO 출처 연결</span>'));
+assert.ok(explorerText.includes('officialDepartmentCounts(officialNames, rows, notices)') && explorerText.includes('selectedAvailability.length > 1'));
 assert.ok(explorerText.includes('regulation-overview-grid') && explorerText.includes('notices.length.toLocaleString("ko-KR")') && !explorerText.includes('regulation-overview-note'));
 assert.ok(regulationsText.includes('<CollectionStatus') && collectionRouteText.includes('public_collection_state'));
 assert.ok(collectionRouteText.includes('expectedHost = "jacyalxzejzrlspmojps.supabase.co"') && collectionRouteText.includes('Cache-Control": "no-store"'));
@@ -168,6 +183,11 @@ assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha2
 const residualSnapshot = JSON.parse(gunzipSync(await readFile(new URL("../apps/public-site/data/public-snapshot-v1.json.gz", import.meta.url))));
 assert.equal(residualSnapshot.rows.length, 1041);
 assert.equal(residualSnapshot.notices.length, 2089);
+const approvedDepartments = officialDepartmentCounts(organizationSnapshot.hierarchy.flatMap(group => group.units), residualSnapshot.rows, residualSnapshot.notices);
+assert.equal(approvedDepartments.length, 20);
+assert.equal(approvedDepartments.reduce((sum, option) => sum + departmentRegulationCount(option, []), 0), 502);
+assert.equal(approvedDepartments.reduce((sum, option) => sum + option.notices, 0), 817);
+assert.ok(approvedDepartments.every(option => departmentRegulationCount(option, ["PARTIAL_PUBLIC"]) === 0));
 assert.equal(residualSnapshot.rows.filter(row => row.availability === "NOTICE_ONLY").length, 831);
 const approvedSourceMap = new Map();
 for (const source of residualSnapshot.sources) approvedSourceMap.set(source.regulation_version_id, [...(approvedSourceMap.get(source.regulation_version_id) ?? []), source]);
@@ -177,6 +197,19 @@ assert.ok(approvedAlio.every(row => approvedSourceMap.get(row.regulation_version
 const residualCategories = ["PERSON_EVIDENCE", "ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
 const nonPersonIds = new Set(residualSnapshot.residuals.filter(row => row.resolution_class !== "PERSON_EVIDENCE").map(row => row.residual_id));
 assert.equal(residualSnapshot.attributionExplanations.filter(row => nonPersonIds.has(row.residual_id)).length, 159);
+const personBasisCounts = residualSnapshot.attributionExplanations.filter(row => !nonPersonIds.has(row.residual_id)).reduce((counts, row) => {
+  counts[row.inference_basis_code] = (counts[row.inference_basis_code] ?? 0) + 1;
+  return counts;
+}, {});
+assert.deepEqual(personBasisCounts, { INFERRED_WORK_SIMILARITY: 822, INFERRED_SEMANTIC_CANDIDATE: 129, INSUFFICIENT_EVIDENCE: 162 });
+assert.deepEqual(Object.values(PUBLIC_PERSON_NOTICE_BASIS), ["추정(업무 유사)", "추정(시맨틱 후보)", "근거 부족"]);
+const personProjections = residualSnapshot.attributionExplanations.filter(row => !nonPersonIds.has(row.residual_id)).map(row => ({ residual_id: row.residual_id, label: publicPersonNoticeBasis(row.inference_basis_code, row.inference_basis_label) }));
+assert.equal(personProjections.length, 1113);
+assert.ok(personProjections.every(row => Object.keys(row).length === 2 && Object.keys(row).every(key => ["residual_id", "label"].includes(key))));
+assert.throws(() => publicPersonNoticeBasis("NEW_UNREVIEWED_CODE", "추정(업무 유사)"), /승인되지 않은 PERSON/);
+assert.throws(() => publicPersonNoticeBasis("INFERRED_WORK_SIMILARITY", "확실(조직개편)"), /승인되지 않은 PERSON/);
+assert.ok(residualPageText.includes('personNoticeBasis={personNoticeBasis}') && residualPageText.includes('publicPersonNoticeBasis(row.inference_basis_code, row.inference_basis_label)') && residualPageText.includes('const publicAttributions = dataset.attributionExplanations.filter(row => nonPersonResidualIds.has(row.residual_id))'));
+assert.ok(!residualPageText.includes('current_org_candidate') && residualAnalysisText.includes('className="residual-rubric"') && residualAnalysisText.includes('aria-label={`게시물 업무 판정: ${personBasis}. 사람 소속 판정 아님`}'));
 const allResiduals = selectResidualLabels(residualSnapshot.residualLabels, residualCategories, "OCCURRENCE_DESC");
 assert.equal(allResiduals.length, 355);
 assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
@@ -211,7 +244,7 @@ assert.deepEqual(mentionSourceLinks(officialListPages, [
   { source_location: officialListPages[1], title: "개별 게시물 제목 B" },
 ]).map(link => link.label), ["사규 제개정 예고 (1)", "사규 제개정 예고 (2)"]);
 assert.ok(!residualAnalysisText.includes('>본문 근거 원문 ↗</a>') && residualAnalysisText.includes("공개된 근거 링크는 신보의 사규 제개정 예고"));
-assert.ok(residualAnalysisText.includes('row.resolution_class!=="PERSON_EVIDENCE"&&activeAttribution&&<AttributionExplanation'));
+assert.ok(residualAnalysisText.includes('row.resolution_class!=="PERSON_EVIDENCE"&&activeAttribution&&<div id={`residual-explanation-${selectedResidual}`}><AttributionExplanation detail={activeAttribution}/></div>'));
 assert.ok(residualAnalysisText.includes("const evidenceUrl=validPublicUrl(step.evidence_url)"));
 
 const topicNames = new Map(topicSnapshot.families.map((item) => [item.code, item.name]));

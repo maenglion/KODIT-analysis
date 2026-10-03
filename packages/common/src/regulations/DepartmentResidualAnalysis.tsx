@@ -16,6 +16,7 @@ import {
   mentionSourceLinks,
   residualOccurrencesForLabels,
   selectResidualLabels,
+  type PersonNoticeBasisLabel,
   type ResidualSort,
 } from "./residual-ui";
 
@@ -28,6 +29,17 @@ const criteria:Record<ResidualResolutionClass,string> = {
   UNTYPED: "현재 본문 관측 근거로 표기의 유형을 확정하지 못했습니다.",
   AMBIGUOUS: "여러 유형의 본문 관측 근거가 공존하여 단일 유형으로 정하지 않았습니다.",
 };
+const publicRubric = [
+  ["인물형 관측", "동일한 담당 표기가 다른 문서 본문에서 인물형 문맥으로 관측됐습니다. 실제 인물의 신원·역할·소속은 판정하지 않습니다."],
+  ["추정(업무 유사)", "게시물의 업무 문맥과 비교 가능한 사규예고 후보에서 업무 범위가 겹치는 단서가 있습니다. 사람 또는 담당 조직의 확정값이 아닙니다."],
+  ["추정(시맨틱 후보)", "유사한 사규예고 후보는 있지만 업무 범위 겹침은 확인되지 않았습니다. 후보 순위만으로 귀속을 확정하지 않습니다."],
+  ["복수 후보", "후보 원장에 모호함으로 기록된 경우입니다. 일반 후보가 여러 개 있다는 이유만으로 이 라벨을 붙이지 않습니다."],
+  ["근거 부족", "확인 가능한 후보나 공식 경로가 충분하지 않아 귀속을 판정하지 않습니다."],
+  ["유력(공식 업무귀속)", "공식 업무 귀속 근거가 있지만 특정 시점의 조직 이동 전체가 확인된 것은 아닙니다."],
+  ["확실(직접 관측)", "사규예고 당시 조직을 공식 시점 자료에서 직접 확인했습니다."],
+  ["확실(조직개편)", "공식 조직변경 근거로 필요한 이동 경로를 확인했습니다."],
+  ["확실(조직개편·업무귀속)", "공식 조직변경 경로와 해당 기능의 귀속 근거를 각각 확인했습니다."],
+] as const;
 
 function download(name:string,body:string) {
   const url=URL.createObjectURL(new Blob([body],{type:"text/csv;charset=utf-8"}));
@@ -42,9 +54,12 @@ type Props={
   occurrences:DepartmentResidualOccurrenceRow[];
   summary:DepartmentResidualLabelRow[];
   attributions:DepartmentAttributionExplanationRow[];
+  personNoticeBasis:PersonNoticeBasis[];
 };
 
-export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Props) {
+export type PersonNoticeBasis={residual_id:string;label:PersonNoticeBasisLabel};
+
+export function DepartmentResidualAnalysis({occurrences,summary,attributions,personNoticeBasis}:Props) {
   const [selectedClasses,setSelectedClasses]=useState<ResidualResolutionClass[]>([...order]);
   const [sort,setSort]=useState<ResidualSort>("OCCURRENCE_DESC");
   const [page,setPage]=useState(1);
@@ -65,8 +80,10 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
   const detail=pageRows.find(row=>row.label_id===selected)??null;
   const detailOccurrences=detail?occurrences.filter(row=>row.label_id===detail.label_id):[];
   const attributionByResidual=useMemo(()=>new Map(attributions.map(row=>[row.residual_id,row])),[attributions]);
+  const personBasisByResidual=useMemo(()=>new Map(personNoticeBasis.map(row=>[row.residual_id,row.label])),[personNoticeBasis]);
   const activeAttribution=selectedResidual?attributionByResidual.get(selectedResidual)??null:null;
   const selectedOccurrence=detailOccurrences.find(row=>row.residual_id===selectedResidual);
+  const selectedPersonBasis=selectedResidual?personBasisByResidual.get(selectedResidual):undefined;
   const filteredOccurrences=useMemo(()=>residualOccurrencesForLabels(occurrences,rows),[occurrences,rows]);
 
   useEffect(()=>{
@@ -144,9 +161,13 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
               <div className="evidence-links">{mentionSourceLinks(row.mention_source_locations,detailOccurrences).map(link=><a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>
             </section>}
             {(row.resolution_class==="ORG_CURRENT"||row.resolution_class==="ORG_HISTORICAL")&&<section><h4>조직 판정</h4><p><b>{row.org_official_name}</b> · {row.resolution_class==="ORG_CURRENT"?"현재 공식 조직자료에서 확인":"관측 시점의 공식·보존 근거에서 확인"}</p><p>유효기간: {row.org_valid_from??"시작일 미확인"} ~ {row.org_valid_to??"종료일 미확인"}</p>{validPublicUrl(row.official_evidence_url)&&<a href={row.official_evidence_url!} target="_blank" rel="noopener noreferrer">공식 조직 근거 보기 ↗</a>}{row.lineage_edges.map((edge,index)=><div className="lineage-text" key={`${edge.relation_type}-${edge.effective_date}-${index}`}><b>{edge.from_name}</b><span> — {edge.edge_scope} 이관 → </span><b>{edge.to_name}</b><small>{edge.effective_date}</small>{validPublicUrl(edge.evidence_url)&&<a href={edge.evidence_url} target="_blank" rel="noopener noreferrer">근거 ↗</a>}</div>)}{row.lineage_edges.length>0&&<p className="lineage-warning">이 관계는 확인된 특정 기능의 이관이며 조직 전체의 명칭변경·승계를 뜻하지 않습니다.</p>}</section>}
-            <section><h4>{row.resolution_class==="PERSON_EVIDENCE"?"담당 표기 관측 게시물":"근거 게시물과 이동 설명"} ({detailOccurrences.length.toLocaleString("ko-KR")}건)</h4><p>{row.resolution_class==="PERSON_EVIDENCE"?"게시물을 선택하면 인물형 문자열 관측의 공개 범위를 설명합니다. 사람의 소속이나 조직 이동을 추론하지 않습니다.":"게시물을 선택할 시 상태 판정에 대한 추론 근거를 확인하실 수 있습니다."}</p><ul className="residual-notices attribution-notices">{detailOccurrences.map(item=>{const attribution=attributionByResidual.get(item.residual_id);return <li key={item.residual_id}><time dateTime={item.posted_at}>{item.posted_at}</time><button onClick={()=>setSelectedResidual(selectedResidual===item.residual_id?null:item.residual_id)} aria-expanded={selectedResidual===item.residual_id}>{item.title}</button><span className="inference-badge">{row.resolution_class==="PERSON_EVIDENCE"?"인물형 관측":attribution?.inference_basis_label??"근거 부족"}</span></li>;})}</ul></section>
-            {row.resolution_class==="PERSON_EVIDENCE"&&selectedOccurrence&&<section className="attribution-explanation person-observation" aria-label="인물형 관측의 공개 범위"><header><div><p className="eyebrow">인물형 관측</p><h4>선택한 게시물의 공개 범위</h4></div><span className="inference-badge">인물형 관측</span></header><p><b>{selectedOccurrence.title}</b>의 담당 표기는 공개 별칭 {publicResidualLabel(row.raw_label,row.label_type)}으로만 표시합니다. 인물형 근거는 동일 문자열의 <b>다른 문서 본문 관측</b>을 뜻합니다. 이 게시물의 담당자 신원·역할·소속 또는 조직 이동을 연결하거나 확정하지 않습니다.</p></section>}
-            {row.resolution_class!=="PERSON_EVIDENCE"&&activeAttribution&&<AttributionExplanation detail={activeAttribution}/>}
+            <details className="residual-rubric"><summary>관측·추정 판정 기준 보기</summary><p>아래는 공개 라벨의 읽는 법입니다. 이 표기에 모두 적용됐다는 뜻이 아닙니다. 인물형 관측과 게시물 업무 후보는 서로 다른 판단이며, 공식 근거로 확인된 상태가 후보보다 우선합니다.</p><dl>{publicRubric.map(([label,meaning])=><div key={label}><dt>{label}</dt><dd>{meaning}</dd></div>)}</dl><pre aria-label="판정 개념 요약"><code>{`동일 표기의 다른 문서 인물형 문맥 → 인물형 관측
+유사 사규예고 후보 + 업무 문맥 겹침 → 업무 유사 추정
+유사 사규예고 후보만 확인 → 시맨틱 후보 추정
+공식 시점별 조직·기능 근거가 없으면 → 귀속 미확정`}</code></pre><small>개념 요약이며 내부 판정 코드·가중치·개별 인물 또는 조직의 소속 정보는 포함하지 않습니다.</small></details>
+            <section><h4>{row.resolution_class==="PERSON_EVIDENCE"?"담당 표기 관측 게시물":"근거 게시물과 이동 설명"} ({detailOccurrences.length.toLocaleString("ko-KR")}건)</h4><p id={row.resolution_class==="PERSON_EVIDENCE"?"residual-person-meaning":undefined}>{row.resolution_class==="PERSON_EVIDENCE"?"인물형 관측은 표기 분류, 옆 라벨은 해당 게시물의 업무 후보·근거 상태입니다. 사람의 신원·소속이나 조직 이동을 추론하지 않습니다.":"게시물을 선택할 시 상태 판정에 대한 추론 근거를 확인하실 수 있습니다."}</p><ul className="residual-notices attribution-notices">{detailOccurrences.map(item=>{const attribution=attributionByResidual.get(item.residual_id);const personBasis=personBasisByResidual.get(item.residual_id);return <li key={item.residual_id}><time dateTime={item.posted_at}>{item.posted_at}</time><button onClick={()=>setSelectedResidual(selectedResidual===item.residual_id?null:item.residual_id)} aria-expanded={selectedResidual===item.residual_id} aria-controls={selectedResidual===item.residual_id?`residual-explanation-${item.residual_id}`:undefined} aria-describedby={row.resolution_class==="PERSON_EVIDENCE"?"residual-person-meaning":undefined}>{item.title}</button><span className="residual-status-pair"><span className="inference-badge">{row.resolution_class==="PERSON_EVIDENCE"?"인물형 관측":attribution?.inference_basis_label??"근거 부족"}</span>{row.resolution_class==="PERSON_EVIDENCE"&&personBasis&&<span className={`inference-badge work-hypothesis-badge${personBasis==="근거 부족"?" is-insufficient":""}`} aria-label={`게시물 업무 판정: ${personBasis}. 사람 소속 판정 아님`} title="게시물 업무 문맥의 후보·근거 상태이며 사람의 소속을 뜻하지 않습니다.">{personBasis}</span>}</span></li>;})}</ul></section>
+            {row.resolution_class==="PERSON_EVIDENCE"&&selectedOccurrence&&<section id={`residual-explanation-${selectedOccurrence.residual_id}`} className="attribution-explanation person-observation" aria-label="인물형 관측의 공개 범위"><header><div><p className="eyebrow">인물형 관측</p><h4>선택한 게시물의 공개 범위</h4></div><span className="residual-status-pair"><span className="inference-badge">인물형 관측</span>{selectedPersonBasis&&<span className={`inference-badge work-hypothesis-badge${selectedPersonBasis==="근거 부족"?" is-insufficient":""}`} aria-label={`게시물 업무 판정: ${selectedPersonBasis}. 사람 소속 판정 아님`}>{selectedPersonBasis}</span>}</span></header><p><b>{selectedOccurrence.title}</b>의 담당 표기는 공개 별칭 {publicResidualLabel(row.raw_label,row.label_type)}으로만 표시합니다. 인물형 근거는 동일 문자열의 <b>다른 문서 본문 관측</b>을 뜻합니다. 이 게시물의 담당자 신원·역할·소속 또는 조직 이동을 연결하거나 확정하지 않습니다.</p>{selectedPersonBasis&&<p className="residual-hypothesis-note">{selectedPersonBasis==="근거 부족"?"게시물의 업무 후보·공식 경로 근거가 충분하지 않습니다.":`${selectedPersonBasis}은 이 사규예고의 업무 문맥을 비교한 후보 신호입니다.`} 공개 별칭의 실제 사람이나 담당 조직과 연결한 결과가 아닙니다.</p>}</section>}
+            {row.resolution_class!=="PERSON_EVIDENCE"&&activeAttribution&&<div id={`residual-explanation-${selectedResidual}`}><AttributionExplanation detail={activeAttribution}/></div>}
           </article></td></tr>}
         </Fragment>):<tr className="residual-empty-row"><td colSpan={6}>선택한 관측 분류에 공개된 표기가 없습니다. 관측 분류 필터에서 다시 선택해 주세요.</td></tr>}</tbody>
       </table>

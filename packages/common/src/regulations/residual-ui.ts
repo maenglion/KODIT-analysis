@@ -9,6 +9,20 @@ import {
 export const RESIDUAL_PAGE_SIZE = 10;
 export type ResidualSort = "LABEL_ASC" | "LABEL_DESC" | "NOTICE_DESC" | "OCCURRENCE_DESC" | "RECENT_DESC";
 
+/** Public-safe notice-work labels only. No person identity, organization candidate, scoring, or provenance. */
+export const PUBLIC_PERSON_NOTICE_BASIS = {
+  INFERRED_WORK_SIMILARITY: "추정(업무 유사)",
+  INFERRED_SEMANTIC_CANDIDATE: "추정(시맨틱 후보)",
+  INSUFFICIENT_EVIDENCE: "근거 부족",
+} as const;
+export type PersonNoticeBasisLabel = typeof PUBLIC_PERSON_NOTICE_BASIS[keyof typeof PUBLIC_PERSON_NOTICE_BASIS];
+
+export function publicPersonNoticeBasis(code: string, label: string): PersonNoticeBasisLabel {
+  const expected = (PUBLIC_PERSON_NOTICE_BASIS as Record<string, string>)[code];
+  if (!expected || expected !== label) throw new Error(`승인되지 않은 PERSON 게시물 판정 코드·라벨: ${code}`);
+  return expected as PersonNoticeBasisLabel;
+}
+
 const korean = new Intl.Collator("ko-KR", { numeric: true });
 
 export function selectResidualLabels(
