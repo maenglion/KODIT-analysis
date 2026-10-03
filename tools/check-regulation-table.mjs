@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
-import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, personResidualObservationsToCsv, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
 import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
 import { addDetailTerm, defaultDetailSettings, detailDateRange, filterDetailedNotices, filterDetailedRegulations, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
@@ -15,6 +15,7 @@ const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", impo
 const regulationsText = await readFile(new URL("../apps/public-site/app/regulations/page.tsx", import.meta.url), "utf8");
 const residualPageText = await readFile(new URL("../apps/public-site/app/residual-data/page.tsx", import.meta.url), "utf8");
 const residualAnalysisText = await readFile(new URL("../packages/common/src/regulations/DepartmentResidualAnalysis.tsx", import.meta.url), "utf8");
+const personObservationText = await readFile(new URL("../packages/common/src/regulations/PersonResidualObservations.tsx", import.meta.url), "utf8");
 const navigationText = await readFile(new URL("../apps/public-site/components/SiteNavigation.tsx", import.meta.url), "utf8");
 const informationText = await readFile(new URL("../apps/public-site/components/InformationPages.tsx", import.meta.url), "utf8");
 const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
@@ -92,9 +93,9 @@ assert.ok(residualLabelCsv.includes("display_label") && residualLabelCsv.include
 for (const label of ["ㅇㅅ(1234)", "ㅇㄱㅅ(7135)", "ㄱㅁㅅㅌ(0000)"]) assert.equal(publicResidualLabel(label, "PERSON"), label);
 for (const unsafe of ["이경선", "이*선", "인물(0000)", "ㅇㄱㅅ(123)", " ㅇㄱㅅ(7135)", "ㅇㄱㅅ(7135) "]) assert.throws(() => publicResidualLabel(unsafe, "PERSON"), /공개 별칭 형식 오류/);
 for (const output of [residualOccurrenceCsv, residualLabelCsv]) assert.ok(output.includes("ㅇㄱㅅ(7135)") && !output.includes("이*선") && !output.includes("이경선"));
-assert.ok(residualAnalysisText.includes('publicResidualLabel(detail.masked_label,detail.label_type)'));
+assert.ok(!residualAnalysisText.includes("masked_label") && !residualAnalysisText.includes("detail.label_type"));
 
-assert.ok(loaderText.includes('public-snapshot-v1.json.gz'));
+assert.ok(loaderText.includes('public-snapshot-v2.json.gz'));
 assert.ok(!loaderText.includes('/rest/v1/rpc/'));
 assert.ok(!loaderText.includes('NEXT_PUBLIC_SUPABASE_'));
 assert.ok(!loaderText.includes("service_role"));
@@ -103,7 +104,8 @@ assert.ok(explorerText.includes("상세 설정") && explorerText.includes("onSub
 assert.ok(homeText.includes("redirect(`/regulations") && regulationsText.includes("<RegulationExplorer") && regulationsText.includes("getPublishDataset"));
 assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.includes('href="/">HOME'));
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
-assert.ok(residualPageText.includes('row.resolution_class !== "PERSON_EVIDENCE"') && residualPageText.includes('attributions={publicAttributions}'));
+assert.ok(residualPageText.includes("PersonResidualObservations") && residualPageText.includes("organizationAttributionExplanations"));
+assert.ok(personObservationText.includes("personResidualObservationsToCsv") && !personObservationText.includes("org_") && !personObservationText.includes("reasoning"));
 assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAnalysisText.indexOf('<div className="table-scroll">'));
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
@@ -165,7 +167,8 @@ assert.ok(helpText.includes('>i</button>') && !helpText.includes('>ⓘ</button>'
 assert.ok(!departmentText.includes("DepartmentResidualAnalysis"));
 assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha256") && !detailText.includes("checks"));
 
-const residualSnapshot = JSON.parse(gunzipSync(await readFile(new URL("../apps/public-site/data/public-snapshot-v1.json.gz", import.meta.url))));
+const residualSnapshot = JSON.parse(gunzipSync(await readFile(new URL("../apps/public-site/data/public-snapshot-v2.json.gz", import.meta.url))));
+assert.equal(residualSnapshot.snapshot_contract, "public-static-snapshot-v2");
 assert.equal(residualSnapshot.rows.length, 1041);
 assert.equal(residualSnapshot.notices.length, 2089);
 assert.equal(residualSnapshot.rows.filter(row => row.availability === "NOTICE_ONLY").length, 831);
@@ -174,29 +177,25 @@ for (const source of residualSnapshot.sources) approvedSourceMap.set(source.regu
 const approvedAlio = filterDetailedRegulations(residualSnapshot.rows, "", { ...defaultDetailSettings(), evidenceGroups: ["ALIO"] }, latestNoticeDates(residualSnapshot.notices), approvedSourceMap);
 assert.equal(approvedAlio.length, 205);
 assert.ok(approvedAlio.every(row => approvedSourceMap.get(row.regulation_version_id).some(source => source.source_kind === "ALIO")));
-const residualCategories = ["PERSON_EVIDENCE", "ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
-const nonPersonIds = new Set(residualSnapshot.residuals.filter(row => row.resolution_class !== "PERSON_EVIDENCE").map(row => row.residual_id));
-assert.equal(residualSnapshot.attributionExplanations.filter(row => nonPersonIds.has(row.residual_id)).length, 159);
+const residualCategories = ["ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
+assert.equal(residualSnapshot.residuals.filter(row => row.label_type === "PERSON").length, 0);
+assert.equal(residualSnapshot.residualLabels.filter(row => row.label_type === "PERSON").length, 0);
+assert.ok(residualSnapshot.organizationAttributionExplanations.every(row => !("label_type" in row) && !/^[ㄱ-ㅎ]+\(\d{4}\)$/.test(row.display_label)));
 const allResiduals = selectResidualLabels(residualSnapshot.residualLabels, residualCategories, "OCCURRENCE_DESC");
-assert.equal(allResiduals.length, 355);
+assert.equal(allResiduals.length + new Set(residualSnapshot.personResidualObservations.map(row => row.public_alias)).size, 355);
 assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
-const picturedResidual = allResiduals.find(row => row.raw_label === "ㅇㄷㅎ(8053)");
-assert.ok(picturedResidual);
-assert.deepEqual([picturedResidual.residual_occurrence_count, picturedResidual.notice_count, picturedResidual.mention_occurrence_count], [18, 18, 24]);
 assert.equal(RESIDUAL_PAGE_SIZE, 10);
-assert.equal(Math.ceil(allResiduals.length / RESIDUAL_PAGE_SIZE), 36);
-const personAndHistorical = selectResidualLabels(residualSnapshot.residualLabels, ["PERSON_EVIDENCE", "ORG_HISTORICAL"], "LABEL_ASC");
-assert.equal(personAndHistorical.length, 319);
-assert.ok(personAndHistorical.slice(1).every((row, index) =>
-  new Intl.Collator("ko-KR", { numeric: true }).compare(publicResidualLabel(personAndHistorical[index].raw_label, personAndHistorical[index].label_type), publicResidualLabel(row.raw_label, row.label_type)) <= 0,
-));
-const personLabels = selectResidualLabels(residualSnapshot.residualLabels, ["PERSON_EVIDENCE"], "NOTICE_DESC");
-const personOccurrences = residualOccurrencesForLabels(residualSnapshot.residuals, personLabels);
-assert.equal(personLabels.length, 317);
-assert.equal(personOccurrences.length, 1113);
-assert.equal(residualLabelsToCsv(personLabels).split("\r\n").length, 319);
-assert.equal(residualOccurrencesToCsv(personOccurrences).split("\r\n").length, 1115);
-assert.ok(personOccurrences.every(row => /^[ㄱ-ㅎ]+\(\d{4}\)$/.test(row.raw_label)));
+assert.equal(residualSnapshot.personResidualObservations.length, 1113);
+assert.equal(new Set(residualSnapshot.personResidualObservations.map(row => row.public_alias)).size, 317);
+const allowedPersonKeys = ["observation_count", "posted_at", "public_alias", "source_location", "title"];
+const forbiddenPersonKey = /(org|organization|department|role|candidate|path|confidence|reasoning|function|assignment|movement)/i;
+assert.ok(residualSnapshot.personResidualObservations.every(row => JSON.stringify(Object.keys(row).sort()) === JSON.stringify(allowedPersonKeys)));
+assert.ok(residualSnapshot.personResidualObservations.every(row => Object.keys(row).every(key => !forbiddenPersonKey.test(key))));
+assert.ok(residualSnapshot.personResidualObservations.every(row => /^[ㄱ-ㅎ]+\(\d{4}\)$/.test(row.public_alias)));
+assert.ok(residualSnapshot.personResidualObservations.every(row => Number(row.observation_count) === 1));
+const personCsv = personResidualObservationsToCsv(residualSnapshot.personResidualObservations);
+assert.equal(personCsv.split("\r\n").length, 1115);
+assert.equal(personCsv.split("\r\n", 1)[0], "﻿public_alias,posted_at,title,source_location,observation_count");
 assert.deepEqual(mentionSourceLinks(["https://example.test/a", "https://example.test/b"], [
   { source_location: "https://example.test/a", title: "공식 공고" },
   { source_location: "https://example.test/b", title: "공식 공고" },
@@ -211,7 +210,7 @@ assert.deepEqual(mentionSourceLinks(officialListPages, [
   { source_location: officialListPages[1], title: "개별 게시물 제목 B" },
 ]).map(link => link.label), ["사규 제개정 예고 (1)", "사규 제개정 예고 (2)"]);
 assert.ok(!residualAnalysisText.includes('>본문 근거 원문 ↗</a>') && residualAnalysisText.includes("공개된 근거 링크는 신보의 사규 제개정 예고"));
-assert.ok(residualAnalysisText.includes('row.resolution_class!=="PERSON_EVIDENCE"&&activeAttribution&&<AttributionExplanation'));
+assert.ok(residualAnalysisText.includes("<AttributionExplanation detail={activeAttribution}"));
 assert.ok(residualAnalysisText.includes("const evidenceUrl=validPublicUrl(step.evidence_url)"));
 
 const topicNames = new Map(topicSnapshot.families.map((item) => [item.code, item.name]));

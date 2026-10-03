@@ -6,7 +6,7 @@ import {
   residualLabelsToCsv,
   residualOccurrencesToCsv,
   validPublicUrl,
-  type DepartmentAttributionExplanationRow,
+  type OrganizationAttributionExplanationRow,
   type DepartmentResidualLabelRow,
   type DepartmentResidualOccurrenceRow,
   type ResidualResolutionClass,
@@ -20,7 +20,7 @@ import {
 } from "./residual-ui";
 
 const labels:Record<ResidualResolutionClass,string>={PERSON_EVIDENCE:"인물형 근거 있음",ORG_CURRENT:"현재 조직 확인",ORG_HISTORICAL:"과거 조직 확인",UNTYPED:"미분류 표기",AMBIGUOUS:"모호한 표기"};
-const order:ResidualResolutionClass[]=["PERSON_EVIDENCE","ORG_CURRENT","ORG_HISTORICAL","UNTYPED","AMBIGUOUS"];
+const order:ResidualResolutionClass[]=["ORG_CURRENT","ORG_HISTORICAL","UNTYPED","AMBIGUOUS"];
 const criteria:Record<ResidualResolutionClass,string> = {
   PERSON_EVIDENCE: "동일한 담당 표기가 다른 문서 본문에서도 인물형 문맥으로 관측됐습니다. 신원·역할·소속을 확정하지 않습니다.",
   ORG_CURRENT: "현행 공식 조직자료에서 해당 조직 노드가 정확히 확인됐습니다(CURRENT_EXACT).",
@@ -41,7 +41,7 @@ function download(name:string,body:string) {
 type Props={
   occurrences:DepartmentResidualOccurrenceRow[];
   summary:DepartmentResidualLabelRow[];
-  attributions:DepartmentAttributionExplanationRow[];
+  attributions:OrganizationAttributionExplanationRow[];
 };
 
 export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Props) {
@@ -88,7 +88,7 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
 
   return <section className="residual-analysis" aria-labelledby="residual-title">
     <div className="residual-title">
-      <div><p className="eyebrow">관측 기반 분석</p><h2 id="residual-title">담당 표기 잔차</h2><p>사규예고의 담당 표기가 해당 release의 기준 조직명과 직접 일치하지 않은 관측 건입니다. 인물명, 과거 조직명, 기타 미분류 문자열이 포함됩니다.</p></div>
+      <div><p className="eyebrow">관측 기반 분석</p><h2 id="residual-title">비인물 담당 표기 잔차</h2><p>사규예고의 담당 표기가 해당 release의 기준 조직명과 직접 일치하지 않은 비인물 관측 건입니다. 과거 조직명과 기타 미분류 문자열이 포함됩니다. 인물형 관측은 별도의 최소 공개계약으로 분리해 표시합니다.</p></div>
       <dl><div><dt>잔차 관측</dt><dd>{occurrences.length.toLocaleString("ko-KR")}건</dd></div><div><dt>서로 다른 표기</dt><dd>{summary.length.toLocaleString("ko-KR")}개</dd></div></dl>
     </div>
     <div className="residual-cards" aria-label="관측 분류별 요약">
@@ -103,7 +103,7 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
     <details className="residual-policy">
       <summary>관측 분류 처리 기준 보기</summary>
       <dl>{order.map(key=><div key={key}><dt>{labels[key]}</dt><dd>{criteria[key]}</dd></div>)}</dl>
-      <p>분류는 승인된 원장의 관측·유형 근거·공식 조직 확인 결과를 표시합니다. 인물형 관측을 신원 확정으로, 조직 후보를 현행 조직 확정으로 자동 승격하지 않습니다.</p>
+      <p>분류는 승인된 원장의 관측·유형 근거·공식 조직 확인 결과를 표시합니다. 조직 후보를 현행 조직 확정으로 자동 승격하지 않습니다.</p>
     </details>
     <div className="residual-controls">
       <label className="residual-sort-control">공개 표기 정렬 <select aria-label="담당 표기 정렬" value={sort} onChange={event=>changeSort(event.target.value as ResidualSort)}>
@@ -116,7 +116,7 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
       <button onClick={()=>download("department-residual-occurrences.csv",residualOccurrencesToCsv(filteredOccurrences))}>잔차 관측 CSV<span className="sr-only"> (현재 분류 필터 전체 {filteredOccurrences.length}건)</span></button>
       <button onClick={()=>download("department-residual-labels.csv",residualLabelsToCsv(rows))}>표기 요약 CSV<span className="sr-only"> (현재 분류 필터 전체 {rows.length}개)</span></button>
     </div>
-    <p className="residual-alias-note" id="residual-alias-note">개인정보 보호와 희귀 성씨·이름 조합에 의한 재식별 위험을 줄이기 위해 사람 이름은 초성과 결정적 공개용 별칭 번호로 표시합니다. 괄호 안 번호는 사번이나 인사번호가 아닙니다. 가나다 정렬은 원래 이름이 아닌 <b>공개 표기</b> 기준입니다. CSV에는 현재 선택한 분류의 전체 결과가 담깁니다.</p>
+    <p className="residual-alias-note" id="residual-alias-note">이 표는 인물형 관측을 포함하지 않습니다. 정렬은 원장의 <b>공개 표기</b> 기준이며, CSV에는 현재 선택한 분류의 전체 결과가 담깁니다.</p>
     <p className="residual-count" id="residual-result-count" role="status">전체 {summary.length.toLocaleString("ko-KR")}개 중 필터 결과 <strong>{rows.length.toLocaleString("ko-KR")}개</strong> · {rows.length?`${(page-1)*RESIDUAL_PAGE_SIZE+1}–${Math.min(page*RESIDUAL_PAGE_SIZE,rows.length)}개 표시`:"표시할 표기 없음"}</p>
     <div className="table-scroll">
       <table className="regulations-table residual-table" aria-describedby="residual-alias-note residual-result-count">
@@ -164,13 +164,13 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
   </section>;
 }
 
-function AttributionExplanation({detail}:{detail:DepartmentAttributionExplanationRow}) {
+function AttributionExplanation({detail}:{detail:OrganizationAttributionExplanationRow}) {
   const confirmed=detail.current_functional_equivalent;
   return <section className="attribution-explanation" aria-label="조직 이동 추론 근거">
     <header><div><p className="eyebrow">추론 근거</p><h4>선택한 게시물의 판정 과정</h4></div><span className="inference-badge">{detail.inference_basis_label}</span></header>
-    <div className="attribution-result-grid"><div><span>담당 표기 관측</span><b>{publicResidualLabel(detail.masked_label,detail.label_type)}</b><small>{detail.posted_at}</small></div><div><span>당시 확인 조직</span><b>{detail.responsible_org_as_of_notice??"확인되지 않음"}</b></div><div className={confirmed?"confirmed":"candidate"}><span>{confirmed?"현 부서 매칭":"현재 부서 후보"}</span><b>{confirmed??detail.current_org_candidate??"근거 부족"}</b><small>{confirmed?"공식 근거로 확인":"확정값이 아닌 후보"}</small></div></div>
+    <div className="attribution-result-grid"><div><span>담당 표기 관측</span><b>{detail.display_label}</b><small>{detail.posted_at}</small></div><div><span>당시 확인 조직</span><b>{detail.responsible_org_as_of_notice??"확인되지 않음"}</b></div><div className={confirmed?"confirmed":"candidate"}><span>{confirmed?"현 부서 매칭":"현재 부서 후보"}</span><b>{confirmed??detail.current_org_candidate??"근거 부족"}</b><small>{confirmed?"공식 근거로 확인":"확정값이 아닌 후보"}</small></div></div>
     {detail.work_context.length>0&&<div className="work-context"><b>관측된 업무 문맥</b><p>{detail.work_context.join(" · ")}</p></div>}
-    <div className="evidence-flow"><div className="flow-node observation"><span>관측</span><b>{publicResidualLabel(detail.masked_label,detail.label_type)}</b><small>{detail.title}</small></div>{detail.path_steps.map(step=>{const evidenceUrl=validPublicUrl(step.evidence_url);return <div className="flow-segment" key={`${step.step_order}-${step.from_name}-${step.to_name}`}><div className="flow-arrow"><span>{relationLabel(step.relation_type)}</span><small>{step.effective_date??"일자 미확인"}</small></div><div className="flow-node organization"><span>{step.from_name} →</span><b>{step.to_name}</b><small>{step.work_scope_match===true?"업무 범위 일치 확인":"공식 조직변경 근거"}</small></div>{evidenceUrl&&<a href={evidenceUrl} target="_blank" rel="noopener noreferrer">{step.evidence_title} ↗</a>}</div>})}{detail.path_steps.length===0&&<div className="flow-empty">공식 조직개편 이동 경로가 확인되지 않았습니다. 후보 유사도만으로 현재 부서를 확정하지 않습니다.</div>}</div>
+    <div className="evidence-flow"><div className="flow-node observation"><span>관측</span><b>{detail.display_label}</b><small>{detail.title}</small></div>{detail.path_steps.map(step=>{const evidenceUrl=validPublicUrl(step.evidence_url);return <div className="flow-segment" key={`${step.step_order}-${step.from_name}-${step.to_name}`}><div className="flow-arrow"><span>{relationLabel(step.relation_type)}</span><small>{step.effective_date??"일자 미확인"}</small></div><div className="flow-node organization"><span>{step.from_name} →</span><b>{step.to_name}</b><small>{step.work_scope_match===true?"업무 범위 일치 확인":"공식 조직변경 근거"}</small></div>{evidenceUrl&&<a href={evidenceUrl} target="_blank" rel="noopener noreferrer">{step.evidence_title} ↗</a>}</div>})}{detail.path_steps.length===0&&<div className="flow-empty">공식 조직개편 이동 경로가 확인되지 않았습니다. 후보 유사도만으로 현재 부서를 확정하지 않습니다.</div>}</div>
     {detail.reasoning_steps.length>0&&<details className="reasoning-log"><summary>판정 과정 보기 ({detail.reasoning_steps.length})</summary><ol>{detail.reasoning_steps.map(step=><li key={`${step.step_order}-${step.step_type}`}><b>{stepTypeLabel(step.step_type)}</b><p>{step.result_description}</p></li>)}</ol></details>}
     {detail.official_evidence.length>0&&<div className="official-evidence-list"><h5>공식 근거</h5>{detail.official_evidence.map((evidence,index)=><p key={`${evidence.evidence_kind}-${index}`}><span>{evidence.evidence_date??"일자 미확인"}</span>{validPublicUrl(evidence.source_url)?<a href={evidence.source_url!} target="_blank" rel="noopener noreferrer">{evidence.document_title??"공식 근거문서"} ↗</a>:<b>{evidence.document_title??"공식 근거 관측"}</b>}</p>)}</div>}
   </section>;

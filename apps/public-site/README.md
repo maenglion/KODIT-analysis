@@ -1,6 +1,6 @@
 # public-site
 
-일반 공개 화면입니다. 배포 시점에 승인된 공개 release를 `data/public-snapshot-v1.json.gz`로 고정해 표시합니다. **규정 목록·집계·CSV는 Supabase RPC 가용성에 의존하지 않습니다.** 예외적으로 상단 자동수집 상태만 서버 `/api/collection-state`가 기존 공개 `api.public_collection_state()`에서 읽으며, 조회 실패 시 상태만 `상태 조회 불가`로 표시하고 승인 규정 목록은 계속 제공합니다. 기존 RPC·migration·검사 코드는 외부 검증과 증빙을 위해 보존합니다.
+일반 공개 화면입니다. 배포 시점에 승인된 공개 release를 `data/public-snapshot-v2.json.gz`로 고정해 표시합니다. **규정 목록·집계·CSV는 Supabase RPC 가용성에 의존하지 않습니다.** 예외적으로 상단 자동수집 상태만 서버 `/api/collection-state`가 기존 공개 `api.public_collection_state()`에서 읽으며, 조회 실패 시 상태만 `상태 조회 불가`로 표시하고 승인 규정 목록은 계속 제공합니다. PERSON 관측 계약에는 승인 별칭·관측일·게시물 제목·공식 URL·관측 횟수만 포함하며 조직 attribution 계약과 결합하지 않습니다. 기존 RPC·migration·검사 코드는 외부 검증과 증빙을 위해 보존합니다.
 
 브라우저 번들에는 DB 비밀번호·access token·service role key를 포함하지 않습니다. 규정 공개 snapshot은 개인·미매핑 표기를 공개 안전값으로 치환하고 내부 provenance 필드를 제거한 뒤 생성합니다.
 

@@ -8,6 +8,7 @@
     "./regulations/RegulationExplorer": "./src/regulations/RegulationExplorer.tsx",
     "./regulations/DepartmentStatistics": "./src/regulations/DepartmentStatistics.tsx",
     "./regulations/DepartmentResidualAnalysis": "./src/regulations/DepartmentResidualAnalysis.tsx",
+    "./regulations/PersonResidualObservations": "./src/regulations/PersonResidualObservations.tsx",
     "./regulations/DepartmentEvidenceGuide": "./src/regulations/DepartmentEvidenceGuide.tsx",
     "./regulations/OrganizationHistory": "./src/regulations/OrganizationHistory.tsx"
   },

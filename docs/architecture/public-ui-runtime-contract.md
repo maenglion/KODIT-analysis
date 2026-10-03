@@ -12,7 +12,7 @@
 
 ## Canonical sources
 
-- 규정 목록·사규예고·부서 및 잔차 화면: `apps/public-site/data/public-snapshot-v1.json.gz` (`evidence_as_of=2026-09-13`, 생성일 2026-09-14). 기존 승인본을 재집계하거나 교체하지 않는다.
+- 규정 목록·사규예고·부서 및 잔차 화면: `apps/public-site/data/public-snapshot-v2.json.gz` (`evidence_as_of=2026-09-13`). v2는 PERSON 관측과 조직 attribution의 공개 계약을 분리한다.
 - 투자·보증 주제 화면: `reports/measurements/2026-09-19-topic-membership-v2/{summary,member-review}.json`에서 공개 필드만 복사한 별도 정적 파일. `topic-membership-v2`의 투자·자본성 금융 관련 승인 9개 family와 `DISTINCT notice_id` 기준 62건이다. 2026-09-19 주제 측정치를 2026-09-13 규정 snapshot의 하위 집계로 표시하지 않는다.
 - 주제 분류 의미·중복 규칙: `docs/architecture/topic-analysis-contract.md`, `config/topic-membership-v2.json`.
 - UI 화면 참조: [피그마 `페이지 기획`의 `letscheck-SINBO` 프레임](https://www.figma.com/design/8y8T16UoFNxl47kuT8C2dO/%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B8%B0%ED%9A%8D?node-id=8-11). 미완성 시안은 자료의 의미 계약과 접근성을 해치지 않는 범위에서 보완한다.
@@ -141,6 +141,15 @@
 사용자가 검수본 운영 반영을 승인하여 [PR #6](https://github.com/maenglion/KODIT-analysis/pull/6)의 고정된 UI head `9f796e9f1bb0ba9ffcf9d15e241a8a3dc4db26f0`을 merge commit `c3c4824298a67f4a45a87386e916b2d25d95856d`로 `main`에 병합했다. 기존 Git→Netlify 자동 배포가 제공하는 [운영 목적 페이지](https://letscheck-sinbo.netlify.app/data-purpose)와 [잔차 페이지](https://letscheck-sinbo.netlify.app/residual-data)에서 Chromium 1440px·800px로 문의 채널·편집 이력 1건, PERSON 공개 별칭 목록 317개·검색·상단 상세·근거·두 CSV를 검증했다. 운영 목적 HTML과 PR #6 미리보기 HTML도 동일했다. Netlify 설정/API는 직접 변경하지 않았다.
 
 별도 GitHub `Supabase Preview` 검사는 Codex 선행 커밋 `43148af`와 이번 merge commit 모두에서 `SQLSTATE 42723: function "public_department_attribution_explanation_rows" already exists with same argument types`로 실패한다. 정적 운영 화면 검증 통과와 이 migration 재생 오류를 혼동하지 않으며, DB migration/공개 read contract 소유자인 Codex가 별도 해결할 문제로 남긴다. Manus는 해당 migration·snapshot·Supabase 설정을 수정하지 않았다.
+
+### 공개 PERSON 계약 사전 검증과 선제 분리 (2026-10-03)
+
+- 이 조치는 공개 운영 중의 유출사고 대응이 아니다. 운영 공개 전에 커밋된 검수본의 payload를 독립 점검하는 과정에서, UI가 숨긴 필드와 별개로 혼합 RPC·정적 snapshot이 PERSON 관측 행에 조직 후보와 업무 문맥·추론 필드를 포함할 수 있음을 발견했다. 검증 결과를 릴리스 차단 조건으로 삼아 배포 전에 공개계약을 분리했다.
+- 검수 snapshot에서 확인한 단위는 사람 수가 아니라 PERSON 관측 occurrence 1,113행(공개 별칭 317개)이다. 후보 또는 추론 필드가 존재한다는 사실을 확정된 소속으로 해석하지 않는다.
+- 공개 PERSON 계약 `public_person_residual_observation_rows()`는 `public_alias`, `posted_at`, `title`, `source_location`, `observation_count`만 반환한다. 조직·부서·직무·후보·점수·경로·추론·업무귀속 키와 내부 ID는 반환 스키마에 존재하지 않는다.
+- 조직 attribution은 `public_organization_attribution_explanation_rows()`로 분리하고 ORG 행만 반환한다. 공개 PERSON→ORG 관계 레코드는 0이어야 한다. 내부 append-only 원장과 기존 근거 데이터는 변경하지 않는다.
+- 정적 공개본 v2 생성기는 PERSON 객체의 허용 키가 정확히 5개인지, 조직 형태의 금지 키가 0개인지, 일반 잔차·조직 attribution에 PERSON 행 또는 PERSON 별칭이 0개인지 검사하고 하나라도 위반하면 산출을 중단한다.
+- 이미 공개 운영된 자료가 아니라 배포 전 검수본을 교체하는 작업이므로 ‘개인정보 유출’로 표현하지 않는다. 정확한 기록명은 ‘비공개 검수 단계의 공개계약 불일치 발견 및 선제 차단’이다.
 
 ### 잔차 목록 제어·행 내부 상세 재구성 (2026-10-03, 검수 전)
 
