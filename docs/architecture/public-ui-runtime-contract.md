@@ -240,3 +240,27 @@ merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `
 ### PR #10 리뷰 P1: 구 PERSON 혼합 DTO·CSV helper 제거 (2026-10-03)
 
 사용자 [PR 리뷰 댓글](https://github.com/maenglion/KODIT-analysis/pull/10#issuecomment-5967736017)에서 이전 보고서와 달리 UI 헬퍼 `residual-ui.ts`에 **미사용 구 PERSON 혼합 DTO 및 CSV 함수가 잔존**함을 발견했다. 특히 구 `publicResidualLabelsToCsv()`는 `mention_count`, `official_source_urls` 열을 다시 만들 수 있었다. 실행 경로가 없었다는 사유로 유지하지 않고 `PersonObservation`, `PersonObservationSummary`, `publicPersonObservation()`, `publicPersonSummary()`, `publicResidualOccurrencesToCsv()`, `publicResidualLabelsToCsv()` 및 그 전용 import/내부 CSV 직렬화 함수를 삭제했다. 조직형 잔차의 목록·정렬·공식 근거 링크 헬퍼만 남겼다. `check:regulations`는 이 모듈의 런타임 export 허용목록과 구 타입·함수·`mention_count`·`official_source_urls` 키 부재를 검사한다. 실제 PERSON 화면/CSV는 계속 별도 `PersonResidualObservations.tsx`와 `personResidualObservationsToCsv()`의 **v2 5필드 관측 계약**만 쓴다. Codex 소관 migration, RPC, snapshot exporter, snapshot v2 및 공통 read contract는 수정하지 않았다. 앞선 ‘구 혼합 DTO를 재적용하지 않았다’는 보고는 실제 PR diff의 미사용 잔존 코드까지 확인하지 못한 불완전한 검토였으며 이 기록으로 정정한다.
+
+### 규정 첫 화면 문구·대조 결과 띠 (2026-10-03, 사용자 검수 전)
+
+사용자 피드백에 따라 PR #10이 병합된 `main@beb48a6`에서 **규정·법령 한 페이지**만 새 브랜치 `feat/regulations-residual-insight-copy`로 시작했다. 별도 HOME 없이 `/regulations?scope=master`의 제목·수집 상태 → 낮은 파란 ‘담당 표기 대조 결과’ 띠 → 네 통계 카드 → 검색/상세설정 → 결과 목록 순으로 배치했다. `scope=notice`에는 규정 전용 띠/카드를 반복하지 않는다. 규정 하위 메뉴는 ‘내부규정’·‘사규예고’로 줄이고, 실제 조직 히스토리로 가던 ‘조직도’를 제거했다. 부서별 통계의 ‘조직 히스토리’ 메뉴는 유지한다. 내부규정의 추가 요약 항목은 사용자가 별도로 전달할 때까지 추가하지 않았다.
+
+승인 snapshot v2 사규예고 **2,089건**, 초기 정확 불일치 관측 **1,272건(60.9%)**; 앞뒤 공백을 제거해 2026-09-15 공식 조직도 **20개** 이름과 비교한다. 그 후속 유형은 인물형 관측 **1,113건**, 공식 조직 확인 **45건(현재 30/과거 15)**, 유형 미확정 **114건(전체 2,089건 중 5.5%)**이다. `1,113+45=1,158`은 ‘유형 구분 또는 조직 근거 확인’일 뿐 부서 재배정/조직 귀속 성공률이 아니다. 이 값들은 승인 v2 집계에서 서버에서 **숫자만** 계산해 컴포넌트에 전달하며 PERSON 원장 행·조직 관련 정보를 전달하지 않는다. DRM·본문 추출 실패를 초기 불일치 원인으로 제시하지 않는다. 네 용어에는 짧은 hover/focus 설명과 눌러 펼치는 박스 안의 자세한 뜻을 두고 Escape·aria-expanded/controls를 연결한다. 잔차 링크는 `/residual-data#residual-index`다.
+
+검증: `pnpm check`, `pnpm check:regulations`, 공개 사이트 타입/프로덕션 빌드, `check:approved`, `check:technical-specs`, `check:t07c`, `check:residual-analysis`, `pnpm test`, `git diff --check`, KODIT UI 스킬의 protected-scope guard 통과. 독립 읽기 전용 검토에서 사실·직렬화·접근성 P0/P1은 발견하지 못했다. 제안된 DOM 순서 회귀를 정적 UI 검사에 추가하고 Chromium 로컬 프로덕션 프리뷰의 **1440/800/768px**에서 요약 띠 높이 **110px/191px/191px**, 카드 순서·네 도움말 hover/focus/click/Enter/Space/Escape·하위 메뉴·scope=notice 미노출·잔차 앵커·기존 상세검색 CSV 회귀를 확인했다. 이는 **로컬 검수**이며 새 draft PR/Netlify 미리보기와 사용자 병합 승인은 별도 단계다. migration/RPC/exporter/snapshot v2, Netlify 설정은 변경하지 않는다.
+
+사용자가 표시한 조직 히스토리 연도 선택 노드의 padding은 **다음 페이지 단계**로 남긴다. 크론 실행 이력과 승인 공개본의 변경 이력은 다른 단위이므로, Codex 소관 공개 read contract/비교 원장이 나오기 전에는 ‘변경 없음’ 0건이나 변동 기록 표를 지어내지 않는다. 계약이 확정되면 요약 목록에서 클릭해 이전/현재 값·시각·근거를 원장형 작은 표로 보여 주는 UI를 별도 검토한다.
+
+### PR #11 검수 문구 보정 (2026-10-03, 병합 전)
+
+사용자 검수에서 인물형 관측을 ‘담당 칸에 사람 이름 **형태**가 적혔다’로 설명하면 외형만 보고 분류했다는 오독이 확인됐다. 정본 `docs/architecture/residual-resolution-ui.md`의 `PERSON_EVIDENCE`대로 **담당 표기와 동일 문자열이 다른 문서 본문에서 인물형 문맥으로 관측**된 경우로 tooltip·펼침 설명을 고친다. 실제 인물 신원, 직원 여부, 기안자/담당자 역할·소속을 확정하지 않고 공개 별칭과 관측 게시물만 보여 준다는 경계도 명시한다. `유형 미확정 114건 (전체의 5.5%)`은 **전체 사규예고 2,089건의 5.5%**로 분모를 문장 안에 넣는다. 소스 문자열뿐 아니라 UI 회귀와 1440/800/768px 브라우저에서 해당 설명을 검증한다. 이 보정은 **규정 첫 화면 문구만** 수정하며 Codex 소관 migration/RPC/exporter/snapshot v2, PERSON 다섯 필드 계약, 운영 main은 변경하지 않는다.
+
+첨부된 정밀도 게이트 설명은 이 박스에 섞지 않고 향후 방법론/기술사양 원고에서 따로 검토한다. 초기 게이트의 50%와 선택적 게이트의 선택 대상 2/2(관측 100%이지만 최소 30건 미달)는 **시점·모집단·실패 이유가 다르다**. 2026 조직 프로필 재현 진단 64.29%를 조직 기능귀속 정확도로, observed-only 683건을 시점 충돌로 설명하지 않는다. ORG_CURRENT+ORG_HISTORICAL 45건과 그 동일한 행에 대한 업무귀속 설명 45건도 **서로 다른 축**이므로 합산하지 않는다. 사용자에게 다음 페이지 지침을 받기 전까지 이 추가 지표를 규정 첫 화면에 임의로 넣지 않는다.
+
+PR #11 문구 보정 로컬 재검증: `pnpm check:regulations`, `pnpm check:approved`, `pnpm check:residual-analysis`, 공개 사이트 타입/프로덕션 빌드, `git diff --check`, 보호 파일 가드 통과. Chromium **1440/800/768px**에서 네 도움말 hover/focus/Enter/Space/Escape, 인물형 tooltip·상세의 다른 문서 본문 관측 문구, `유형 미확정 114건 (전체 사규예고의 5.5%)`, 기존 상세검색/CSV 회귀 통과. 새 head의 Netlify 미리보기는 **푸시 후 별도로 재검수**한다.
+
+### PR #11 병합 및 운영 검증 (2026-10-03)
+
+사용자가 수정본 `4d0af55604dd08a7afe3673fd09206d4f1a19fe8`의 병합을 명시 승인했다. 최종 사전 점검에서 `main@beb48a6010457bc44bef0b70d180a1449c046ee8` 불변, PR head/base 일치, mergeable/CLEAN, Netlify header/redirect 검사 성공, UI 변경 8개 파일·Codex 보호 범위 불변을 확인하고 draft를 해제했다. [PR #11](https://github.com/maenglion/KODIT-analysis/pull/11)을 merge commit `c36c336e6fa3a003a28d7c5a69452a2a0d753852`으로 병합하고 로컬 main도 fast-forward했다. Netlify 설정/API는 조작하지 않고 기존 GitHub main 자동 배포만 사용했다.
+
+운영 `/regulations?scope=master`의 HTML 200과 ‘담당 표기 대조 결과’, ‘다른 문서 본문에서 인물형 문맥’, ‘전체 사규예고의 5.5%’ 문구를 확인했다. 운영 Chromium 회귀에서 1440/800/768px 요약 띠 순서·높이·네 도움말 hover/focus/click/Enter/Space/Escape·`scope=notice` 미노출·잔차 앵커가 모두 통과했다. 기존 상세검색/CSV는 1440/800px의 자료 범위 전환·공개결론 1,036건/CSV 1,036행·조직 선택/해제·0건·notice 817건 조건이 통과했다. 병합 후 `pnpm check:regulations`, `pnpm check:approved`, `pnpm check:residual-analysis`, 보호 범위 검사 및 `git diff --check`도 통과했다. 조직 히스토리 padding, 방법론의 정밀도 게이트 문구, 수집/승인 공개본 변경이력 UI는 별도 지침과 공개계약 확인 전까지 변경하지 않는다.
