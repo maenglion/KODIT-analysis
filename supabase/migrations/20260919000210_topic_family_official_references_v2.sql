@@ -4,7 +4,7 @@ create table core.topic_family_official_references_v2 (
   family_reference_id uuid primary key,
   family_id uuid not null references core.topic_families_v2(family_id) on delete restrict,
   reference_role text not null check(reference_role='CANONICAL_OFFICIAL_PRODUCT_PAGE'),
-  official_url text not null check(official_url ~ '^https://www\\.kodit\\.or\\.kr/'),
+  official_url text not null check(official_url ~ '^https://www[.]kodit[.]or[.]kr/'),
   verified_on date not null,
   created_at timestamptz not null default now(),
   unique(family_id,reference_role,official_url)

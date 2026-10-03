@@ -71,11 +71,22 @@ select md5('kodit:t06.7:node-evidence:'||m.name)::uuid,'organization-v1-evidence
 from src cross join missing m
 on conflict do nothing;
 
-with missing(name) as (values ('홍보협력실'),('AI혁신부'),('비상계획부'))
+with missing(name) as (values ('홍보협력실'),('AI혁신부'),('비상계획부')),
+available_evidence as (
+  select organization_evidence_id, observed_name
+  from core.organization_evidence
+  where organization_evidence_id in (
+    md5('kodit:t06.7:node-evidence:홍보협력실')::uuid,
+    md5('kodit:t06.7:node-evidence:AI혁신부')::uuid,
+    md5('kodit:t06.7:node-evidence:비상계획부')::uuid
+  )
+)
 insert into core.organization_nodes(org_node_id,org_contract_version,node_key,official_name,node_status,primary_evidence_id)
 select md5('kodit:core:organization-node:organization-v1:'||name)::uuid,'organization-v1-evidence-r2',name,name,'CONFIRMED',
-  md5('kodit:t06.7:node-evidence:'||name)::uuid
-from missing on conflict do nothing;
+  e.organization_evidence_id
+from missing m
+join available_evidence e on e.observed_name=m.name
+on conflict do nothing;
 
 -- Current 2026 snapshot from the direct organization enumeration in the organization rule.
 insert into core.organization_snapshots(snapshot_id,snapshot_contract_version,snapshot_key,snapshot_date,effective_date,organization_evidence_document_id,snapshot_status)
