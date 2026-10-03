@@ -151,6 +151,16 @@
 - 정적 공개본 v2 생성기는 PERSON 객체의 허용 키가 정확히 5개인지, 조직 형태의 금지 키가 0개인지, 일반 잔차·조직 attribution에 PERSON 행 또는 PERSON 별칭이 0개인지 검사하고 하나라도 위반하면 산출을 중단한다.
 - 이미 공개 운영된 자료가 아니라 배포 전 검수본을 교체하는 작업이므로 ‘개인정보 유출’로 표현하지 않는다. 정확한 기록명은 ‘비공개 검수 단계의 공개계약 불일치 발견 및 선제 차단’이다.
 
+### 공개 PERSON 계약 교정·배포 및 Manus 인계 상태 (2026-10-03)
+
+- 정식 공개 전 검수에서 UI 비노출만으로는 정적 payload와 혼합 RPC의 PERSON 조직 후보·업무 문맥·추론 키를 제거할 수 없다는 설계 오류를 확인했다. 확인된 외부 유출 사고가 아니라, 커밋·푸시된 검수본을 점검하면서 공개계약과 화면 원칙의 불일치를 발견해 릴리스 전에 교정한 선제 조치다.
+- 임시 대응인 `NULL`·빈 배열 반환이나 UI 숨김을 최종 계약으로 채택하지 않았다. migration `20261003000200_split_person_org_public_contracts`에서 PERSON과 ORG read contract를 분리하고, PERSON RPC 반환형에서 금지 키 자체를 제거했다. 구 혼합 base/safe RPC의 `anon`·`authenticated` 실행 권한은 회수했다.
+- 공개 PERSON occurrence의 `observation_count`는 라벨 전체 합계를 각 행에 반복하지 않고 행마다 `1`을 반환한다. 초기 smoke에서 라벨 합계를 occurrence별로 반복하면 화면 합산이 제곱되는 오류를 발견했으며, 배포 전에 RPC와 migration을 함께 수정했다. 최종 v2는 PERSON occurrence 1,113행·서로 다른 공개 별칭 317개이고 모든 occurrence의 `observation_count=1`이다.
+- snapshot v2 생성 검사는 PERSON 객체의 키가 정확히 `public_alias`, `posted_at`, `title`, `source_location`, `observation_count`인지 확인한다. 비PERSON 잔차 159행·라벨 38개와 ORG 설명 45행은 별도 배열이며, ORG 설명에는 PERSON 라벨·PERSON 식별자·PERSON→ORG 공개 관계가 없어야 한다.
+- Codex 보안 패치 `a8d6422437d020eb47c1209954cb5bcb55619866`를 당시 최신 `main`의 PR #9 UI 변경 위에 재배치해 충돌을 해결했고, `HEAD == origin/main`을 확인했다. Netlify production은 `main@a8d6422`를 Published로 표시했으며 `/residual-data` HTTP 200과 분리된 PERSON 화면을 확인했다. 현재 배포에서 `public-snapshot-v1.json.gz`와 `public-snapshot-v2.json.gz` 직접 URL은 모두 404이고 snapshot은 Next 서버 내부 데이터로만 읽는다.
+- Manus는 구 기준 `033d939` 위의 로컬 UI 커밋 `d162fca`를 RPC·snapshot 교정 전이라고 판단해 푸시·병합하지 않았다. 이는 당시 올바른 릴리스 차단이었다. 선행 조건은 이제 해소됐으므로 후속 UI 검수는 `a8d6422` 또는 그 이후 `main`을 먼저 동기화하고, migration·공개 read contract·snapshot exporter·snapshot v2를 되돌리지 않은 채 UI 소관 diff만 재적용해야 한다. 구 PR #10 미리보기를 최신 계약의 검수본으로 간주하지 않는다.
+- 현재 Git HEAD에서는 v1 파일을 제거했지만 과거 Git commit과 과거 deploy 기록은 보존돼 있다. 이력 재작성이나 과거 deploy 삭제는 파괴적 별도 작업이므로 이번 선제 패치에서 수행하지 않았으며, 이를 확인된 유출로 해석하지 않는다. 외부 공개 범위 정리 필요성이 생기면 별도 승인 아래 처리한다.
+
 ### 잔차 목록 제어·행 내부 상세 재구성 (2026-10-03, 검수 전)
 
 - `/residual-data`는 승인 정적 snapshot **표기 355개·관측 1,272건**을 그대로 소비한다. 검색 상자 대신 목록 표시명/관련 사규예고 건수 정렬과 표 머리의 관측 분류 **복수 체크박스**를 제공한다. 10개 단위 페이지, 전체/필터 후 표기 수·관련 관측 건수 및 현재 페이지를 표시한다. 이전 목록 위 공용 상세 패널은 사용자 스크린샷의 맥락을 따라 **클릭한 표 행 바로 다음 행**의 펼침으로 바꾼다. 선택 표기의 실제 연결 게시물 건수를 표시하며 날짜는 한 줄, 처리 상태는 절제된 단일 파란 칩으로 정리한다. 필터 CSV는 현재 화면의 10행이 아니라 **필터 전체 표기 및 해당 연결 관측 전체**를 각각 내보낸다.
