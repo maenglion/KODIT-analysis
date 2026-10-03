@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
 import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, organizationSnapshot, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
-import { PUBLIC_PERSON_NOTICE_BASIS, RESIDUAL_PAGE_SIZE, mentionSourceLinks, publicPersonNoticeBasis, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
+import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, publicPersonObservation, publicPersonSummary, publicResidualLabelsToCsv, publicResidualOccurrencesToCsv, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
 import { addDetailTerm, defaultDetailSettings, departmentRegulationCount, detailDateRange, filterDetailedNotices, filterDetailedRegulations, officialDepartmentCounts, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
@@ -197,19 +197,28 @@ assert.ok(approvedAlio.every(row => approvedSourceMap.get(row.regulation_version
 const residualCategories = ["PERSON_EVIDENCE", "ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
 const nonPersonIds = new Set(residualSnapshot.residuals.filter(row => row.resolution_class !== "PERSON_EVIDENCE").map(row => row.residual_id));
 assert.equal(residualSnapshot.attributionExplanations.filter(row => nonPersonIds.has(row.residual_id)).length, 159);
-const personBasisCounts = residualSnapshot.attributionExplanations.filter(row => !nonPersonIds.has(row.residual_id)).reduce((counts, row) => {
-  counts[row.inference_basis_code] = (counts[row.inference_basis_code] ?? 0) + 1;
-  return counts;
-}, {});
-assert.deepEqual(personBasisCounts, { INFERRED_WORK_SIMILARITY: 822, INFERRED_SEMANTIC_CANDIDATE: 129, INSUFFICIENT_EVIDENCE: 162 });
-assert.deepEqual(Object.values(PUBLIC_PERSON_NOTICE_BASIS), ["추정(업무 유사)", "추정(시맨틱 후보)", "근거 부족"]);
-const personProjections = residualSnapshot.attributionExplanations.filter(row => !nonPersonIds.has(row.residual_id)).map(row => ({ residual_id: row.residual_id, label: publicPersonNoticeBasis(row.inference_basis_code, row.inference_basis_label) }));
+const personSourceRows = residualSnapshot.residuals.filter(row => row.resolution_class === "PERSON_EVIDENCE");
+const personSourceLabels = residualSnapshot.residualLabels.filter(row => row.resolution_class === "PERSON_EVIDENCE");
+const personProjections = personSourceRows.map(publicPersonObservation);
+const personSummaryProjections = personSourceLabels.map(publicPersonSummary);
 assert.equal(personProjections.length, 1113);
-assert.ok(personProjections.every(row => Object.keys(row).length === 2 && Object.keys(row).every(key => ["residual_id", "label"].includes(key))));
-assert.throws(() => publicPersonNoticeBasis("NEW_UNREVIEWED_CODE", "추정(업무 유사)"), /승인되지 않은 PERSON/);
-assert.throws(() => publicPersonNoticeBasis("INFERRED_WORK_SIMILARITY", "확실(조직개편)"), /승인되지 않은 PERSON/);
-assert.ok(residualPageText.includes('personNoticeBasis={personNoticeBasis}') && residualPageText.includes('publicPersonNoticeBasis(row.inference_basis_code, row.inference_basis_label)') && residualPageText.includes('const publicAttributions = dataset.attributionExplanations.filter(row => nonPersonResidualIds.has(row.residual_id))'));
-assert.ok(!residualPageText.includes('current_org_candidate') && residualAnalysisText.includes('className="residual-rubric"') && residualAnalysisText.includes('aria-label={`게시물 업무 판정: ${personBasis}. 사람 소속 판정 아님`}'));
+assert.equal(personSummaryProjections.length, 317);
+assert.equal(new Set(personSummaryProjections.map(row => row.alias)).size, 317);
+assert.ok(personProjections.every(row => Object.keys(row).sort().join(",") === "alias,notice_title,observed_at,official_url"));
+assert.ok(personSummaryProjections.every(row => Object.keys(row).sort().join(",") === "alias,first_observed_at,last_observed_at,mention_count,notice_count,observation_count,source_urls"));
+assert.ok(!Object.hasOwn(publicPersonObservation({ ...personSourceRows[0], current_org_candidate: "UNSAFE" }), "current_org_candidate"));
+assert.ok(!Object.hasOwn(publicPersonSummary({ ...personSourceLabels[0], path_steps: ["UNSAFE"] }), "path_steps"));
+assert.throws(() => publicPersonObservation({ ...personSourceRows[0], raw_label: "홍길동", label_type: "OTHER" }), /PERSON 공개 별칭/);
+assert.throws(() => publicPersonSummary({ ...personSourceLabels[0], raw_label: "홍길동", label_type: "PERSON" }), /PERSON 공개 별칭/);
+assert.throws(() => publicPersonObservation({ ...personSourceRows[0], source_location: "https://example.test/notice" }), /PERSON 공식 게시물 URL/);
+assert.throws(() => publicPersonSummary({ ...personSourceLabels[0], mention_source_locations: ["https://example.test/a"] }), /PERSON 공식 게시물 URL/);
+const safePersonCsv = publicResidualOccurrencesToCsv(personSourceRows);
+assert.equal(safePersonCsv.split("\r\n").length, 1115);
+assert.ok(!/notice_id|release_id|org_official_name|org_valid_from|org_valid_to/.test(safePersonCsv.split("\r\n")[0]));
+assert.ok(!/label_id|org_official_name|org_valid_from|org_valid_to/.test(publicResidualLabelsToCsv(personSourceLabels).split("\r\n")[0]));
+assert.ok(!safePersonCsv.includes(personSourceRows[0].notice_id));
+assert.ok(residualPageText.includes('personObservations={personObservations} personSummary={personSummary}') && residualPageText.includes('const publicAttributions = dataset.attributionExplanations.filter(row => nonPersonResidualIds.has(row.residual_id))'));
+assert.ok(!residualPageText.includes('personNoticeBasis') && !residualAnalysisText.includes('personNoticeBasis') && residualAnalysisText.includes('row.resolution_class!=="PERSON_EVIDENCE"&&<details className="residual-rubric"'));
 const allResiduals = selectResidualLabels(residualSnapshot.residualLabels, residualCategories, "OCCURRENCE_DESC");
 assert.equal(allResiduals.length, 355);
 assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
@@ -227,8 +236,8 @@ const personLabels = selectResidualLabels(residualSnapshot.residualLabels, ["PER
 const personOccurrences = residualOccurrencesForLabels(residualSnapshot.residuals, personLabels);
 assert.equal(personLabels.length, 317);
 assert.equal(personOccurrences.length, 1113);
-assert.equal(residualLabelsToCsv(personLabels).split("\r\n").length, 319);
-assert.equal(residualOccurrencesToCsv(personOccurrences).split("\r\n").length, 1115);
+assert.equal(publicResidualLabelsToCsv(personLabels).split("\r\n").length, 319);
+assert.equal(publicResidualOccurrencesToCsv(personOccurrences).split("\r\n").length, 1115);
 assert.ok(personOccurrences.every(row => /^[ㄱ-ㅎ]+\(\d{4}\)$/.test(row.raw_label)));
 assert.deepEqual(mentionSourceLinks(["https://example.test/a", "https://example.test/b"], [
   { source_location: "https://example.test/a", title: "공식 공고" },

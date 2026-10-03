@@ -96,21 +96,16 @@
 .evidence-links a { max-width:100%; padding:6px 10px; border:1px solid #b8d6f6; border-radius:6px; background:#fff; color:#125a9c; font-size:12px; font-weight:700; line-height:1.5; overflow-wrap:anywhere; }
 .evidence-links a:hover { background:#edf6ff; }
 .residual-notices { max-height:310px; overflow:auto; }
-.residual-notices li { display:grid; grid-template-columns:118px minmax(0,1fr) 270px; align-items:center; gap:12px; padding:10px 0; border-top:1px solid var(--line); }
+.residual-notices li { display:grid; grid-template-columns:118px minmax(0,1fr) 210px; align-items:center; gap:12px; padding:10px 0; border-top:1px solid var(--line); }
 .residual-notices time { white-space:nowrap; color:#536278; font-variant-numeric:tabular-nums; font-size:13px; }
 .attribution-notices button { min-width:0; border:0; background:transparent; padding:0; color:var(--primary); font:inherit; font-weight:750; text-align:left; cursor:pointer; }
 .attribution-notices button:hover,.attribution-notices button[aria-expanded="true"] { text-decoration:underline; text-underline-offset:3px; }
 .inference-badge { display:inline-flex; align-items:center; justify-self:start; max-width:100%; padding:5px 10px; border:1px solid #a9cfee; border-radius:999px; background:#eaf4ff; color:#135f9c; font-size:12px; font-weight:800; white-space:nowrap; }
-.residual-status-pair { display:inline-flex; flex-wrap:wrap; align-items:center; justify-self:start; gap:6px; min-width:0; }
-.work-hypothesis-badge { border-style:dashed; border-color:#dbbe78; background:#fffaed; color:#71531f; }
-.work-hypothesis-badge.is-insufficient { border-color:#d2d9e2; background:#f4f6f8; color:#596b7f; }
 .attribution-explanation { margin-top:22px; padding:22px; border:2px solid #8dbdf7; border-radius:12px; background:#fff; }
 .attribution-explanation>header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
 .attribution-explanation>header h4 { margin:2px 0 0; font-family:Paperlogy,Inter,sans-serif; font-size:22px; }
 .person-observation>header { justify-content:flex-start; flex-wrap:wrap; gap:12px 20px; }
-.person-observation .residual-status-pair { align-self:center; }
 .person-observation>p { margin:14px 0 0; color:#3d5269; line-height:1.75; }
-.person-observation>p.residual-hypothesis-note { color:#536278; font-size:12px; }
 .attribution-result-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:18px; }
 .attribution-result-grid>div { min-height:104px; padding:14px; border:1px solid var(--line); border-radius:9px; background:#f8fafc; }
 .attribution-result-grid>div.confirmed { border-color:#83c8a5; background:#effaf4; }
