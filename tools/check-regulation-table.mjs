@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
-import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, personResidualObservationsToCsv, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
-import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
-import { addDetailTerm, defaultDetailSettings, detailDateRange, filterDetailedNotices, filterDetailedRegulations, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
+import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, organizationSnapshot, personResidualObservationsToCsv, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
+import * as residualUi from "../packages/common/src/regulations/residual-ui.ts";
+import { addDetailTerm, defaultDetailSettings, departmentRegulationCount, detailDateRange, filterDetailedNotices, filterDetailedRegulations, officialDepartmentCounts, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
+const { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } = residualUi;
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
 const advancedText = await readFile(new URL("../packages/common/src/regulations/RegulationAdvancedSearch.tsx", import.meta.url), "utf8");
@@ -15,6 +16,7 @@ const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", impo
 const regulationsText = await readFile(new URL("../apps/public-site/app/regulations/page.tsx", import.meta.url), "utf8");
 const residualPageText = await readFile(new URL("../apps/public-site/app/residual-data/page.tsx", import.meta.url), "utf8");
 const residualAnalysisText = await readFile(new URL("../packages/common/src/regulations/DepartmentResidualAnalysis.tsx", import.meta.url), "utf8");
+const residualUiText = await readFile(new URL("../packages/common/src/regulations/residual-ui.ts", import.meta.url), "utf8");
 const personObservationText = await readFile(new URL("../packages/common/src/regulations/PersonResidualObservations.tsx", import.meta.url), "utf8");
 const navigationText = await readFile(new URL("../apps/public-site/components/SiteNavigation.tsx", import.meta.url), "utf8");
 const informationText = await readFile(new URL("../apps/public-site/components/InformationPages.tsx", import.meta.url), "utf8");
@@ -80,6 +82,8 @@ assert.deepEqual(filterDetailedNotices(notices, "투자", { ...defaultDetailSett
 assert.deepEqual(detailDateRange("2026-09-13", 1), { startDate: "2026-08-13", endDate: "2026-09-13" });
 assert.equal(addDetailTerm(["투자", "보증", "규정"], "네 번째").length, 3);
 assert.deepEqual(settingsForScope({ ...detailDefault, fields: ["TITLE", "ATTACHMENT_NAME"], evidenceGroups: ["ALIO"], dateField: "REVISION" }, "notice"), { ...detailDefault, fields: ["TITLE"], evidenceGroups: [], dateField: "POSTED" });
+assert.deepEqual(settingsForScope({ ...detailDefault, availabilityStatuses: ["FULLTEXT_PUBLIC", "NOTICE_ONLY"] }, "notice").availabilityStatuses, []);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, availabilityStatuses: ["FULLTEXT_PUBLIC", "NOTICE_ONLY"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
 const noticeFilters = { query: "", startDate: "", endDate: "", year: "", department: "", unmappedOnly: false };
 assert.equal(filterAndSortNotices(notices, noticeFilters)[0].notice_number, "10");
 assert.equal(filterAndSortNotices(notices, { ...noticeFilters, unmappedOnly: true }).length, 1);
@@ -106,11 +110,20 @@ assert.ok(navigationText.includes('href="/residual-data"') && !navigationText.in
 assert.ok(residualPageText.includes("DepartmentResidualAnalysis") && residualPageText.includes("getPublishDataset"));
 assert.ok(residualPageText.includes("PersonResidualObservations") && residualPageText.includes("organizationAttributionExplanations"));
 assert.ok(personObservationText.includes("personResidualObservationsToCsv") && !personObservationText.includes("org_") && !personObservationText.includes("reasoning"));
+assert.deepEqual(Object.keys(residualUi).sort(), ["RESIDUAL_PAGE_SIZE", "mentionSourceLinks", "residualOccurrencesForLabels", "selectResidualLabels"]);
+for (const removed of ["PersonObservation", "PersonObservationSummary", "publicPersonObservation", "publicPersonSummary", "publicResidualOccurrencesToCsv", "publicResidualLabelsToCsv", "mention_count", "official_source_urls", "residualLabelsToCsv", "residualOccurrencesToCsv"]) {
+  assert.ok(!residualUiText.includes(removed), `residual-ui.ts에 구 PERSON 혼합 계약 잔존: ${removed}`);
+}
 assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAnalysisText.indexOf('<div className="table-scroll">'));
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
-assert.ok(residualAnalysisText.includes('RESIDUAL_PAGE_SIZE') && residualAnalysisText.includes('담당 표기 관측 게시물') && residualAnalysisText.includes('근거 게시물과 이동 설명'));
-assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('본문 언급(mention)은 담당 칸과 별도로'));
+assert.ok(residualAnalysisText.includes('RESIDUAL_PAGE_SIZE') && residualAnalysisText.includes('근거 게시물과 이동 설명'));
+assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('관측·추정 판정 기준 보기'));
+assert.ok(personObservationText.includes('RESIDUAL_PAGE_SIZE') && personObservationText.includes('residual-detail-row') && personObservationText.includes('colSpan={4}'));
+assert.ok(personObservationText.includes('personResidualObservationsToCsv(safeRows)') && personObservationText.includes('publicResidualLabel(row.public_alias, "PERSON")'));
+assert.ok(personObservationText.includes('officialNoticeListUrl(row.source_location)') && personObservationText.includes('사규 제개정 예고 목록 페이지'));
+assert.ok(personObservationText.includes('aria-controls=') && personObservationText.includes('scrollIntoView('));
+assert.ok(!personObservationText.includes('inference_basis') && !personObservationText.includes('work_context') && !personObservationText.includes('org_node_id'));
 assert.ok(residualAnalysisText.includes('id="residual-selected-detail"') && residualAnalysisText.includes('aria-expanded={selected===row.label_id}') && residualAnalysisText.includes('scrollIntoView('));
 assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
@@ -120,8 +133,8 @@ assert.ok(explorerText.includes('onToggleSettings={toggleSettings}') && explorer
 assert.ok(explorerText.includes('aria-controls="advanced-search-panel"') && advancedText.includes('id="advanced-search-panel"'));
 assert.ok(advancedText.includes('panelRef.current?.focus()') && advancedText.includes('handleEscape') && advancedText.includes('aria-labelledby="advanced-search-title"'));
 assert.ok(explorerText.includes('partial-filter-clear') && explorerText.includes('부분공개 속성:') && explorerText.includes('onClearPartial={() => updateRegulations({ partialType: "ALL" })}'));
-for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", "현재 설정 적용"]) assert.ok(advancedText.includes(field));
-assert.ok(advancedText.includes('과거 부서 자동 매칭 (미제공)') && advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
+for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", ">적용<"]) assert.ok(advancedText.includes(field));
+assert.ok(advancedText.includes('과거→현재 조직 자동 매칭은 제공하지 않습니다') && advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
 assert.ok(explorerText.includes('ALIO 출처 연결') && explorerText.includes('승인 공개본 전체 규정') && explorerText.includes('전체 사규예고'));
 assert.ok(explorerText.includes('regulation-overview-grid') && explorerText.includes('notices.length.toLocaleString("ko-KR")') && !explorerText.includes('regulation-overview-note'));
 assert.ok(regulationsText.includes('<CollectionStatus') && collectionRouteText.includes('public_collection_state'));
@@ -177,6 +190,14 @@ for (const source of residualSnapshot.sources) approvedSourceMap.set(source.regu
 const approvedAlio = filterDetailedRegulations(residualSnapshot.rows, "", { ...defaultDetailSettings(), evidenceGroups: ["ALIO"] }, latestNoticeDates(residualSnapshot.notices), approvedSourceMap);
 assert.equal(approvedAlio.length, 205);
 assert.ok(approvedAlio.every(row => approvedSourceMap.get(row.regulation_version_id).some(source => source.source_kind === "ALIO")));
+const selectedConclusions = filterDetailedRegulations(residualSnapshot.rows, "", { ...defaultDetailSettings(), availabilityStatuses: ["FULLTEXT_PUBLIC", "NOTICE_ONLY"] }, latestNoticeDates(residualSnapshot.notices), approvedSourceMap);
+assert.equal(selectedConclusions.length, 1036);
+const officialDepartments = organizationSnapshot.hierarchy.flatMap(group => group.units);
+const departmentCounts = officialDepartmentCounts(officialDepartments, residualSnapshot.rows, residualSnapshot.notices);
+assert.equal(departmentCounts.length, 20);
+assert.equal(departmentCounts.reduce((sum, option) => sum + departmentRegulationCount(option, []), 0), 502);
+assert.equal(departmentCounts.reduce((sum, option) => sum + option.notices, 0), 817);
+assert.ok(departmentCounts.every(option => departmentRegulationCount(option, ["PARTIAL_PUBLIC"]) === 0));
 const residualCategories = ["ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
 assert.equal(residualSnapshot.residuals.filter(row => row.label_type === "PERSON").length, 0);
 assert.equal(residualSnapshot.residualLabels.filter(row => row.label_type === "PERSON").length, 0);
@@ -193,6 +214,10 @@ assert.ok(residualSnapshot.personResidualObservations.every(row => JSON.stringif
 assert.ok(residualSnapshot.personResidualObservations.every(row => Object.keys(row).every(key => !forbiddenPersonKey.test(key))));
 assert.ok(residualSnapshot.personResidualObservations.every(row => /^[ㄱ-ㅎ]+\(\d{4}\)$/.test(row.public_alias)));
 assert.ok(residualSnapshot.personResidualObservations.every(row => Number(row.observation_count) === 1));
+assert.ok(residualSnapshot.personResidualObservations.every(row => {
+  const url = new URL(row.source_location);
+  return url.protocol === "https:" && url.hostname === "www.kodit.or.kr" && url.pathname.endsWith("/selectNttList.do") && url.searchParams.get("bbsId") === "322";
+}));
 const personCsv = personResidualObservationsToCsv(residualSnapshot.personResidualObservations);
 assert.equal(personCsv.split("\r\n").length, 1115);
 assert.equal(personCsv.split("\r\n", 1)[0], "﻿public_alias,posted_at,title,source_location,observation_count");
@@ -209,7 +234,8 @@ assert.deepEqual(mentionSourceLinks(officialListPages, [
   { source_location: officialListPages[0], title: "개별 게시물 제목 A" },
   { source_location: officialListPages[1], title: "개별 게시물 제목 B" },
 ]).map(link => link.label), ["사규 제개정 예고 (1)", "사규 제개정 예고 (2)"]);
-assert.ok(!residualAnalysisText.includes('>본문 근거 원문 ↗</a>') && residualAnalysisText.includes("공개된 근거 링크는 신보의 사규 제개정 예고"));
+assert.ok(!personObservationText.includes('>{row.title} ↗</a>') && personObservationText.includes('개별 게시물 원문이 아닌'));
+assert.ok(!residualAnalysisText.includes('row.resolution_class==="PERSON_EVIDENCE"') && !residualAnalysisText.includes('person-observation'));
 assert.ok(residualAnalysisText.includes("<AttributionExplanation detail={activeAttribution}"));
 assert.ok(residualAnalysisText.includes("const evidenceUrl=validPublicUrl(step.evidence_url)"));
 

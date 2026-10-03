@@ -2,17 +2,17 @@
 
 일반 공개 화면입니다. 배포 시점에 승인된 공개 release를 `data/public-snapshot-v2.json.gz`로 고정해 표시합니다. **규정 목록·집계·CSV는 Supabase RPC 가용성에 의존하지 않습니다.** 예외적으로 상단 자동수집 상태만 서버 `/api/collection-state`가 기존 공개 `api.public_collection_state()`에서 읽으며, 조회 실패 시 상태만 `상태 조회 불가`로 표시하고 승인 규정 목록은 계속 제공합니다. PERSON 관측 계약에는 승인 별칭·관측일·게시물 제목·공식 URL·관측 횟수만 포함하며 조직 attribution 계약과 결합하지 않습니다. 기존 RPC·migration·검사 코드는 외부 검증과 증빙을 위해 보존합니다.
 
-브라우저 번들에는 DB 비밀번호·access token·service role key를 포함하지 않습니다. 규정 공개 snapshot은 개인·미매핑 표기를 공개 안전값으로 치환하고 내부 provenance 필드를 제거한 뒤 생성합니다.
+브라우저 번들에는 DB 비밀번호·access token·service role key를 포함하지 않습니다. `a8d6422`에서 PERSON 관측 RPC와 ORG 귀속 RPC를 분리하고 PERSON 5필드만 담은 snapshot v2를 재생성했습니다. 이 UI 후속 변경은 새 계약을 기준으로 검수하며, 이전 PR #10 head `033d939`의 미리보기를 최신 검수본으로 사용하지 않습니다.
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm --filter @kodit/public-site dev
 ```
 
-- 규정·법령 시작 화면: `http://localhost:3000/regulations` (기존 `/` 접근은 같은 화면으로 리디렉션하며 허용된 검색 쿼리를 유지). 작은 요약 카드 4개는 **승인 규정 1,041건·ALIO 출처 연결 규정 205건·사전예고만 831건·전체 사규예고 2,089건**으로, 마지막 값은 규정 버전이 아닌 게시물 수입니다. ALIO 연결은 전문 공개의 동의어가 아닙니다. 결과표의 상세설정 버튼은 검색창과 표 사이의 2열 공개 필드 설정표를 열며, 포함/제외 단어 각 최대 3개, 공개 필드·공식 부서명 정확 일치·규정 출처 종류·기간을 조건으로 삼습니다. `필터 결과 전체 CSV`는 현재 페이지가 아니라 필터된 모든 규정/예고 행을 내려받습니다. 기존 `부분 공개` 하위 분류(`partial_*` 공개 속성)는 **출처 종류 ALIO 필터와 다르며**, 분류 영역을 접어도 표 제목 옆의 활성 조건 칩에서 확인·해제할 수 있습니다. 본문 검색·과거 부서→현행 조직 자동 매칭은 공개 계약이 없어 제공하지 않습니다.
+- 규정·법령 시작 화면: `http://localhost:3000/regulations` (기존 `/` 접근은 같은 화면으로 리디렉션하며 허용된 검색 쿼리를 유지). 작은 요약 카드는 **전체 사규예고 2,089건(게시물) → 승인 규정 1,041건(버전) → ALIO 출처 연결 규정 205건 → 사전예고만 831건** 순서입니다. ALIO 연결은 전문 공개의 동의어가 아닙니다. 결과표의 상세설정 버튼은 검색창과 표 사이의 2열 공개 필드 설정표를 열며, 포함/제외 단어 각 최대 3개, 공개 필드·공식 부서명 정확 일치·규정 출처 종류·기간을 조건으로 삼습니다. **첨부파일명은 규정 단독, 연결된 규정명은 사규예고 단독** 범위에서만 선택 가능하고 미지원 시 비활성 사유가 옆에 표시됩니다. 공개결론 네 값은 규정 버전에만 복수 선택으로 적용합니다. 조직도 2026-09-15 정본은 공식 부서 **20개**(요청의 24개가 아님)이며, 부서 옆 건수는 선택한 자료·공개결론에 따른 승인본의 **담당 표기 정확 일치 행 수**입니다. 0건 부서도 목록에 남기고, 전체 선택은 공식 20개로 좁히며 선택 해제는 부서 제한을 제거합니다. 검색어·기간 조건은 이 부서 옆 건수에 반영하지 않습니다. `필터 결과 전체 CSV`는 현재 페이지가 아니라 같은 조건의 필터된 모든 규정/예고 행을 내려받습니다. 기존 `부분 공개` 하위 분류(`partial_*` 공개 속성)는 **출처 종류 ALIO 필터와 다르며**, 분류 영역을 접어도 표 제목 옆의 활성 조건 칩에서 확인·해제할 수 있습니다. 본문 검색·**공식 근거 없는 과거→현재 조직 자동 매칭은 제공하지 않습니다.**
 - 사업별 통계(정적 주제 검증본): `/investment-statistics` 요약, `/investment-statistics/yearly-notices` 연도별 사규예고, `/investment-statistics/evidence-notices` 근거 사규예고. 요약 카드·연도를 누르면 선택한 하위군 또는 연도를 URL 매개변수로 근거 목록에 전달합니다. 목록에서 하위군을 바꾸거나 해제하면 주소도 갱신되어 새로고침·공유 후에도 동일한 선택 상태를 유지하며, CSV는 현재 필터 결과만 내보냅니다.
 - 부서별 통계: `/department-statistics` 요약, `/department-statistics/semantic-matching` 시맨틱 매칭방식, `/department-statistics/organization-history` 조직 히스토리. 각 화면은 상단 메뉴로 이동하며 한 화면의 긴 앵커가 아닙니다.
-- 담당 표기 잔차 데이터: `http://localhost:3000/residual-data`. 공개 표기 355개를 관측 분류 복수 선택·표시명/관련 사규예고 수 정렬·10개 단위 페이지로 살펴보고 클릭한 행 바로 아래에서 상세를 펼칩니다. 두 CSV는 현재 페이지 10행이 아니라 **선택한 분류 전체 표기 및 연결 관측 전체**를 내보냅니다. PERSON은 공급된 한글 초성+4자리 공개 별칭만 사용하며 원문 신원·소속을 추정하지 않습니다. 본문 근거 링크는 개별 문서 원문이 아니라 신보의 공식 `사규 제개정 예고` **목록 페이지**이며, 같은 페이지 제목은 화면에서 순번으로 구별합니다.
+- 담당 표기 잔차 데이터: `http://localhost:3000/residual-data`. 분리된 공개본의 **비PERSON 표기 38개/관측 159건**과 **PERSON 별칭 317개/관측 1,113건**은 각각 10개 단위 목록·클릭한 행 바로 아래 상세로 표시합니다. 비PERSON은 네 분류 복수 필터와 조직형 판정 근거를, PERSON은 공개 별칭 정렬·관측일·게시물 제목·신보 공식 목록 URL·관측 횟수만 제공합니다. PERSON 화면·CSV에는 원장 ID, 조직 후보·업무귀속·이동 경로·추론 과정·본문 mention 통계를 넣지 않습니다. 비PERSON의 두 CSV는 현재 분류 필터 **전체 결과**, PERSON 관측 CSV는 **1,113건 전체**를 내보냅니다. PERSON 출처 링크는 개별 게시물 원문이 아닌 신보의 `사규 제개정 예고` **목록 페이지**이며 같은 제목은 순번으로 구별합니다. 별칭과 신보 공식 URL은 UI에서도 다시 검증합니다.
 - 상단 1그룹: `/data-purpose`, `/methodology`, `/technical-specs`
 - 규정 상세 예시: `http://localhost:3000/regulations/investment-option-guarantee`
 
@@ -47,7 +47,7 @@ node tools/publish/build_public_organization_history.mjs
 node tools/publish/build_public_organization_history.mjs --check
 ```
 
-시각 체계는 `app/styles.css`의 공통 토큰·헤더와 `app/styles/{regulations,department,residual,topic,information,detail}.css`의 화면별 규칙으로 나눕니다. `/regulations`에서는 요약 뒤 검색창과 결과표가 이어지고, 표 아래쪽 도구 버튼에서 위의 상세설정 표를 펼칩니다. 검색어는 **검색 버튼/Enter 제출 후**, 상세 조건은 **현재 설정 적용**을 눌러 반영합니다. 상단 정보 링크는 각각의 페이지로 바로 이동합니다. 본문은 [한국출판인회의 KoPubWorld 돋움](https://www.kopus.org/biz-electronic-font2/) 공식 2026 TTF 묶음의 Medium(400), Bold(700)를 웹폰트 임베딩 승인에 따라 **바이트 변경 없이** `public/fonts/`에 사용합니다. 일부 제목에만 기존 Paperlogy를 씁니다. KoPub의 글리프를 수정하거나 서브셋·포맷 변환하지 않았습니다. 최대 본문 폭은 1296px, 최소 웹 화면 폭은 768px입니다. 모바일에서는 768px 태블릿 레이아웃을 가로로 볼 수 있고 세션당 한 번 PC·태블릿 최적화 안내 모달이 열립니다.
+시각 체계는 `app/styles.css`의 공통 토큰·헤더와 `app/styles/{regulations,department,residual,topic,information,detail}.css`의 화면별 규칙으로 나눕니다. `/regulations`에서는 요약 뒤 검색창과 결과표가 이어지고, 표 아래쪽 도구 버튼에서 위의 상세설정 표를 펼칩니다. 검색어는 **검색 버튼/Enter 제출 후**, 상세 조건은 **적용**을 눌러 반영합니다. 빠른 기간의 기준일은 오늘이 아닌 **승인 공개본 기준일**이며 1개월·6개월·1년 버튼 바로 앞에 명시합니다. 상단 정보 링크는 각각의 페이지로 바로 이동합니다. 본문은 [한국출판인회의 KoPubWorld 돋움](https://www.kopus.org/biz-electronic-font2/) 공식 2026 TTF 묶음의 Medium(400), Bold(700)를 웹폰트 임베딩 승인에 따라 **바이트 변경 없이** `public/fonts/`에 사용합니다. 일부 제목에만 기존 Paperlogy를 씁니다. KoPub의 글리프를 수정하거나 서브셋·포맷 변환하지 않았습니다. 최대 본문 폭은 1296px, 최소 웹 화면 폭은 768px입니다. 모바일에서는 768px 태블릿 레이아웃을 가로로 볼 수 있고 세션당 한 번 PC·태블릿 최적화 안내 모달이 열립니다.
 
 다이어그램의 정본은 `data/diagrams/*.mmd`이고 화면용 SVG는 `public/diagrams/*.svg`입니다. 잔차 ERD는 제공된 Mermaid 원문을 유지하고, **기술·방법론 페이지에만** 독립적인 작은 그림을 배치했습니다. `/data-purpose`의 전용 흐름도 원본·SVG는 사용자가 제거를 요청해 삭제했습니다. 잔차 화면의 발생·처리 설명은 `/methodology#residual-ledger-erd`로 직접 연결됩니다. 2026-10-03의 재렌더링에서 기본 Mermaid 글자를 한 단계(작은 흐름도 14px, 전체 ERD 13px) 낮췄습니다. SVG를 다시 생성할 때는 Mermaid CLI `mmdc -c data/diagrams/mermaid-theme.json -i data/diagrams/residual-ledger-erd.mmd -o public/diagrams/residual-ledger-erd.svg`처럼 실행하되, 실행 환경에 Chromium/Puppeteer 경로를 지정해야 합니다. 확대 패널과 새 창 원본 보기를 지원합니다.
 

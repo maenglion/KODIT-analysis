@@ -211,3 +211,32 @@ merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `
 기술사양의 보존 문서 2,414개×재현 2회=4,828회(9/13)와 별도 parser 원장 실행 기록 2,414건(9/17), 본문이 있는 실행 관측 2,403건, 원장 고유 추출 산출물 2,397건을 각각 다른 단위로 설명한다. HWP 298+28(17+11)=326, HWPX 353+5(4+1)=358의 식별 결과와 중첩 가능한 형식 불일치 지표는 서로 다른 그룹으로 표시한다. PDF의 본문 없음 1건은 OCR 미수행 경계를 존중해 ‘추출 가능한 텍스트 없음’으로 적었다. 사용자가 선호한 다이어그램 파일은 유지하되 caption에서 실행·추출 기록과 공개 승인이 별도임을 설명한다. 첨부 대화의 ‘승인 CSV만 서버 API로 제공’ 및 ‘2026-10-03 공개본 생성’은 현행 코드와 일치하지 않아 반영하지 않았다: Next server-only `review-data.ts`는 배포된 `public-snapshot-v1.json.gz`를 읽어 공개 UI에 전달하며 브라우저 CSV는 동일한 승인 데이터의 필터 결과로 생성한다. `/api/collection-state`는 규정 목록이 아닌 공개 수집 상태만 조회한다.
 
 `pnpm check:regulations`·공개 사이트 TypeScript·프로덕션 빌드·`git diff --check` 통과. 로컬 프로덕션 Chromium **1440/800px × 13개 공개 뷰**에서 각각 5개 항목 순서·기준일·추가 날짜·생성일 미기재·10일 주기·상단 정렬/넘침 없음, 단일 모달 Escape 및 초점 복귀·4개 카드 숫자·기술사양 단위/다이어그램 보존을 확인했다. 기존 상세설정 브라우저 회귀의 ALIO 205건 CSV(BOM)·포함/제외·담당부서/기간 필터·부분공개 속성 표시 및 2,089건 예고 전환도 유지됐다. 이 변경은 UI·설명·회귀/워크로그에 한정하며 DB migration·public read contract·승인 snapshot·Netlify 설정은 수정하지 않는다.
+
+### PR #9 운영 반영 및 상세검색 후속 개선 (2026-10-03, 새 PR 검수 전)
+
+사용자가 기존 변경을 먼저 푸시·병합하도록 승인해 [PR #9](https://github.com/maenglion/KODIT-analysis/pull/9)의 고정 head `19aef3f5d9c5525c30476cdb44bb15a432deaa34`를 GitHub `main`의 merge commit `03036ff6472fbefbcad3259b1490fb31ebced20f`로 병합했다. Netlify 설정/API를 직접 변경하지 않았고, 기존 GitHub→Netlify 자동 배포가 완료된 뒤 `https://letscheck-sinbo.netlify.app/regulations`에서 4개 요약 카드·동적 수집 상태 API 200, 기술사양 새 제목, 1440/800px 상세조건/ALIO 205건 CSV·예고 2,089건 전환을 Chromium으로 확인했다. 운영 반영과 다음 UI 변경은 **별도 브랜치**로 구분한다.
+
+다음 상세검색은 승인 snapshot/공식 조직도에 국한한 UI 후속작업이다. 검색 자료를 바꾸면 해당 범위가 지원하지 않는 `첨부파일명`(규정 단독)·`연결된 규정명`(예고 단독)을 체크 해제·비활성화하고 각각 그 **사유를 체크박스 옆에 표시**한다. 기존 단일 드롭다운 `공개 자료 상태`를 정본의 전체 공개결론 네 값 **전문 공개 205 / 일부 공개 0 / 사전예고만 831 / 출처불명 5** 체크박스로 바꾸되, 복수 선택은 규정 버전의 OR 조건이며 사규예고 게시물에는 적용하지 않는다. 0개 선택은 전체 규정 버전이다. 분류 버튼·단일 URL 카테고리와 상태를 일치시키고 CSV에도 동일 필터 전체를 적용한다. 결과표는 복수 공개결론이 적용됐다는 사실을 표 머리에 표시한다.
+
+사용자의 ‘부서 24개’ 표현을 그대로 숫자로 만들지 않는다. `organizationSnapshot.hierarchy`의 **2026-09-15 공식 부서 정본은 20개**이며, 승인 공개본에서 정확히 일치하는 담당 표기는 **규정 버전 502건 / 예고 게시물 817건**이다. 공식 부서는 0건이어도 전부 렌더하고, 각 라벨의 건수는 선택한 **자료·규정 공개결론**의 정확 일치 행 수만 표시한다(검색어·기간 등 다른 조건은 미반영). 복수 자료 범위에서는 규정/예고 수를 **별도로** 표시한다. 전체 선택은 비공식·과거 담당 표기를 제외한 그 20개로 제한(현재 기본 규정 502건), 선택 해제는 부서 조건을 제거(현재 기본 규정 1,041건)한다. 과거→현행 조직 자동 매칭은 ‘향후 제공’ 항목이 아니라 **공식 근거가 없어 제공하지 않는 기능**이라고 명시한다. 빠른 기간 기준일 2026-09-13은 1개월·6개월·1년 버튼 바로 앞에 놓고, 버튼은 `적용`으로 짧게 표기했다.
+
+추가 요청으로 요약 카드 순서는 **전체 사규예고 2,089건 → 전체 규정 1,041건 → ALIO 연결 205건 → 사전예고만 831건**으로 이동했다. 규정/예고 행과 조직 정본은 변경하지 않았다. UI 정적 회귀·타입·Next 프로덕션 빌드·잔차 공개 계약 및 로컬 Chromium 1440/800px에서 범위 변경/비활성 사유/공개결론 두 값 합집합 1,036건과 CSV 1,036행/공식 20개 전체 선택 502건·선택 해제 1,041건/부분공개 0건이 통과했다. 새 PR 자동 미리보기 검수·사용자 확인 전에는 후속 변경을 `main`에 병합하지 않는다.
+
+### 잔차 PERSON 관측 전용 UI와 배포 차단 (2026-10-03, PR #10 검수 전)
+
+처음에는 사용자 제안에 따라 PERSON 게시물의 인물형 관측 옆에 업무 유사/시맨틱 후보 라벨을 놓는 방안을 검토했다. 독립 개인정보 검토와 사용자 최종 판단에 따라 **그 방안을 철회한다**. 공개 계약에는 이름만으로 조직·업무담당을 만드는 일이 없어야 한다. 따라서 PERSON 화면은 한글 초성+4자리 공개 별칭, 관측 게시물 제목·관측일·공식 URL 및 관측 횟수만 소비한다. 인물형 문맥 관측은 계속 설명하지만 조직 후보·업무귀속 라벨·이동 경로·추론 과정·판정 루브릭을 PERSON 행/상세에 표시하지 않는다. 조직 판정 루브릭은 비PERSON 행 아래에서만 열 수 있다. `복수 후보`는 일반 후보 다수가 아니라 명시적 모호 후보 상태라는 뜻으로 표기한다.
+
+당시 구 snapshot v1에는 UI 서버에서 별도 DTO를 만들더라도 공개 RPC·checked-in payload가 남는 문제가 있었다. 따라서 로컬 커밋 `d162fca`의 화면 경계만으로는 PR #10을 릴리스할 수 없어 푸시를 보류했다. 이 문단은 **보안 패치 전 판단의 이력**이며, 최신 배포/검수 기준은 위 `a8d6422`의 분리 계약과 아래 후속 기록이다.
+
+### 분리 공개계약 v2 위 UI 재적용 (2026-10-03, PR #10 최신 검수 전)
+
+- 사용자의 선행 패치 완료 안내에 따라 `main@77fa77b`를 먼저 fast-forward한 뒤, 기존 PR #10 기능 브랜치에 보안 패치 `a8d6422`를 비강제 병합했다. 충돌한 페이지·패키지 export·잔차 조직 컴포넌트·UI 회귀 파일은 **보안 main 버전**을 기준으로 해결했다. `public-snapshot-v1.json.gz`는 제거된 상태를 유지하고 `public-snapshot-v2.json.gz`, 보안 migration/RPC, snapshot exporter, read loader는 main과 동일하게 둔다.
+- 구 로컬 UI 커밋 `d162fca`의 혼합 PERSON→ORG 임시 투영은 재적용하지 않는다. Codex의 `PublicPersonResidualObservationRow` 다섯 필드(`public_alias`, `posted_at`, `title`, `source_location`, `observation_count`)와 별도 `PersonResidualObservations` 컴포넌트를 그대로 사용한다. 목록은 317개 별칭·1,113개 관측을 10개 단위로 정렬·페이지 이동하며, 선택 행 바로 아래에 관측일·게시물 제목·**공식 사규예고 목록 페이지** 링크만 펼친다. 별칭 형식과 KODIT 목록 URL은 화면에서 재검증하고, 목록 페이지를 특정 게시물 원문으로 표기하지 않는다. PERSON CSV는 원래 v2 관측 CSV의 다섯 컬럼만 사용한다.
+- 조직형은 별도 잔차 38개 표기·159개 관측 및 공개 ORG 귀속 설명만 소비한다. 기존 ORG 표의 죽은 PERSON 분기/본문 mention·추론 렌더 코드를 제거하고 조직형 8개 용어 범례만 남겼다. PERSON의 공개 조직 후보·직무·업무귀속·이동 경로·추론 과정·내부 ID·본문 mention 통계는 화면·CSV·props에 다시 합치지 않는다. 과거 18/18/24 예시는 이전 계약의 **역사적 화면 확인 값**이지 v2 PERSON UI의 공개 통계가 아니다.
+- `docs/architecture`의 이전 v1·PR #7 서술은 당시 배포/검수의 이력이다. 현재 계약과 서로 다른 부분은 이 절 및 보안 패치 기록을 우선한다. 2026-10-02 기준 과거 화면 기획 첨부의 v1 공개본·임시 문의 연락처·삭제된 데이터 목적 카드 같은 내용은 이후 사용자 승인 결정과 충돌하므로 이 UI 통합에 되돌려 넣지 않는다.
+
+검증: `pnpm check`, `check:approved`, `check:technical-specs`, `check:t07c`, `pnpm test`, `check:regulations`, 공개 사이트 TypeScript/프로덕션 빌드, `check:residual-analysis`, `git diff --check` 통과. 로컬 Chromium 1440/800px에서 PERSON 10행/32쪽, 별칭 317개/관측 1,113건 CSV의 UTF-8 BOM·정확한 5열 헤더, 인라인 상세·닫기 초점 복귀·조직 루브릭 비노출을 확인했다. 별칭 `ㅇㄷㅎ(8053)`은 v2 관측 게시물 18건·서로 다른 **사규예고 목록 URL 2개**다. 이전 snapshot v1의 본문 mention 근거 목록 URL 네 개와는 **서로 다른 출처 배열**이므로 목록 개수를 재사용하지 않는다. 비PERSON 상세의 8개 조직형 판정 기준, 규정 상세검색 20개 공식 조직·1,036건 복수 공개결론 CSV도 재검증했다. 새 PR #10 head의 Netlify 자동 미리보기와 사용자 확인 전에는 main을 변경하지 않는다.
+
+### PR #10 리뷰 P1: 구 PERSON 혼합 DTO·CSV helper 제거 (2026-10-03)
+
+사용자 [PR 리뷰 댓글](https://github.com/maenglion/KODIT-analysis/pull/10#issuecomment-5967736017)에서 이전 보고서와 달리 UI 헬퍼 `residual-ui.ts`에 **미사용 구 PERSON 혼합 DTO 및 CSV 함수가 잔존**함을 발견했다. 특히 구 `publicResidualLabelsToCsv()`는 `mention_count`, `official_source_urls` 열을 다시 만들 수 있었다. 실행 경로가 없었다는 사유로 유지하지 않고 `PersonObservation`, `PersonObservationSummary`, `publicPersonObservation()`, `publicPersonSummary()`, `publicResidualOccurrencesToCsv()`, `publicResidualLabelsToCsv()` 및 그 전용 import/내부 CSV 직렬화 함수를 삭제했다. 조직형 잔차의 목록·정렬·공식 근거 링크 헬퍼만 남겼다. `check:regulations`는 이 모듈의 런타임 export 허용목록과 구 타입·함수·`mention_count`·`official_source_urls` 키 부재를 검사한다. 실제 PERSON 화면/CSV는 계속 별도 `PersonResidualObservations.tsx`와 `personResidualObservationsToCsv()`의 **v2 5필드 관측 계약**만 쓴다. Codex 소관 migration, RPC, snapshot exporter, snapshot v2 및 공통 read contract는 수정하지 않았다. 앞선 ‘구 혼합 DTO를 재적용하지 않았다’는 보고는 실제 PR diff의 미사용 잔존 코드까지 확인하지 못한 불완전한 검토였으며 이 기록으로 정정한다.

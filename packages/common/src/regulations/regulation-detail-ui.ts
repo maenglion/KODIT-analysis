@@ -1,5 +1,7 @@
 import {
+  availabilityOrder,
   normalizePublicSearch,
+  type Availability,
   type PublicRegulationSourceRow,
   type PublishNoticeRow,
   type PublishRegulationRow,
@@ -12,6 +14,7 @@ export type DetailDateField = "REVISION" | "LATEST_NOTICE" | "POSTED";
 
 export type RegulationDetailSettings = {
   fields: DetailField[];
+  availabilityStatuses: Availability[];
   includes: string[];
   excludes: string[];
   departments: string[];
@@ -24,6 +27,7 @@ export type RegulationDetailSettings = {
 export function defaultDetailSettings(scope: DetailScope = "master"): RegulationDetailSettings {
   return {
     fields: ["TITLE", "DEPARTMENT", "YEAR"],
+    availabilityStatuses: [],
     includes: [],
     excludes: [],
     departments: [],
@@ -44,9 +48,40 @@ export function settingsForScope(settings: RegulationDetailSettings, scope: Deta
   return {
     ...settings,
     fields: supported.length ? supported : defaultDetailSettings(scope).fields,
+    availabilityStatuses: scope === "notice" ? [] : settings.availabilityStatuses,
     evidenceGroups: scope === "master" ? settings.evidenceGroups : [],
     dateField: scope === "notice" ? "POSTED" : scope === "all" || settings.dateField === "POSTED" ? "LATEST_NOTICE" : settings.dateField,
   };
+}
+
+/** Approved organization names, including those with no exact match; no historical-name inference. */
+export type OfficialDepartmentCount = {
+  name: string;
+  regulationsByStatus: Record<Availability, number>;
+  notices: number;
+};
+
+export function officialDepartmentCounts(
+  names: readonly string[], rows: readonly PublishRegulationRow[], notices: readonly PublishNoticeRow[],
+): OfficialDepartmentCount[] {
+  const counts = new Map<string, OfficialDepartmentCount>(names.map(name => [name, {
+    name,
+    regulationsByStatus: { FULLTEXT_PUBLIC: 0, PARTIAL_PUBLIC: 0, NOTICE_ONLY: 0, SOURCE_UNKNOWN: 0 },
+    notices: 0,
+  }]));
+  for (const row of rows) {
+    const item = counts.get(row.notice_department ?? "");
+    if (item) item.regulationsByStatus[row.availability]++;
+  }
+  for (const notice of notices) {
+    const item = counts.get(notice.notice_department ?? "");
+    if (item) item.notices++;
+  }
+  return names.map(name => counts.get(name)!);
+}
+
+export function departmentRegulationCount(option: OfficialDepartmentCount, statuses: readonly Availability[]) {
+  return (statuses.length ? statuses : availabilityOrder).reduce((total, status) => total + option.regulationsByStatus[status], 0);
 }
 
 export function addDetailTerm(terms: readonly string[], value: string): string[] {
@@ -91,6 +126,7 @@ export function filterDetailedRegulations(
   sourcesByVersion: Map<string, PublicRegulationSourceRow[]>,
 ) {
   return rows.filter(row => {
+    if (settings.availabilityStatuses.length && !settings.availabilityStatuses.includes(row.availability)) return false;
     const sources = sourcesByVersion.get(row.regulation_version_id) ?? [];
     const values = settings.fields.flatMap(field => {
       if (field === "TITLE") return [row.display_name, row.normalized_name];
@@ -131,6 +167,6 @@ export function filterDetailedNotices(
 
 export function hasDetailCriteria(settings: RegulationDetailSettings, scope: DetailScope) {
   const base = defaultDetailSettings(scope);
-  return settings.includes.length > 0 || settings.excludes.length > 0 || settings.departments.length > 0 || settings.evidenceGroups.length > 0 || Boolean(settings.startDate || settings.endDate) ||
+  return (scope !== "notice" && settings.availabilityStatuses.length > 0) || settings.includes.length > 0 || settings.excludes.length > 0 || settings.departments.length > 0 || settings.evidenceGroups.length > 0 || Boolean(settings.startDate || settings.endDate) ||
     settings.fields.length !== base.fields.length || base.fields.some(field => !settings.fields.includes(field));
 }
