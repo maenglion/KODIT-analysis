@@ -158,3 +158,40 @@
   .residual-policy dl>div { grid-template-columns:130px minmax(0,1fr); }
   .residual-pagination { align-items:flex-start; flex-direction:column; }
 }
+
+/* PERSON observation is a separate five-field public contract, not an ORG attribution table. */
+.person-observation-section { margin-top:28px; padding:26px 24px 28px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:var(--shadow); }
+.person-observation-section .residual-section-header { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; }
+.person-observation-section .residual-section-header h2 { margin:4px 0 8px; font-family:Paperlogy,Inter,sans-serif; font-size:26px; }
+.person-observation-section .residual-section-header p:last-child { max-width:750px; margin:0; color:var(--muted); line-height:1.65; }
+.person-observation-section .residual-section-header>button { flex-shrink:0; min-height:42px; padding:9px 16px; border:1px solid var(--primary-dark); border-radius:7px; background:var(--primary-dark); color:#fff; font-weight:750; cursor:pointer; }
+.person-observation-section .residual-section-header>button:hover { background:var(--primary); }
+.person-observation-toolbar { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin:19px 0 12px; }
+.person-observation-toolbar label { min-width:230px; color:#315477; font-size:12px; font-weight:800; }
+.person-observation-toolbar select { display:block; width:100%; min-height:42px; margin-top:5px; padding:9px 11px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); font-size:14px; }
+.person-observation-toolbar p { margin:0 0 7px; color:#4b5f75; font-size:13px; }
+.person-observation-toolbar b { color:var(--primary); }
+.person-observation-table { min-width:700px; }
+.person-observation-table th:nth-child(1) { width:32%; }
+.person-observation-table th:nth-child(2) { width:19%; }
+.person-observation-table th:nth-child(3) { width:27%; }
+.person-observation-table th:nth-child(4) { width:22%; }
+.person-observation-table td:nth-child(3) { white-space:nowrap; }
+.person-observation-detail>p:not(.eyebrow) { color:#42566f; line-height:1.6; }
+.person-observation-meta { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin:0; }
+.person-observation-meta>div { padding:10px; border-top:1px solid var(--line); }
+.person-observation-meta dt { color:var(--muted); font-size:11px; font-weight:800; }
+.person-observation-meta dd { margin:5px 0 0; font-size:13px; font-weight:700; }
+.person-observation-detail .residual-notices li { grid-template-columns:118px minmax(0,1fr) 82px; }
+.person-observation-detail .evidence-links { margin-bottom:18px; }
+@media(max-width:850px) {
+  .person-observation-section .residual-section-header { flex-wrap:wrap; }
+  .person-observation-toolbar { align-items:flex-start; flex-direction:column; gap:10px; }
+  .person-observation-toolbar p { margin:0; }
+}
+
+.residual-detail-rubric { margin-top:16px; }
+.residual-detail-rubric dl { max-height:390px; overflow:auto; }
+.residual-detail-rubric summary:focus-visible,
+.person-observation-section button:focus-visible,
+.person-observation-toolbar select:focus-visible { outline:2px solid var(--primary); outline-offset:2px; }

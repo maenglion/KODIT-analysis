@@ -31,12 +31,15 @@ export type DepartmentAttributionReasoningStep = {
 export type DepartmentAttributionEvidence = {
   evidence_kind:string; document_title:string|null; document_type:string|null; evidence_date:string|null; source_url:string|null;
 };
-export type DepartmentAttributionExplanationRow = {
-  release_id:string; residual_id:string; notice_id:string; masked_label:string; label_type:string;
+export type OrganizationAttributionExplanationRow = {
+  release_id:string; residual_id:string; notice_id:string; display_label:string;
   posted_at:string; title:string; source_location:string; inference_basis_code:string; inference_basis_label:string;
   responsible_org_as_of_notice:string|null; current_functional_equivalent:string|null; current_org_candidate:string|null;
   work_context:string[]; path_steps:DepartmentAttributionPathStep[]; reasoning_steps:DepartmentAttributionReasoningStep[];
   official_evidence:DepartmentAttributionEvidence[];
+};
+export type PublicPersonResidualObservationRow = {
+  public_alias:string; posted_at:string; title:string; source_location:string; observation_count:number;
 };
 export type PublicRegulationSourceRow = { release_id: string; regulation_version_id: string; regulation_code: string; source_kind: string; evidence_role: string; source_location: string | null; attachment_name: string | null };
 export type PublishReleaseMetadata = { release_id: string; release_type: string; schema_version: string; evidence_as_of: string; generated_at: string; source_snapshot_hash: string; projection_hash: string; population: number };
@@ -113,6 +116,9 @@ export function residualOccurrencesToCsv(rows:DepartmentResidualOccurrenceRow[])
 }
 export function residualLabelsToCsv(rows:DepartmentResidualLabelRow[]){
   return makeCsv(["display_label","resolution_class","label_type","first_seen_at","last_seen_at","residual_occurrence_count","notice_count","mention_occurrence_count","org_official_name","org_valid_from","org_valid_to","official_evidence_url"],rows.map(r=>[publicResidualLabel(r.raw_label,r.label_type),r.resolution_class,r.label_type,r.first_seen_at,r.last_seen_at,r.residual_occurrence_count,r.notice_count,r.mention_occurrence_count,r.org_official_name,r.org_valid_from,r.org_valid_to,r.official_evidence_url]));
+}
+export function personResidualObservationsToCsv(rows:PublicPersonResidualObservationRow[]){
+  return makeCsv(["public_alias","posted_at","title","source_location","observation_count"],rows.map(r=>[r.public_alias,r.posted_at,r.title,r.source_location,r.observation_count]));
 }
 
 const publicPersonAliasPattern = /^[ㄱ-ㅎ]+\(\d{4}\)$/;

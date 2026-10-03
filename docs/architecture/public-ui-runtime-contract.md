@@ -12,7 +12,7 @@
 
 ## Canonical sources
 
-- 규정 목록·사규예고·부서 및 잔차 화면: `apps/public-site/data/public-snapshot-v1.json.gz` (`evidence_as_of=2026-09-13`, 생성일 2026-09-14). 기존 승인본을 재집계하거나 교체하지 않는다.
+- 규정 목록·사규예고·부서 및 잔차 화면: `apps/public-site/data/public-snapshot-v2.json.gz` (`evidence_as_of=2026-09-13`). v2는 PERSON 관측과 조직 attribution의 공개 계약을 분리한다.
 - 투자·보증 주제 화면: `reports/measurements/2026-09-19-topic-membership-v2/{summary,member-review}.json`에서 공개 필드만 복사한 별도 정적 파일. `topic-membership-v2`의 투자·자본성 금융 관련 승인 9개 family와 `DISTINCT notice_id` 기준 62건이다. 2026-09-19 주제 측정치를 2026-09-13 규정 snapshot의 하위 집계로 표시하지 않는다.
 - 주제 분류 의미·중복 규칙: `docs/architecture/topic-analysis-contract.md`, `config/topic-membership-v2.json`.
 - UI 화면 참조: [피그마 `페이지 기획`의 `letscheck-SINBO` 프레임](https://www.figma.com/design/8y8T16UoFNxl47kuT8C2dO/%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B8%B0%ED%9A%8D?node-id=8-11). 미완성 시안은 자료의 의미 계약과 접근성을 해치지 않는 범위에서 보완한다.
@@ -142,6 +142,25 @@
 
 별도 GitHub `Supabase Preview` 검사는 Codex 선행 커밋 `43148af`와 이번 merge commit 모두에서 `SQLSTATE 42723: function "public_department_attribution_explanation_rows" already exists with same argument types`로 실패한다. 정적 운영 화면 검증 통과와 이 migration 재생 오류를 혼동하지 않으며, DB migration/공개 read contract 소유자인 Codex가 별도 해결할 문제로 남긴다. Manus는 해당 migration·snapshot·Supabase 설정을 수정하지 않았다.
 
+### 공개 PERSON 계약 사전 검증과 선제 분리 (2026-10-03)
+
+- 이 조치는 공개 운영 중의 유출사고 대응이 아니다. 운영 공개 전에 커밋된 검수본의 payload를 독립 점검하는 과정에서, UI가 숨긴 필드와 별개로 혼합 RPC·정적 snapshot이 PERSON 관측 행에 조직 후보와 업무 문맥·추론 필드를 포함할 수 있음을 발견했다. 검증 결과를 릴리스 차단 조건으로 삼아 배포 전에 공개계약을 분리했다.
+- 검수 snapshot에서 확인한 단위는 사람 수가 아니라 PERSON 관측 occurrence 1,113행(공개 별칭 317개)이다. 후보 또는 추론 필드가 존재한다는 사실을 확정된 소속으로 해석하지 않는다.
+- 공개 PERSON 계약 `public_person_residual_observation_rows()`는 `public_alias`, `posted_at`, `title`, `source_location`, `observation_count`만 반환한다. 조직·부서·직무·후보·점수·경로·추론·업무귀속 키와 내부 ID는 반환 스키마에 존재하지 않는다.
+- 조직 attribution은 `public_organization_attribution_explanation_rows()`로 분리하고 ORG 행만 반환한다. 공개 PERSON→ORG 관계 레코드는 0이어야 한다. 내부 append-only 원장과 기존 근거 데이터는 변경하지 않는다.
+- 정적 공개본 v2 생성기는 PERSON 객체의 허용 키가 정확히 5개인지, 조직 형태의 금지 키가 0개인지, 일반 잔차·조직 attribution에 PERSON 행 또는 PERSON 별칭이 0개인지 검사하고 하나라도 위반하면 산출을 중단한다.
+- 이미 공개 운영된 자료가 아니라 배포 전 검수본을 교체하는 작업이므로 ‘개인정보 유출’로 표현하지 않는다. 정확한 기록명은 ‘비공개 검수 단계의 공개계약 불일치 발견 및 선제 차단’이다.
+
+### 공개 PERSON 계약 교정·배포 및 Manus 인계 상태 (2026-10-03)
+
+- 정식 공개 전 검수에서 UI 비노출만으로는 정적 payload와 혼합 RPC의 PERSON 조직 후보·업무 문맥·추론 키를 제거할 수 없다는 설계 오류를 확인했다. 확인된 외부 유출 사고가 아니라, 커밋·푸시된 검수본을 점검하면서 공개계약과 화면 원칙의 불일치를 발견해 릴리스 전에 교정한 선제 조치다.
+- 임시 대응인 `NULL`·빈 배열 반환이나 UI 숨김을 최종 계약으로 채택하지 않았다. migration `20261003000200_split_person_org_public_contracts`에서 PERSON과 ORG read contract를 분리하고, PERSON RPC 반환형에서 금지 키 자체를 제거했다. 구 혼합 base/safe RPC의 `anon`·`authenticated` 실행 권한은 회수했다.
+- 공개 PERSON occurrence의 `observation_count`는 라벨 전체 합계를 각 행에 반복하지 않고 행마다 `1`을 반환한다. 초기 smoke에서 라벨 합계를 occurrence별로 반복하면 화면 합산이 제곱되는 오류를 발견했으며, 배포 전에 RPC와 migration을 함께 수정했다. 최종 v2는 PERSON occurrence 1,113행·서로 다른 공개 별칭 317개이고 모든 occurrence의 `observation_count=1`이다.
+- snapshot v2 생성 검사는 PERSON 객체의 키가 정확히 `public_alias`, `posted_at`, `title`, `source_location`, `observation_count`인지 확인한다. 비PERSON 잔차 159행·라벨 38개와 ORG 설명 45행은 별도 배열이며, ORG 설명에는 PERSON 라벨·PERSON 식별자·PERSON→ORG 공개 관계가 없어야 한다.
+- Codex 보안 패치 `a8d6422437d020eb47c1209954cb5bcb55619866`를 당시 최신 `main`의 PR #9 UI 변경 위에 재배치해 충돌을 해결했고, `HEAD == origin/main`을 확인했다. Netlify production은 `main@a8d6422`를 Published로 표시했으며 `/residual-data` HTTP 200과 분리된 PERSON 화면을 확인했다. 현재 배포에서 `public-snapshot-v1.json.gz`와 `public-snapshot-v2.json.gz` 직접 URL은 모두 404이고 snapshot은 Next 서버 내부 데이터로만 읽는다.
+- Manus는 구 기준 `033d939` 위의 로컬 UI 커밋 `d162fca`를 RPC·snapshot 교정 전이라고 판단해 푸시·병합하지 않았다. 이는 당시 올바른 릴리스 차단이었다. 선행 조건은 이제 해소됐으므로 후속 UI 검수는 `a8d6422` 또는 그 이후 `main`을 먼저 동기화하고, migration·공개 read contract·snapshot exporter·snapshot v2를 되돌리지 않은 채 UI 소관 diff만 재적용해야 한다. 구 PR #10 미리보기를 최신 계약의 검수본으로 간주하지 않는다.
+- 현재 Git HEAD에서는 v1 파일을 제거했지만 과거 Git commit과 과거 deploy 기록은 보존돼 있다. 이력 재작성이나 과거 deploy 삭제는 파괴적 별도 작업이므로 이번 선제 패치에서 수행하지 않았으며, 이를 확인된 유출로 해석하지 않는다. 외부 공개 범위 정리 필요성이 생기면 별도 승인 아래 처리한다.
+
 ### 잔차 목록 제어·행 내부 상세 재구성 (2026-10-03, 검수 전)
 
 - `/residual-data`는 승인 정적 snapshot **표기 355개·관측 1,272건**을 그대로 소비한다. 검색 상자 대신 목록 표시명/관련 사규예고 건수 정렬과 표 머리의 관측 분류 **복수 체크박스**를 제공한다. 10개 단위 페이지, 전체/필터 후 표기 수·관련 관측 건수 및 현재 페이지를 표시한다. 이전 목록 위 공용 상세 패널은 사용자 스크린샷의 맥락을 따라 **클릭한 표 행 바로 다음 행**의 펼침으로 바꾼다. 선택 표기의 실제 연결 게시물 건수를 표시하며 날짜는 한 줄, 처리 상태는 절제된 단일 파란 칩으로 정리한다. 필터 CSV는 현재 화면의 10행이 아니라 **필터 전체 표기 및 해당 연결 관측 전체**를 각각 내보낸다.
@@ -207,4 +226,13 @@ merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `
 
 처음에는 사용자 제안에 따라 PERSON 게시물의 인물형 관측 옆에 업무 유사/시맨틱 후보 라벨을 놓는 방안을 검토했다. 독립 개인정보 검토와 사용자 최종 판단에 따라 **그 방안을 철회한다**. 공개 계약에는 이름만으로 조직·업무담당을 만드는 일이 없어야 한다. 따라서 PERSON 화면은 한글 초성+4자리 공개 별칭, 관측 게시물 제목·관측일·공식 URL 및 관측 횟수만 소비한다. 인물형 문맥 관측은 계속 설명하지만 조직 후보·업무귀속 라벨·이동 경로·추론 과정·판정 루브릭을 PERSON 행/상세에 표시하지 않는다. 조직 판정 루브릭은 비PERSON 행 아래에서만 열 수 있다. `복수 후보`는 일반 후보 다수가 아니라 명시적 모호 후보 상태라는 뜻으로 표기한다.
 
-UI 서버에서 PERSON 관측/표기를 **별칭·관측일·게시물 제목·공식 URL·관측 횟수만의 별도 DTO**로 재구성한다. 원장의 ID와 조직 관련 키는 클라이언트 전달 props에 아예 존재하지 않는다. 별칭의 `PERSON` 유형·초성+4자리 형식과 신보 공식 사규예고 목록 URL은 불일치 시 실패한다. 목록 선택에 필요한 임시 키는 클라이언트 내부에서만 만든다. PERSON이 포함된 CSV의 헤더에서도 원장 ID·조직 컬럼을 제거하고 비PERSON attribution 설명은 별도 159행만 전달한다. CSS·정렬/10개 페이지·ARIA 관계·18건/24건 관측 의미는 유지한다. 이 UI 투영은 기존 공개 RPC·정적 snapshot의 계약 위반을 치유하지 못한다. Codex가 internal 원장을 그대로 보존하면서 **PERSON 관측과 ORG attribution 공개 RPC를 분리**하고 snapshot exporter 금지 키 검사·기존 snapshot 교체·과거 배포 접근 검증을 완료하기 전에는 PR #10을 `main`에 병합하지 않는다. 보안 세부 재현은 공개 GitHub 문서가 아닌 사용자/담당자 비공개 인계에서 다룬다.
+당시 구 snapshot v1에는 UI 서버에서 별도 DTO를 만들더라도 공개 RPC·checked-in payload가 남는 문제가 있었다. 따라서 로컬 커밋 `d162fca`의 화면 경계만으로는 PR #10을 릴리스할 수 없어 푸시를 보류했다. 이 문단은 **보안 패치 전 판단의 이력**이며, 최신 배포/검수 기준은 위 `a8d6422`의 분리 계약과 아래 후속 기록이다.
+
+### 분리 공개계약 v2 위 UI 재적용 (2026-10-03, PR #10 최신 검수 전)
+
+- 사용자의 선행 패치 완료 안내에 따라 `main@77fa77b`를 먼저 fast-forward한 뒤, 기존 PR #10 기능 브랜치에 보안 패치 `a8d6422`를 비강제 병합했다. 충돌한 페이지·패키지 export·잔차 조직 컴포넌트·UI 회귀 파일은 **보안 main 버전**을 기준으로 해결했다. `public-snapshot-v1.json.gz`는 제거된 상태를 유지하고 `public-snapshot-v2.json.gz`, 보안 migration/RPC, snapshot exporter, read loader는 main과 동일하게 둔다.
+- 구 로컬 UI 커밋 `d162fca`의 혼합 PERSON→ORG 임시 투영은 재적용하지 않는다. Codex의 `PublicPersonResidualObservationRow` 다섯 필드(`public_alias`, `posted_at`, `title`, `source_location`, `observation_count`)와 별도 `PersonResidualObservations` 컴포넌트를 그대로 사용한다. 목록은 317개 별칭·1,113개 관측을 10개 단위로 정렬·페이지 이동하며, 선택 행 바로 아래에 관측일·게시물 제목·**공식 사규예고 목록 페이지** 링크만 펼친다. 별칭 형식과 KODIT 목록 URL은 화면에서 재검증하고, 목록 페이지를 특정 게시물 원문으로 표기하지 않는다. PERSON CSV는 원래 v2 관측 CSV의 다섯 컬럼만 사용한다.
+- 조직형은 별도 잔차 38개 표기·159개 관측 및 공개 ORG 귀속 설명만 소비한다. 기존 ORG 표의 죽은 PERSON 분기/본문 mention·추론 렌더 코드를 제거하고 조직형 8개 용어 범례만 남겼다. PERSON의 공개 조직 후보·직무·업무귀속·이동 경로·추론 과정·내부 ID·본문 mention 통계는 화면·CSV·props에 다시 합치지 않는다. 과거 18/18/24 예시는 이전 계약의 **역사적 화면 확인 값**이지 v2 PERSON UI의 공개 통계가 아니다.
+- `docs/architecture`의 이전 v1·PR #7 서술은 당시 배포/검수의 이력이다. 현재 계약과 서로 다른 부분은 이 절 및 보안 패치 기록을 우선한다. 2026-10-02 기준 과거 화면 기획 첨부의 v1 공개본·임시 문의 연락처·삭제된 데이터 목적 카드 같은 내용은 이후 사용자 승인 결정과 충돌하므로 이 UI 통합에 되돌려 넣지 않는다.
+
+검증: `pnpm check`, `check:approved`, `check:technical-specs`, `check:t07c`, `pnpm test`, `check:regulations`, 공개 사이트 TypeScript/프로덕션 빌드, `check:residual-analysis`, `git diff --check` 통과. 로컬 Chromium 1440/800px에서 PERSON 10행/32쪽, 별칭 317개/관측 1,113건 CSV의 UTF-8 BOM·정확한 5열 헤더, 인라인 상세·닫기 초점 복귀·조직 루브릭 비노출을 확인했다. 별칭 `ㅇㄷㅎ(8053)`은 v2 관측 게시물 18건·서로 다른 **사규예고 목록 URL 2개**다. 이전 snapshot v1의 본문 mention 근거 목록 URL 네 개와는 **서로 다른 출처 배열**이므로 목록 개수를 재사용하지 않는다. 비PERSON 상세의 8개 조직형 판정 기준, 규정 상세검색 20개 공식 조직·1,036건 복수 공개결론 CSV도 재검증했다. 새 PR #10 head의 Netlify 자동 미리보기와 사용자 확인 전에는 main을 변경하지 않는다.

@@ -25,7 +25,7 @@ assert.match(workflow, /test "\$CONFIRMATION" = "PUBLISH"/);
 assert.doesNotMatch(scheduleWorkflow, /publish_regulation_release|publish_release\.py/);
 assert.doesNotMatch(publicLoader, /KODIT_SUPABASE_SERVICE_ROLE_KEY|service_role/i);
 assert.match(publicLoader, /import "server-only"/);
-assert.match(publicLoader, /public-snapshot-v1\.json\.gz/);
+assert.match(publicLoader, /public-snapshot-v2\.json\.gz/);
 assert.match(publicLoader, /gunzipSync\(compressed\)/);
 assert.match(publicLoader, /snapshot\.release/);
 assert.match(publicLoader, /snapshot\.rows/);

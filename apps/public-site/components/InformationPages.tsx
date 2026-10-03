@@ -34,8 +34,10 @@ const availability = [
 ] as const;
 
 export async function MethodologyPage() {
-  const { notices, residuals, residualLabels, release } = await getPublishDataset();
-  const exactNotices = notices.length - residuals.length;
+  const { notices, residuals, residualLabels, personResidualObservations, release } = await getPublishDataset();
+  const residualOccurrenceCount = residuals.length + personResidualObservations.length;
+  const residualLabelCount = residualLabels.length + new Set(personResidualObservations.map(row => row.public_alias)).size;
+  const exactNotices = notices.length - residualOccurrenceCount;
   return <>
     <InformationHero eyebrow="검증 체계 / 02" title="검증 방법론" description="원본 파일, 추출 본문, 문자열 관측, 의미 판정과 공개 통계를 다른 계층으로 관리합니다." evidenceAsOf={release.evidence_as_of} snapshotGeneratedAt={release.generated_at} principle="관측은 보존하고, 의미는 근거가 있을 때만 부여합니다." />
     <main className="methodology-page information-page"><div className="shell">
@@ -54,8 +56,8 @@ export async function MethodologyPage() {
         <blockquote>SHA로 같은 파일을 확인하고, extract_hash로 같은 글을 고정한 뒤 그 글 안의 언급을 셉니다.</blockquote>
       </InformationSection>
       <InformationSection number="04" title="해결하지 못한 담당 표기도 남겨 둡니다" id="method-residual">
-        <p>현재 승인 공개본의 사규예고 {notices.length.toLocaleString("ko-KR")}건 중 공식 조직명과 정확히 일치한 게시물은 {exactNotices.toLocaleString("ko-KR")}건입니다. 나머지 <strong>{residuals.length.toLocaleString("ko-KR")}건은 게시물에 귀속된 잔차 occurrence</strong>로 보존하며, 사람 수나 서로 다른 이름의 개수가 아닙니다. 서로 다른 lexical label은 {residualLabels.length.toLocaleString("ko-KR")}개입니다.</p>
-        <div className="information-metric-grid"><div><span>사규예고</span><strong>{notices.length.toLocaleString("ko-KR")}건</strong></div><div><span>조직명 exact match</span><strong>{exactNotices.toLocaleString("ko-KR")}건</strong></div><div><span>잔차 occurrence</span><strong>{residuals.length.toLocaleString("ko-KR")}건</strong></div><div><span>lexical label</span><strong>{residualLabels.length.toLocaleString("ko-KR")}개</strong></div></div>
+        <p>현재 승인 공개본의 사규예고 {notices.length.toLocaleString("ko-KR")}건 중 공식 조직명과 정확히 일치한 게시물은 {exactNotices.toLocaleString("ko-KR")}건입니다. 나머지 <strong>{residualOccurrenceCount.toLocaleString("ko-KR")}건은 게시물에 귀속된 잔차 occurrence</strong>로 보존하며, 사람 수나 서로 다른 이름의 개수가 아닙니다. 서로 다른 lexical label은 {residualLabelCount.toLocaleString("ko-KR")}개입니다.</p>
+        <div className="information-metric-grid"><div><span>사규예고</span><strong>{notices.length.toLocaleString("ko-KR")}건</strong></div><div><span>조직명 exact match</span><strong>{exactNotices.toLocaleString("ko-KR")}건</strong></div><div><span>잔차 occurrence</span><strong>{residualOccurrenceCount.toLocaleString("ko-KR")}건</strong></div><div><span>lexical label</span><strong>{residualLabelCount.toLocaleString("ko-KR")}개</strong></div></div>
         <p>잔차와 추출 언급은 각자 라벨에 묶이고, 조직 후보·근거·경로는 별도 원장으로 보존됩니다. 후보 점수나 이름 유사도만으로 공식 조직이 되지 않습니다. <b>조직개편·업무귀속 path에는 공식 근거문서가 필요합니다.</b></p>
         <DiagramViewer />
         <p className="information-note">제공받은 ERD는 관계·필드명만 보여 줍니다. 공개 화면은 내부 실행 ID, 문서별 해시, 신뢰도 점수나 비마스킹 이름을 표시하지 않습니다. 상세 UI에서는 ‘상태’보다 ‘추론 근거’와 확인 경로를 먼저 읽습니다.</p>
@@ -103,8 +105,8 @@ export async function TechnicalSpecsPage() {
       <InformationSection number="05" title="수집 주기와 공개본 갱신" id="spec-release">
         <p>수집기는 마지막 성공 기록으로부터 기본 10일 간격을 확인합니다. 수집 결과는 검증·공개용 데이터 변환·승인을 거친 뒤 공개 snapshot에 반영됩니다. 수집일과 공개 데이터 기준일이 달라도 공개 화면이 자동으로 갱신된 것은 아닙니다.</p>
         <div className="information-metric-grid"><div><span>현재 규정 버전</span><strong>{rows.length.toLocaleString("ko-KR")}건</strong></div><div><span>사규예고</span><strong>{notices.length.toLocaleString("ko-KR")}건</strong></div><div><span>공개 source</span><strong>{sources.length.toLocaleString("ko-KR")}건</strong></div><div><span>근거 기준일</span><strong>{release.evidence_as_of}</strong></div></div>
-        <p>공개 규정·예고 데이터는 배포된 <code>public-snapshot-v1.json.gz</code>를 Next 서버에서 읽어 화면에 전달합니다. 규정 목록을 요청할 때마다 내부 원장이나 Supabase RPC를 조회하지 않습니다. 브라우저의 <code>/api/collection-state</code> 요청은 <b>수집 상태</b>만 표시하는 별도 경로입니다. 화면의 CSV 내려받기는 승인 데이터의 필터 결과를 만들며, 서버의 규정 전달 포맷이 아닙니다.</p>
-        <p className="information-note">공개 규정 기준일 {release.evidence_as_of}, 별도 parser 원장 측정일 {parserMeasurements.measuredAt}과 공개본 생성일 {release.generated_at.slice(0, 10)}은 서로 다른 단계입니다. 추출 원장 보고서: <code>{parserMeasurements.ledger.report}</code></p>
+        <p>공개 규정·예고 데이터는 배포된 <code>public-snapshot-v2.json.gz</code>를 Next 서버에서 읽어 화면에 전달합니다. 규정 목록을 요청할 때마다 내부 원장이나 Supabase RPC를 조회하지 않습니다. 브라우저의 <code>/api/collection-state</code> 요청은 <b>수집 상태</b>만 표시하는 별도 경로입니다. PERSON 관측과 조직 attribution은 별도 공개 계약으로 분리되어 있습니다. 화면의 CSV 내려받기는 승인 데이터의 필터 결과를 만들며, 서버의 규정 전달 포맷이 아닙니다.</p>
+        <p className="information-note">공개 규정 기준일 {release.evidence_as_of}, 별도 parser 원장 측정일 {parserMeasurements.measuredAt}과 공개본 생성일 {release.generated_at.slice(0, 10)}은 서로 다른 단계이며 같은 시점의 집계로 합산하지 않습니다. parser 원장 {parserMeasurements.ledger.parserRuns.toLocaleString("ko-KR")}회 실행 중 본문이 있는 occurrence {parserMeasurements.ledger.nonemptyOccurrences.toLocaleString("ko-KR")}건은 고유 추출 artifact {parserMeasurements.ledger.uniqueExtractions.toLocaleString("ko-KR")}건으로 보존됐습니다. 로그 출처: <code>{parserMeasurements.ledger.report}</code></p>
       </InformationSection>
       <InformationRelated links={[{ href: "/data-purpose", label: "데이터 수집 및 활용목적" }, { href: "/methodology", label: "검증 방법론" }, { href: "/regulations", label: "규정 공개 현황" }]} />
     </div></main>
