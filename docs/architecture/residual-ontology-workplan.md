@@ -167,6 +167,23 @@ union으로 구성한 `topic-membership-v2`를 별도 추가한다. generic `보
 18건을 모두 포함하고 44건을 추가한다. LITIGATION은 topic-v1을 그대로 canonical로 참조한다.
 신규 versioned read RPC까지만 제공하며 UI는 시작하지 않는다.
 
+## Work-trace evidence-chain boundary
+
+잔차 label을 현재 조직 하나에 대응시키는 attribution을 산출로 삼지 않는다. 동일 담당 표기로 게시된
+각 사규예고를 notice→`PROPOSES_CHANGE_TO`→규정·업무 관측→시기별 공식 업무분장 순서로 조사하고,
+공식 근거가 이어지는 지점까지만 append-only branch로 보존한다. 자료 부재, 연결 근거 부재, 대응
+미확인을 서로 다른 gap으로 기록하고, 여러 현행 조직에 대응하는 경우는 실패가 아닌 복수 대응
+산출로 남긴다.
+
+trace case identity는 release와 독립하고 run은 release·contract·evidence corpus를 보존한다. 자료가
+확충되면 이전 run을 덮어쓰지 않고 연장·완료·종결값 변경·정정 단축·무변화와 실제 인용 evidence를
+비교한다. PERSON 공개 객체와 업무 추적 payload는 계속 분리하며 PERSON→ORG 공개 relation은 만들지
+않는다. 기존 공식 `FUNCTION_TRANSFERRED_TO` 2건은 관측 endpoint와 합산하지 않는다.
+
+2026-10-04 기준 additive 원장과 service-only writer를 운영 DB에 적용하고 deterministic run
+`a00dba9a-4f99-2ece-ce53-35fc87afc433`의 1,272 branch를 검증했다. public-safe A/B/C projection과
+UI는 다음 단계이며 core 원장을 브라우저에서 직접 읽지 않는다.
+
 ## Related architecture
 
 - `docs/architecture/notice-department-residual-ledger.md` (T01 계약; 저장소에 아직 없음)
@@ -178,6 +195,8 @@ union으로 구성한 `topic-membership-v2`를 별도 추가한다. generic `보
 - `docs/architecture/organization-function-precision-gate.md`
 - `docs/architecture/temporal-function-profiles.md`
 - `docs/architecture/selective-function-resolution.md`
+- `docs/architecture/work-trace-evidence-chain.md`
+- `docs/architecture/work-trace-public-ui-contract.md`
 
 ## Decision history
 
@@ -200,3 +219,4 @@ union으로 구성한 `topic-membership-v2`를 별도 추가한다. generic `보
 | 2026-09-19 | T07-A | 소송/투자·보증 topic-v1 membership, evidence, metric read model과 public-safe RPC를 추가하고 UI는 후속으로 분리했다. |
 | 2026-09-19 | T07-B | topic-v1을 변경하지 않고 35개 false-negative 후보와 scope verdict를 재현 가능한 review artifact로 고정했다. |
 | 2026-09-19 | T07-C | 투자·보증을 9개 승인 child family의 distinct union으로 구현하고 v1과 v2를 함께 재현 가능하게 보존했다. |
+| 2026-10-03 | Work trace | 잔차 최종 귀속 대신 notice/regulation/work의 증거사슬, 명시적 gap, 복수 대응, versioned run diff를 새 additive 원장 계약으로 채택했다. |
