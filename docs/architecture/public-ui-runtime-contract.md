@@ -258,3 +258,9 @@ merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `
 첨부된 정밀도 게이트 설명은 이 박스에 섞지 않고 향후 방법론/기술사양 원고에서 따로 검토한다. 초기 게이트의 50%와 선택적 게이트의 선택 대상 2/2(관측 100%이지만 최소 30건 미달)는 **시점·모집단·실패 이유가 다르다**. 2026 조직 프로필 재현 진단 64.29%를 조직 기능귀속 정확도로, observed-only 683건을 시점 충돌로 설명하지 않는다. ORG_CURRENT+ORG_HISTORICAL 45건과 그 동일한 행에 대한 업무귀속 설명 45건도 **서로 다른 축**이므로 합산하지 않는다. 사용자에게 다음 페이지 지침을 받기 전까지 이 추가 지표를 규정 첫 화면에 임의로 넣지 않는다.
 
 PR #11 문구 보정 로컬 재검증: `pnpm check:regulations`, `pnpm check:approved`, `pnpm check:residual-analysis`, 공개 사이트 타입/프로덕션 빌드, `git diff --check`, 보호 파일 가드 통과. Chromium **1440/800/768px**에서 네 도움말 hover/focus/Enter/Space/Escape, 인물형 tooltip·상세의 다른 문서 본문 관측 문구, `유형 미확정 114건 (전체 사규예고의 5.5%)`, 기존 상세검색/CSV 회귀 통과. 새 head의 Netlify 미리보기는 **푸시 후 별도로 재검수**한다.
+
+### PR #11 병합 및 운영 검증 (2026-10-03)
+
+사용자가 수정본 `4d0af55604dd08a7afe3673fd09206d4f1a19fe8`의 병합을 명시 승인했다. 최종 사전 점검에서 `main@beb48a6010457bc44bef0b70d180a1449c046ee8` 불변, PR head/base 일치, mergeable/CLEAN, Netlify header/redirect 검사 성공, UI 변경 8개 파일·Codex 보호 범위 불변을 확인하고 draft를 해제했다. [PR #11](https://github.com/maenglion/KODIT-analysis/pull/11)을 merge commit `c36c336e6fa3a003a28d7c5a69452a2a0d753852`으로 병합하고 로컬 main도 fast-forward했다. Netlify 설정/API는 조작하지 않고 기존 GitHub main 자동 배포만 사용했다.
+
+운영 `/regulations?scope=master`의 HTML 200과 ‘담당 표기 대조 결과’, ‘다른 문서 본문에서 인물형 문맥’, ‘전체 사규예고의 5.5%’ 문구를 확인했다. 운영 Chromium 회귀에서 1440/800/768px 요약 띠 순서·높이·네 도움말 hover/focus/click/Enter/Space/Escape·`scope=notice` 미노출·잔차 앵커가 모두 통과했다. 기존 상세검색/CSV는 1440/800px의 자료 범위 전환·공개결론 1,036건/CSV 1,036행·조직 선택/해제·0건·notice 817건 조건이 통과했다. 병합 후 `pnpm check:regulations`, `pnpm check:approved`, `pnpm check:residual-analysis`, 보호 범위 검사 및 `git diff --check`도 통과했다. 조직 히스토리 padding, 방법론의 정밀도 게이트 문구, 수집/승인 공개본 변경이력 UI는 별도 지침과 공개계약 확인 전까지 변경하지 않는다.
