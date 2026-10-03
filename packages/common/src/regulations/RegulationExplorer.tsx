@@ -14,7 +14,7 @@ import {
 } from "./regulation-detail-ui";
 
 type Scope = DetailScope;
-type Props = { rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; release: PublishReleaseMetadata; initialScope?: Scope; initialQuery?: string; initialCategory?: PublicRegulationFilters["availability"]; metadataSlot?: ReactNode };
+type Props = { rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; release: PublishReleaseMetadata; initialScope?: Scope; initialQuery?: string; initialCategory?: PublicRegulationFilters["availability"]; metadataSlot?: ReactNode; insightSlot?: ReactNode };
 const emptyRegulationFilters: PublicRegulationFilters = { query: "", availability: "ALL", currentness: "", partialType: "ALL" };
 const emptyNoticeFilters: NoticeFilters = { query: "", startDate: "", endDate: "", year: "", department: "", unmappedOnly: false };
 const partialTypeLabels: Record<string, string> = { ALIO: "ALIO", KODIT_PAGE: "신보 사이트", ATTACHMENT: "첨부파일" };
@@ -40,7 +40,7 @@ function Pagination({ page, pageCount, setPage, label = "검색 결과" }: { pag
   </nav>;
 }
 
-export function RegulationExplorer({ rows, notices, sources, release, initialScope = "master", initialQuery = "", initialCategory = "ALL", metadataSlot }: Props) {
+export function RegulationExplorer({ rows, notices, sources, release, initialScope = "master", initialQuery = "", initialCategory = "ALL", metadataSlot, insightSlot }: Props) {
   const [scope, setScope] = useState<Scope>(initialScope);
   const [filters, setFilters] = useState<PublicRegulationFilters>({ ...emptyRegulationFilters, query: initialQuery, availability: initialCategory });
   const [noticeFilters, setNoticeFilters] = useState<NoticeFilters>({ ...emptyNoticeFilters, query: initialQuery });
@@ -124,7 +124,7 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
     <section className="public-page-intro">
       <div className="shell intro-inner intro-inner-with-status">
         <div className="intro-copy">
-          <p className="breadcrumb"><a href="/regulations">규정·법령</a> &gt; <b>{scope === "notice" ? "사규예고" : "내부규정(분석)"}</b></p>
+          <p className="breadcrumb"><a href="/regulations">규정·법령</a> &gt; <b>{scope === "notice" ? "사규예고" : "내부규정"}</b></p>
           <h1>{scope === "notice" ? "신용보증기금 사규예고" : "신용보증기금 규정 공개현황"}</h1>
           <p>규정 버전과 사규예고 게시물을 구분해 공식 출처와 공개 범위를 확인합니다.</p>
           <button className="terms-button" type="button" aria-expanded={termsOpen} aria-controls="public-terms" onClick={() => setTermsOpen((value) => !value)}><img src="/figma-icons/help.svg" alt=""/>용어 및 해석</button>
@@ -137,6 +137,7 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
       <div><strong>데이터 기준일</strong><p>승인된 공개본이 참조한 근거 기준일입니다. 생성일은 파일을 만든 날짜이며 실시간 수집 시각이 아닙니다.</p></div>
       <div><strong>사규예고 이력</strong><p>규정 버전에 연결된 예고 게시물의 수입니다. 예고 이력이 있다고 개정이 확정되었다는 뜻은 아닙니다.</p></div>
     </div></aside>}
+    {scope !== "notice" && insightSlot}
     {scope !== "notice" && <section className="shell regulation-overview" aria-label="내부규정 요약">
       <div className="regulation-overview-grid">
         <div><span>전체 사규예고</span><strong>{notices.length.toLocaleString("ko-KR")}<small>건</small></strong><p>중복 제거 게시물</p></div>
