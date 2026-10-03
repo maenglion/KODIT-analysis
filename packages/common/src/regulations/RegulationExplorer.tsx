@@ -1,17 +1,23 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  availabilityLabels, availabilityOrder, filterAndSortNotices, filterPublishRegulations, latestNoticeDates,
+  availabilityLabels, availabilityOrder, canonicalDepartment, filterAndSortNotices, filterPublishRegulations, latestNoticeDates, organizationSnapshot,
   publishNoticesToCsv, publishRowsToCsv, sortPublishRegulations, validPublicUrl,
   type NoticeFilters, type PublicRegulationFilters, type PublicRegulationSourceRow, type PublishNoticeRow,
   type PublishRegulationRow, type PublishReleaseMetadata, type RegulationSort,
 } from "./index";
+import { RegulationAdvancedSearch } from "./RegulationAdvancedSearch";
+import {
+  defaultDetailSettings, filterDetailedNotices, filterDetailedRegulations,
+  hasDetailCriteria, settingsForScope, type DetailScope, type EvidenceGroup, type RegulationDetailSettings,
+} from "./regulation-detail-ui";
 
-type Scope = "master" | "notice" | "all";
-type Props = { rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; release: PublishReleaseMetadata; initialScope?: Scope; initialQuery?: string; initialCategory?: PublicRegulationFilters["availability"] };
+type Scope = DetailScope;
+type Props = { rows: PublishRegulationRow[]; notices: PublishNoticeRow[]; sources: PublicRegulationSourceRow[]; release: PublishReleaseMetadata; initialScope?: Scope; initialQuery?: string; initialCategory?: PublicRegulationFilters["availability"]; metadataSlot?: ReactNode };
 const emptyRegulationFilters: PublicRegulationFilters = { query: "", availability: "ALL", currentness: "", partialType: "ALL" };
 const emptyNoticeFilters: NoticeFilters = { query: "", startDate: "", endDate: "", year: "", department: "", unmappedOnly: false };
+const partialTypeLabels: Record<string, string> = { ALIO: "ALIO", KODIT_PAGE: "신보 사이트", ATTACHMENT: "첨부파일" };
 
 function downloadCsv(name: string, content: string) {
   const blob = new Blob([content], { type: "text/csv;charset=utf-8" });
@@ -21,13 +27,6 @@ function downloadCsv(name: string, content: string) {
   anchor.download = name;
   anchor.click();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function toggleAdvancedSearch() {
-  const panel = document.getElementById("advanced-search-panel") as HTMLDetailsElement | null;
-  if (!panel) return;
-  panel.open = !panel.open;
-  if (panel.open) panel.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function Pagination({ page, pageCount, setPage, label = "검색 결과" }: { page: number; pageCount: number; setPage: (page: number | ((value: number) => number)) => void; label?: string }) {
@@ -41,7 +40,7 @@ function Pagination({ page, pageCount, setPage, label = "검색 결과" }: { pag
   </nav>;
 }
 
-export function RegulationExplorer({ rows, notices, sources, release, initialScope = "master", initialQuery = "", initialCategory = "ALL" }: Props) {
+export function RegulationExplorer({ rows, notices, sources, release, initialScope = "master", initialQuery = "", initialCategory = "ALL", metadataSlot }: Props) {
   const [scope, setScope] = useState<Scope>(initialScope);
   const [filters, setFilters] = useState<PublicRegulationFilters>({ ...emptyRegulationFilters, query: initialQuery, availability: initialCategory });
   const [noticeFilters, setNoticeFilters] = useState<NoticeFilters>({ ...emptyNoticeFilters, query: initialQuery });
@@ -50,6 +49,9 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
   const [combinedRegPage, setCombinedRegPage] = useState(1);
   const [combinedNoticePage, setCombinedNoticePage] = useState(1);
   const [termsOpen, setTermsOpen] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const settingsTrigger = useRef<HTMLButtonElement | null>(null);
+  const [appliedDetail, setAppliedDetail] = useState<RegulationDetailSettings>(() => defaultDetailSettings(initialScope));
   const noticeDates = useMemo(() => latestNoticeDates(notices), [notices]);
   const noticeHistory = useMemo(() => {
     const map = new Map<string, { count: number; latest: string | null }>();
@@ -61,16 +63,31 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
     }
     return map;
   }, [notices]);
-  const filteredRegulations = useMemo(() => sortPublishRegulations(filterPublishRegulations(rows, filters), filters.availability === "NOTICE_ONLY" ? "NOTICE_DESC" : regulationSort, noticeDates), [rows, filters, regulationSort, noticeDates]);
-  const filteredNotices = useMemo(() => filterAndSortNotices(notices, noticeFilters), [notices, noticeFilters]);
-  const counts = useMemo(() => Object.fromEntries(availabilityOrder.map((status) => [status, rows.filter((row) => row.availability === status).length])) as Record<PublishRegulationRow["availability"], number>, [rows]);
-  const currentnessOptions = useMemo(() => [...new Set(rows.map((row) => row.currentness))].sort(), [rows]);
-  const departments = useMemo(() => [...new Set(notices.map((row) => row.notice_department).filter((value): value is string => Boolean(value)))].sort((a, b) => a.localeCompare(b, "ko")), [notices]);
   const sourcesByVersion = useMemo(() => {
     const map = new Map<string, PublicRegulationSourceRow[]>();
     for (const source of sources) map.set(source.regulation_version_id, [...(map.get(source.regulation_version_id) ?? []), source]);
     return map;
   }, [sources]);
+  const regulationNames = useMemo(() => new Map(rows.map(row => [row.regulation_version_id, row.display_name])), [rows]);
+  const officialDepartments = useMemo(() => {
+    const available = new Set([...rows, ...notices].map(row => row.notice_department));
+    return organizationSnapshot.hierarchy.flatMap(group => group.units).filter(name => canonicalDepartment(name) && available.has(name)).sort((a, b) => a.localeCompare(b, "ko"));
+  }, [rows, notices]);
+  const alioCount = useMemo(() => new Set(sources.filter(source => source.source_kind === "ALIO").map(source => source.regulation_version_id)).size, [sources]);
+  const availableEvidenceGroups = useMemo(() => [
+    ...(sources.some(source => source.source_kind === "ALIO") ? ["ALIO" as const] : []),
+    ...(sources.some(source => source.source_kind === "KODIT_ATTACHMENT" || source.source_kind === "KODIT_PAGE") ? ["KODIT" as const] : []),
+    ...(sources.some(source => source.source_kind === "OFFICIAL_OTHER") ? ["OTHER" as const] : []),
+  ], [sources]);
+  const counts = useMemo(() => Object.fromEntries(availabilityOrder.map((status) => [status, rows.filter((row) => row.availability === status).length])) as Record<PublishRegulationRow["availability"], number>, [rows]);
+  const filteredRegulations = useMemo(() => sortPublishRegulations(
+    filterDetailedRegulations(filterPublishRegulations(rows, { ...filters, query: "" }), filters.query, appliedDetail, noticeDates, sourcesByVersion),
+    filters.availability === "NOTICE_ONLY" ? "NOTICE_DESC" : regulationSort, noticeDates,
+  ), [rows, filters, appliedDetail, regulationSort, noticeDates, sourcesByVersion]);
+  const filteredNotices = useMemo(() => filterAndSortNotices(
+    filterDetailedNotices(notices, noticeFilters.query, appliedDetail, regulationNames),
+    { ...noticeFilters, query: "" },
+  ), [notices, noticeFilters, appliedDetail, regulationNames]);
   const pageSize = 50;
   const activeLength = scope === "notice" ? filteredNotices.length : filteredRegulations.length;
   const pageCount = Math.max(1, Math.ceil(activeLength / pageSize));
@@ -92,8 +109,13 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
 
   const updateRegulations = (next: Partial<PublicRegulationFilters>) => { setFilters((old) => ({ ...old, ...next })); setPage(1); setCombinedRegPage(1); };
   const updateNotices = (next: Partial<NoticeFilters>) => { setNoticeFilters((old) => ({ ...old, ...next })); setPage(1); setCombinedNoticePage(1); };
-  const chooseScope = (next: Scope) => { setScope(next); setPage(1); if (next === "notice") updateNotices({ query: filters.query }); else updateRegulations({ query: noticeFilters.query }); };
-  const chooseCategory = (availability: PublicRegulationFilters["availability"]) => { setScope("master"); updateRegulations({ availability, partialType: "ALL" }); if (availability === "NOTICE_ONLY") setRegulationSort("NOTICE_DESC"); };
+  const chooseScope = (next: Scope) => { setScope(next); setAppliedDetail(old => settingsForScope(old, next)); setPage(1); if (next === "notice") updateNotices({ query: filters.query }); else updateRegulations({ query: noticeFilters.query }); };
+  const chooseCategory = (availability: PublicRegulationFilters["availability"]) => { setScope("master"); setAppliedDetail(old => settingsForScope(old, "master")); updateRegulations({ availability, partialType: "ALL" }); if (availability === "NOTICE_ONLY") setRegulationSort("NOTICE_DESC"); };
+  const toggleSettings = (trigger: HTMLButtonElement) => { settingsTrigger.current = trigger; setAdvancedOpen(open => !open); };
+  const closeSettings = () => { setAdvancedOpen(false); const target = settingsTrigger.current?.isConnected ? settingsTrigger.current : document.querySelector<HTMLButtonElement>(".notice-heading .detail-button"); target?.focus(); };
+  useEffect(() => {
+    if (advancedOpen) document.getElementById("advanced-search-panel")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }, [advancedOpen]);
 
   return <>
     <section className="public-page-intro">
@@ -107,7 +129,7 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
       </div>
     </section>
     <section className="release-meta-bar"><div className="shell">
-      <dl className="public-release-meta"><div><dt>데이터 기준일</dt><dd>{release.evidence_as_of}</dd></div><div><dt>공개본 생성일</dt><dd>{release.generated_at.slice(0, 10)}</dd></div><div><dt>전체 규정</dt><dd>{release.population.toLocaleString("ko-KR")}건</dd></div></dl>
+      {metadataSlot ?? <dl className="public-release-meta"><div><dt>데이터 기준일</dt><dd>{release.evidence_as_of}</dd></div><div><dt>공개본 생성일</dt><dd>{release.generated_at.slice(0, 10)}</dd></div><div><dt>전체 규정</dt><dd>{release.population.toLocaleString("ko-KR")}건</dd></div></dl>}
       <button className="terms-button" type="button" aria-expanded={termsOpen} aria-controls="public-terms" onClick={() => setTermsOpen((value) => !value)}><img src="/figma-icons/help.svg" alt=""/>용어 및 해석</button>
     </div></section>
     {termsOpen && <aside className="terms-content" id="public-terms" aria-label="공개 데이터 용어 및 해석"><div className="shell">
@@ -115,12 +137,20 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
       <div><strong>데이터 기준일</strong><p>승인된 공개본이 참조한 근거 기준일입니다. 생성일은 파일을 만든 날짜이며 실시간 수집 시각이 아닙니다.</p></div>
       <div><strong>사규예고 이력</strong><p>규정 버전에 연결된 예고 게시물의 수입니다. 예고 이력이 있다고 개정이 확정되었다는 뜻은 아닙니다.</p></div>
     </div></aside>}
+    {scope !== "notice" && <section className="shell regulation-overview" aria-label="내부규정 요약">
+      <div className="regulation-overview-grid">
+        <div className="regulation-overview-lead"><span>승인 공개본 전체 규정</span><strong>{rows.length.toLocaleString("ko-KR")}<small>건</small></strong><p>규정 버전 기준 · {release.evidence_as_of}</p></div>
+        <div><span>ALIO 출처 연결</span><strong>{alioCount.toLocaleString("ko-KR")}<small>건</small></strong><p>ALIO 근거가 연결된 서로 다른 규정 버전 수</p></div>
+        <div><span>사전예고만 확인</span><strong>{counts.NOTICE_ONLY.toLocaleString("ko-KR")}<small>건</small></strong><p>공개결론 `NOTICE_ONLY` · 전문 미확보와 혼동 금지</p></div>
+      </div>
+      <p className="regulation-overview-note">정적 승인본 기준 요약입니다. ALIO 연결 수는 출처 종류별 연결이며 전문 공개 건수와 같은 뜻이 아닙니다. 아래 검색 조건은 요약 수치가 아니라 결과 목록과 CSV에 적용됩니다.</p>
+    </section>}
     <main className="public-table-shell">
       <div className="shell">
-        <SearchBar scope={scope} filters={filters} noticeFilters={noticeFilters} updateRegulations={updateRegulations} updateNotices={updateNotices} chooseScope={chooseScope} currentnessOptions={currentnessOptions} departments={departments} count={scope === "all" ? filteredRegulations.length + filteredNotices.length : activeLength} />
+        <SearchBar scope={scope} initialScope={initialScope} filters={filters} noticeFilters={noticeFilters} updateRegulations={updateRegulations} updateNotices={updateNotices} chooseScope={chooseScope} officialDepartments={officialDepartments} availableEvidenceGroups={availableEvidenceGroups} release={release} appliedDetail={appliedDetail} onApplyDetail={setAppliedDetail} advancedOpen={advancedOpen} onCloseSettings={closeSettings} count={scope === "all" ? filteredRegulations.length + filteredNotices.length : activeLength} />
         <div id="search-results">
-          {scope !== "notice" && <><RegulationTable rows={scope === "all" ? filteredRegulations.slice((currentCombinedRegPage - 1) * pageSize, currentCombinedRegPage * pageSize) : filteredRegulations.slice(offset, offset + pageSize)} allRows={filteredRegulations} rowOffset={scope === "all" ? (currentCombinedRegPage - 1) * pageSize : offset} release={release} noticeDates={noticeDates} noticeHistory={noticeHistory} sourcesByVersion={sourcesByVersion} sort={regulationSort} setSort={setRegulationSort} category={filters.availability} grouped={scope === "all"} />{scope === "all" && <Pagination label="규정 검색 결과" page={currentCombinedRegPage} pageCount={combinedRegPages} setPage={setCombinedRegPage} />}</>}
-          {scope !== "master" && <><NoticeTable rows={scope === "all" ? filteredNotices.slice((currentCombinedNoticePage - 1) * pageSize, currentCombinedNoticePage * pageSize) : filteredNotices.slice(offset, offset + pageSize)} allRows={filteredNotices} rowOffset={scope === "all" ? (currentCombinedNoticePage - 1) * pageSize : offset} release={release} grouped={scope === "all"} />{scope === "all" && <Pagination label="사규예고 검색 결과" page={currentCombinedNoticePage} pageCount={combinedNoticePages} setPage={setCombinedNoticePage} />}</>}
+          {scope !== "notice" && <><RegulationTable rows={scope === "all" ? filteredRegulations.slice((currentCombinedRegPage - 1) * pageSize, currentCombinedRegPage * pageSize) : filteredRegulations.slice(offset, offset + pageSize)} allRows={filteredRegulations} rowOffset={scope === "all" ? (currentCombinedRegPage - 1) * pageSize : offset} release={release} noticeDates={noticeDates} noticeHistory={noticeHistory} sourcesByVersion={sourcesByVersion} sort={regulationSort} setSort={setRegulationSort} category={filters.availability} partialType={filters.partialType} onClearPartial={() => updateRegulations({ partialType: "ALL" })} grouped={scope === "all"} advancedOpen={advancedOpen} onToggleSettings={toggleSettings} detailApplied={hasDetailCriteria(appliedDetail, scope) || filters.availability !== "ALL"} />{scope === "all" && <Pagination label="규정 검색 결과" page={currentCombinedRegPage} pageCount={combinedRegPages} setPage={setCombinedRegPage} />}</>}
+          {scope !== "master" && <><NoticeTable rows={scope === "all" ? filteredNotices.slice((currentCombinedNoticePage - 1) * pageSize, currentCombinedNoticePage * pageSize) : filteredNotices.slice(offset, offset + pageSize)} allRows={filteredNotices} rowOffset={scope === "all" ? (currentCombinedNoticePage - 1) * pageSize : offset} release={release} grouped={scope === "all"} advancedOpen={advancedOpen} onToggleSettings={toggleSettings} detailApplied={hasDetailCriteria(appliedDetail, scope)} />{scope === "all" && <Pagination label="사규예고 검색 결과" page={currentCombinedNoticePage} pageCount={combinedNoticePages} setPage={setCombinedNoticePage} />}</>}
           {scope !== "all" && <Pagination page={currentPage} pageCount={pageCount} setPage={setPage} />}
         </div>
         {scope !== "notice" && <details className="category-disclosure">
@@ -137,55 +167,57 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
   </>;
 }
 
-function SearchBar({ scope, filters, noticeFilters, updateRegulations, updateNotices, chooseScope, currentnessOptions, departments, count }: {
+function SearchBar({ scope, initialScope, filters, noticeFilters, updateRegulations, updateNotices, chooseScope, officialDepartments, availableEvidenceGroups, release, appliedDetail, onApplyDetail, advancedOpen, onCloseSettings, count }: {
   scope: Scope;
+  initialScope: Scope;
   filters: PublicRegulationFilters;
   noticeFilters: NoticeFilters;
   updateRegulations: (value: Partial<PublicRegulationFilters>) => void;
   updateNotices: (value: Partial<NoticeFilters>) => void;
   chooseScope: (next: Scope) => void;
-  currentnessOptions: string[];
-  departments: string[];
+  officialDepartments: string[];
+  availableEvidenceGroups: EvidenceGroup[];
+  release: PublishReleaseMetadata;
+  appliedDetail: RegulationDetailSettings;
+  onApplyDetail: (value: RegulationDetailSettings) => void;
+  advancedOpen: boolean;
+  onCloseSettings: () => void;
   count: number;
 }) {
   const value = scope === "notice" ? noticeFilters.query : filters.query;
   const [draft, setDraft] = useState(value);
-  const [settings, setSettings] = useState({ scope, availability: filters.availability, currentness: filters.currentness, startDate: noticeFilters.startDate, endDate: noticeFilters.endDate, year: noticeFilters.year, department: noticeFilters.department, unmappedOnly: noticeFilters.unmappedOnly });
   useEffect(() => setDraft(value), [value]);
-  useEffect(() => setSettings({ scope, availability: filters.availability, currentness: filters.currentness, startDate: noticeFilters.startDate, endDate: noticeFilters.endDate, year: noticeFilters.year, department: noticeFilters.department, unmappedOnly: noticeFilters.unmappedOnly }), [scope, filters.availability, filters.currentness, noticeFilters.startDate, noticeFilters.endDate, noticeFilters.year, noticeFilters.department, noticeFilters.unmappedOnly]);
   const setQuery = (query: string) => { updateRegulations({ query }); updateNotices({ query }); };
-  const apply = () => {
+  const apply = (settings: { scope: Scope; availability: PublicRegulationFilters["availability"]; detail: RegulationDetailSettings }, query: string) => {
     if (settings.scope !== scope) chooseScope(settings.scope);
-    updateRegulations({ query: draft.trim(), availability: settings.availability, currentness: settings.currentness });
-    updateNotices({ query: draft.trim(), startDate: settings.startDate, endDate: settings.endDate, year: settings.year, department: settings.department, unmappedOnly: settings.unmappedOnly });
+    updateRegulations({ query, availability: settings.availability, currentness: "", partialType: "ALL" });
+    updateNotices({ ...emptyNoticeFilters, query });
+    onApplyDetail(settings.detail);
   };
   const reset = () => {
-    setDraft("");
+    if (scope !== initialScope) chooseScope(initialScope);
     updateRegulations(emptyRegulationFilters);
     updateNotices(emptyNoticeFilters);
-    setSettings({ scope, availability: "ALL", currentness: "", startDate: "", endDate: "", year: "", department: "", unmappedOnly: false });
+    onApplyDetail(defaultDetailSettings(initialScope));
   };
   return <section className="public-searchbar" aria-label="공개 자료 검색">
     <form className="search-field" role="search" onSubmit={(event) => { event.preventDefault(); setQuery(draft.trim()); }}>
       <label htmlFor="public-search"><span className="sr-only">규정 및 사규예고 검색어</span></label>
-      <input id="public-search" type="search" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={scope === "notice" ? "사규예고 제목을 입력해 검색하세요" : "규정명, 부서, 주제, 개정연도 등을 입력해 검색하세요"} />
+      <input id="public-search" type="search" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={scope === "notice" ? "사규예고 제목 또는 담당 표기를 검색하세요" : "규정명, 담당 표기, 개정연도를 검색하세요"} />
       <button type="submit">검색</button>
     </form>
     <div className="search-meta"><span role="status" aria-live="polite">검색 결과 <strong>{count.toLocaleString("ko-KR")}</strong>건</span><span>검색 버튼 또는 Enter를 눌러 적용합니다.</span></div>
-    <details className="advanced-search" id="advanced-search-panel"><summary>상세 설정 <span aria-hidden="true">⌄</span></summary>
-      <div className="detail-search">
-        <fieldset className="search-scope"><legend>검색 범위</legend>{[["master", "내부규정"], ["notice", "사규예고"], ["all", "통합검색"]].map(([item, label]) => <label key={item}><input type="radio" name="scope" checked={settings.scope === item} onChange={() => setSettings((old) => ({ ...old, scope: item as Scope }))} /> {label}</label>)}</fieldset>
-        {settings.scope !== "notice" && <><label>공개결론<select value={settings.availability} onChange={(event) => setSettings((old) => ({ ...old, availability: event.target.value as PublicRegulationFilters["availability"] }))}><option value="ALL">전체</option>{availabilityOrder.map((status) => <option key={status} value={status}>{availabilityLabels[status]}</option>)}</select></label><label>현행상태<select value={settings.currentness} onChange={(event) => setSettings((old) => ({ ...old, currentness: event.target.value }))}><option value="">전체</option>{currentnessOptions.map((option) => <option key={option} value={option}>{option}</option>)}</select></label></>}
-        {settings.scope !== "master" && <><label>시작일<input type="date" value={settings.startDate} onChange={(event) => setSettings((old) => ({ ...old, startDate: event.target.value }))} /></label><label>종료일<input type="date" value={settings.endDate} onChange={(event) => setSettings((old) => ({ ...old, endDate: event.target.value }))} /></label><label>게시 연도<input inputMode="numeric" value={settings.year} onChange={(event) => setSettings((old) => ({ ...old, year: event.target.value.replace(/\D/g, "").slice(0, 4) }))} placeholder="예: 2026" /></label><label>담당부서<select value={settings.department} onChange={(event) => setSettings((old) => ({ ...old, department: event.target.value }))}><option value="">전체</option>{departments.map((item) => <option key={item}>{item}</option>)}</select></label><label className="check-label"><input type="checkbox" checked={settings.unmappedOnly} onChange={(event) => setSettings((old) => ({ ...old, unmappedOnly: event.target.checked }))} /> 기타·개인 표기만</label></>}
-        <div className="detail-search-actions"><button type="button" className="reset-button" onClick={reset}>초기화</button><button type="button" className="apply-button" onClick={apply}>적용</button></div>
-      </div>
-    </details>
+    <RegulationAdvancedSearch open={advancedOpen} onClose={onCloseSettings}
+      scope={scope} initialScope={initialScope} availability={filters.availability} appliedDetail={appliedDetail}
+      officialDepartments={officialDepartments} availableEvidenceGroups={availableEvidenceGroups} evidenceAsOf={release.evidence_as_of}
+      query={draft} onQueryChange={setDraft} onApply={apply} onReset={reset} />
   </section>;
 }
 
-function RegulationTable({ rows, allRows, rowOffset, release, noticeDates, noticeHistory, sourcesByVersion, sort, setSort, category, grouped }: { rows: PublishRegulationRow[]; allRows: PublishRegulationRow[]; rowOffset: number; release: PublishReleaseMetadata; noticeDates: Map<string, string>; noticeHistory: Map<string, { count: number; latest: string | null }>; sourcesByVersion: Map<string, PublicRegulationSourceRow[]>; sort: RegulationSort; setSort: (value: RegulationSort) => void; category: PublicRegulationFilters["availability"]; grouped: boolean }) {
+function RegulationTable({ rows, allRows, rowOffset, release, noticeDates, noticeHistory, sourcesByVersion, sort, setSort, category, partialType, onClearPartial, grouped, advancedOpen, onToggleSettings, detailApplied }: { rows: PublishRegulationRow[]; allRows: PublishRegulationRow[]; rowOffset: number; release: PublishReleaseMetadata; noticeDates: Map<string, string>; noticeHistory: Map<string, { count: number; latest: string | null }>; sourcesByVersion: Map<string, PublicRegulationSourceRow[]>; sort: RegulationSort; setSort: (value: RegulationSort) => void; category: PublicRegulationFilters["availability"]; partialType: PublicRegulationFilters["partialType"]; onClearPartial: () => void; grouped: boolean; advancedOpen: boolean; onToggleSettings: (trigger: HTMLButtonElement) => void; detailApplied: boolean }) {
   const noticeOnly = category === "NOTICE_ONLY";
-  return <section className="result-group"><div className="notice-heading"><h2>{grouped ? "규정 검색 결과" : category === "ALL" ? "내부규정" : availabilityLabels[category]} <span>({allRows.length.toLocaleString("ko-KR")}건)</span></h2><div className="table-actions"><button className="csv-button" type="button" onClick={() => downloadCsv("kodit_public_regulations.csv", publishRowsToCsv(allRows, release, noticeDates))}><img src="/figma-icons/download.svg" alt=""/>다운로드(CSV)</button><button className="detail-button" type="button" onClick={toggleAdvancedSearch}><img src="/figma-icons/filter.svg" alt=""/>상세 설정</button><select aria-label="규정 정렬" value={sort} onChange={(event) => setSort(event.target.value as RegulationSort)}><option value="REVISION_DESC">최신 개정일 기준</option><option value="NAME_ASC">규정명 가나다</option><option value="NOTICE_DESC">최근 사규예고일 기준</option></select></div></div>
+  const activePartial = category === "PARTIAL_PUBLIC" && partialType !== "ALL" ? partialTypeLabels[partialType] : null;
+  return <section className="result-group"><div className="notice-heading"><h2>{grouped ? "규정 검색 결과" : category === "ALL" ? "내부규정" : availabilityLabels[category]} <span>({allRows.length.toLocaleString("ko-KR")}건)</span></h2><div className="table-actions">{activePartial && <button className="partial-filter-clear" type="button" onClick={onClearPartial} aria-label={`부분공개 속성 ${activePartial} 필터 해제`}>부분공개 속성: {activePartial} <span aria-hidden="true">×</span></button>}{detailApplied && <span className="detail-applied-badge">설정 적용 중</span>}<button className="csv-button" type="button" onClick={() => downloadCsv("kodit_public_regulations.csv", publishRowsToCsv(allRows, release, noticeDates))}><img src="/figma-icons/download.svg" alt=""/>필터 결과 전체 CSV</button><button className="detail-button" type="button" aria-expanded={advancedOpen} aria-controls="advanced-search-panel" onClick={event => onToggleSettings(event.currentTarget)}><img src="/figma-icons/filter.svg" alt=""/>상세 설정</button><select aria-label="규정 정렬" value={sort} onChange={(event) => setSort(event.target.value as RegulationSort)}><option value="REVISION_DESC">최신 개정일 기준</option><option value="NAME_ASC">규정명 가나다</option><option value="NOTICE_DESC">최근 사규예고일 기준</option></select></div></div>
     <div className="table-scroll"><table className="regulations-table public-regulations-table"><thead><tr><th>NO</th><th>규정명</th><th>{noticeOnly ? "최근 사전예고일" : "개정일"}</th><th>확보 상태</th><th>담당부서</th><th>사규예고 이력</th></tr></thead><tbody>{rows.map((row, index) => {
       const url = validPublicUrl(row.source_location); const evidence = sourcesByVersion.get(row.regulation_version_id) ?? [];
       const history = noticeHistory.get(row.regulation_version_id);
@@ -199,6 +231,6 @@ function EvidenceLinks({ rows }: { rows: PublicRegulationSourceRow[] }) {
   return <ul className="evidence-links">{safeRows.map((row, index) => <li key={`${row.source_location}-${index}`}><a href={validPublicUrl(row.source_location)!} target="_blank" rel="noopener noreferrer">{row.attachment_name || row.evidence_role || row.source_kind} ↗</a></li>)}</ul>;
 }
 
-function NoticeTable({ rows, allRows, rowOffset, release, grouped }: { rows: PublishNoticeRow[]; allRows: PublishNoticeRow[]; rowOffset: number; release: PublishReleaseMetadata; grouped: boolean }) {
-  return <section className="result-group"><div className="notice-heading"><h2>{grouped ? "사규예고 검색 결과" : "사규예고 전체"} <span>({allRows.length.toLocaleString("ko-KR")}건)</span></h2><button className="csv-button" type="button" onClick={() => downloadCsv("kodit_public_notices.csv", publishNoticesToCsv(allRows, release))}>현재 목록 CSV</button></div><div className="table-scroll"><table className="regulations-table notice-table"><thead><tr><th>번호</th><th>제목</th><th>담당부서</th><th>게시일</th></tr></thead><tbody>{rows.map((notice, index) => <tr key={notice.notice_number}><td data-label="번호">{rowOffset + index + 1}</td><td data-label="제목">{validPublicUrl(notice.source_location) ? <a className="name-link" href={notice.source_location} target="_blank" rel="noopener noreferrer">{notice.title}</a> : notice.title}</td><td data-label="담당부서">{notice.notice_department ?? "—"}</td><td data-label="게시일">{notice.posted_date}</td></tr>)}{allRows.length === 0 && <tr><td colSpan={4} className="empty-result">일치하는 사규예고가 없습니다. 검색어나 상세 설정을 바꿔 주세요.</td></tr>}</tbody></table></div></section>;
+function NoticeTable({ rows, allRows, rowOffset, release, grouped, advancedOpen, onToggleSettings, detailApplied }: { rows: PublishNoticeRow[]; allRows: PublishNoticeRow[]; rowOffset: number; release: PublishReleaseMetadata; grouped: boolean; advancedOpen: boolean; onToggleSettings: (trigger: HTMLButtonElement) => void; detailApplied: boolean }) {
+  return <section className="result-group"><div className="notice-heading"><h2>{grouped ? "사규예고 검색 결과" : "사규예고 전체"} <span>({allRows.length.toLocaleString("ko-KR")}건)</span></h2><div className="table-actions">{detailApplied && <span className="detail-applied-badge">설정 적용 중</span>}<button className="csv-button" type="button" onClick={() => downloadCsv("kodit_public_notices.csv", publishNoticesToCsv(allRows, release))}>필터 결과 전체 CSV</button><button className="detail-button" type="button" aria-expanded={advancedOpen} aria-controls="advanced-search-panel" onClick={event => onToggleSettings(event.currentTarget)}><img src="/figma-icons/filter.svg" alt=""/>상세 설정</button></div></div><div className="table-scroll"><table className="regulations-table notice-table"><thead><tr><th>번호</th><th>제목</th><th>담당부서</th><th>게시일</th></tr></thead><tbody>{rows.map((notice, index) => <tr key={notice.notice_number}><td data-label="번호">{rowOffset + index + 1}</td><td data-label="제목">{validPublicUrl(notice.source_location) ? <a className="name-link" href={notice.source_location} target="_blank" rel="noopener noreferrer">{notice.title}</a> : notice.title}</td><td data-label="담당부서">{notice.notice_department ?? "—"}</td><td data-label="게시일">{notice.posted_date}</td></tr>)}{allRows.length === 0 && <tr><td colSpan={4} className="empty-result">일치하는 사규예고가 없습니다. 검색어나 상세 설정을 바꿔 주세요.</td></tr>}</tbody></table></div></section>;
 }

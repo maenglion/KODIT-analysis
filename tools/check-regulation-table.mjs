@@ -3,10 +3,14 @@ import { readFile } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
 import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
 import { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } from "../packages/common/src/regulations/residual-ui.ts";
+import { addDetailTerm, defaultDetailSettings, detailDateRange, filterDetailedNotices, filterDetailedRegulations, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
 const explorerText = await readFile(new URL("../packages/common/src/regulations/RegulationExplorer.tsx", import.meta.url), "utf8");
+const advancedText = await readFile(new URL("../packages/common/src/regulations/RegulationAdvancedSearch.tsx", import.meta.url), "utf8");
+const collectionText = await readFile(new URL("../apps/public-site/components/CollectionStatus.tsx", import.meta.url), "utf8");
+const collectionRouteText = await readFile(new URL("../apps/public-site/app/api/collection-state/route.ts", import.meta.url), "utf8");
 const homeText = await readFile(new URL("../apps/public-site/app/page.tsx", import.meta.url), "utf8");
 const regulationsText = await readFile(new URL("../apps/public-site/app/regulations/page.tsx", import.meta.url), "utf8");
 const residualPageText = await readFile(new URL("../apps/public-site/app/residual-data/page.tsx", import.meta.url), "utf8");
@@ -57,6 +61,20 @@ const notices = [
 const noticeDates = latestNoticeDates(notices);
 assert.equal(noticeDates.get(base.regulation_version_id), "2026-09-01");
 assert.equal(sortPublishRegulations(rows, "NAME_ASC", noticeDates)[0].display_name, "일부 규정");
+const detailDefault = defaultDetailSettings();
+const sampleSources = new Map([
+  [base.regulation_version_id, [{ regulation_version_id: base.regulation_version_id, source_kind: "ALIO", attachment_name: "투자 옵션 자료.pdf" }]],
+  [rows[1].regulation_version_id, [{ regulation_version_id: rows[1].regulation_version_id, source_kind: "KODIT_ATTACHMENT", attachment_name: "그 외 첨부.hwp" }]],
+]);
+assert.deepEqual(filterDetailedRegulations(rows, "투자 옵션", detailDefault, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, fields: ["ATTACHMENT_NAME"], includes: ["첨부"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["B"]);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, excludes: ["투자"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["B"]);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, evidenceGroups: ["ALIO"] }, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
+assert.deepEqual(filterDetailedRegulations(rows, "", { ...detailDefault, dateField: "REVISION", startDate: "2024-01-01", endDate: "2024-12-31" }, noticeDates, sampleSources).map(row => row.regulation_code), ["A"]);
+assert.deepEqual(filterDetailedNotices(notices, "투자", { ...defaultDetailSettings("notice"), fields: ["LINKED_REGULATION_NAME"] }, new Map([[base.regulation_version_id, base.display_name]])).map(row => row.notice_number), ["9"]);
+assert.deepEqual(detailDateRange("2026-09-13", 1), { startDate: "2026-08-13", endDate: "2026-09-13" });
+assert.equal(addDetailTerm(["투자", "보증", "규정"], "네 번째").length, 3);
+assert.deepEqual(settingsForScope({ ...detailDefault, fields: ["TITLE", "ATTACHMENT_NAME"], evidenceGroups: ["ALIO"], dateField: "REVISION" }, "notice"), { ...detailDefault, fields: ["TITLE"], evidenceGroups: [], dateField: "POSTED" });
 const noticeFilters = { query: "", startDate: "", endDate: "", year: "", department: "", unmappedOnly: false };
 assert.equal(filterAndSortNotices(notices, noticeFilters)[0].notice_number, "10");
 assert.equal(filterAndSortNotices(notices, { ...noticeFilters, unmappedOnly: true }).length, 1);
@@ -91,8 +109,19 @@ assert.ok(residualAnalysisText.includes('id="residual-selected-detail"') && resi
 assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
 assert.ok(diagramText.includes('id="residual-ledger-erd"') && residualPageText.includes('/methodology#residual-ledger-erd'));
-assert.ok(explorerText.includes("현재 목록 CSV"));
-assert.ok(explorerText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
+assert.ok(explorerText.includes("필터 결과 전체 CSV"));
+assert.ok(explorerText.includes('onToggleSettings={toggleSettings}') && explorerText.includes('settingsTrigger.current?.isConnected') && explorerText.includes('target?.focus()') && explorerText.includes('id="search-results"'));
+assert.ok(explorerText.includes('aria-controls="advanced-search-panel"') && advancedText.includes('id="advanced-search-panel"'));
+assert.ok(advancedText.includes('panelRef.current?.focus()') && advancedText.includes('handleEscape') && advancedText.includes('aria-labelledby="advanced-search-title"'));
+assert.ok(explorerText.includes('partial-filter-clear') && explorerText.includes('부분공개 속성:') && explorerText.includes('onClearPartial={() => updateRegulations({ partialType: "ALL" })}'));
+for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", "현재 설정 적용"]) assert.ok(advancedText.includes(field));
+assert.ok(advancedText.includes('과거 부서 자동 매칭 (미제공)') && advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
+assert.ok(explorerText.includes('ALIO 출처 연결') && explorerText.includes('승인 공개본 전체 규정'));
+assert.ok(regulationsText.includes('<CollectionStatus') && collectionRouteText.includes('public_collection_state'));
+assert.ok(collectionRouteText.includes('expectedHost = "jacyalxzejzrlspmojps.supabase.co"') && collectionRouteText.includes('Cache-Control": "no-store"'));
+assert.ok(!collectionRouteText.includes('service_role') && collectionText.includes('모든 출처의 완료나 공개본 승인을 뜻하지 않습니다'));
+assert.ok(collectionText.includes('<dt>자동수집 주기</dt><dd>10일</dd>') && collectionText.includes('기본 수집 간격은 10일입니다'));
+assert.ok(advancedText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
 assert.ok(!explorerText.includes("인쇄"));
 assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
 assert.ok(!layoutText.includes('["홈", "/"]'));
@@ -103,6 +132,8 @@ assert.ok(semanticText.includes("DepartmentEvidenceGuide") && historyText.includ
 assert.ok(navigationText.includes('href="/department-statistics/semantic-matching"') && navigationText.includes('href="/department-statistics/organization-history"'));
 assert.ok(navigationText.includes('href="/investment-statistics/yearly-notices"') && navigationText.includes('href="/investment-statistics/evidence-notices"'));
 assert.ok(topicText.includes('view === "summary"') && topicText.includes('view === "yearly"') && topicText.includes('view === "evidence"') && evidenceText.includes('initialFamily={family}') && evidenceText.includes('initialYear={year}'));
+assert.ok(topicText.includes('집계 기준일 안내') && topicText.includes('이 화면의 62건은 2026.09.19 기준으로 분류한 근거 사규예고입니다. 규정 목록은 2026.09.13 기준 승인 데이터이므로 두 수치를 합산하지 않습니다.'));
+assert.ok(!topicText.includes('기준이 다른 두 공개본'));
 assert.ok(topicText.includes('onClick={() => saveCsv(filtered)}') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
 assert.ok(topicStyleText.includes('color:#217a39') && topicStyleText.includes('border:1px solid var(--figma-green)'));
 assert.ok(helpText.includes('>i</button>') && !helpText.includes('>ⓘ</button>'));
@@ -110,6 +141,14 @@ assert.ok(!departmentText.includes("DepartmentResidualAnalysis"));
 assert.ok(!detailText.includes("confidence_level") && !detailText.includes("sha256") && !detailText.includes("checks"));
 
 const residualSnapshot = JSON.parse(gunzipSync(await readFile(new URL("../apps/public-site/data/public-snapshot-v1.json.gz", import.meta.url))));
+assert.equal(residualSnapshot.rows.length, 1041);
+assert.equal(residualSnapshot.notices.length, 2089);
+assert.equal(residualSnapshot.rows.filter(row => row.availability === "NOTICE_ONLY").length, 831);
+const approvedSourceMap = new Map();
+for (const source of residualSnapshot.sources) approvedSourceMap.set(source.regulation_version_id, [...(approvedSourceMap.get(source.regulation_version_id) ?? []), source]);
+const approvedAlio = filterDetailedRegulations(residualSnapshot.rows, "", { ...defaultDetailSettings(), evidenceGroups: ["ALIO"] }, latestNoticeDates(residualSnapshot.notices), approvedSourceMap);
+assert.equal(approvedAlio.length, 205);
+assert.ok(approvedAlio.every(row => approvedSourceMap.get(row.regulation_version_id).some(source => source.source_kind === "ALIO")));
 const residualCategories = ["PERSON_EVIDENCE", "ORG_CURRENT", "ORG_HISTORICAL", "UNTYPED", "AMBIGUOUS"];
 const nonPersonIds = new Set(residualSnapshot.residuals.filter(row => row.resolution_class !== "PERSON_EVIDENCE").map(row => row.residual_id));
 assert.equal(residualSnapshot.attributionExplanations.filter(row => nonPersonIds.has(row.residual_id)).length, 159);

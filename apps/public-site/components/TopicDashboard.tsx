@@ -64,7 +64,7 @@ export function TopicDashboard({ view = "summary", initialFamily = "ALL", initia
       <h1>{titles[view]}</h1><p>{descriptions[view]}</p>
     </div><span className="topic-date-pill">정적 검증본 · 2026.09.19</span></div></section>
     <main className="shell topic-page">
-      <div className="topic-boundary" role="note"><strong>기준이 다른 두 공개본</strong><span>아래 62건은 2026.09.19 주제 분류 결과입니다. 규정 목록은 2026.09.13 기준 별도 승인본이므로 숫자를 합산하거나 같은 시점의 값으로 해석하지 마세요. 화면 표시에는 실시간 RPC를 사용하지 않습니다.</span></div>
+      <div className="topic-boundary" role="note"><strong>집계 기준일 안내</strong><span>이 화면의 62건은 2026.09.19 기준으로 분류한 근거 사규예고입니다. 규정 목록은 2026.09.13 기준 승인 데이터이므로 두 수치를 합산하지 않습니다.</span></div>
       {view === "summary" && <>
         <div className="topic-overview" aria-label="주제 통계 요약">
           <div className="topic-lead-stat"><span>승인된 주제 사규예고</span><strong>{snapshot.noticeCount}<small>건</small></strong><p>중복 제거된 게시물 수<br />{snapshot.period.start} — {snapshot.period.end}</p></div>

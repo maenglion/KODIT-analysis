@@ -19,7 +19,7 @@
 
 ## Decisions and invariants
 
-1. 현재 공개 사이트의 초기 렌더링·검색·통계·CSV는 Supabase RPC 호출을 요구하지 않는다. 향후 외부 검증과 증빙을 위한 기존 RPC, migration, 검사 스크립트 및 계약은 **삭제하거나 대체하지 않는다**. 연결 재개는 별도 승인·검증 단계에서 수행한다.
+1. 공개 사이트의 초기 규정 렌더링·검색·통계·CSV는 Supabase RPC 호출을 요구하지 않는다. 2026-10-03 사용자 요청으로 **자동수집 상태만** 기존 공개 RPC를 서버에서 읽는 예외를 둔다. 조회 실패는 상태 표시만 확인 불가로 바꾸고 승인 정적 자료의 로딩·집계·CSV에 영향을 주지 않는다. 외부 검증과 증빙을 위한 기존 RPC, migration, 검사 스크립트 및 계약은 **삭제하거나 대체하지 않는다**.
 2. 주제별 숫자는 `topic-membership-v2`의 기록된 측정값으로 표시한다. 소송과 투자·보증의 대분류, 9개 하위군, 사규예고 중복 집계, '선정 업무 키워드'와 직접 해소된 조직 수를 혼동하지 않는다. `보증 OR 투자` 문자열만으로 주제 회원을 새로 만들지 않는다.
 3. 주제 화면의 각 공식 게시물 링크는 유효한 공개 URL에 한정한다. 2026-09-19 주제 통계와 2026-09-13 규정 검색을 상호 연결할 때 별도 기준일을 안내한다.
 4. 상단 1차 정보 메뉴의 목적·방법론·기술 설명은 확인된 설계와 공개 자료 범위 안에서 작성한다. 법적 확정, 개인 평가, 수치의 실시간성, 이름이 확인되지 않은 담당 조직을 주장하지 않는다.
@@ -168,3 +168,17 @@ Next 정적 페이지가 전체 설명 1,272행을 클라이언트 props로 직�
 사용자가 `푸쉬해죠`로 운영 반영을 요청해 [PR #7](https://github.com/maenglion/KODIT-analysis/pull/7)의 고정 UI head `35350088f4c9da47431396095eaad4f4cf73b3eb`를 검수한 뒤 `main`의 merge commit `f8ff989843487bc6a126a6ee00cf41c6139a3562`로 병합했다. PR의 Netlify deploy-preview·Header rules·Redirect rules 검사는 성공했고 Pages changed·Supabase Preview는 건너뛰었다. 기존 Git→Netlify 자동 연결이 제공하는 [운영 잔차 페이지](https://letscheck-sinbo.netlify.app/residual-data)에서 `ㅇㄷㅎ(8053)`의 **담당 표기 관측 18건 / 사규예고 18건 / 본문 인물형 언급 24건**과 집계 단위·반복 위치 설명을 실제로 열어 확인했다. Chromium 1440px·800px에서 10개 단위 페이지, 분류 필터·CSV·클릭 행 바로 아래 상세·PERSON 조직 후보 비노출을, 조직형에서는 근거 링크·키보드 조작을 검증했다. Netlify API·설정은 변경하지 않았다.
 
 merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `public_department_attribution_explanation_rows already exists with same argument types (SQLSTATE 42723)` migration 재생 오류로 실패 상태로 남았다. 이는 정적 사이트의 확인된 운영 화면과 다른 검사이며 Codex 소관 migration·공개 read contract·승인 snapshot에 손대지 않았다. 본 기록만 추가하는 후속 커밋은 UI/데이터를 변경하지 않는다.
+
+### 규정 상세설정·요약 및 자동수집 상태 분리 (2026-10-03, PR 검수 전)
+
+사용자가 제공한 [상세설정 시안](https://www.figma.com/design/8y8T16UoFNxl47kuT8C2dO/%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B8%B0%ED%9A%8D?node-id=16-3172)을 기준으로 **결과표 아래 버튼을 누르면 검색창과 결과표 사이에 2열 공개 필드 설정표가 펼쳐지게** 재구성했다. 기존 내비게이션은 유지한다. 검색 범위·포함/제외 단어 각 최대 3개·공식 조직명 정확 일치 복수선택·ALIO/KODIT 출처 종류·개정일/최근 연결 예고일/게시일 기간을 UI 전용 필터로 적용하며, 규정과 사규예고 각각의 CSV는 표와 같은 필터의 **전체 결과**를 내려받는다. 실제 공개본에 텍스트가 없는 확보문서/첨부 본문 검색과 공개 매핑이 없는 과거→현재 조직 자동 매칭은 제공하지 않는다. `currentness` 전 행 null과 `partial_*` 전 행 false를 출처 종류 필터로 오인하지 않는다.
+
+규정 목록 앞의 요약은 승인 snapshot의 **규정 버전 1,041건**, `source_kind=ALIO` 근거가 연결된 **서로 다른 규정 버전 205건**(근거 역할은 전문표현물 204건/기타근거 1건), `NOTICE_ONLY` **831건**만 쓴다. ALIO 출처 연결 205를 전문 공개 205와 동치로 해석하지 않는다. 사업별 통계의 기준일 안내는 사용자가 제공한 정확한 문구(62건: 2026.09.19 주제 분류 / 규정: 2026.09.13 승인본, 합산 금지)로 교체했다.
+
+규정 화면의 데이터 영역은 **공개 데이터 기준일 2026-09-13 / 공개본 생성일 2026-09-14**를 정적 release에서 표시하고, **마지막 성공 수집일 / 다음 수집 예정일**만 서버 `/api/collection-state`가 기존 `api.public_collection_state()`에서 익명 publishable credential로 읽는다. 서버 전용 `KODIT_SUPABASE_*` URL/key 쌍을 우선하고 없으면 `NEXT_PUBLIC_SUPABASE_*` 쌍을 사용하며 쌍을 섞지 않는다. `GET`은 KODIT 프로젝트 호스트를 검사하고, 5초 타임아웃/상태 실패·키 미설정 시 `{available:false}`로 돌아가 정적 규정·CSV를 막지 않는다. 화면은 5분마다 상태만 갱신한다. **자동수집 주기 10일**은 별도 정적 라벨이며 GitHub Actions가 매일 due를 확인하는 것과 구분한다. 서버/Netlify 환경변수를 변경하거나 DB read contract·migration·승인 snapshot을 수정하지 않았다.
+
+크론 코드 읽기 감사에서 자동 수집은 내부 관측/draft만 생성하고 공개 승인·정적 export는 수동인 분리 구조를 확인했다. 다만 `workers/collector/scheduled_collection.py`의 혼합 성공/실패가 `succeeded`로 완료되면 다음 10일 기준일을 앞당길 수 있고, claim 이후 워커 중단 시 `running` 잠금의 자동 만료가 없어 수집이 정지될 수 있다. 이는 공개본 자동 훼손 근거는 아니지만 운영 위험이므로 Codex 소관 [GitHub 이슈 #8](https://github.com/maenglion/KODIT-analysis/issues/8)로 분리했다. 실제 원격 크론 실행이나 DB 수정은 하지 않았다.
+
+`pnpm check:regulations`, 공개 사이트 TS 검사·프로덕션 빌드, `git diff --check` 통과. Chromium 1440px/800px에서 1,041/205/831 요약·설정표 상단 펼침/ARIA·ALIO 필터 205행 CSV(BOM)·사규예고 2,089건 전환·상태 API 실패 격리·공개 RPC mock의 서울시간 표시·10일 주기·사업별 통계 정확 원고를 확인했다. 프리뷰에서 실제 상태 RPC 이용 가능 여부는 GitHub→Netlify 자동 deploy-preview가 나온 뒤 확인한다.
+
+독립 읽기 전용 리뷰에서 (1) 서버 전용 환경변수 쌍 fallback, (2) 결과표 아래 버튼에서 **앞쪽**에 새로 나타난 설정표로 키보드 초점 진입 및 Escape 닫기, (3) 접힌 공개 범위 분류에 남는 `partial_*` 하위 선택의 표 머리 표시·즉시 해제가 필요하다고 확인했다. 서버 API 호스트 검증 및 키 쌍 우선순위를 추가했고, 설정표에 초점 진입·원래 버튼 복귀 및 모션 감소 대응을 구현했다. `partial_*`는 ALIO 출처 종류 필터가 아닌 별도 공개 속성으로 이름을 명시하고 표 머리에서 해제하게 했으며, 상세설정 적용 시 숨은 소분류를 초기화한다.
