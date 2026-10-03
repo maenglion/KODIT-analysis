@@ -31,6 +31,8 @@
     "check:t067": "node tools/organizations/check_historical_org_evidence_contract.mjs",
     "test:t067:http": "node tools/organizations/check_historical_org_evidence_http.mjs",
     "check:work-traces": "node tools/organizations/check_work_trace_evidence_chain_contract.mjs && node tools/organizations/check_work_trace_run_plan.mjs && python -B tools/organizations/test_work_trace_planner.py",
+    "build:work-trace-public": "node tools/publish/build_work_trace_public_snapshot.mjs",
+    "check:work-trace-public": "node tools/publish/check_work_trace_public_snapshot.mjs",
     "check:t07a": "node tools/analytics/check_topic_v1_contract.mjs",
     "test:t07a:http": "node tools/analytics/check_topic_v1_http.mjs",
     "build:t07b-review": "node tools/analytics/build_topic_boundary_review_v1.mjs",

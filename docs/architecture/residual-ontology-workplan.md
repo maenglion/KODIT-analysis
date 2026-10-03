@@ -181,8 +181,10 @@ trace case identity는 release와 독립하고 run은 release·contract·evidenc
 않는다. 기존 공식 `FUNCTION_TRANSFERRED_TO` 2건은 관측 endpoint와 합산하지 않는다.
 
 2026-10-04 기준 additive 원장과 service-only writer를 운영 DB에 적용하고 deterministic run
-`a00dba9a-4f99-2ece-ce53-35fc87afc433`의 1,272 branch를 검증했다. public-safe A/B/C projection과
-UI는 다음 단계이며 core 원장을 브라우저에서 직접 읽지 않는다.
+`a00dba9a-4f99-2ece-ce53-35fc87afc433`의 1,272 branch를 검증했다. 이어 내부 identity와 PERSON/raw
+label을 제거한 정적 `public-work-trace-snapshot-v1`을 생성하고 사규예고 1,272 / 관련 규정 450 /
+현행 endpoint 조직 22개의 A/B/C projection을 검증했다. UI는 Manus 후속 작업이며 core 원장을
+브라우저에서 직접 읽지 않는다.
 
 ## Related architecture
 
@@ -220,3 +222,4 @@ UI는 다음 단계이며 core 원장을 브라우저에서 직접 읽지 않는
 | 2026-09-19 | T07-B | topic-v1을 변경하지 않고 35개 false-negative 후보와 scope verdict를 재현 가능한 review artifact로 고정했다. |
 | 2026-09-19 | T07-C | 투자·보증을 9개 승인 child family의 distinct union으로 구현하고 v1과 v2를 함께 재현 가능하게 보존했다. |
 | 2026-10-03 | Work trace | 잔차 최종 귀속 대신 notice/regulation/work의 증거사슬, 명시적 gap, 복수 대응, versioned run diff를 새 additive 원장 계약으로 채택했다. |
+| 2026-10-04 | Work trace public | validated run을 runtime RPC가 아닌 public-safe 정적 snapshot으로 투영하고 Manus UI가 사용할 A/B/C grain과 evidence dictionary를 고정했다. |

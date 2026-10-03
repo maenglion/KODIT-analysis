@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **REMOTE IMPLEMENTED + VALIDATED; PUBLIC PROJECTION NOT YET ADDED**
+- Status: **REMOTE IMPLEMENTED + VALIDATED; PUBLIC STATIC PROJECTION VERIFIED**
 - Base commit: `beb48a6010457bc44bef0b70d180a1449c046ee8`
 - Contract: `work-trace-evidence-chain-v1`
 
@@ -241,8 +241,8 @@ run header, branch batch와 backlog를 나누어 idempotent하게 적재한 뒤
 
 ## Known gaps
 
-- relation과 trace run은 운영 append-only 원장에 적재·검증했다. public-safe A/B/C projection과
-  checked-in snapshot은 아직 생성하지 않았다.
+- relation과 trace run은 운영 append-only 원장에 적재·검증했고 public-safe A/B/C projection과
+  checked-in snapshot을 생성했다. Manus UI와 공개 배포는 아직 적용하지 않았다.
 - core regulation identity 1,041건에는 version ledger가 1건만 존재한다. publish version identity를 core
   version으로 오인하지 않으며, version별 추적은 별도 정본 보강이 필요하다.
 - positive-control strict row 696건은 evaluation material이며 운영 relation 원장이 아니다.
@@ -318,6 +318,10 @@ mutation 때문에 idempotency check에서 중단됐다. run/result/validation �
 - `tools/organizations/check_work_trace_evidence_chain_contract.mjs`
 - `tools/organizations/check_work_trace_run_plan.mjs`
 - `tools/organizations/verify_work_trace_evidence_chain.sql`
+- `tools/publish/build_work_trace_public_snapshot.mjs`
+- `tools/publish/check_work_trace_public_snapshot.mjs`
+- `apps/public-site/data/public-work-trace-v1.json.gz`
+- `apps/public-site/lib/work-trace-data.ts`
 - `supabase/migrations/20260918000500_org_work_attribution_ledger.sql`
 - `docs/architecture/organization-function-precision-gate.md`
 
@@ -334,6 +338,7 @@ mutation 때문에 idempotency check에서 중단됐다. run/result/validation �
 | 2026-10-03 | 1,272건 dry-run을 생성했으나 운영 migration/backfill은 적용하지 않았다. |
 | 2026-10-04 | additive migration 2개와 deterministic relation/trace plan을 운영 원장에 적용하고 1,272 branch를 검증했다. |
 | 2026-10-04 | trace planning이 relation payload를 mutation하던 결함을 발견해 복사 경계를 추가하고 idempotent 재실행 delta 0을 확인했다. |
+| 2026-10-04 | public runtime RPC 대신 validated run에서 생성한 정적 A/B/C snapshot을 채택하고 PERSON·raw label·internal identity를 payload에서 제외했다. |
 
 > 추적은 답을 만들어 내는 일이 아니라, 확인된 근거를 순서대로 연결하고 더 이어 갈 수 없는
 > 지점에서 멈춘 이유를 기록하는 일이다. 각 단계에는 근거번호와 원문 링크를 붙이며, 끊긴 지점의

@@ -1,0 +1,435 @@
+{
+  "fixture_contract": "public-work-trace-fixture-v1",
+  "snapshot_contract": "public-work-trace-snapshot-v1",
+  "examples": [
+    {
+      "public_branch_key": "wt_branch_9dd20b1270164332e731",
+      "public_notice_key": "wt_notice_751e4ef6e09fcdb076f8",
+      "notice": {
+        "posted_at": "2026-04-10",
+        "title": "「보안업무요령」 개정 사전예고",
+        "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1"
+      },
+      "regulation": {
+        "public_regulation_key": "wt_regulation_842094f04cc5a76874b1",
+        "title": "보안업무요령",
+        "source_url": "https://www.alio.go.kr/download/rulefiledown.json?fileNo=235307"
+      },
+      "terminal_outcome": "COMPLETE",
+      "terminal_outcome_label": "확인된 범위까지 추적 완료",
+      "completion_scope": "CURRENT_FUNCTION_OBSERVED",
+      "completion_scope_label": "현행 업무분장까지 확인",
+      "public_summary": "공식 규정 관리 문구와 현행 업무분장을 연결하여 현재 소관 업무를 확인했습니다.",
+      "last_verified_date": "2026-07-14",
+      "current_endpoint_count": 1,
+      "steps": [
+        {
+          "step_order": 1,
+          "step_kind": "NOTICE_OBSERVED",
+          "step_basis": "OFFICIAL_DOCUMENT",
+          "public_description": "공식 사규예고 게시물과 게시일을 확인했습니다.",
+          "observed_at": "2026-04-10",
+          "effective_at": null,
+          "observed_phrase": "「보안업무요령」 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1354"
+          ]
+        },
+        {
+          "step_order": 2,
+          "step_kind": "PROPOSES_CHANGE_TO",
+          "step_basis": "EXISTING_ASSERTION",
+          "public_description": "사규예고 제목에서 개정 대상 규정을 직접 확인했습니다.",
+          "observed_at": "2026-04-10",
+          "effective_at": null,
+          "observed_phrase": "「보안업무요령」 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1354"
+          ]
+        },
+        {
+          "step_order": 3,
+          "step_kind": "CURRENT_FUNCTION_OBSERVED",
+          "step_basis": "OFFICIAL_DOCUMENT",
+          "public_description": "현행 공식 업무분장에 해당 규정의 관리 문구가 직접 나타납니다.",
+          "observed_at": null,
+          "effective_at": null,
+          "observed_phrase": "보안업무요령",
+          "matched_phrase": "비상계획부1.비상대비에관한업무「비상근무기준」관리관련제규정의제정·개정·폐지,유권해석　　 충무계획기획및운용충무계획기본계획수립및조정　　 　 각부서충무계획반영사항의견수렴및환류　　 을지연습기획및운용을지연습기본계획수립및조정　　 　 을지연습준비,실시및사후보고　2.직장예비군및민방위대운영에관한업무직장예비군운영및관리조직편성,운영및보고서제출　　 　 직장예비군교육훈련및장비관리예비군감사수검　　 민방위대운영및관리조직편성,운영및보고서제출중점자원관리및보고　　 　 민방위대교육훈련및장비관리　　 사회복무요원운용및관리사회복무요원관련기준및SOP관리　　 　 인원배정요청및배정인원배치　　 　 사회복무요원복무관리　　 　 사회복무요원관련보급품관리등　　 　 예산요구및예산집행　3.보안및경비에관한업무「보안업무요령」관리관련제규정의제정·개정·폐지,유권해석　　 보안업무계획및운용보안업무기본계획수립및조정　 　 보안업무심사분석보고　　 보안점검및감사보안진단의날행사　　 　 각본부점보안관리실태확인및감사　　 　 암호장비점검,수령및반납　　 　 비밀소유조",
+          "current_org_key": "wt_organization_92340e7bd8e867f5d1d5",
+          "current_org_name": "비상계획부",
+          "evidence_numbers": [
+            "E-1451",
+            "E-0097"
+          ]
+        }
+      ],
+      "break": null,
+      "current_endpoints": [
+        {
+          "current_org_key": "wt_organization_92340e7bd8e867f5d1d5",
+          "current_org_name": "비상계획부",
+          "correspondence_basis": "FUNCTION_DIRECT",
+          "correspondence_basis_label": "공식 업무분장에서 직접 확인",
+          "observed_phrase": "보안업무요령",
+          "matched_phrase": "비상계획부1.비상대비에관한업무「비상근무기준」관리관련제규정의제정·개정·폐지,유권해석　　 충무계획기획및운용충무계획기본계획수립및조정　　 　 각부서충무계획반영사항의견수렴및환류　　 을지연습기획및운용을지연습기본계획수립및조정　　 　 을지연습준비,실시및사후보고　2.직장예비군및민방위대운영에관한업무직장예비군운영및관리조직편성,운영및보고서제출　　 　 직장예비군교육훈련및장비관리예비군감사수검　　 민방위대운영및관리조직편성,운영및보고서제출중점자원관리및보고　　 　 민방위대교육훈련및장비관리　　 사회복무요원운용및관리사회복무요원관련기준및SOP관리　　 　 인원배정요청및배정인원배치　　 　 사회복무요원복무관리　　 　 사회복무요원관련보급품관리등　　 　 예산요구및예산집행　3.보안및경비에관한업무「보안업무요령」관리관련제규정의제정·개정·폐지,유권해석　　 보안업무계획및운용보안업무기본계획수립및조정　 　 보안업무심사분석보고　　 보안점검및감사보안진단의날행사　　 　 각본부점보안관리실태확인및감사　　 　 암호장비점검,수령및반납　　 　 비밀소유조",
+          "evidence_numbers": [
+            "E-1451",
+            "E-0097"
+          ]
+        }
+      ],
+      "corrected_by_later_run": false
+    },
+    {
+      "public_branch_key": "wt_branch_da7b5dc6b68b8fcec22c",
+      "public_notice_key": "wt_notice_7213086a2b4fd093b8a9",
+      "notice": {
+        "posted_at": "2026-08-27",
+        "title": "「문화산업보증 업무요령」 개정 사전예고",
+        "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1"
+      },
+      "regulation": {
+        "public_regulation_key": "wt_regulation_610919a814d1112b2f79",
+        "title": "문화산업보증 업무요령",
+        "source_url": "https://www.alio.go.kr/download/rulefiledown.json?fileNo=235815"
+      },
+      "terminal_outcome": "FUNCTION_MULTIPLE_CANDIDATES",
+      "terminal_outcome_label": "복수 대응",
+      "completion_scope": null,
+      "completion_scope_label": null,
+      "public_summary": "현행 업무분장에서 둘 이상의 대응이 관측되어 하나로 좁히지 않았습니다.",
+      "last_verified_date": "2026-07-13",
+      "current_endpoint_count": 3,
+      "steps": [
+        {
+          "step_order": 1,
+          "step_kind": "NOTICE_OBSERVED",
+          "step_basis": "OFFICIAL_DOCUMENT",
+          "public_description": "공식 사규예고 게시물과 게시일을 확인했습니다.",
+          "observed_at": "2026-08-27",
+          "effective_at": null,
+          "observed_phrase": "「문화산업보증 업무요령」 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1381"
+          ]
+        },
+        {
+          "step_order": 2,
+          "step_kind": "PROPOSES_CHANGE_TO",
+          "step_basis": "EXISTING_ASSERTION",
+          "public_description": "사규예고 제목에서 개정 대상 규정을 직접 확인했습니다.",
+          "observed_at": "2026-08-27",
+          "effective_at": null,
+          "observed_phrase": "「문화산업보증 업무요령」 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1381"
+          ]
+        },
+        {
+          "step_order": 3,
+          "step_kind": "SEPARATE_CURRENT_OBSERVATION",
+          "step_basis": "TEXT_COMPARISON",
+          "public_description": "규정 문구와 현행 업무분장 문구를 조사 목적으로 대조했습니다. 공식 이관이나 소관 확정을 뜻하지 않습니다.",
+          "observed_at": null,
+          "effective_at": null,
+          "observed_phrase": "문화산업보증 업무요령",
+          "matched_phrase": "문화산업보증업무의기획및총괄",
+          "current_org_key": "wt_organization_a84a7c95325b7d10fd0b",
+          "current_org_name": "혁신금융부",
+          "evidence_numbers": [
+            "E-1439",
+            "E-0044"
+          ]
+        },
+        {
+          "step_order": 4,
+          "step_kind": "SEPARATE_CURRENT_OBSERVATION",
+          "step_basis": "TEXT_COMPARISON",
+          "public_description": "규정 문구와 현행 업무분장 문구를 조사 목적으로 대조했습니다. 공식 이관이나 소관 확정을 뜻하지 않습니다.",
+          "observed_at": null,
+          "effective_at": null,
+          "observed_phrase": "문화산업보증 업무요령",
+          "matched_phrase": "스타트업보증업무의기획및총괄",
+          "current_org_key": "wt_organization_e07df2f350d33d3a5e5b",
+          "current_org_name": "스타트업금융부",
+          "evidence_numbers": [
+            "E-1439",
+            "E-0090"
+          ]
+        },
+        {
+          "step_order": 5,
+          "step_kind": "SEPARATE_CURRENT_OBSERVATION",
+          "step_basis": "TEXT_COMPARISON",
+          "public_description": "규정 문구와 현행 업무분장 문구를 조사 목적으로 대조했습니다. 공식 이관이나 소관 확정을 뜻하지 않습니다.",
+          "observed_at": null,
+          "effective_at": null,
+          "observed_phrase": "문화산업보증 업무요령",
+          "matched_phrase": "신용보증업무의기획및총괄",
+          "current_org_key": "wt_organization_2b17881e4b7d945901e7",
+          "current_org_name": "신용보증부",
+          "evidence_numbers": [
+            "E-1439",
+            "E-0052"
+          ]
+        }
+      ],
+      "break": null,
+      "current_endpoints": [
+        {
+          "current_org_key": "wt_organization_e07df2f350d33d3a5e5b",
+          "current_org_name": "스타트업금융부",
+          "correspondence_basis": "FUNCTION_PHRASE_CANDIDATE",
+          "correspondence_basis_label": "업무 문구 대조 후보",
+          "observed_phrase": "문화산업보증 업무요령",
+          "matched_phrase": "스타트업보증업무의기획및총괄",
+          "evidence_numbers": [
+            "E-1439",
+            "E-0090"
+          ]
+        },
+        {
+          "current_org_key": "wt_organization_2b17881e4b7d945901e7",
+          "current_org_name": "신용보증부",
+          "correspondence_basis": "FUNCTION_PHRASE_CANDIDATE",
+          "correspondence_basis_label": "업무 문구 대조 후보",
+          "observed_phrase": "문화산업보증 업무요령",
+          "matched_phrase": "신용보증업무의기획및총괄",
+          "evidence_numbers": [
+            "E-1439",
+            "E-0052"
+          ]
+        },
+        {
+          "current_org_key": "wt_organization_a84a7c95325b7d10fd0b",
+          "current_org_name": "혁신금융부",
+          "correspondence_basis": "FUNCTION_PHRASE_CANDIDATE",
+          "correspondence_basis_label": "업무 문구 대조 후보",
+          "observed_phrase": "문화산업보증 업무요령",
+          "matched_phrase": "문화산업보증업무의기획및총괄",
+          "evidence_numbers": [
+            "E-1439",
+            "E-0044"
+          ]
+        }
+      ],
+      "corrected_by_later_run": false
+    },
+    {
+      "public_branch_key": "wt_branch_f9df0c5898a2c0aabe5a",
+      "public_notice_key": "wt_notice_e1fa32af10bd09c06b23",
+      "notice": {
+        "posted_at": "2026-08-28",
+        "title": "「기술성장 지원 프로그램 운용기준」 등 개정 사전예고",
+        "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1"
+      },
+      "regulation": {
+        "public_regulation_key": "wt_regulation_408515a9543f344f6564",
+        "title": "기술성장 지원 프로그램 운용기준",
+        "source_url": "https://www.alio.go.kr/download/rulefiledown.json?fileNo=219956"
+      },
+      "terminal_outcome": "FUNCTION_CORRESPONDENCE_UNCONFIRMED",
+      "terminal_outcome_label": "대응 미확인",
+      "completion_scope": null,
+      "completion_scope_label": null,
+      "public_summary": "규정은 확인했으나 현행 업무분장과의 직접 대응은 확인하지 못했습니다.",
+      "last_verified_date": "2026-08-28",
+      "current_endpoint_count": 0,
+      "steps": [
+        {
+          "step_order": 1,
+          "step_kind": "NOTICE_OBSERVED",
+          "step_basis": "OFFICIAL_DOCUMENT",
+          "public_description": "공식 사규예고 게시물과 게시일을 확인했습니다.",
+          "observed_at": "2026-08-28",
+          "effective_at": null,
+          "observed_phrase": "「기술성장 지원 프로그램 운용기준」 등 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1383"
+          ]
+        },
+        {
+          "step_order": 2,
+          "step_kind": "PROPOSES_CHANGE_TO",
+          "step_basis": "EXISTING_ASSERTION",
+          "public_description": "사규예고 제목에서 개정 대상 규정을 직접 확인했습니다.",
+          "observed_at": "2026-08-28",
+          "effective_at": null,
+          "observed_phrase": "「기술성장 지원 프로그램 운용기준」 등 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1383"
+          ]
+        }
+      ],
+      "break": {
+        "break_kind": "FUNCTION_CORRESPONDENCE_UNCONFIRMED",
+        "missing_relation": "REGULATION_TO_CURRENT_FUNCTION_OFFICIAL_RELATION",
+        "gap_from": "2026-08-28",
+        "gap_to": null,
+        "required_evidence_description": "해당 규정의 현행 소관 업무를 직접 뒷받침하는 공식 업무분장 또는 규정 관리 문구",
+        "public_explanation": "규정은 확인했으나 현행 업무분장과의 직접 대응은 확인하지 못했습니다."
+      },
+      "current_endpoints": [],
+      "corrected_by_later_run": false
+    },
+    {
+      "public_branch_key": "wt_branch_c95f07b5c13f4e2503c5",
+      "public_notice_key": "wt_notice_61b8079bdeb0c07824a7",
+      "notice": {
+        "posted_at": "2026-07-14",
+        "title": "비대면 플랫폼 대안평가 연계 프로그램 운용기준 개정 사전예고",
+        "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1"
+      },
+      "regulation": null,
+      "terminal_outcome": "RELATION_EVIDENCE_GAP",
+      "terminal_outcome_label": "연결 근거 부재",
+      "completion_scope": null,
+      "completion_scope_label": null,
+      "public_summary": "사규예고와 개정 대상 규정을 직접 연결하는 근거를 확인하지 못했습니다.",
+      "last_verified_date": "2026-07-14",
+      "current_endpoint_count": 0,
+      "steps": [
+        {
+          "step_order": 1,
+          "step_kind": "NOTICE_OBSERVED",
+          "step_basis": "OFFICIAL_DOCUMENT",
+          "public_description": "공식 사규예고 게시물과 게시일을 확인했습니다.",
+          "observed_at": "2026-07-14",
+          "effective_at": null,
+          "observed_phrase": "비대면 플랫폼 대안평가 연계 프로그램 운용기준 개정 사전예고",
+          "matched_phrase": null,
+          "current_org_key": null,
+          "current_org_name": null,
+          "evidence_numbers": [
+            "E-1378"
+          ]
+        }
+      ],
+      "break": {
+        "break_kind": "RELATION_EVIDENCE_GAP",
+        "missing_relation": "NOTICE_TO_REGULATION_DIRECT_ASSERTION",
+        "gap_from": "2026-07-14",
+        "gap_to": null,
+        "required_evidence_description": "사규예고가 제정·개정·폐지를 제안한 규정을 직접 확인할 공식 근거",
+        "public_explanation": "사규예고와 개정 대상 규정을 직접 연결하는 근거를 확인하지 못했습니다."
+      },
+      "current_endpoints": [],
+      "corrected_by_later_run": false
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_no": "E-0044",
+      "reference_kind": "FUNCTION_ASSIGNMENT",
+      "title": "직제규정(2026년도 7월 1일 개정).pdf",
+      "source_url": "https://www.alio.go.kr/item/itemBoard21110.do?disclosureNo=null&apbaId=C0091&nowcode=21110&reportFormNo=21110&table_name=COMM_RULE&idx_name=RULE_NO&idx=11716&reportGbn=N&bid_type=K1300",
+      "source_date": "2026-07-13",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-0052",
+      "reference_kind": "FUNCTION_ASSIGNMENT",
+      "title": "직제규정(2026년도 7월 1일 개정).pdf",
+      "source_url": "https://www.alio.go.kr/item/itemBoard21110.do?disclosureNo=null&apbaId=C0091&nowcode=21110&reportFormNo=21110&table_name=COMM_RULE&idx_name=RULE_NO&idx=11716&reportGbn=N&bid_type=K1300",
+      "source_date": "2026-07-13",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-0090",
+      "reference_kind": "FUNCTION_ASSIGNMENT",
+      "title": "직제규정(2026년도 7월 1일 개정).pdf",
+      "source_url": "https://www.alio.go.kr/item/itemBoard21110.do?disclosureNo=null&apbaId=C0091&nowcode=21110&reportFormNo=21110&table_name=COMM_RULE&idx_name=RULE_NO&idx=11716&reportGbn=N&bid_type=K1300",
+      "source_date": "2026-07-13",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-0097",
+      "reference_kind": "FUNCTION_ASSIGNMENT",
+      "title": "본부점 세부운영기준(2026년도 7월 2일 개정).pdf",
+      "source_url": "https://www.alio.go.kr/item/itemBoard21110.do?disclosureNo=null&apbaId=C0091&nowcode=21110&reportFormNo=21110&table_name=COMM_RULE&idx_name=RULE_NO&idx=45568&reportGbn=N&bid_type=K1300",
+      "source_date": "2026-07-14",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-1354",
+      "reference_kind": "NOTICE",
+      "title": "「보안업무요령」 개정 사전예고",
+      "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "source_date": "2026-04-10",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-1378",
+      "reference_kind": "NOTICE",
+      "title": "비대면 플랫폼 대안평가 연계 프로그램 운용기준 개정 사전예고",
+      "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "source_date": "2026-07-14",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-1381",
+      "reference_kind": "NOTICE",
+      "title": "「문화산업보증 업무요령」 개정 사전예고",
+      "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "source_date": "2026-08-27",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-1383",
+      "reference_kind": "NOTICE",
+      "title": "「기술성장 지원 프로그램 운용기준」 등 개정 사전예고",
+      "source_url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322&listCo=500&currPage=1",
+      "source_date": "2026-08-28",
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-1439",
+      "reference_kind": "REGULATION",
+      "title": "문화산업보증 업무요령",
+      "source_url": "https://www.alio.go.kr/download/rulefiledown.json?fileNo=235815",
+      "source_date": null,
+      "effective_date": null
+    },
+    {
+      "evidence_no": "E-1451",
+      "reference_kind": "REGULATION",
+      "title": "보안업무요령",
+      "source_url": "https://www.alio.go.kr/download/rulefiledown.json?fileNo=235307",
+      "source_date": null,
+      "effective_date": null
+    }
+  ],
+  "data_literacy": {
+    "evidence_chain": "사규예고, 규정, 업무분장 등 확인된 자료를 순서대로 연결한 기록입니다. 중간 근거가 없으면 선을 이어 그리지 않습니다.",
+    "trace_branch": "사규예고 한 건에서 출발해 개정 대상 규정과 현행 업무분장 대조까지 조사한 단위입니다.",
+    "current_function_assignment": "현재 공식 업무분장 문서에 적힌 업무와 담당 조직입니다. 과거 조직에서 현재 조직으로 이관됐다는 뜻은 아닙니다.",
+    "official_transfer_path": "조직변경이나 업무이관을 명시한 공식 문서로 중간 단계까지 확인된 경로입니다.",
+    "phrase_comparison": "규정 문구와 현행 업무분장 문구를 조사 후보로 대조한 결과입니다. 담당 부서 확정이나 조직 승계를 뜻하지 않습니다.",
+    "source_document_gap": "다음 관계를 확인할 자료가 현재 확보 범위에 없습니다. 관련 사건이나 문서가 존재하지 않는다는 뜻은 아닙니다.",
+    "relation_evidence_gap": "사규예고와 개정 대상 규정을 직접 잇는 공식 근거를 현재 확인하지 못했습니다.",
+    "function_unconfirmed": "개정 대상 규정은 확인했지만 현행 업무분장에서 직접 대응하는 관리 문구를 확인하지 못했습니다.",
+    "multiple_correspondence": "둘 이상의 현행 업무분장 문구가 조사 후보로 확인된 결과입니다. 하나를 대표 부서로 선택하지 않습니다.",
+    "current_impact": "해당 자료나 근거를 확인하지 못해 현재 추적이 멈춘 분기 수입니다. 자료를 확보하면 모두 해결된다는 예상치는 아닙니다.",
+    "run_change": "같은 조사 계약에서 근거 자료가 달라졌을 때 증거사슬이 얼마나 연장되거나 정정됐는지를 비교한 값입니다.",
+    "corrected_run": "후속 실행에서 더 정확한 근거가 확인되어 이전 기록보다 경로가 짧아지거나 내용이 바뀐 경우입니다. 이전 실행은 삭제하지 않습니다."
+  }
+}

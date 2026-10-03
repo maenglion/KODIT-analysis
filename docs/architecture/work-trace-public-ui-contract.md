@@ -2,7 +2,7 @@
 
 ## Status / 기준 commit
 
-- Status: **CORE RUN VALIDATED; PUBLIC-SAFE SNAPSHOT + A/B/C PROJECTION PENDING**
+- Status: **PUBLIC-SAFE SNAPSHOT + A/B/C PROJECTION READY; MANUS UI PENDING**
 - Data contract: `work-trace-evidence-chain-v1`
 - UI implementation owner: Manus
 - Data/schema owner: Codex
@@ -23,11 +23,52 @@
 
 세 탐색 방향을 제공한다.
 
-1. 담당 표기에서 보기: 표기 → 사규예고 목록까지만 제공하고 업무 추적 상세는 notice route로 이동
+1. 사규예고에서 보기: 기존 잔차 화면은 표기 → 사규예고 목록까지만 제공하고, 업무 추적 상세는
+   별도의 notice route로 이동한다. 새 payload에는 raw label 또는 PERSON 별칭을 넣지 않는다.
 2. 규정에서 보기: 규정 → 관련 사규예고 → 시기별 업무·근거
 3. 현재 부서에서 보기: 현행 조직 → 공식 소관 업무·규정 → 관련 과거 사규예고
 
 세 방향은 같은 trace ledger의 projection이며 프론트에서 서로 다른 통계를 만들지 않는다.
+
+공개 A축을 표기별 집계가 아닌 사규예고별 추적으로 둔 이유는 PERSON 관측 별칭과 조직 endpoint를
+하나의 공개 payload에서 결합하지 않기 위해서다. 사용자는 기존 잔차 화면에서 관측 게시물을 고른 뒤
+해당 사규예고의 업무 증거사슬로 이동할 수 있지만, work-trace snapshot 자체에는 PERSON·raw label·
+residual identity가 없다.
+
+## Static data contract
+
+- snapshot: `apps/public-site/data/public-work-trace-v1.json.gz`
+- example fixture: `apps/public-site/data/public-work-trace-v1.fixture.json`
+- server loader: `apps/public-site/lib/work-trace-data.ts`
+- TypeScript contract: `@kodit/common/regulations/work-trace-contract`
+- builder: `pnpm build:work-trace-public`
+- verifier: `pnpm check:work-trace-public`
+- snapshot SHA-256: `0111c9a5d74ada34f175d34cfc7a5ed45da8ebf94d206af16ded37ebefaa49ad`
+- fixture SHA-256: `5ae620102c5ce102f7087c11d555157a1df774946ec0a99c0616ca21a03fe4ef`
+
+화면은 Supabase RPC를 호출하지 않는다. trusted build가 원격 validated run 존재 여부와 dimension 명칭을
+확인한 뒤 내부 ID를 제거한 정적 snapshot을 생성한다. 브라우저에는 서비스 키, core ID, raw label,
+PERSON 별칭, residual/label identity가 전달되지 않는다.
+
+validated snapshot `public-work-trace-snapshot-v1`의 기대값은 다음과 같다.
+
+| grain | count |
+|---|---:|
+| 사규예고 추적 branch | 1,272 |
+| 관련 규정 | 450 |
+| endpoint가 있는 현행 조직 | 22 |
+| 공개 근거번호 | 1,622 |
+| 조사 backlog 항목 | 677 |
+| COMPLETE / CURRENT_FUNCTION_OBSERVED | 38 |
+| FUNCTION_MULTIPLE_CANDIDATES | 222 |
+| FUNCTION_CORRESPONDENCE_UNCONFIRMED | 650 |
+| RELATION_EVIDENCE_GAP | 362 |
+| 단일 phrase candidate만 있는 보류 branch | 219 |
+| PERSON→ORG 공개 relation | 0 |
+
+관련 규정 450개는 1,041개 전체 규정 수가 아니다. residual 사규예고 중 direct
+`PROPOSES_CHANGE_TO`가 확인된 branch가 참조한 distinct 규정 수다. 현행 조직 22개도 조직도 전체
+조직 수가 아니라 이번 branch의 direct/candidate endpoint에 실제 나타난 distinct 조직 수다.
 
 ## Required page copy
 
@@ -101,6 +142,20 @@
 > 확보하더라도 모든 분기가 연장되거나 완료된다는 뜻은 아닙니다.
 
 `COMPLETE`와 `FUNCTION_MULTIPLE_CANDIDATES`는 backlog에 표시하지 않는다.
+
+## CSV grain
+
+CSV는 화면의 정적 snapshot과 같은 행을 사용한다.
+
+1. 추적 분기 CSV: branch 1행. 사규예고 제목·게시일·규정명·종결값·완료범위·마지막 확인일·endpoint
+   수·중단 사유를 제공한다. PERSON/표기/내부 ID는 넣지 않는다.
+2. endpoint CSV: branch + current organization + correspondence basis 1행. `FUNCTION_DIRECT`와
+   `FUNCTION_PHRASE_CANDIDATE`를 같은 값으로 합치지 않는다.
+3. 조사 backlog CSV: evidence need 1행. 현재 영향 분기 수는 해결 예상치가 아니라는 각주를 CSV
+   metadata 또는 안내문에 유지한다.
+
+프론트는 branch 배열과 endpoint 배열로 CSV를 만들 수 있으나, PERSON 관측 배열과 client-side join해
+표기 또는 별칭 열을 추가하지 않는다.
 
 ## Run comparison
 
@@ -193,15 +248,14 @@
 Manus의 데이터 연결 구현은 다음을 받은 뒤 시작한다.
 
 1. validated trace run — 완료 (`a00dba9a-4f99-2ece-ce53-35fc87afc433` / branch 1,272)
-2. public-safe snapshot schema와 fixture
-3. A/B/C aggregate grain 정의
-4. 근거 detail URL contract
-5. PERSON→ORG 공개 relation 0건 검증
-6. Codex가 제공한 expected counts
+2. public-safe snapshot schema와 fixture — 완료
+3. A/B/C aggregate grain 정의 — 완료
+4. 근거 detail URL contract — 완료 (`evidence_no` → snapshot evidence dictionary)
+5. PERSON→ORG 공개 relation 0건 검증 — 완료
+6. Codex가 제공한 expected counts — 완료
 
-2026-10-04 remote validated run도 38/222/650/362를 재현했다. 다만 core 원장 수치를 프론트가 직접
-읽지 않는다. PERSON 식별자를 포함하지 않는 public-safe snapshot과 A/B/C grain을 별도로 검증하기
-전까지 이 수치를 UI에 하드코딩하거나 임시 RPC로 노출하지 않는다.
+2026-10-04 remote validated run과 정적 snapshot이 모두 38/222/650/362를 재현했다. core 원장 수치를
+프론트가 직접 읽지 않으며 UI에 숫자를 하드코딩하거나 임시 RPC로 노출하지 않는다.
 
 UI는 이 문서나 fixture의 임시 숫자를 운영 값으로 사용하지 않는다.
 
@@ -212,3 +266,4 @@ UI는 이 문서나 fixture의 임시 숫자를 운영 값으로 사용하지 �
 | 2026-10-03 | evidence-chain DB 계약이 먼저이고 UI는 검증된 snapshot만 소비하도록 분리했다. |
 | 2026-10-03 | 친절한 데이터 리터러시와 법률 독자가 이해할 수 있는 gap·근거 설명을 release gate에 포함했다. |
 | 2026-10-04 | core run 1,272건은 원격 검증됐으나 public-safe snapshot과 A/B/C projection은 별도 release gate로 유지했다. |
+| 2026-10-04 | 내부 ID·PERSON·raw label을 제거한 정적 snapshot과 notice/regulation/current-org A/B/C projection을 검증해 Manus UI gate를 열었다. |
