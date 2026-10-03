@@ -1,6 +1,6 @@
 begin;
 
-create function publish.public_department_residual_analysis_rows_safe()
+create or replace function publish.public_department_residual_analysis_rows_safe()
 returns table (
   release_id uuid,residual_id uuid,notice_id uuid,label_id uuid,raw_label text,normalized_label text,
   resolution_class text,label_type text,posted_at date,title text,source_location text,
@@ -25,7 +25,7 @@ as $$
   from publish.public_department_residual_analysis_rows() r;
 $$;
 
-create function publish.public_department_residual_label_rows_safe()
+create or replace function publish.public_department_residual_label_rows_safe()
 returns table (
   release_id uuid,label_id uuid,raw_label text,normalized_label text,resolution_class text,label_type text,
   first_seen_at date,last_seen_at date,residual_occurrence_count bigint,notice_count bigint,mention_occurrence_count bigint,

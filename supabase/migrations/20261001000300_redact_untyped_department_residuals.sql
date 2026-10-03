@@ -1,6 +1,6 @@
 begin;
 
-create function publish.public_residual_display_label(
+create or replace function publish.public_residual_display_label(
   p_label_type text,
   p_label text,
   p_opaque_id uuid
@@ -64,7 +64,7 @@ as $$
   from publish.public_department_residual_label_rows() r;
 $$;
 
-create function publish.public_department_attribution_explanation_rows_safe()
+create or replace function publish.public_department_attribution_explanation_rows_safe()
 returns table (
   release_id uuid,residual_id uuid,notice_id uuid,masked_label text,label_type text,posted_at date,title text,
   source_location text,inference_basis_code text,inference_basis_label text,responsible_org_as_of_notice text,
