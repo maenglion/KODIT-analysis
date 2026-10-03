@@ -1,31 +1,21 @@
 /* Regulation list and search: snapshot data unchanged, interaction model rebuilt. */
-.release-meta-bar>.shell:has(.collection-status) { flex-wrap:wrap; padding-block:13px; }
-.collection-status { flex:1 1 890px; min-width:0; }
-.collection-status .public-release-meta { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:0; }
-.collection-status .public-release-meta div { display:flex; flex-direction:column; align-items:flex-start; gap:2px; min-width:0; padding:0 14px; }
-.collection-status .public-release-meta div:first-child { padding-left:0; }
-.collection-status .public-release-meta dt { color:#185f9d; font-size:12px; }
-.collection-status .public-release-meta dd { max-width:100%; color:#36475a; font-size:13px; white-space:normal; }
-.collection-status-note { margin:7px 0 0; color:#64738a; font-size:12px; line-height:1.5; }
-.regulation-overview { padding:28px 0 8px; }
-.regulation-overview-grid { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:14px; }
-.regulation-overview-grid>div { min-width:0; padding:22px 25px; border:1px solid var(--line); border-radius:11px; background:#fff; box-shadow:var(--shadow); }
-.regulation-overview-grid .regulation-overview-lead { border-color:var(--figma-navy); background:var(--figma-navy); color:#fff; }
-.regulation-overview-grid span { display:block; font-size:14px; font-weight:700; }
-.regulation-overview-grid strong { display:block; margin:12px 0 0; font-family:Inter,"Noto Sans KR",sans-serif; font-size:36px; font-weight:800; line-height:1.05; color:var(--action-blue); }
-.regulation-overview-grid .regulation-overview-lead strong { color:#fff; }
-.regulation-overview-grid strong small { margin-left:4px; font-size:15px; font-weight:700; }
-.regulation-overview-grid p { margin:12px 0 0; color:#5d7087; font-size:13px; line-height:1.5; }
-.regulation-overview-grid .regulation-overview-lead p { color:#bfd2e7; }
-.regulation-overview-note { margin:11px 0 0; color:#65748a; font-size:13px; line-height:1.6; }
+.public-page-intro .terms-button { display:inline-flex; gap:5px; min-height:29px; margin-top:10px; padding:2px 4px; color:#247638; font-size:12px; }
+.public-page-intro .terms-button img { width:16px; height:16px; }
+.regulation-overview { padding:23px 0 5px; }
+.regulation-overview-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.regulation-overview-grid>div { min-width:0; min-height:104px; padding:12px 14px; border:1px solid #d7dee8; border-radius:9px; background:#fff; }
+.regulation-overview-grid span { display:block; color:#22669b; font-size:12px; font-weight:700; }
+.regulation-overview-grid strong { display:block; margin:9px 0 0; font-family:Inter,"Noto Sans KR",sans-serif; font-size:23px; font-weight:750; line-height:1; color:var(--figma-navy); }
+.regulation-overview-grid strong small { margin-left:3px; font-size:13px; font-weight:700; }
+.regulation-overview-grid p { margin:7px 0 0; color:#687689; font-size:11px; line-height:1.4; }
 .public-table-shell { padding:0 0 85px; background:linear-gradient(#f8f9fb 0 205px,#fff 205px); }
 .public-searchbar { width:min(1010px,100%); margin:0 auto; padding:36px 0 24px; }
-.search-field { position:relative; display:grid; grid-template-columns:minmax(0,1fr) 190px; height:70px; margin:0; }
+.search-field { position:relative; display:grid; grid-template-columns:minmax(0,1fr) 170px; height:70px; margin:0; }
 .search-field label { position:absolute; width:0; height:0; overflow:hidden; }
-.search-field input { min-width:0; width:100%; height:70px; padding:0 30px; border:2px solid var(--figma-blue-line); border-right:0; border-radius:14px 0 0 14px; outline:none; background:#fff; color:var(--ink); font-size:18px; }
+.search-field input { min-width:0; width:100%; height:70px; padding:0 30px; border:2px solid var(--figma-blue-line); border-right:0; border-radius:14px 0 0 14px; outline:none; background:#fff; color:var(--ink); font-size:16px; }
 .search-field input::placeholder { color:#717982; opacity:1; }
 .search-field input:focus { border-color:var(--primary); box-shadow:inset 0 0 0 1px var(--primary); }
-.search-field button { border:2px solid var(--figma-blue-line); border-radius:0 14px 14px 0; background:#e9f4ff; color:var(--ink); font:700 22px var(--display-font); }
+.search-field button { border:2px solid var(--figma-blue-line); border-radius:0 14px 14px 0; background:#e9f4ff; color:var(--ink); font:700 16px var(--body-font); }
 .search-field button:hover { background:#cfe7ff; }
 .search-meta { display:flex; justify-content:space-between; gap:12px; padding:11px 2px 0; color:#6b7582; font-size:12px; }
 .search-meta strong { color:#0d71c1; font-size:14px; }
@@ -124,12 +114,7 @@
 .pagination button:hover,.pagination button.active { color:#0d6dbb; font-weight:700; }
 
 @media(max-width:1060px) {
-  .collection-status .public-release-meta { grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px 0; }
-  .collection-status .public-release-meta div:nth-child(3n+1) { padding-left:0; }
-  .collection-status .public-release-meta div:nth-child(3n) { border-right:0; }
   .category-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-  .regulation-overview-grid>div { padding:18px; }
-  .regulation-overview-grid strong { font-size:30px; }
   .advanced-search-panel { padding:17px; }
   .detail-setting-row { grid-template-columns:166px minmax(0,1fr); }
   .detail-setting-label,.detail-setting-value { padding:12px; }

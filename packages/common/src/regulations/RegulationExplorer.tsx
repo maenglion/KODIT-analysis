@@ -119,19 +119,16 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
 
   return <>
     <section className="public-page-intro">
-      <div className="shell intro-inner">
+      <div className="shell intro-inner intro-inner-with-status">
         <div className="intro-copy">
           <p className="breadcrumb"><a href="/regulations">규정·법령</a> &gt; <b>{scope === "notice" ? "사규예고" : "내부규정(분석)"}</b></p>
           <h1>{scope === "notice" ? "신용보증기금 사규예고" : "신용보증기금 규정 공개현황"}</h1>
-          <p>전체 사규예고 {notices.length.toLocaleString("ko-KR")}건의 공식 관찰값을 규정에 연결해 보여줍니다. 동일 규정의 여러 예고는 하나의 규정 버전으로 묶으며, 공개 범위와 공식 원문은 승인된 근거를 따릅니다.</p>
+          <p>규정 버전과 사규예고 게시물을 구분해 공식 출처와 공개 범위를 확인합니다.</p>
+          <button className="terms-button" type="button" aria-expanded={termsOpen} aria-controls="public-terms" onClick={() => setTermsOpen((value) => !value)}><img src="/figma-icons/help.svg" alt=""/>용어 및 해석</button>
         </div>
-        <div className="database-state"><img src="/figma-icons/database.svg" alt=""/><b>승인된 정적 공개본</b><span>생성일: {release.generated_at.slice(0, 10).replaceAll("-", ".")}</span></div>
+        {metadataSlot ?? <div className="database-state"><b>승인된 정적 공개본</b><span>기준일 {release.evidence_as_of}</span></div>}
       </div>
     </section>
-    <section className="release-meta-bar"><div className="shell">
-      {metadataSlot ?? <dl className="public-release-meta"><div><dt>데이터 기준일</dt><dd>{release.evidence_as_of}</dd></div><div><dt>공개본 생성일</dt><dd>{release.generated_at.slice(0, 10)}</dd></div><div><dt>전체 규정</dt><dd>{release.population.toLocaleString("ko-KR")}건</dd></div></dl>}
-      <button className="terms-button" type="button" aria-expanded={termsOpen} aria-controls="public-terms" onClick={() => setTermsOpen((value) => !value)}><img src="/figma-icons/help.svg" alt=""/>용어 및 해석</button>
-    </div></section>
     {termsOpen && <aside className="terms-content" id="public-terms" aria-label="공개 데이터 용어 및 해석"><div className="shell">
       <div><strong>공개결론</strong><p>공식 경로에서 확인된 자료의 공개 범위입니다. 규정의 현행 여부나 법적 효력을 뜻하지 않습니다.</p></div>
       <div><strong>데이터 기준일</strong><p>승인된 공개본이 참조한 근거 기준일입니다. 생성일은 파일을 만든 날짜이며 실시간 수집 시각이 아닙니다.</p></div>
@@ -139,11 +136,11 @@ export function RegulationExplorer({ rows, notices, sources, release, initialSco
     </div></aside>}
     {scope !== "notice" && <section className="shell regulation-overview" aria-label="내부규정 요약">
       <div className="regulation-overview-grid">
-        <div className="regulation-overview-lead"><span>승인 공개본 전체 규정</span><strong>{rows.length.toLocaleString("ko-KR")}<small>건</small></strong><p>규정 버전 기준 · {release.evidence_as_of}</p></div>
-        <div><span>ALIO 출처 연결</span><strong>{alioCount.toLocaleString("ko-KR")}<small>건</small></strong><p>ALIO 근거가 연결된 서로 다른 규정 버전 수</p></div>
-        <div><span>사전예고만 확인</span><strong>{counts.NOTICE_ONLY.toLocaleString("ko-KR")}<small>건</small></strong><p>공개결론 `NOTICE_ONLY` · 전문 미확보와 혼동 금지</p></div>
+        <div><span>승인 공개본 전체 규정</span><strong>{rows.length.toLocaleString("ko-KR")}<small>건</small></strong><p>규정 버전</p></div>
+        <div><span>ALIO 출처 연결</span><strong>{alioCount.toLocaleString("ko-KR")}<small>건</small></strong><p>서로 다른 규정 버전</p></div>
+        <div><span>사전예고만 확인</span><strong>{counts.NOTICE_ONLY.toLocaleString("ko-KR")}<small>건</small></strong><p>공개결론 NOTICE_ONLY</p></div>
+        <div><span>전체 사규예고</span><strong>{notices.length.toLocaleString("ko-KR")}<small>건</small></strong><p>중복 제거 게시물</p></div>
       </div>
-      <p className="regulation-overview-note">정적 승인본 기준 요약입니다. ALIO 연결 수는 출처 종류별 연결이며 전문 공개 건수와 같은 뜻이 아닙니다. 아래 검색 조건은 요약 수치가 아니라 결과 목록과 CSV에 적용됩니다.</p>
     </section>}
     <main className="public-table-shell">
       <div className="shell">

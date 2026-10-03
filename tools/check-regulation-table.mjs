@@ -24,11 +24,15 @@ const departmentText = await readFile(new URL("../packages/common/src/regulation
 const semanticText = await readFile(new URL("../apps/public-site/app/department-statistics/semantic-matching/page.tsx", import.meta.url), "utf8");
 const historyText = await readFile(new URL("../apps/public-site/app/department-statistics/organization-history/page.tsx", import.meta.url), "utf8");
 const topicText = await readFile(new URL("../apps/public-site/components/TopicDashboard.tsx", import.meta.url), "utf8");
+const purposeText = await readFile(new URL("../apps/public-site/components/DataPurposeContent.tsx", import.meta.url), "utf8");
+const parserText = await readFile(new URL("../apps/public-site/components/ParserEvidence.tsx", import.meta.url), "utf8");
+const organizationText = await readFile(new URL("../packages/common/src/regulations/index.ts", import.meta.url), "utf8");
 const evidenceText = await readFile(new URL("../apps/public-site/app/investment-statistics/evidence-notices/page.tsx", import.meta.url), "utf8");
 const diagramText = await readFile(new URL("../apps/public-site/components/DiagramViewer.tsx", import.meta.url), "utf8");
 const helpText = await readFile(new URL("../packages/common/src/regulations/MetricHelp.tsx", import.meta.url), "utf8");
 const topicStyleText = await readFile(new URL("../apps/public-site/app/styles/topic.css", import.meta.url), "utf8");
 const topicSnapshot = JSON.parse(await readFile(new URL("../apps/public-site/data/topic-public-v2.json", import.meta.url), "utf8"));
+const parserMeasurements = JSON.parse(await readFile(new URL("../apps/public-site/data/public-parser-measurements.json", import.meta.url), "utf8"));
 
 const base = {
   release_id: manifest.correction_release_id, regulation_version_id: "00000000-0000-0000-0000-000000000001", regulation_code: "A", display_name: "투자옵션부보증 운용기준", normalized_name: "투자옵션부보증운용기준", availability: "FULLTEXT_PUBLIC", currentness: "unknown", revision_date: "2024-02-23", notice_department: "보증부", official_source_available: true, source_location: "https://www.kodit.or.kr/rule.pdf", partial_alio: false, partial_kodit_page: false, partial_attachment: false, is_new: false, is_updated: false,
@@ -116,11 +120,32 @@ assert.ok(advancedText.includes('panelRef.current?.focus()') && advancedText.inc
 assert.ok(explorerText.includes('partial-filter-clear') && explorerText.includes('부분공개 속성:') && explorerText.includes('onClearPartial={() => updateRegulations({ partialType: "ALL" })}'));
 for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", "현재 설정 적용"]) assert.ok(advancedText.includes(field));
 assert.ok(advancedText.includes('과거 부서 자동 매칭 (미제공)') && advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
-assert.ok(explorerText.includes('ALIO 출처 연결') && explorerText.includes('승인 공개본 전체 규정'));
+assert.ok(explorerText.includes('ALIO 출처 연결') && explorerText.includes('승인 공개본 전체 규정') && explorerText.includes('전체 사규예고'));
+assert.ok(explorerText.includes('regulation-overview-grid') && explorerText.includes('notices.length.toLocaleString("ko-KR")') && !explorerText.includes('regulation-overview-note'));
 assert.ok(regulationsText.includes('<CollectionStatus') && collectionRouteText.includes('public_collection_state'));
 assert.ok(collectionRouteText.includes('expectedHost = "jacyalxzejzrlspmojps.supabase.co"') && collectionRouteText.includes('Cache-Control": "no-store"'));
 assert.ok(!collectionRouteText.includes('service_role') && collectionText.includes('모든 출처의 완료나 공개본 승인을 뜻하지 않습니다'));
 assert.ok(collectionText.includes('<dt>자동수집 주기</dt><dd>10일</dd>') && collectionText.includes('기본 수집 간격은 10일입니다'));
+for (const label of ['공개 데이터 기준일', '공개본 생성일', '마지막 성공 수집일', '다음 수집 예정일', '자동수집 주기']) assert.ok(collectionText.includes(label));
+assert.ok(collectionText.includes('aria-haspopup="dialog"') && collectionText.includes('<dialog ref={dialogRef}') && collectionText.includes('onClose={() => triggerRef.current?.focus()}'));
+for (const page of [residualPageText, semanticText, historyText, topicText, purposeText, detailText, informationText]) assert.ok(page.includes('<CollectionStatus'), '공개 페이지 오른쪽 날짜 슬롯 누락');
+assert.ok(departmentText.includes('metadataSlot') && historyText.includes('organizationSnapshot.snapshotDate') && organizationText.includes('snapshotDate: "2026-09-15"'));
+assert.ok(topicText.includes('evidenceAsOf={snapshot.measuredAt}') && !topicText.includes('snapshotGeneratedAt={snapshot.measuredAt}'));
+assert.ok(informationText.includes('Next 서버에서 읽어 화면에 전달합니다') && informationText.includes('/api/collection-state') && !informationText.includes('현재 브라우저는 공개본의'));
+assert.ok(parserText.includes('본문 추출 및 규정 식별 결과') && parserText.includes('별도 형식 판별 지표') && parserText.includes('추출 가능한 텍스트 없음'));
+assert.deepEqual([
+  parserMeasurements.formats.reduce((sum, format) => sum + format.documents, 0),
+  parserMeasurements.audit.replayAttempts, parserMeasurements.ledger.parserRuns,
+  parserMeasurements.ledger.nonemptyOccurrences, parserMeasurements.ledger.uniqueExtractions,
+], [2414, 4828, 2414, 2403, 2397]);
+for (const [name, identified, unresolved, missing, mismatch, extensionMismatch] of [["HWP", 298, 28, 17, 11, 28], ["HWPX", 353, 5, 4, 1, 2]]) {
+  const format = parserMeasurements.formats.find(row => row.format === name);
+  assert.deepEqual([format.parsedAndIdentified, format.parsedIdentityUnresolved, format.referenceMissing, format.textMismatch, format.extensionMismatch], [identified, unresolved, missing, mismatch, extensionMismatch]);
+  assert.equal(identified + unresolved, format.documents);
+  assert.equal(missing + mismatch, unresolved);
+  assert.equal(format.parserFailed, 0);
+}
+assert.deepEqual([parserMeasurements.formats.find(row => row.format === "PDF").noText, parserMeasurements.formats.find(row => row.format === "PDF").readFailed], [1, 10]);
 assert.ok(advancedText.includes("통합검색") && explorerText.includes("최근 사규예고일 기준"));
 assert.ok(!explorerText.includes("인쇄"));
 assert.ok(explorerText.includes('target="_blank" rel="noopener noreferrer"'));
@@ -132,7 +157,7 @@ assert.ok(semanticText.includes("DepartmentEvidenceGuide") && historyText.includ
 assert.ok(navigationText.includes('href="/department-statistics/semantic-matching"') && navigationText.includes('href="/department-statistics/organization-history"'));
 assert.ok(navigationText.includes('href="/investment-statistics/yearly-notices"') && navigationText.includes('href="/investment-statistics/evidence-notices"'));
 assert.ok(topicText.includes('view === "summary"') && topicText.includes('view === "yearly"') && topicText.includes('view === "evidence"') && evidenceText.includes('initialFamily={family}') && evidenceText.includes('initialYear={year}'));
-assert.ok(topicText.includes('집계 기준일 안내') && topicText.includes('이 화면의 62건은 2026.09.19 기준으로 분류한 근거 사규예고입니다. 규정 목록은 2026.09.13 기준 승인 데이터이므로 두 수치를 합산하지 않습니다.'));
+assert.ok(topicText.includes('집계 기준 구분') && topicText.includes('규정 목록의 2026-09-13 집계와 합산하지 않습니다.'));
 assert.ok(!topicText.includes('기준이 다른 두 공개본'));
 assert.ok(topicText.includes('onClick={() => saveCsv(filtered)}') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
 assert.ok(topicStyleText.includes('color:#217a39') && topicStyleText.includes('border:1px solid var(--figma-green)'));

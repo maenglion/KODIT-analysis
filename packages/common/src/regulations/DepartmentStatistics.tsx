@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { DepartmentSelectorDialog } from "./DepartmentSelectorDialog";
 import { MetricHelp } from "./MetricHelp";
 import { availabilityLabels, canonicalDepartment, organizationSnapshot, validPublicUrl, type Availability, type PublicRegulationSourceRow, type PublishNoticeRow, type PublishRegulationRow } from "./index";
@@ -11,6 +11,7 @@ type Props = {
   rows: PublishRegulationRow[];
   notices: PublishNoticeRow[];
   sources: PublicRegulationSourceRow[];
+  metadataSlot?: ReactNode;
 };
 
 function availabilityCounts(rows: PublishRegulationRow[]): Record<Availability, number> {
@@ -19,7 +20,7 @@ function availabilityCounts(rows: PublishRegulationRow[]): Record<Availability, 
   return counts;
 }
 
-export function DepartmentStatistics({ rows, notices, sources }: Props) {
+export function DepartmentStatistics({ rows, notices, sources, metadataSlot }: Props) {
   const [sort, setSort] = useState<Sort>("NONPUBLIC_RATE");
   const [selected, setSelected] = useState<string | null>(null);
   const [tab, setTab] = useState<"regulations" | "validation" | "changes">("regulations");
@@ -71,7 +72,7 @@ export function DepartmentStatistics({ rows, notices, sources }: Props) {
   };
 
   return <>
-    <section className="public-page-intro department-intro"><div className="shell intro-inner"><div className="intro-copy"><p className="breadcrumb"><a href="/regulations">규정·법령</a> &gt; 부서별 통계 &gt; <b>요약</b></p><h1>사규예고 및 공개</h1><p>공식 조직도와 정확히 일치하는 담당부서를 기준으로 사규예고와 연결 규정의 공개 현황을 보여줍니다.</p></div><div className="database-state"><img src="/figma-icons/database.svg" alt=""/><b>승인된 정적 공개본</b><span>조직도 기준: {organizationSnapshot.snapshotDate}</span></div></div></section>
+    <section className="public-page-intro department-intro"><div className="shell intro-inner intro-inner-with-status"><div className="intro-copy"><p className="breadcrumb"><a href="/regulations">규정·법령</a> &gt; 부서별 통계 &gt; <b>요약</b></p><h1>사규예고 및 공개</h1><p>공식 조직도와 정확히 일치하는 담당부서를 기준으로 사규예고와 연결 규정의 공개 현황을 보여줍니다.</p></div>{metadataSlot ?? <div className="database-state"><b>조직도 기준</b><span>{organizationSnapshot.snapshotDate}</span></div>}</div></section>
     <main className="department-page" id="summary"><div className="shell">
       <aside className="public-notice"><img src="/figma-icons/info.svg" alt=""/><div><b>공개 데이터 이용 안내</b><p>담당 표기의 개인명·과거 조직명은 별도 잔차 원장으로 분리합니다. 확인되지 않은 관계나 규정 전문을 임의로 확정하지 않습니다.</p></div></aside>
       <div className="department-actions"><button className="csv-button" type="button" onClick={downloadSummary}><img src="/figma-icons/download.svg" alt=""/>다운로드(CSV)</button><div><DepartmentSelectorDialog departments={calculation.result.map((row) => row.department)} selected={department} onSelect={(name) => setSelected(name)} /><label><span className="sr-only">담당부서 정렬 기준</span><select value={sort} onChange={(event) => setSort(event.target.value as Sort)}><option value="NONPUBLIC_RATE">전문 미확보율 높은 순</option><option value="NONPUBLIC_COUNT">전문 미확보 건수 높은 순</option><option value="NOTICE_COUNT">사규예고 많은 순</option><option value="FULLTEXT_RATE">전문공개율 높은 순</option></select></label></div></div>

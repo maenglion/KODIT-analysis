@@ -1,9 +1,11 @@
 /* Top-group editorial pages: KoPub body, Paperlogy section titles, no duplicate page navigation. */
 body:has(.information-hero) .header-inner { min-height:137px; }
 .methodology-hero.information-hero { padding:18px 0 16px; background:#fff; }
+.information-hero-inner { display:flex; align-items:flex-start; gap:26px; }
+.information-hero-main,.purpose-hero-copy { flex:1 1 auto; min-width:0; }
 .information-hero .eyebrow { margin:0 0 10px; color:#68717c; font-size:14px; }
 .information-hero h1 { margin:0 0 12px; font:700 clamp(26px,2.5vw,34px)/1.2 var(--display-font); letter-spacing:-.035em; }
-.information-hero span { display:block; max-width:1040px; color:#555f6d; font-size:15px; line-height:1.5; }
+.information-hero-main>span { display:block; max-width:850px; color:#555f6d; font-size:15px; line-height:1.5; }
 .information-hero-principle { margin:9px 0 0; color:#265f90; font-size:13px; font-weight:700; }
 .information-meta { display:flex; flex-wrap:wrap; gap:15px; margin-top:10px; }
 .information-meta span { font-size:12px; color:#7b8490; }
@@ -84,8 +86,13 @@ body:has(.information-hero) .header-inner { min-height:137px; }
 .parser-result-card h3 small { color:#627383; font-weight:400; }
 .parser-result-card>p { min-height:55px; margin:0; color:#5a6e81; font-size:13px; line-height:1.58; }
 .parser-result-card dl { margin:13px 0 0; }
+.parser-metric-group { margin-top:13px; padding-top:11px; border-top:1px solid #dce8f3; }
+.parser-metric-group h4 { margin:0; color:#195f96; font-size:12px; line-height:1.5; }
+.parser-metric-group dl { margin-top:4px; }
 .parser-result-card dl div { display:flex; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid #e8eef5; font-size:12px; }
 .parser-result-card dt { color:#5d6d7d; }
+.parser-result-card .parser-submetric { padding-left:12px; background:#f8fbff; }
+.parser-result-card .parser-submetric dt { color:#577084; }
 .parser-result-card dd { margin:0; color:var(--ink); font-weight:700; text-align:right; }
 .parser-operation-details { margin-top:14px; }
 .parser-operation-details summary { color:#096bb8; font-size:13px; font-weight:700; }
@@ -127,6 +134,7 @@ body:has(.information-hero) .header-inner { min-height:137px; }
 
 /* User-provided purpose manuscript: text-first document, no diagram, cards or promo block. */
 .purpose-hero { padding-bottom:30px!important; }
+.purpose-hero-inner { min-height:0; padding-block:12px 0; }
 .purpose-hero-copy>p { max-width:1100px; margin:0 0 9px; color:#465669; font-size:15px; line-height:1.68; }
 .purpose-hero-copy>p:first-child { margin:0 0 11px; color:#6a7686; font-size:13px; font-weight:700; }
 .purpose-hero-copy h1 { margin:0 0 20px; }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CollectionStatus } from "@/components/CollectionStatus";
 import snapshot from "@/data/topic-public-v2.json";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "@/lib/topic-notice-filter";
 
@@ -59,12 +60,12 @@ export function TopicDashboard({ view = "summary", initialFamily = "ALL", initia
   }
 
   return <>
-    <section className="public-page-intro topic-intro"><div className="shell intro-inner"><div className="intro-copy">
+    <section className="public-page-intro topic-intro"><div className="shell intro-inner intro-inner-with-status"><div className="intro-copy">
       <p className="breadcrumb"><Link href="/regulations">규정·법령</Link> &gt; <Link href="/investment-statistics">사업별 통계</Link> &gt; <b>{view === "summary" ? "요약" : titles[view]}</b></p>
       <h1>{titles[view]}</h1><p>{descriptions[view]}</p>
-    </div><span className="topic-date-pill">정적 검증본 · 2026.09.19</span></div></section>
+    </div><CollectionStatus evidenceAsOf={snapshot.measuredAt} basisLabel="주제 분류" /></div></section>
     <main className="shell topic-page">
-      <div className="topic-boundary" role="note"><strong>집계 기준일 안내</strong><span>이 화면의 62건은 2026.09.19 기준으로 분류한 근거 사규예고입니다. 규정 목록은 2026.09.13 기준 승인 데이터이므로 두 수치를 합산하지 않습니다.</span></div>
+      <div className="topic-boundary" role="note"><strong>집계 기준 구분</strong><span>이 주제 분류는 {snapshot.measuredAt} 기준입니다. 규정 목록의 2026-09-13 집계와 합산하지 않습니다.</span></div>
       {view === "summary" && <>
         <div className="topic-overview" aria-label="주제 통계 요약">
           <div className="topic-lead-stat"><span>승인된 주제 사규예고</span><strong>{snapshot.noticeCount}<small>건</small></strong><p>중복 제거된 게시물 수<br />{snapshot.period.start} — {snapshot.period.end}</p></div>

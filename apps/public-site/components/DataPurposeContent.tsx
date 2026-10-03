@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { CollectionStatus } from "@/components/CollectionStatus";
+import { getPublishDataset } from "@/lib/review-data";
 import manuscript from "@/content/data-purpose.md";
 import history from "@/data/data-purpose-history.json";
 
@@ -31,7 +33,8 @@ function RevisionHistory() {
   </details>;
 }
 
-export function DataPurposePage() {
+export async function DataPurposePage() {
+  const { release } = await getPublishDataset();
   const [hero, ...parts] = manuscript.trim().split(/^\s*---\s*$/m).map((part) => part.trim());
   const relatedPart = parts.at(-1) ?? "";
   const chapters = parts.slice(0, -1).map((part, index) => {
@@ -43,7 +46,7 @@ export function DataPurposePage() {
 
   return <>
     <header className="methodology-hero information-hero purpose-hero">
-      <div className="shell purpose-hero-copy"><Markdown remarkPlugins={[remarkGfm]}>{hero}</Markdown></div>
+      <div className="shell intro-inner intro-inner-with-status purpose-hero-inner"><div className="purpose-hero-copy"><Markdown remarkPlugins={[remarkGfm]}>{hero}</Markdown></div><CollectionStatus evidenceAsOf={release.evidence_as_of} basisLabel="규정·예고" snapshotGeneratedAt={release.generated_at} generationSource="규정 공개본" /></div>
     </header>
     <main className="methodology-page information-page purpose-page"><div className="shell">
       {chapters.map((chapter, index) => <section className="information-section purpose-section" id={chapter.id} key={chapter.id}>

@@ -1,14 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 type CollectionState = {
   available: boolean;
-  lastCheckedAt?: string | null;
   lastSuccessfulAt?: string | null;
   recentStatus?: string;
   nextDueAt?: string | null;
-  reviewPendingCount?: number;
+};
+
+type BasisDetail = { label: string; date: string };
+type Props = {
+  evidenceAsOf: string;
+  snapshotGeneratedAt?: string | null;
+  basisLabel?: string;
+  additionalBases?: BasisDetail[];
+  generationSource?: string;
 };
 
 function formatSeoulTime(value?: string | null) {
@@ -30,8 +37,11 @@ function statusLabel(value?: string) {
   return labels[value ?? ""] ?? "상태 확인 필요";
 }
 
-export function CollectionStatus({ evidenceAsOf, snapshotGeneratedAt }: { evidenceAsOf: string; snapshotGeneratedAt: string }) {
+export function CollectionStatus({ evidenceAsOf, snapshotGeneratedAt, basisLabel, additionalBases = [], generationSource }: Props) {
   const [state, setState] = useState<CollectionState | null>(null);
+  const dialogId = useId();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     let active = true;
     async function load() {
@@ -49,14 +59,27 @@ export function CollectionStatus({ evidenceAsOf, snapshotGeneratedAt }: { eviden
   }, []);
 
   const collectionValue = (value?: string | null) => state === null ? "조회 중" : state.available ? formatSeoulTime(value) : "상태 조회 불가";
-  return <div className="collection-status" aria-label="공개본 및 자동 수집 상태">
+  const currentStatus = state?.available ? statusLabel(state.recentStatus) : state === null ? "조회 중" : "확인 불가";
+  return <aside className="collection-status" aria-label="이 페이지의 공개 데이터와 자동수집 날짜">
     <dl className="public-release-meta">
-      <div><dt>공개 데이터 기준일</dt><dd>{evidenceAsOf}</dd></div>
-      <div><dt>공개본 생성일</dt><dd>{snapshotGeneratedAt.slice(0, 10)}</dd></div>
+      <div><dt>공개 데이터 기준일</dt><dd>{evidenceAsOf}{basisLabel && <small> · {basisLabel}</small>}{additionalBases.map(basis => <small className="meta-additional-basis" key={`${basis.label}-${basis.date}`}>{basis.label} {basis.date}</small>)}</dd></div>
+      <div><dt>공개본 생성일</dt><dd>{snapshotGeneratedAt ? snapshotGeneratedAt.slice(0, 10) : "기록 없음"}{generationSource && snapshotGeneratedAt && <small> · {generationSource}</small>}</dd></div>
       <div><dt>마지막 성공 수집일</dt><dd aria-live="polite">{collectionValue(state?.lastSuccessfulAt)}</dd></div>
       <div><dt>다음 수집 예정일</dt><dd aria-live="polite">{collectionValue(state?.nextDueAt)}</dd></div>
       <div><dt>자동수집 주기</dt><dd>10일</dd></div>
     </dl>
-    <p className="collection-status-note">자동수집 상태: {state?.available ? statusLabel(state.recentStatus) : state === null ? "조회 중" : "확인 불가"} · 실행 여부는 매일 확인하며 기본 수집 간격은 10일입니다. 성공은 작업 기록 기준이며 모든 출처의 완료나 공개본 승인을 뜻하지 않습니다.</p>
-  </div>;
+    <button ref={triggerRef} type="button" className="collection-status-help" aria-haspopup="dialog" aria-controls={dialogId} onClick={() => dialogRef.current?.showModal()}>
+      <img src="/figma-icons/info.svg" alt="" /> 수집 상태: {currentStatus} <span className="sr-only">· 날짜와 수집 기준 설명 열기</span>
+    </button>
+    <dialog ref={dialogRef} id={dialogId} className="collection-status-dialog" aria-labelledby={`${dialogId}-title`} onClose={() => triggerRef.current?.focus()} onClick={event => { if (event.target === dialogRef.current) dialogRef.current?.close(); }}>
+      <div className="collection-status-dialog-inner">
+        <div className="collection-status-dialog-head"><h2 id={`${dialogId}-title`}>데이터·수집 날짜 안내</h2><button type="button" onClick={() => dialogRef.current?.close()} aria-label="날짜 안내 닫기">×</button></div>
+        <p><strong>공개 데이터 기준일</strong>은 이 페이지의 표시 자료가 참조한 시점입니다. 조직도·주제 분류처럼 별도 날짜가 있으면 함께 표시합니다.</p>
+        <p><strong>공개본 생성일</strong>은 생성일이 기록된 해당 공개본의 날짜입니다. 별도 검증본에 생성일 필드가 없으면 추정하지 않습니다.</p>
+        <p><strong>마지막 성공 수집일</strong>과 <strong>다음 수집 예정일</strong>은 별도 공개 상태 API의 값이며, 공개본의 자료 날짜가 자동으로 바뀌는 것은 아닙니다.</p>
+        <p>자동수집 상태: <strong>{currentStatus}</strong> · 실행 여부는 매일 확인하며 기본 수집 간격은 10일입니다. 성공은 작업 기록 기준이며 모든 출처의 완료나 공개본 승인을 뜻하지 않습니다.</p>
+        <button type="button" className="collection-status-dialog-close" onClick={() => dialogRef.current?.close()}>닫기</button>
+      </div>
+    </dialog>
+  </aside>;
 }
