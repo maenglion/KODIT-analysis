@@ -135,3 +135,36 @@
   .notice-heading { align-items:flex-start; flex-direction:column; padding:18px 0; }
   .table-actions { justify-content:flex-start; }
 }
+
+/* A reusable, compact public-data insight; page-specific populations come from props. */
+.public-insight-shell { padding-top:15px; }
+.public-insight { min-width:0; padding:13px 16px 10px; border:1px solid #acd3f9; border-left:4px solid var(--action-blue); border-radius:9px; background:#eaf5ff; color:#28465f; font-size:13px; line-height:1.55; }
+.public-insight-main { display:flex; align-items:flex-start; justify-content:space-between; gap:17px; }
+.public-insight-copy { min-width:0; display:flex; align-items:flex-start; gap:16px; }
+.public-insight-title { flex:0 0 138px; line-height:1.35; }
+.public-insight-title>span { display:block; color:#517b9f; font-size:10px; font-weight:700; }
+.public-insight-title h2 { margin:3px 0 0; color:#135f9e; font:700 14px/1.3 var(--display-font); }
+.public-insight-copy>p { margin:0; }
+.public-insight-link { flex:0 0 auto; margin-top:8px; color:#0b65a8; font-size:12px; font-weight:700; text-decoration:underline; text-underline-offset:3px; white-space:nowrap; }
+.public-insight-link:hover { color:#08436f; }
+.public-insight-bottom { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:3px 15px; margin:7px 0 0 154px; font-size:12px; }
+.public-insight-bottom p { margin:0; }
+.public-insight-metrics>strong { margin-right:7px; color:#155d93; }
+.public-insight-note { color:#536d82; font-size:11px; }
+.public-insight-basis { margin:4px 0 0 154px; color:#5a748c; font-size:10px; }
+.public-insight-term { position:relative; display:inline-block; }
+.public-insight-term button { padding:0; border:0; border-bottom:1px dotted currentColor; background:transparent; color:#115e99; font-size:inherit; font-weight:700; line-height:1.3; text-decoration:none; }
+.public-insight-term button:hover,.public-insight-term button[aria-expanded="true"] { color:#073e6a; border-bottom-style:solid; }
+.public-insight-tooltip:not([hidden]) { position:absolute; z-index:5; left:0; top:calc(100% + 5px); width:max-content; max-width:280px; padding:7px 9px; border:1px solid #93bee3; border-radius:5px; background:#fff; color:#2b4560; box-shadow:0 5px 16px #16365130; font-size:11px; font-weight:400; line-height:1.45; }
+.public-insight-tooltip[hidden] { display:none; }
+.public-insight-detail { margin:10px 0 0 154px; padding:9px 11px; border:1px solid #b8d6ee; border-radius:5px; background:#fff; color:#304b65; font-size:12px; }
+.public-insight-detail strong { color:#135f9e; }
+.public-insight-detail p { margin:3px 0 0; line-height:1.6; }
+@media(max-width:1050px) {
+  .public-insight-main,.public-insight-copy { flex-wrap:wrap; }
+  .public-insight-copy { gap:5px; }
+  .public-insight-title { flex:1 1 100%; }
+  .public-insight-title>span,.public-insight-title h2 { display:inline; margin-right:7px; }
+  .public-insight-link { margin:0; }
+  .public-insight-bottom,.public-insight-basis,.public-insight-detail { margin-left:0; }
+}

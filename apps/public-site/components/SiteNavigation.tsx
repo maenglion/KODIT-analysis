@@ -20,9 +20,8 @@ export function SiteNavigation() {
       <Link className={isResidual ? "active" : ""} aria-current={isResidual ? "page" : undefined} href="/residual-data">잔차 데이터</Link>
     </nav>
     {isRegulations && <nav className="sub-navigation" aria-label="규정 하위 메뉴">
-      <Link className={scope === "master" && pathname === "/regulations" ? "active" : ""} href="/regulations?scope=master">내부규정(분석)</Link>
+      <Link className={scope === "master" && pathname === "/regulations" ? "active" : ""} href="/regulations?scope=master">내부규정</Link>
       <Link className={scope === "notice" && pathname === "/regulations" ? "active" : ""} href="/regulations?scope=notice">사규예고</Link>
-      <Link href="/department-statistics/organization-history">조직도</Link>
     </nav>}
     {isDepartment && <nav className="sub-navigation" aria-label="부서 통계 하위 메뉴">
       <Link href="/department-statistics" className={pathname === "/department-statistics" ? "active" : ""} aria-current={pathname === "/department-statistics" ? "page" : undefined}>요약</Link>
