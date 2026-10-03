@@ -1,6 +1,6 @@
 begin;
 
-create function publish.public_department_attribution_explanation_rows()
+create or replace function publish.public_department_attribution_explanation_rows()
 returns table (
   release_id uuid,
   residual_id uuid,
