@@ -277,3 +277,14 @@ Codex가 `codex/work-trace-ledger@ce9d83dd0d16a39570ee9c86677f4872b1851716`에 �
 추적 분기 CSV 1,272행, 분기×현행 조직×근거등급 CSV 819행, 조사 필요 자료 CSV 677행은 같은 gzip 공개본에서 낸다. A/B축 검색·선택은 분기의 전체 대응 조직을 보되 C축 endpoint CSV는 **검색·선택된 조직의 행만** 내보낸다(독립 리뷰에서 확인한 `혁신금융부` 41개 분기/88개 전체 대응 행 중 선택 조직 41행으로 수정). 상세의 다른 대응 조직은 맥락으로 남겨 두고 선택 조직을 별도 강조한다. backlog 수치는 축 검색에 따라 새로 추정하지 않고 고유 단위 및 영향 수 각주를 CSV에도 함께 넣는다. CSV는 UTF-8 BOM·공식 링크·formula escape를 적용하고 PERSON/표기/내부 ID 열을 만들지 않는다.
 
 로컬 검증: `pnpm check:work-trace-public`이 분기 1,272/근거 1,622/backlog 677/PERSON→ORG 공개관계 0을 확인했고, `pnpm check`, `pnpm test`, 공개 사이트 타입 검사·프로덕션 빌드, 기존 `pnpm check:regulations`·`pnpm check:residual-analysis` 및 세 CSV의 필터/행수 검증을 통과했다. Chromium 1440/800/768px에서 A/B/C·네 종결 예시·근거 drawer·용어/초점·잔차 PERSON/조직형 게시물 제목 진입·문서 가로 넘침 없음과 상단 인사이트 배치를 확인했다. 독립 읽기 전용 검토의 C축 CSV 범위 문제와 장래 공식 URL 호스트 과잉 제한은 수정했다. 이 기록은 **로컬 검수**만 뜻하며 새 head의 Netlify Preview·사용자 승인 및 운영 병합은 별도 단계다. Netlify 설정/API는 건드리지 않는다.
+
+
+### PR #13 draft 검수와 Netlify Preview 미등록 (2026-10-04)
+
+UI 기능 head `056dbc8228ecb8c6b3aa2835529bafbc6775c876`을 `codex/work-trace-ledger@ce9d83d` 대상 [draft PR #13](https://github.com/maenglion/KODIT-analysis/pull/13)에 푸시했다. 기존 `main@e1de159`과 원격 Codex 브랜치는 변경하지 않았다. PR의 diff에는 이미 main에 병합된 PR #11 UI를 기능 브랜치로 가져온 merge 이력이 함께 보이며 Codex의 승인 trace 공개본·계약·검증기를 수정하거나 되돌린 것은 아니다.
+
+**Netlify 미리보기는 아직 없다.** PR #13을 연 뒤 약 8분간 확인한 GitHub 검사에는 `Supabase Preview: SKIPPED`만 등록됐고 `netlify/letscheck-sinbo/deploy-preview` 검사는 생성되지 않았으며 `deploy-preview-13--letscheck-sinbo.netlify.app/work-traces`는 계속 HTTP 404였다. 같은 draft 상태이지만 `main`을 base로 하는 PR #12에는 Netlify 미리보기 성공 검사가 있어 PR base 차이가 원인일 가능성이 높으나, Netlify 설정을 열거나 변경해 원인을 단정하지 않는다. 미리보기 성공 또는 배포 완료라고 보고하지 않는다.
+
+대신 **동일 UI commit의 깨끗한 Next production build**를 임시 Sandbox HTTPS `https://3010-inttcbsfw5v55o5vlxuy4-e606b6a7.sg2.manus.computer/work-traces`에서 제공해 `/work-traces`·`/residual-data` HTTP 200과 Chromium 1440/800/768px 브라우저 회귀를 통과했다. 이 주소는 세션 한정 임시 검수용이지 기존 Netlify 운영 배포가 아니다. 기존 PERSON 5필드 CSV(1,113행), 규정 인사이트 1440/800/768px, 상세검색·CSV 1440/800px도 같은 production build에서 통과했다. 게시물 제목만 이용한 A축 검색은 승인 잔차 PERSON 1,113건·조직형 설명 45건에서 검색 결과 0건이 각각 0이었으며, 같은 제목이 복수로 검색되면 사용자가 사규예고를 직접 선택하도록 한다.
+
+다음 게이트는 **Codex 소관 데이터 계약 브랜치의 main 반영 순서 확인**이다. 그 뒤 PR #13을 새로운 main 기준으로 재검증·Netlify 자동 미리보기에서 테스트하고 사용자 승인 후에만 병합한다. 병합 전까지 `main`이나 Netlify 설정/API를 변경하지 않는다.
