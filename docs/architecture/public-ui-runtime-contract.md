@@ -250,3 +250,11 @@ merge SHA의 별도 `Supabase Preview` 검사는 이전 PR #6 때와 동일한 `
 검증: `pnpm check`, `pnpm check:regulations`, 공개 사이트 타입/프로덕션 빌드, `check:approved`, `check:technical-specs`, `check:t07c`, `check:residual-analysis`, `pnpm test`, `git diff --check`, KODIT UI 스킬의 protected-scope guard 통과. 독립 읽기 전용 검토에서 사실·직렬화·접근성 P0/P1은 발견하지 못했다. 제안된 DOM 순서 회귀를 정적 UI 검사에 추가하고 Chromium 로컬 프로덕션 프리뷰의 **1440/800/768px**에서 요약 띠 높이 **110px/191px/191px**, 카드 순서·네 도움말 hover/focus/click/Enter/Space/Escape·하위 메뉴·scope=notice 미노출·잔차 앵커·기존 상세검색 CSV 회귀를 확인했다. 이는 **로컬 검수**이며 새 draft PR/Netlify 미리보기와 사용자 병합 승인은 별도 단계다. migration/RPC/exporter/snapshot v2, Netlify 설정은 변경하지 않는다.
 
 사용자가 표시한 조직 히스토리 연도 선택 노드의 padding은 **다음 페이지 단계**로 남긴다. 크론 실행 이력과 승인 공개본의 변경 이력은 다른 단위이므로, Codex 소관 공개 read contract/비교 원장이 나오기 전에는 ‘변경 없음’ 0건이나 변동 기록 표를 지어내지 않는다. 계약이 확정되면 요약 목록에서 클릭해 이전/현재 값·시각·근거를 원장형 작은 표로 보여 주는 UI를 별도 검토한다.
+
+### PR #11 검수 문구 보정 (2026-10-03, 병합 전)
+
+사용자 검수에서 인물형 관측을 ‘담당 칸에 사람 이름 **형태**가 적혔다’로 설명하면 외형만 보고 분류했다는 오독이 확인됐다. 정본 `docs/architecture/residual-resolution-ui.md`의 `PERSON_EVIDENCE`대로 **담당 표기와 동일 문자열이 다른 문서 본문에서 인물형 문맥으로 관측**된 경우로 tooltip·펼침 설명을 고친다. 실제 인물 신원, 직원 여부, 기안자/담당자 역할·소속을 확정하지 않고 공개 별칭과 관측 게시물만 보여 준다는 경계도 명시한다. `유형 미확정 114건 (전체의 5.5%)`은 **전체 사규예고 2,089건의 5.5%**로 분모를 문장 안에 넣는다. 소스 문자열뿐 아니라 UI 회귀와 1440/800/768px 브라우저에서 해당 설명을 검증한다. 이 보정은 **규정 첫 화면 문구만** 수정하며 Codex 소관 migration/RPC/exporter/snapshot v2, PERSON 다섯 필드 계약, 운영 main은 변경하지 않는다.
+
+첨부된 정밀도 게이트 설명은 이 박스에 섞지 않고 향후 방법론/기술사양 원고에서 따로 검토한다. 초기 게이트의 50%와 선택적 게이트의 선택 대상 2/2(관측 100%이지만 최소 30건 미달)는 **시점·모집단·실패 이유가 다르다**. 2026 조직 프로필 재현 진단 64.29%를 조직 기능귀속 정확도로, observed-only 683건을 시점 충돌로 설명하지 않는다. ORG_CURRENT+ORG_HISTORICAL 45건과 그 동일한 행에 대한 업무귀속 설명 45건도 **서로 다른 축**이므로 합산하지 않는다. 사용자에게 다음 페이지 지침을 받기 전까지 이 추가 지표를 규정 첫 화면에 임의로 넣지 않는다.
+
+PR #11 문구 보정 로컬 재검증: `pnpm check:regulations`, `pnpm check:approved`, `pnpm check:residual-analysis`, 공개 사이트 타입/프로덕션 빌드, `git diff --check`, 보호 파일 가드 통과. Chromium **1440/800/768px**에서 네 도움말 hover/focus/Enter/Space/Escape, 인물형 tooltip·상세의 다른 문서 본문 관측 문구, `유형 미확정 114건 (전체 사규예고의 5.5%)`, 기존 상세검색/CSV 회귀 통과. 새 head의 Netlify 미리보기는 **푸시 후 별도로 재검수**한다.

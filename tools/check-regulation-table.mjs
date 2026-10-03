@@ -122,6 +122,10 @@ assert.ok(explorerText.includes('scope === "notice" ? "사규예고" : "내부�
 assert.ok(regulationsText.includes('href="/residual-data#residual-index"') && residualPageText.includes('id="residual-index"'));
 for (const term of ["초기 미일치", "인물형 관측", "공식 근거로 조직 확인", "유형 미확정"]) assert.ok(regulationsText.includes(term));
 for (const fragment of ["앞뒤 공백을 제거", "현재 조직 확인", "과거 조직 확인", "이 수치는 부서 재배정 건수가 아닙니다", "DRM 건수와도 별개의 통계입니다"]) assert.ok(regulationsText.includes(fragment));
+assert.ok(regulationsText.includes("담당 표기와 같은 문자열이 다른 문서 본문에서 인물형 문맥으로 관측된 건수입니다."));
+assert.ok(regulationsText.includes("실제 인물의 신원, 직원 여부, 기안자·담당자 역할 또는 소속을 확정하지 않습니다."));
+assert.ok(regulationsText.includes("전체 사규예고의 ${percent(untypedCount)}"));
+assert.ok(!regulationsText.includes("사람 이름 형태의 문자열"));
 assert.ok(insightText.includes('aria-expanded={isExpanded}') && insightText.includes('aria-controls={detailId}') && insightText.includes('aria-describedby={tooltipId}'));
 assert.ok(insightText.includes('role="tooltip"') && insightText.includes('role="region"') && insightText.includes('event.key === "Escape"'));
 assert.ok(!regulationsText.includes('organizationAttributionExplanations') && !regulationsText.includes('work_context'));

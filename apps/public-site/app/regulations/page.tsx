@@ -29,14 +29,14 @@ export default async function RegulationsPage({ searchParams }: { searchParams: 
   const officialCount = organizationSnapshot.hierarchy.flatMap(group => group.units).length;
   const terms: InsightTerm[] = [
     { id: "initial", label: "초기 미일치", short: "담당 표기가 기준 조직명과 글자 그대로 일치하지 않은 게시물입니다.", detail: `사규예고의 담당 표기에서 앞뒤 공백을 제거한 뒤, ${organizationSnapshot.snapshotDate} 기준 공식 조직명 ${officialCount}개와 문자열이 정확히 같은지 비교한 결과입니다. 유사한 이름이나 과거 조직명은 자동으로 같은 조직으로 처리하지 않았습니다.` },
-    { id: "person", label: "인물형 관측", short: "담당 칸에서 사람 이름 형태의 문자열을 관측한 건수입니다.", detail: "담당 칸에 사람 이름 형태의 문자열이 기록된 경우입니다. 공개 화면에서는 초성 기반 공개 별칭과 관측 게시물만 표시하며, 그 사람의 소속이나 업무 역할을 생성하지 않습니다." },
+    { id: "person", label: "인물형 관측", short: "담당 표기와 같은 문자열이 다른 문서 본문에서 인물형 문맥으로 관측된 건수입니다.", detail: "담당 표기와 같은 문자열이 다른 문서 본문에서 인물형 문맥으로 관측된 건수입니다. 실제 인물의 신원, 직원 여부, 기안자·담당자 역할 또는 소속을 확정하지 않습니다. 공개 화면에서는 초성 기반 공개 별칭과 관측 게시물만 표시합니다." },
     { id: "organization", label: "공식 근거로 조직 확인", short: "공식 근거에서 현재 또는 과거 조직을 확인한 건수입니다.", detail: `공식 조직자료 또는 보존된 시점 근거에서 현재 조직이나 과거 조직을 확인한 기록입니다. 현재 조직 확인 ${format(currentCount)}건과 과거 조직 확인 ${format(historicalCount)}건을 합한 수치입니다.` },
     { id: "untyped", label: "유형 미확정", short: "근거만으로 사람·조직 등 표기의 유형을 정하지 않은 건수입니다.", detail: "원문 표기는 존재하지만 현재 확보한 근거만으로 사람·조직 등 표기의 유형을 정하지 않은 기록입니다. 데이터 오류나 자료 부재를 뜻하지 않습니다." },
   ];
   const metrics: InsightMetric[] = [
     { termId: "person", value: `${format(personCount)}건` },
     { termId: "organization", value: `${format(confirmedCount)}건` },
-    { termId: "untyped", value: `${format(untypedCount)}건 (전체의 ${percent(untypedCount)})` },
+    { termId: "untyped", value: `${format(untypedCount)}건 (전체 사규예고의 ${percent(untypedCount)})` },
   ];
   if (ambiguousCount > 0) metrics.push({ termId: "ambiguous", value: `${format(ambiguousCount)}건` });
   if (ambiguousCount > 0) terms.push({ id: "ambiguous", label: "복수 유형 관측", short: "한 담당 표기에서 복수 유형의 근거가 관측됐습니다.", detail: "서로 다른 유형의 관측이 겹친 경우입니다. 단일 조직·인물로 자동 확정하지 않습니다." });
