@@ -36,23 +36,25 @@ export function ParserEvidence() {
         <div className="parser-result-heading"><span>{format.format}</span><strong>{format.documents.toLocaleString("ko-KR")}<small>개 문서</small></strong></div>
         <h3>{format.parser} <small>v{format.version}</small></h3>
         <p>엔진: {format.engine} · 문서마다 두 번 실행해 동일 결과·추출 해시를 확인했습니다.</p>
-        <dl>
-          <div><dt>재현 실행</dt><dd>{format.attempts.toLocaleString("ko-KR")}회</dd></div>
-          {"parsedAndIdentified" in format ? <>
-            <div><dt>본문 추출·신원 확인</dt><dd>{format.parsedAndIdentified}건</dd></div>
-            <div><dt>추출 성공 / 신원 미해결</dt><dd>{format.parsedIdentityUnresolved}건</dd></div>
-            <div><dt>기준명 참조 없음</dt><dd>{format.referenceMissing}건</dd></div>
-            <div><dt>기준명과 본문 표기 불일치</dt><dd>{format.textMismatch}건</dd></div>
+        <dl><div><dt>재현 실행</dt><dd>{format.attempts.toLocaleString("ko-KR")}회</dd></div></dl>
+        {"parsedAndIdentified" in format ? <>
+          <div className="parser-metric-group"><h4>본문 추출 및 규정 식별 결과</h4><dl>
+            <div><dt>본문 추출·규정 식별 완료</dt><dd>{format.parsedAndIdentified}건</dd></div>
+            <div><dt>본문 추출 성공·규정 식별 미확정</dt><dd>{format.parsedIdentityUnresolved}건</dd></div>
+            <div className="parser-submetric"><dt>└ 기준 규정명 참조 없음</dt><dd>{format.referenceMissing}건</dd></div>
+            <div className="parser-submetric"><dt>└ 기준명과 본문 표기 불일치</dt><dd>{format.textMismatch}건</dd></div>
+          </dl></div>
+          <div className="parser-metric-group"><h4>별도 형식 판별 지표 · 위 결과와 중첩 가능</h4><dl>
             <div><dt>확장자·실제 형식 불일치</dt><dd>{format.extensionMismatch}건</dd></div>
             <div><dt>유효 배치 parser 실패</dt><dd>{format.parserFailed}건</dd></div>
-          </> : <>
-            <div><dt>본문 추출</dt><dd>{format.extracted}건</dd></div>
-            <div><dt>본문 없는 문서</dt><dd>{format.noText}건</dd></div>
-            <div><dt>암호화 문서</dt><dd>{format.encrypted}건</dd></div>
-            <div><dt>문서 읽기 실패</dt><dd>{format.readFailed}건</dd></div>
-            <div><dt>중앙값: 페이지 / 본문 문자</dt><dd>{format.medianPages}쪽 / {format.medianCharacters}자</dd></div>
-          </>}
-        </dl>
+          </dl></div>
+        </> : <div className="parser-metric-group"><h4>본문 추출 결과</h4><dl>
+          <div><dt>본문 추출</dt><dd>{format.extracted}건</dd></div>
+          <div><dt>추출 가능한 텍스트 없음</dt><dd>{format.noText}건</dd></div>
+          <div><dt>암호화 문서</dt><dd>{format.encrypted}건</dd></div>
+          <div><dt>문서 읽기 실패</dt><dd>{format.readFailed}건</dd></div>
+          <div><dt>중앙값: 페이지 / 본문 문자</dt><dd>{format.medianPages}쪽 / {format.medianCharacters}자</dd></div>
+        </dl></div>}
         <details className="parser-operation-details"><summary>처리 단계와 실패 조건 보기</summary>
           <ol>{processingSteps[format.format as keyof typeof processingSteps].map(([title, description]) => <li key={title}><strong>{title}</strong><p>{description}</p></li>)}</ol>
           <p className="parser-log-source">집계 근거: <code>{format.report}</code></p>
