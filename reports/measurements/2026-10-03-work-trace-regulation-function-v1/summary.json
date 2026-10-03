@@ -1,0 +1,65 @@
+{
+  "contract_version": "work-trace-regulation-function-v1",
+  "config_sha256": "98f36f8b5c5ea10ce15d5c2126a329ce98d45d573cc6a86a130a934d746f2f5d",
+  "builder_sha256": "4ea11d7bc169504e74a9cdb1d171ae631dd3eb45c5fe462d28c422f3a5a6f401",
+  "mode": "apply",
+  "relation_stats": {
+    "regulations": 1041,
+    "regulation_identity_bridge_rows": 1041,
+    "regulation_identity_bridge_distinct_core_ids": 1041,
+    "regulation_identity_bridge_distinct_publish_versions": 1041,
+    "canonical_function_assignments": 202,
+    "canonical_function_assignment_orgs": 23,
+    "canonical_function_assignment_documents": 3,
+    "function_assignment_character_grain": {
+      "minimum": 4,
+      "median": 17.0,
+      "p90": 258.6,
+      "maximum": 500,
+      "at_least_1000": 0
+    },
+    "direct_relations": 10,
+    "candidate_relations": 984,
+    "regulations_with_direct": 10,
+    "regulations_with_candidate": 530,
+    "regulations_without_any_relation": 503,
+    "direct_distinct_org_width": {
+      "1": 10
+    },
+    "candidate_distinct_org_width": {
+      "1": 234,
+      "2": 138,
+      "3": 158
+    }
+  },
+  "positive_control_diagnostic": {
+    "metric_name": "OBSERVED_DEPARTMENT_REPRODUCTION_DIAGNOSTIC",
+    "interpretation_warning": "The observed notice department is not a function-owner gold label. Inclusion counts are diagnostics only and are not current-function accuracy.",
+    "known_answer_total": 817,
+    "strict_subset": 728,
+    "regulation_or_proposal_signal_subset": 696,
+    "all_relation_coverage": 403,
+    "all_relation_observed_department_included": 268,
+    "multiple_current_org_endpoints": 234,
+    "direct_coverage": 24,
+    "direct_observed_department_included": 24,
+    "no_relation_candidate": 293,
+    "endpoint_width": {
+      "0": 293,
+      "1": 169,
+      "2": 90,
+      "3": 119,
+      "4": 14,
+      "5": 8,
+      "6": 2,
+      "7": 1
+    },
+    "leakage": {
+      "department_input_count": 0,
+      "ground_truth_joined_after_relations": true,
+      "residual_rows_queried": false,
+      "count": 0
+    }
+  },
+  "evidence_reference_count": 1243
+}

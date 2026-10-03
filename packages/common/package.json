@@ -10,7 +10,8 @@
     "./regulations/DepartmentResidualAnalysis": "./src/regulations/DepartmentResidualAnalysis.tsx",
     "./regulations/PersonResidualObservations": "./src/regulations/PersonResidualObservations.tsx",
     "./regulations/DepartmentEvidenceGuide": "./src/regulations/DepartmentEvidenceGuide.tsx",
-    "./regulations/OrganizationHistory": "./src/regulations/OrganizationHistory.tsx"
+    "./regulations/OrganizationHistory": "./src/regulations/OrganizationHistory.tsx",
+    "./regulations/work-trace-contract": "./src/regulations/work-trace-contract.ts"
   },
   "peerDependencies": {
     "react": "19.1.2",

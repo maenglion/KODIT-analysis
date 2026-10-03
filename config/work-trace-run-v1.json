@@ -1,0 +1,35 @@
+{
+  "trace_contract_version": "work-trace-run-v1",
+  "validation_contract_version": "work-trace-run-validation-v1",
+  "relation_contract_version": "work-trace-regulation-function-v1",
+  "relation_plan_path": "reports/measurements/2026-10-03-work-trace-regulation-function-v1/result.json",
+  "case_grain": "notice_id + regulation_id/sentinel + proposal assertion key",
+  "terminal_policy": {
+    "no_direct_proposal_assertion": "RELATION_EVIDENCE_GAP",
+    "one_direct_current_function": "COMPLETE",
+    "multiple_direct_current_functions": "FUNCTION_MULTIPLE_CANDIDATES",
+    "one_phrase_candidate": "FUNCTION_CORRESPONDENCE_UNCONFIRMED",
+    "multiple_phrase_candidates": "FUNCTION_MULTIPLE_CANDIDATES",
+    "no_function_correspondence": "FUNCTION_CORRESPONDENCE_UNCONFIRMED"
+  },
+  "completion_scope": "CURRENT_FUNCTION_OBSERVED",
+  "public_interpretation": {
+    "complete": "공식 규정 관리 문구와 현행 업무분장을 연결하여 현재 소관 업무를 확인했습니다.",
+    "multiple": "현행 업무분장에서 둘 이상의 대응이 관측되어 하나로 좁히지 않았습니다.",
+    "proposal_gap": "사규예고와 개정 대상 규정을 직접 연결하는 근거를 확인하지 못했습니다.",
+    "function_gap": "규정은 확인했으나 현행 업무분장과의 직접 대응은 확인하지 못했습니다."
+  },
+  "leakage_policy": {
+    "forbidden_input_fields": [
+      "notice_department",
+      "raw_label",
+      "comparison_label",
+      "public_alias",
+      "person_mentions",
+      "org_mentions",
+      "email_mentions"
+    ],
+    "person_to_org_relation_count": 0,
+    "linked_regulation_version_ids_used_as_proposal": false
+  }
+}

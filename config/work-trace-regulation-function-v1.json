@@ -1,0 +1,35 @@
+{
+  "contract_version": "work-trace-regulation-function-v1",
+  "parent_retrieval_contract": "org-function-positive-control-v4",
+  "assignment_read_contract": "analytics.canonical_organization_function_assignments",
+  "regulation_identity_bridge": "publish.regulations.display_name = core.regulations.canonical_name (exact, unique)",
+  "regulation_identity_bridge_kind": "SAME_UPSTREAM_CORPUS_EXACT_IDENTITY_RECONCILIATION",
+  "regulation_identity_bridge_interpretation": "The two materializations use different identifiers and responsibilities but preserve the same upstream 1,041-row regulation corpus. A 1:1 match is a reconciliation invariant, not independent cross-source validation or an accuracy metric.",
+  "direct_method": "EXACT_REGULATION_MANAGEMENT_REFERENCE",
+  "direct_channels": ["regulation_name"],
+  "minimum_exact_characters": 4,
+  "candidate_method": "CHARACTER_NGRAM_COSINE",
+  "character_ngram_sizes": [2, 3],
+  "candidate_weights": {
+    "regulation_name": 0.4,
+    "regulation_text": 0.6
+  },
+  "search_candidate_minimum_score": 0.08,
+  "candidate_org_limit": 3,
+  "maximum_body_chunks_per_regulation": 200,
+  "maximum_body_chunk_characters": 400,
+  "leakage_policy": {
+    "forbidden_input_fields": [
+      "notice_department",
+      "raw_label",
+      "comparison_label",
+      "person_mentions",
+      "org_mentions",
+      "email_mentions"
+    ],
+    "remove_all_known_organization_names_from_text": true,
+    "ground_truth_available_to_relation_builder": false,
+    "residual_rows_queried": false
+  },
+  "interpretation": "Direct is exact official wording. Candidate is a retained search lead. Neither creates organization succession or PERSON-to-ORG attribution."
+}

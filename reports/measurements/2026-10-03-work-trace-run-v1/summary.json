@@ -1,0 +1,34 @@
+{
+  "trace_contract_version": "work-trace-run-v1",
+  "trace_run_id": "a00dba9a-4f99-2ece-ce53-35fc87afc433",
+  "mode": "apply",
+  "residual_notice_count": 1272,
+  "trace_case_count": 1272,
+  "terminal_outcomes": {
+    "COMPLETE": 38,
+    "FUNCTION_CORRESPONDENCE_UNCONFIRMED": 650,
+    "FUNCTION_MULTIPLE_CANDIDATES": 222,
+    "RELATION_EVIDENCE_GAP": 362
+  },
+  "completion_scopes": {
+    "CURRENT_FUNCTION_OBSERVED": 38
+  },
+  "correspondence_basis": {
+    "FUNCTION_DIRECT": 38,
+    "FUNCTION_PHRASE_CANDIDATE": 781
+  },
+  "endpoint_width": {
+    "0": 793,
+    "1": 257,
+    "2": 104,
+    "3": 118
+  },
+  "evidence_reference_count": 1622,
+  "evidence_need_count": 677,
+  "leakage": {
+    "notice_department_fields_read": 0,
+    "person_identifiers_read": 0,
+    "linked_regulation_version_ids_used_as_proposal": 0,
+    "person_to_org_relations_created": 0
+  }
+}

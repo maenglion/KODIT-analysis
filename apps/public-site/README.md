@@ -2,6 +2,11 @@
 
 일반 공개 화면입니다. 배포 시점에 승인된 공개 release를 `data/public-snapshot-v2.json.gz`로 고정해 표시합니다. **규정 목록·집계·CSV는 Supabase RPC 가용성에 의존하지 않습니다.** 예외적으로 상단 자동수집 상태만 서버 `/api/collection-state`가 기존 공개 `api.public_collection_state()`에서 읽으며, 조회 실패 시 상태만 `상태 조회 불가`로 표시하고 승인 규정 목록은 계속 제공합니다. PERSON 관측 계약에는 승인 별칭·관측일·게시물 제목·공식 URL·관측 횟수만 포함하며 조직 attribution 계약과 결합하지 않습니다. 기존 RPC·migration·검사 코드는 외부 검증과 증빙을 위해 보존합니다.
 
+업무 이동 근거 추적은 별도 `data/public-work-trace-v1.json.gz`를 서버에서 읽습니다. 이 snapshot은
+validated trace run을 사규예고·규정·현행 조직 A/B/C grain으로 투영한 정적 자료이며 raw label,
+PERSON 별칭, residual/label/core identity를 포함하지 않습니다. `lib/work-trace-data.ts`는 이 파일만
+읽고 브라우저에서 Supabase 또는 core 원장을 호출하지 않습니다.
+
 브라우저 번들에는 DB 비밀번호·access token·service role key를 포함하지 않습니다. `a8d6422`에서 PERSON 관측 RPC와 ORG 귀속 RPC를 분리하고 PERSON 5필드만 담은 snapshot v2를 재생성했습니다. 이 UI 후속 변경은 새 계약을 기준으로 검수하며, 이전 PR #10 head `033d939`의 미리보기를 최신 검수본으로 사용하지 않습니다.
 
 ```sh
