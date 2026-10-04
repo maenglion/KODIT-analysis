@@ -299,3 +299,7 @@ UI 기능 head `056dbc8228ecb8c6b3aa2835529bafbc6775c876`을 `codex/work-trace-l
 사용자가 병합을 명시 승인해 PR을 ready로 전환하고, base `ef795af4...`·head `53a2786...`·Netlify 검사 성공·CLEAN 상태를 재확인한 뒤 [PR #13](https://github.com/maenglion/KODIT-analysis/pull/13)을 **merge commit `2e0ef4d84f2563dc19f53646c2b8f7a23a54c53d`**으로 main에 병합했다. 로컬 main은 fast-forward-only로 동일 SHA에 동기화했다. 기존 GitHub main→Netlify 자동 배포만 사용하며 Netlify 설정/API는 조작하지 않았다.
 
 운영 `https://letscheck-sinbo.netlify.app/work-traces`와 `/residual-data`가 HTTP 200 및 새 화면 marker를 반환한다. 운영 Chromium 1440/800/768px의 업무 추적·증거사슬·용어·PERSON/ORG 제목 진입이 통과했다. 운영 PERSON v2 별칭 317개/관측 1,113건·CSV 다섯 열(1440/800px), 규정 인사이트(1440/800/768px), 기존 상세검색·CSV(1440/800px)가 통과했다. 운영 trace CSV의 전체 1,272/819/677행과 C축 선택 조직 41행 모두 UTF-8 BOM·PERSON/내부 ID 금지 열 부재를 확인했다. PERSON→ORG 공개 관계는 Codex 정적 snapshot 검증 기준 **0건**이며 UI도 PERSON 별칭을 조직 대응과 결합하지 않는다. 이 작업은 별도 cron 변경이력이나 조직 히스토리 padding을 포함하지 않는다.
+
+### 기존 잔차 ERD와 업무 추적 계층의 공개 경계 (2026-10-04)
+
+방법론의 `잔차 처리 원장 관계도`는 잔차·라벨·귀속 원장을 설명하는 기존 Mermaid ERD 정본을 그대로 유지한다. 사규예고→규정→현행 업무분장을 근거 순서대로 확인하는 `/work-traces`는 이 원장을 수정하거나 대체한 새 버전이 아니라, 기존 잔차 occurrence를 입력으로 삼아 별도로 추가된 추적 계층이다. 두 그림이나 화면이 같은 시스템의 전후 버전으로 오해되지 않도록 ERD 섹션에 이 경계와 추적 화면 링크를 명시한다. Mermaid 원문·SVG·원장 schema·추적 snapshot은 변경하지 않는다.

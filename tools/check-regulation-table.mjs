@@ -242,6 +242,9 @@ assert.equal(allResiduals.length + new Set(residualSnapshot.personResidualObserv
 assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
 assert.equal(RESIDUAL_PAGE_SIZE, 10);
 assert.equal(residualSnapshot.personResidualObservations.length, 1113);
+assert.ok(diagramText.includes("이 그림은 잔차·라벨·귀속을 기록한 기존 원장입니다."));
+assert.ok(diagramText.includes("추적 계층") && diagramText.includes('href="/work-traces"'));
+assert.ok(diagramText.includes("이 원장을 바꾸거나 대체하지 않고 별도로 추가했습니다."));
 assert.equal(new Set(residualSnapshot.personResidualObservations.map(row => row.public_alias)).size, 317);
 const allowedPersonKeys = ["observation_count", "posted_at", "public_alias", "source_location", "title"];
 const forbiddenPersonKey = /(org|organization|department|role|candidate|path|confidence|reasoning|function|assignment|movement)/i;
