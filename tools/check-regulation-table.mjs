@@ -141,7 +141,9 @@ assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAna
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
 assert.ok(residualAnalysisText.includes('RESIDUAL_PAGE_SIZE') && residualAnalysisText.includes('근거 게시물과 이동 설명'));
-assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('관측·추정 판정 기준 보기'));
+assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('라벨 분류 근거'));
+assert.ok(residualAnalysisText.includes('조직 변경 추적') && residualAnalysisText.includes('ObservationClassificationEvidence'));
+assert.ok(residualAnalysisText.includes('residual-inline-evidence') && residualAnalysisText.includes('aria-expanded={expanded}'));
 assert.ok(personObservationText.includes('RESIDUAL_PAGE_SIZE') && personObservationText.includes('residual-detail-row') && personObservationText.includes('colSpan={4}'));
 assert.ok(personObservationText.includes('personResidualObservationsToCsv(safeRows)') && personObservationText.includes('publicResidualLabel(row.public_alias, "PERSON")'));
 assert.ok(personObservationText.includes('officialNoticeListUrl(row.source_location)') && personObservationText.includes('사규 제개정 예고 목록 페이지'));
@@ -243,6 +245,9 @@ assert.equal(allResiduals.length + new Set(residualSnapshot.personResidualObserv
 assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
 assert.equal(RESIDUAL_PAGE_SIZE, 10);
 assert.equal(residualSnapshot.personResidualObservations.length, 1113);
+assert.ok(diagramText.includes("이 그림은 잔차·라벨·귀속을 기록한 기존 원장입니다."));
+assert.ok(diagramText.includes("추적 계층") && diagramText.includes('href="/work-traces"'));
+assert.ok(diagramText.includes("이 원장을 바꾸거나 대체하지 않고 별도로 추가했습니다."));
 assert.equal(new Set(residualSnapshot.personResidualObservations.map(row => row.public_alias)).size, 317);
 const allowedPersonKeys = ["observation_count", "posted_at", "public_alias", "source_location", "title"];
 const forbiddenPersonKey = /(org|organization|department|role|candidate|path|confidence|reasoning|function|assignment|movement)/i;
@@ -272,7 +277,7 @@ assert.deepEqual(mentionSourceLinks(officialListPages, [
 ]).map(link => link.label), ["사규 제개정 예고 (1)", "사규 제개정 예고 (2)"]);
 assert.ok(!personObservationText.includes('>{row.title} ↗</a>') && personObservationText.includes('개별 게시물 원문이 아닌'));
 assert.ok(!residualAnalysisText.includes('row.resolution_class==="PERSON_EVIDENCE"') && !residualAnalysisText.includes('person-observation'));
-assert.ok(residualAnalysisText.includes("<AttributionExplanation detail={activeAttribution}"));
+assert.ok(residualAnalysisText.includes('<AttributionExplanation detail={attribution}') && residualAnalysisText.includes('<ObservationClassificationEvidence occurrence={item}'));
 assert.ok(residualAnalysisText.includes("const evidenceUrl=validPublicUrl(step.evidence_url)"));
 
 const topicNames = new Map(topicSnapshot.families.map((item) => [item.code, item.name]));
