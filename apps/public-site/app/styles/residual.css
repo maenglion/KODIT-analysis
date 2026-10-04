@@ -171,7 +171,9 @@
   .residual-rubric dl { grid-template-columns:1fr; }
   .residual-policy dl>div { grid-template-columns:130px minmax(0,1fr); }
   .residual-pagination { align-items:flex-start; flex-direction:column; }
+  .residual-detail { width:min(100%,calc(100vw - 100px)); padding-inline:18px; }
   .attribution-explanation>header { align-items:flex-start; flex-direction:column; gap:8px; }
+  .evidence-flow .flow-empty { flex:1 1 250px; min-width:0; overflow-wrap:anywhere; }
 }
 
 /* PERSON observation is a separate five-field public contract, not an ORG attribution table. */

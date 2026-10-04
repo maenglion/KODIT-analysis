@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     : undefined;
   const body = kind === "branches" ? branchesCsv(branches)
     : kind === "endpoints" ? endpointsCsv(branches, organizationKeys)
-    : backlogCsv(snapshot.research_backlog);
+    : backlogCsv(snapshot.research_backlog, snapshot.branches);
   const filename = `work-trace-${kind}.csv`;
   return new Response(body, {
     headers: {

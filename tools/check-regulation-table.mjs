@@ -195,11 +195,12 @@ assert.ok(departmentText.includes("organizationSnapshot") && departmentText.incl
 assert.ok(departmentText.includes("DepartmentSelectorDialog") && !departmentText.includes("<OrganizationHistory") && !departmentText.includes("<DepartmentEvidenceGuide"));
 assert.ok(semanticText.includes("DepartmentEvidenceGuide") && historyText.includes("OrganizationHistory"));
 assert.ok(navigationText.includes('href="/department-statistics/semantic-matching"') && navigationText.includes('href="/department-statistics/organization-history"'));
-assert.ok(navigationText.includes('href="/investment-statistics/yearly-notices"') && navigationText.includes('href="/investment-statistics/evidence-notices"'));
+assert.ok(navigationText.includes('>투자 보증</Link>') && navigationText.includes('개인정보보호 <small>준비중</small>'));
+assert.ok(topicText.includes('topic-page-links') && topicText.includes('href="/investment-statistics/yearly-notices"') && topicText.includes('topicEvidenceUrl()'));
 assert.ok(topicText.includes('view === "summary"') && topicText.includes('view === "yearly"') && topicText.includes('view === "evidence"') && evidenceText.includes('initialFamily={family}') && evidenceText.includes('initialYear={year}'));
 assert.ok(topicText.includes('집계 기준 구분') && topicText.includes('규정 목록의 2026-09-13 집계와 합산하지 않습니다.'));
 assert.ok(!topicText.includes('기준이 다른 두 공개본'));
-assert.ok(topicText.includes('onClick={() => saveCsv(filtered)}') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
+assert.ok(topicText.includes('saveCsv(filtered, noticeRegulationStatuses') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
 assert.ok(topicStyleText.includes('color:#217a39') && topicStyleText.includes('border:1px solid var(--figma-green)'));
 assert.ok(helpText.includes('>i</button>') && !helpText.includes('>ⓘ</button>'));
 assert.ok(!departmentText.includes("DepartmentResidualAnalysis"));

@@ -3,6 +3,7 @@ import type {
   PublicWorkTraceResearchBacklogRow,
 } from "@kodit/common/regulations/work-trace-contract";
 import { officialSourceUrl, outcomeText } from "./work-trace-view";
+import { backlogTargetTitle } from "./work-trace-backlog-view";
 
 export const BACKLOG_NOTE = "현재 영향 분기 수는 해당 자료나 근거를 확인하지 못해 당시 추적이 멈춘 분기 수입니다. 자료를 확보하더라도 모든 분기가 연장되거나 완료된다는 뜻은 아닙니다.";
 
@@ -54,10 +55,13 @@ export function endpointsCsv(rows: PublicWorkTraceBranch[], selectedOrganization
   );
 }
 
-export function backlogCsv(rows: PublicWorkTraceResearchBacklogRow[]): string {
+export function backlogCsv(rows: PublicWorkTraceResearchBacklogRow[], branches: PublicWorkTraceBranch[]): string {
+  const byKey = new Map(branches.map((branch) => [branch.public_branch_key, branch]));
   return csv(
-    ["확인이 필요한 자료·근거", "대상 기간 시작", "대상 기간 끝", "현재 영향 분기 수", "관련 사규예고 수", "관련 규정 수", "마지막 확인 근거번호", "현재 영향 분기 수의 뜻"],
+    ["조사 구역", "사규예고 제목 또는 규정명", "확인이 필요한 자료·근거", "대상 기간 시작", "대상 기간 끝", "현재 영향 분기 수", "관련 사규예고 수", "관련 규정 수", "마지막 확인 근거번호", "현재 영향 분기 수의 뜻"],
     rows.map((row) => [
+      row.need_kind === "RELATION_EVIDENCE_GAP" ? "사규예고→규정 연결 근거 조사" : "규정→현행 업무분장 대응 조사",
+      backlogTargetTitle(row, byKey),
       row.required_evidence_description,
       row.period_from,
       row.period_to,

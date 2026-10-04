@@ -30,9 +30,8 @@ export function SiteNavigation() {
       <Link href="/department-statistics/organization-history" className={pathname.endsWith("/organization-history") ? "active" : ""} aria-current={pathname.endsWith("/organization-history") ? "page" : undefined}>조직 히스토리</Link>
     </nav>}
     {isTopic && <nav className="sub-navigation" aria-label="사업 통계 하위 메뉴">
-      <Link href="/investment-statistics" className={pathname === "/investment-statistics" ? "active" : ""} aria-current={pathname === "/investment-statistics" ? "page" : undefined}>요약</Link>
-      <Link href="/investment-statistics/yearly-notices" className={pathname.endsWith("/yearly-notices") ? "active" : ""} aria-current={pathname.endsWith("/yearly-notices") ? "page" : undefined}>연도별 사규예고</Link>
-      <Link href="/investment-statistics/evidence-notices" className={pathname.endsWith("/evidence-notices") ? "active" : ""} aria-current={pathname.endsWith("/evidence-notices") ? "page" : undefined}>근거 사규예고</Link>
+      <Link href="/investment-statistics" className="active" aria-current={pathname === "/investment-statistics" ? "page" : undefined}>투자 보증</Link>
+      <span className="topic-coming-soon">개인정보보호 <small>준비중</small><span className="sr-only">아직 준비중입니다.</span></span>
     </nav>}
     {(isResidual || isTrace) && <nav className="sub-navigation" aria-label="잔차 데이터 하위 메뉴">
       <Link href="/residual-data#residual-index" className={isResidual ? "active" : ""} aria-current={isResidual ? "page" : undefined}>담당 표기 잔차</Link>
