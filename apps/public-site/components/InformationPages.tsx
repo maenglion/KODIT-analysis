@@ -39,33 +39,33 @@ export async function MethodologyPage() {
   const residualLabelCount = residualLabels.length + new Set(personResidualObservations.map(row => row.public_alias)).size;
   const exactNotices = notices.length - residualOccurrenceCount;
   return <>
-    <InformationHero eyebrow="검증 체계 / 02" title="검증 방법론" description="원본 파일, 추출 본문, 문자열 관측, 의미 판정과 공개 통계를 다른 계층으로 관리합니다." evidenceAsOf={release.evidence_as_of} snapshotGeneratedAt={release.generated_at} principle="관측은 보존하고, 의미는 근거가 있을 때만 부여합니다." />
+    <InformationHero eyebrow="검증 체계 / 02" title="판정 근거와 검증 구조" description="문서를 읽은 결과와 그 결과에 의미를 부여한 판단을 섞지 않기 위해, 원본·추출·관측·판정·공개를 각각 분리해 기록합니다." evidenceAsOf={release.evidence_as_of} snapshotGeneratedAt={release.generated_at} principle="확인한 범위까지만 확정하고, 근거가 끊긴 지점은 그대로 남깁니다." />
     <main className="methodology-page information-page"><div className="shell">
-      <InformationSection number="01" title="관측에서 분석까지 단계를 분리합니다" id="method-layers">
-        <p>원문에서 발견된 문자열과 그 문자열이 뜻하는 조직·규정은 같지 않습니다. SOURCE → OBSERVATION → LABEL → ENTITY/NODE → RELATION → ANALYSIS 계층을 분리합니다. 앞 단계의 존재만으로 다음 계층의 의미를 확정하지 않습니다.</p>
-        <DiagramPanel title="원문에서 공개 분석까지" src="/diagrams/evidence-layers.svg" alt="공식 원문에서 관측값과 라벨을 만들고, 근거가 있는 대상과 관계를 거쳐 공개 분석으로 이어집니다. 미해결 관측은 잔차로 남겨 공식 근거를 다시 검토합니다." caption="담당 표기가 인물형이더라도 그 사람의 소속이나 업무 역할은 자동으로 생성하지 않습니다." />
+      <InformationSection number="01" title="원문·관측·판정의 분리" id="method-layers">
+        <p>문서에서 문자열이 발견되었다는 사실과 그것이 특정 조직이나 규정을 뜻한다는 판단은 다릅니다. SOURCE → OBSERVATION → LABEL → ENTITY/NODE → RELATION → ANALYSIS를 분리해, 앞 단계의 관측만으로 다음 단계의 의미가 자동 확정되지 않도록 했습니다.</p>
+        <DiagramPanel title="원문에서 판정 결과까지" src="/diagrams/evidence-layers.svg" alt="공식 원문에서 관측값과 라벨을 만들고, 근거가 있는 대상과 관계를 거쳐 공개 분석으로 이어집니다. 미해결 관측은 잔차로 남겨 공식 근거를 다시 검토합니다." caption="인물형 표기가 관측되어도 별도 근거가 없으면 소속이나 업무관계를 만들지 않습니다." />
       </InformationSection>
-      <InformationSection number="02" title="파일이 아니라 규정 버전을 판정합니다" id="method-availability">
-        <p>PDF, HWP, HWPX, 공식 HTML은 한 규정 버전을 나타내는 서로 다른 표현 형식입니다. 공식 경로에서 전문을 담은 형식이 하나라도 확인되면 그 규정 버전의 전문 공개 gate를 충족합니다. PDF 추출 오류 하나가 확인된 다른 형식의 전문 공개를 뒤집지 않습니다.</p>
-        <DiagramPanel title="전문 공개의 OR gate" src="/diagrams/version-gate.svg" alt="규정 버전의 공식 PDF, HWP, HWPX, HTML 가운데 한 형식에서 전문이 확인되면 FULLTEXT_PUBLIC, 그렇지 않으면 사규예고와 기타 근거를 더 평가합니다." caption="문서 추출 outcome과 규정 버전의 availability는 별개입니다. OCR은 전문 공개를 만드는 선행 조건이 아닙니다." />
+      <InformationSection number="02" title="규정 버전 단위의 공개 판정" id="method-availability">
+        <p>PDF·HWP·HWPX·공식 HTML은 같은 규정 버전을 보여주는 서로 다른 형식입니다. 공식 경로 중 하나에서 전문이 확인되면 해당 규정 버전을 전문 공개로 판정하며, 특정 파일의 추출 실패가 다른 공식 형식에서 확인된 공개 상태를 뒤집지는 않습니다.</p>
+        <DiagramPanel title="규정 버전의 전문 확인 기준" src="/diagrams/version-gate.svg" alt="규정 버전의 공식 PDF, HWP, HWPX, HTML 가운데 한 형식에서 전문이 확인되면 FULLTEXT_PUBLIC, 그렇지 않으면 사규예고와 기타 근거를 더 평가합니다." caption="문서 추출 결과와 규정 버전의 공개 상태는 별도로 판정합니다." />
         <div className="information-table-scroll"><table className="information-table"><thead><tr><th scope="col">공개 결론</th><th scope="col">뜻</th></tr></thead><tbody>{availability.map(([key, meaning]) => <tr key={key}><th scope="row"><code>{key}</code></th><td>{meaning}</td></tr>)}</tbody></table></div><p className="information-note"><code>NO_EXTRACTABLE_TEXT</code>, <code>EXTRACTION_FAILED</code>는 parser 결과입니다. <code>REEVALUATION_PENDING</code>도 위 네 가지 공개 availability가 아닙니다.</p>
       </InformationSection>
-      <InformationSection number="03" title="같은 파일과 같은 글의 identity를 따로 관리합니다" id="method-integrity">
+      <InformationSection number="03" title="원본·추출문·추출 규칙의 식별" id="method-integrity">
+        <p>같은 원본이라도 파서나 추출 규칙이 바뀌면 본문 결과가 달라질 수 있습니다. 그래서 원본 바이너리, 추출된 본문, 적용한 추출 규칙을 서로 다른 식별값으로 관리합니다.</p>
         <div className="information-use-grid information-identity-grid"><article><span>01 / BINARY</span><h3>SHA-256</h3><p>동일한 원본 바이너리인가?</p></article><article><span>02 / TEXT</span><h3>extract_hash</h3><p>추출된 본문이 동일한가?</p></article><article><span>03 / RULE</span><h3>extraction contract</h3><p>어떤 추출 규칙으로 본문을 만들었는가?</p></article></div>
-        <p>성공과 실패를 포함한 parser 실행은 실행마다 별도 기록으로 보존합니다. 같은 바이너리·같은 계약·같은 추출 본문이 재현되면 실행 이력은 새로 남기되 기존 immutable extraction artifact를 재사용할 수 있습니다. 실패나 본문 없음은 실행 기록만 남기고 빈 본문을 만들지 않습니다.</p>
-        <blockquote>SHA로 같은 파일을 확인하고, extract_hash로 같은 글을 고정한 뒤 그 글 안의 언급을 셉니다.</blockquote>
+        <blockquote>같은 파일인지, 같은 본문인지, 같은 규칙으로 읽었는지를 각각 확인합니다.</blockquote>
       </InformationSection>
-      <InformationSection number="04" title="해결하지 못한 담당 표기도 남겨 둡니다" id="method-residual">
-        <p>현재 승인 공개본의 사규예고 {notices.length.toLocaleString("ko-KR")}건 중 공식 조직명과 정확히 일치한 게시물은 {exactNotices.toLocaleString("ko-KR")}건입니다. 나머지 <strong>{residualOccurrenceCount.toLocaleString("ko-KR")}건은 게시물에 귀속된 잔차 occurrence</strong>로 보존하며, 사람 수나 서로 다른 이름의 개수가 아닙니다. 서로 다른 lexical label은 {residualLabelCount.toLocaleString("ko-KR")}개입니다.</p>
+      <InformationSection number="04" title="미분류 담당표기의 잔차 보존" id="method-residual">
+        <p>현재 조직명과 정확히 일치하지 않는 담당표기를 오류로 삭제하거나 임의로 현행 조직에 배정하지 않았습니다. {residualOccurrenceCount.toLocaleString("ko-KR")}건은 게시물 단위의 잔차 occurrence로, {residualLabelCount.toLocaleString("ko-KR")}개는 서로 다른 lexical label로 각각 보존합니다.</p>
         <div className="information-metric-grid"><div><span>사규예고</span><strong>{notices.length.toLocaleString("ko-KR")}건</strong></div><div><span>조직명 exact match</span><strong>{exactNotices.toLocaleString("ko-KR")}건</strong></div><div><span>잔차 occurrence</span><strong>{residualOccurrenceCount.toLocaleString("ko-KR")}건</strong></div><div><span>lexical label</span><strong>{residualLabelCount.toLocaleString("ko-KR")}개</strong></div></div>
-        <p>잔차와 추출 언급은 각자 라벨에 묶이고, 조직 후보·근거·경로는 별도 원장으로 보존됩니다. 후보 점수나 이름 유사도만으로 공식 조직이 되지 않습니다. <b>조직개편·업무귀속 path에는 공식 근거문서가 필요합니다.</b></p>
+        <p>잔차 관측, 문자열 라벨, 조직 후보와 귀속 근거를 서로 다른 계층으로 기록합니다. 이름 유사도나 후보 점수만으로 공식 조직을 확정하지 않으며, 조직개편이나 업무 이동을 연결하려면 공식 근거가 필요합니다.</p>
         <DiagramViewer />
         <p className="information-note">제공받은 ERD는 관계·필드명만 보여 줍니다. 공개 화면은 내부 실행 ID, 문서별 해시, 신뢰도 점수나 비마스킹 이름을 표시하지 않습니다. 상세 UI에서는 ‘상태’보다 ‘추론 근거’와 확인 경로를 먼저 읽습니다.</p>
       </InformationSection>
-      <InformationSection number="05" title="검증 계약을 통과하지 못하면 자동 적용하지 않습니다" id="method-stop">
-        <p>known-answer positive control과 시점에 맞는 공식 조직·업무 profile, calibration, 독립 holdout을 함께 평가합니다. 정답을 누설할 수 있는 담당부서 원문이나 사람 이름을 resolver 입력으로 사용하지 않습니다.</p><p>표본 수, coverage, top-1 accuracy, top-3 recall, 모호성, 후보 없음 비중까지 살핍니다. 최소 표본과 독립 검증 기준을 충족하지 못하면 잔차 1,272건에 자동 귀속 결과를 적용하지 않습니다. 단일 ‘신뢰도 1~5’ 점수로 이 경계를 감추지 않습니다.</p>
+      <InformationSection number="05" title="자동 귀속의 검증 조건" id="method-stop">
+        <p>자동 귀속 규칙은 정답을 알고 있는 데이터에서 보정한 뒤 독립 검증합니다. 정답을 누설할 수 있는 담당부서 원문이나 사람 이름은 입력에서 제외합니다.</p><p>표본 수, coverage, Top-1 정확도, Top-3 재현율, 모호성, 후보 없음 비중을 함께 봅니다. 사전에 정한 검증 조건을 충족하지 못하면 잔차 {residualOccurrenceCount.toLocaleString("ko-KR")}건에는 자동 귀속을 적용하지 않습니다. 하나의 신뢰도 점수로 이 차이를 합치지 않습니다.</p>
       </InformationSection>
-      <InformationRelated links={[{ href: "/regulations", label: "규정 공개 현황" }, { href: "/residual-data", label: "담당 표기 잔차" }, { href: "/technical-specs", label: "기술 사양" }]} />
+      <InformationRelated links={[{ href: "/regulations", label: "규정 공개 현황" }, { href: "/residual-data", label: "담당 표기 잔차" }, { href: "/technical-specs", label: "기술 사양" }, { href: "/work-traces", label: "업무·근거 추적" }]} />
     </div></main>
   </>;
 }
