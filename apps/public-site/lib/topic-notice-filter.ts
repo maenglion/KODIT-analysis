@@ -1,3 +1,5 @@
+import type { Availability, PublishRegulationRow } from "@kodit/common/regulations";
+
 export type TopicNoticeFilter = { family: string; year?: string; query: string };
 
 type SearchableTopicNotice = { title: string; date: string; families: readonly string[] };
@@ -19,6 +21,18 @@ export function topicEvidenceUrl({ family = "ALL", year = "" }: { family?: strin
   if (year) params.set("year", year);
   const query = params.toString();
   return `/investment-statistics/evidence-notices${query ? `?${query}` : ""}`;
+}
+
+export function topicRegulationAvailability(
+  names: readonly string[],
+  rows: readonly PublishRegulationRow[],
+): Partial<Record<string, Availability>> {
+  const result: Partial<Record<string, Availability>> = {};
+  for (const name of new Set(names)) {
+    const statuses = new Set(rows.filter((row) => row.display_name === name).map((row) => row.availability));
+    if (statuses.size === 1) result[name] = [...statuses][0];
+  }
+  return result;
 }
 
 export function topicNoticesToCsv<T extends ExportableTopicNotice>(notices: readonly T[], familyNames: ReadonlyMap<string, string>): string {

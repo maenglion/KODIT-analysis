@@ -42,15 +42,21 @@
 .topic-panel { overflow:hidden; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:var(--shadow); }
 .topic-panel-head { padding:23px 26px; border-bottom:1px solid var(--line); }
 .topic-panel-head p { margin:7px 0 0; color:#677188; font-size:13px; }
+.topic-rank-columns { display:grid; grid-template-columns:30px minmax(0,1fr) 94px 42px; gap:10px; padding:10px 26px 8px; background:#f7faff; color:#66768d; font-size:11px; font-weight:750; }
+.topic-rank-columns span:first-child { grid-column:2; }
+.topic-rank-columns span:last-child { text-align:right; }
 .topic-rank-list { list-style:none; margin:0; padding:6px 26px 17px; }
-.topic-rank-list li { display:grid; grid-template-columns:30px minmax(0,1fr) 42px; gap:10px; align-items:center; min-height:64px; border-bottom:1px solid #edf0f4; font-size:14px; }
+.topic-rank-list li { display:grid; grid-template-columns:30px minmax(0,1fr) 94px 42px; gap:10px; align-items:center; min-height:64px; border-bottom:1px solid #edf0f4; font-size:14px; }
 .topic-rank-list li:last-child { border:0; }
 .topic-rank-number { font-weight:800; color:#8495ac; }
 .topic-rank-list a { color:var(--figma-navy); font-weight:700; text-decoration:none; }
 .topic-rank-list a:hover { color:var(--action-blue); text-decoration:underline; }
+.topic-rank-availability { justify-self:start; }
+.topic-rank-unmatched { color:#6e7786; font-size:12px; font-weight:700; white-space:nowrap; }
 .topic-rank-list strong { text-align:right; color:var(--action-blue); white-space:nowrap; }
 .topic-rank-track { height:5px; margin-top:7px; border-radius:5px; background:#ebf2fb; }
 .topic-rank-track span { display:block; height:100%; border-radius:5px; background:#83c1fa; }
+.topic-availability-note { margin:12px 2px 0; color:#5f6f84; font-size:13px; line-height:1.65; }
 .topic-notices-section { padding:26px; border:1px solid var(--line); border-radius:12px; background:#fff; }
 .topic-list-tools { display:flex; gap:8px; }
 .topic-list-tools label { flex:1; }

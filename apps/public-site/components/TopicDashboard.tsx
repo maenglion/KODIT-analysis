@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { CollectionStatus } from "@/components/CollectionStatus";
 import snapshot from "@/data/topic-public-v2.json";
 import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "@/lib/topic-notice-filter";
+import { availabilityLabels, type Availability } from "@kodit/common/regulations";
 
 type TopicNotice = (typeof snapshot.notices)[number];
 type TopicView = "summary" | "yearly" | "evidence";
@@ -20,15 +21,23 @@ function saveCsv(rows: TopicNotice[]) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function RankedList({ title, description, items }: { title: string; description: string; items: { name: string; count: number }[] }) {
+type RegulationAvailabilityByName = Partial<Record<string, Availability>>;
+
+function RankedList({ title, description, items, availabilityByName }: { title: string; description: string; items: { name: string; count: number }[]; availabilityByName: RegulationAvailabilityByName }) {
   const max = items[0]?.count ?? 1;
   return <section className="topic-panel">
     <div className="topic-panel-head"><h2>{title}</h2><p>{description}</p></div>
-    <ol className="topic-rank-list">{items.map((item, index) => <li key={item.name}>
+    <div className="topic-rank-columns" aria-hidden="true"><span>규정</span><span>공개 범위</span><span>게시물</span></div>
+    <ol className="topic-rank-list">{items.map((item, index) => {
+      const availability = availabilityByName[item.name];
+      return <li key={item.name}>
       <span className="topic-rank-number">{String(index + 1).padStart(2, "0")}</span>
       <div><Link href={`/regulations?q=${encodeURIComponent(item.name)}`}>{item.name}</Link><div className="topic-rank-track" aria-hidden="true"><span style={{ width: `${Math.max(12, item.count / max * 100)}%` }} /></div></div>
+      {availability
+        ? <span className={`topic-rank-availability status-flag status-${availability.toLowerCase()}`}>{availabilityLabels[availability]}</span>
+        : <span className="topic-rank-availability topic-rank-unmatched">대조 미확인</span>}
       <strong>{item.count}건</strong>
-    </li>)}</ol>
+    </li>})}</ol>
   </section>;
 }
 
@@ -43,7 +52,7 @@ const descriptions: Record<TopicView, string> = {
   evidence: "승인된 62건의 사규예고를 하위군과 게시일로 좁혀 공식 게시판 근거를 확인합니다.",
 };
 
-export function TopicDashboard({ view = "summary", initialFamily = "ALL", initialYear }: { view?: TopicView; initialFamily?: string; initialYear?: string }) {
+export function TopicDashboard({ view = "summary", initialFamily = "ALL", initialYear, regulationAvailabilityByName = {}, regulationEvidenceAsOf }: { view?: TopicView; initialFamily?: string; initialYear?: string; regulationAvailabilityByName?: RegulationAvailabilityByName; regulationEvidenceAsOf?: string }) {
   const safeFamily = familyNames.has(initialFamily) ? initialFamily : "ALL";
   const safeYear = initialYear && Object.hasOwn(snapshot.yearly, initialYear) ? initialYear : "";
   const [family, setFamily] = useState(safeFamily);
@@ -79,9 +88,10 @@ export function TopicDashboard({ view = "summary", initialFamily = "ALL", initia
           <p className="topic-exclusion">분류 범위: {snapshot.scope}. 퍼스트펭귄 창업기업 보증지원은 투자·자본성 금융과의 직접 관계가 확인되지 않아 이 통계에 포함되지 않습니다.</p>
         </section>
         <div className="topic-rank-grid">
-          <RankedList title="많이 언급된 규정" description="규정 언급이 확인된 서로 다른 게시물 수" items={snapshot.mostMentioned} />
-          <RankedList title="개정 제안 대상 규정" description="개정 제안 관계가 확인된 서로 다른 게시물 수" items={snapshot.mostProposed} />
+          <RankedList title="많이 언급된 규정" description="규정 언급이 확인된 서로 다른 게시물 수" items={snapshot.mostMentioned} availabilityByName={regulationAvailabilityByName} />
+          <RankedList title="개정 제안 대상 규정" description="개정 제안 관계가 확인된 서로 다른 게시물 수" items={snapshot.mostProposed} availabilityByName={regulationAvailabilityByName} />
         </div>
+        <p className="topic-availability-note">공개 범위는 승인 규정 버전{regulationEvidenceAsOf ? ` ${regulationEvidenceAsOf} 기준` : ""}입니다. <strong>전문 공개</strong>와 <strong>일부 공개</strong>는 공식 경로에서 확인된 본문의 범위를 뜻합니다. <strong>사전예고만</strong>은 비공개 확정이 아니라 사전예고는 확인됐지만 전문 또는 일부 본문을 승인 근거에서 확인하지 못했다는 뜻입니다.</p>
       </>}
       {view === "yearly" && <section className="topic-section topic-first-section"><div className="topic-heading"><div><p className="eyebrow">ANNUAL DISTRIBUTION</p><h2>연도별 사규예고</h2></div><p>승인된 {snapshot.noticeCount}건의 게시일 연도별 분포 · 과거 승인본 간 증감률이 아닙니다.</p></div>
         <ol className="topic-year-chart">{years.map(([year, count]) => <li key={year}><Link href={topicEvidenceUrl({ year })} className="topic-year-link" aria-label={`${year}년 근거 사규예고 ${count}건 보기`}>{year}</Link><div className="topic-year-track"><span style={{ height: `${Math.max(7, count / maxYearCount * 100)}%` }} /></div><strong>{count}건</strong></li>)}</ol>
