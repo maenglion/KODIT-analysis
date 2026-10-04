@@ -22,6 +22,11 @@ function saveCsv(rows: TopicNotice[]) {
 }
 
 type RegulationAvailabilityByName = Partial<Record<string, Availability>>;
+type TopicDashboardProps = { initialFamily?: string; initialYear?: string } & (
+  | { view?: "summary"; regulationAvailabilityByName: RegulationAvailabilityByName; regulationEvidenceAsOf: string }
+  | { view: "yearly" | "evidence"; regulationAvailabilityByName?: never; regulationEvidenceAsOf?: never }
+);
+const availabilityOrder: Availability[] = ["FULLTEXT_PUBLIC", "PARTIAL_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN"];
 
 function RankedList({ title, description, items, availabilityByName }: { title: string; description: string; items: { name: string; count: number }[]; availabilityByName: RegulationAvailabilityByName }) {
   const max = items[0]?.count ?? 1;
@@ -34,9 +39,9 @@ function RankedList({ title, description, items, availabilityByName }: { title: 
       <span className="topic-rank-number">{String(index + 1).padStart(2, "0")}</span>
       <div><Link href={`/regulations?q=${encodeURIComponent(item.name)}`}>{item.name}</Link><div className="topic-rank-track" aria-hidden="true"><span style={{ width: `${Math.max(12, item.count / max * 100)}%` }} /></div></div>
       {availability
-        ? <span className={`topic-rank-availability status-flag status-${availability.toLowerCase()}`}>{availabilityLabels[availability]}</span>
-        : <span className="topic-rank-availability topic-rank-unmatched">대조 미확인</span>}
-      <strong>{item.count}건</strong>
+        ? <span className={`topic-rank-availability status-flag status-${availability.toLowerCase()}`}><span className="sr-only">공개 범위: </span>{availabilityLabels[availability]}</span>
+        : <span className="topic-rank-availability topic-rank-unmatched"><span className="sr-only">공개 범위: </span>대조 미확인</span>}
+      <strong><span className="sr-only">게시물 </span>{item.count}건</strong>
     </li>})}</ol>
   </section>;
 }
@@ -52,7 +57,7 @@ const descriptions: Record<TopicView, string> = {
   evidence: "승인된 62건의 사규예고를 하위군과 게시일로 좁혀 공식 게시판 근거를 확인합니다.",
 };
 
-export function TopicDashboard({ view = "summary", initialFamily = "ALL", initialYear, regulationAvailabilityByName = {}, regulationEvidenceAsOf }: { view?: TopicView; initialFamily?: string; initialYear?: string; regulationAvailabilityByName?: RegulationAvailabilityByName; regulationEvidenceAsOf?: string }) {
+export function TopicDashboard({ view = "summary", initialFamily = "ALL", initialYear, regulationAvailabilityByName = {}, regulationEvidenceAsOf }: TopicDashboardProps) {
   const safeFamily = familyNames.has(initialFamily) ? initialFamily : "ALL";
   const safeYear = initialYear && Object.hasOwn(snapshot.yearly, initialYear) ? initialYear : "";
   const [family, setFamily] = useState(safeFamily);
@@ -62,6 +67,12 @@ export function TopicDashboard({ view = "summary", initialFamily = "ALL", initia
   const shown = showAll ? filtered : filtered.slice(0, 10);
   const years = Object.entries(snapshot.yearly).sort(([a], [b]) => a.localeCompare(b));
   const maxYearCount = Math.max(...years.map(([, count]) => count));
+  const rankedNames = [...new Set([...snapshot.mostMentioned, ...snapshot.mostProposed].map((item) => item.name))];
+  const rankedStatusCounts = availabilityOrder.map((status) => ({
+    status,
+    count: rankedNames.filter((name) => regulationAvailabilityByName[name] === status).length,
+  })).filter(({ count }) => count > 0);
+  const unmatchedCount = rankedNames.filter((name) => !regulationAvailabilityByName[name]).length;
   function changeFamily(next: string) {
     setFamily(next);
     setShowAll(false);
@@ -87,11 +98,24 @@ export function TopicDashboard({ view = "summary", initialFamily = "ALL", initia
           </Link>)}</div>
           <p className="topic-exclusion">분류 범위: {snapshot.scope}. 퍼스트펭귄 창업기업 보증지원은 투자·자본성 금융과의 직접 관계가 확인되지 않아 이 통계에 포함되지 않습니다.</p>
         </section>
+        <section className="topic-publication-guide" aria-labelledby="topic-publication-guide-title">
+          <div className="topic-publication-lead">
+            <div><h2 id="topic-publication-guide-title">순위표의 공개 범위</h2><p>승인 규정 버전 · {regulationEvidenceAsOf} 기준</p></div>
+            <p className="topic-publication-count"><strong>서로 다른 규정 {rankedNames.length}개</strong><span aria-hidden="true"> · </span>{rankedStatusCounts.map(({ status, count }) => <span key={status}>{availabilityLabels[status]} {count}개</span>)}{unmatchedCount > 0 && <span>대조 미확인 {unmatchedCount}개</span>}</p>
+          </div>
+          <p className="topic-publication-caution"><strong>사전예고만</strong>은 비공개 확정이 아니라, 사규예고는 확인됐지만 반영된 최종 전문이나 일부 본문을 승인 근거에서 확인하지 못한 상태입니다.</p>
+          <details className="topic-publication-definitions"><summary>네 가지 공개 범위와 대조 기준 보기</summary><dl>
+            <div><dt>전문 공개</dt><dd>공식 경로에서 해당 규정 버전의 전문을 확인했습니다.</dd></div>
+            <div><dt>일부 공개</dt><dd>공식 경로에서 일부 내용만 확인했습니다.</dd></div>
+            <div><dt>사전예고만</dt><dd>사규예고는 확인됐지만 반영된 최종 본문은 미확인입니다.</dd></div>
+            <div><dt>출처불명</dt><dd>현재 보유 근거에서 공식 출처를 결정하지 못했습니다.</dd></div>
+            <div><dt>대조 미확인</dt><dd>규정명을 정확히 비교해 단일 공개 범위로 정리하지 못했습니다. 자료 부재 확정은 아닙니다.</dd></div>
+          </dl></details>
+        </section>
         <div className="topic-rank-grid">
           <RankedList title="많이 언급된 규정" description="규정 언급이 확인된 서로 다른 게시물 수" items={snapshot.mostMentioned} availabilityByName={regulationAvailabilityByName} />
           <RankedList title="개정 제안 대상 규정" description="개정 제안 관계가 확인된 서로 다른 게시물 수" items={snapshot.mostProposed} availabilityByName={regulationAvailabilityByName} />
         </div>
-        <p className="topic-availability-note">공개 범위는 승인 규정 버전{regulationEvidenceAsOf ? ` ${regulationEvidenceAsOf} 기준` : ""}입니다. <strong>전문 공개</strong>와 <strong>일부 공개</strong>는 공식 경로에서 확인된 본문의 범위를 뜻합니다. <strong>사전예고만</strong>은 비공개 확정이 아니라 사전예고는 확인됐지만 전문 또는 일부 본문을 승인 근거에서 확인하지 못했다는 뜻입니다.</p>
       </>}
       {view === "yearly" && <section className="topic-section topic-first-section"><div className="topic-heading"><div><p className="eyebrow">ANNUAL DISTRIBUTION</p><h2>연도별 사규예고</h2></div><p>승인된 {snapshot.noticeCount}건의 게시일 연도별 분포 · 과거 승인본 간 증감률이 아닙니다.</p></div>
         <ol className="topic-year-chart">{years.map(([year, count]) => <li key={year}><Link href={topicEvidenceUrl({ year })} className="topic-year-link" aria-label={`${year}년 근거 사규예고 ${count}건 보기`}>{year}</Link><div className="topic-year-track"><span style={{ height: `${Math.max(7, count / maxYearCount * 100)}%` }} /></div><strong>{count}건</strong></li>)}</ol>

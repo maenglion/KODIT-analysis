@@ -119,7 +119,7 @@ export function WorkTraceExplorer(props: Props) {
     </section>
 
     <section className="work-trace-panel" id="work-trace-explore" aria-labelledby="work-trace-explore-title">
-      <div className="work-trace-panel-head"><div><p className="eyebrow">A / B / C · 동일한 추적 원장</p><h2 id="work-trace-explore-title">어디서부터 볼까요?</h2></div>
+      <div className="work-trace-panel-head"><div><p className="eyebrow">A / B / C · 동일한 추적 원장</p><h2 id="work-trace-explore-title">추적 분기</h2></div>
         <p>어느 방향에서 시작해도 같은 사규예고 추적 분기를 엽니다. 사람 이름이나 담당 표기를 현행 부서에 연결하지 않습니다.</p></div>
       <nav className="work-trace-axes" aria-label="업무 추적 탐색 방향">
         {(Object.keys(axisNames) as WorkTraceAxis[]).map((key, index) => <a key={key} className={axis === key ? "active" : undefined}
@@ -204,7 +204,7 @@ export function WorkTraceExplorer(props: Props) {
     </section>}
 
     <section className="work-trace-panel" id="work-trace-backlog" aria-labelledby="work-trace-backlog-title">
-      <div className="work-trace-panel-head"><div><p className="eyebrow">다음 조사자료</p><h2 id="work-trace-backlog-title">현재 확보 범위에서 추적을 멈추게 한 자료·근거 유형</h2></div>
+      <div className="work-trace-panel-head"><div><p className="eyebrow">다음 조사자료</p><h2 id="work-trace-backlog-title">추적 종료 근거</h2></div>
         <a className="work-trace-csv" href={csvHref("backlog")}>조사자료 CSV</a></div>
       <p>{backlogCount.toLocaleString("ko-KR")}개 조사 항목입니다. 복수 대응과 확인 완료는 이 목록에 넣지 않습니다. {term("current_impact", "추가 전 영향 분기", "자료 확보 후 해결될 건수의 예측이 아님")}는 조사 우선순위의 참고값입니다.</p>
       <div className="table-scroll"><table className="work-trace-table work-trace-backlog-table"><thead><tr><th scope="col">확인이 필요한 자료·근거</th><th scope="col">대상 기간</th><th scope="col">현재 영향 분기</th><th scope="col">관련 예고 / 규정</th><th scope="col">마지막 확인 근거</th></tr></thead>

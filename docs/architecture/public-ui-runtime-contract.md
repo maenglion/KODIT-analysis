@@ -299,3 +299,12 @@ UI 기능 head `056dbc8228ecb8c6b3aa2835529bafbc6775c876`을 `codex/work-trace-l
 사용자가 병합을 명시 승인해 PR을 ready로 전환하고, base `ef795af4...`·head `53a2786...`·Netlify 검사 성공·CLEAN 상태를 재확인한 뒤 [PR #13](https://github.com/maenglion/KODIT-analysis/pull/13)을 **merge commit `2e0ef4d84f2563dc19f53646c2b8f7a23a54c53d`**으로 main에 병합했다. 로컬 main은 fast-forward-only로 동일 SHA에 동기화했다. 기존 GitHub main→Netlify 자동 배포만 사용하며 Netlify 설정/API는 조작하지 않았다.
 
 운영 `https://letscheck-sinbo.netlify.app/work-traces`와 `/residual-data`가 HTTP 200 및 새 화면 marker를 반환한다. 운영 Chromium 1440/800/768px의 업무 추적·증거사슬·용어·PERSON/ORG 제목 진입이 통과했다. 운영 PERSON v2 별칭 317개/관측 1,113건·CSV 다섯 열(1440/800px), 규정 인사이트(1440/800/768px), 기존 상세검색·CSV(1440/800px)가 통과했다. 운영 trace CSV의 전체 1,272/819/677행과 C축 선택 조직 41행 모두 UTF-8 BOM·PERSON/내부 ID 금지 열 부재를 확인했다. PERSON→ORG 공개 관계는 Codex 정적 snapshot 검증 기준 **0건**이며 UI도 PERSON 별칭을 조직 대응과 결합하지 않는다. 이 작업은 별도 cron 변경이력이나 조직 히스토리 padding을 포함하지 않는다.
+
+
+### 투자·보증 규정 공개 범위 UI 및 추적 제목 보완 (2026-10-04, 로컬 검수)
+
+Codex가 [draft PR #17](https://github.com/maenglion/KODIT-analysis/pull/17)의 `6f6e1714498bc40ab0e5522c033afea777607f82`에서 두 규정 순위표의 공개 상태를 승인 규정 버전과 **규정명 정확 대조**로 연결했다. 그 작업 브랜치에는 PR #13의 추적 UI가 아직 반영되지 않아, Manus는 새 **로컬** `feat/investment-publication-ui`에서만 `main@c217b4c470963372f66509d7e196b46e6618af98`을 병합했다. 원격 PR #17·main은 변경하지 않았고, Codex 소관 `topic-notice-filter.ts`·`tools/check-regulation-table.mjs`, 공개 snapshot·migration·RPC는 수정하지 않았다.
+
+`/investment-statistics`의 두 순위표 **앞**에 낮은 공개 범위 안내를 두어, 두 표에 등장하는 **서로 다른 규정 7개**를 게시물 건수와 구별해 전문 공개 2개·사전예고만 5개로 표시한다. 이 수치는 현행 승인본의 규정명 정확 대조 결과에서 계산하며 숫자를 하드코딩하지 않는다. `사전예고만`은 비공개 확정이 아니라 반영된 본문을 승인 근거에서 확인하지 못한 상태라고 즉시 안내하고, 전문 공개·일부 공개·사전예고만·출처불명과 `대조 미확인`의 뜻을 키보드로 열 수 있는 접힌 상세에 둔다. 불확실한 규정명은 대표 상태를 선택하지 않는다. 공개 범위 기준일은 요약 화면 필수 props로 받아 규정 승인본 `2026-09-13`을 표시하고 주제 분류 `2026-09-19`와 합치지 않는다. 배지와 게시물 수에는 화면 낭독용 명칭을 보탰으며 800/768px 두 표의 칼럼 여백을 정리했다. 별도 사용자 요청으로 `/work-traces`의 두 제목만 `추적 분기`, `추적 종료 근거`로 변경하고 A/B/C 원장·backlog 수치/계약은 그대로 둔다.
+
+로컬 격리 worktree에서 Next 프로덕션 빌드를 통과했고, Chromium 1440/800/768px에서 7개 고유 규정·2/5 상태·네 공개 상태/대조 미확인 펼침·키보드 Enter/Space·가로 넘침 없음·두 추적 제목과 기존 업무 추적 회귀를 확인했다. `pnpm check:regulations`, `pnpm check:t07c`, `pnpm check:work-trace-public`, `pnpm check:approved`, `pnpm check`, `pnpm test`, 잔차/기술사양 검사가 통과했다. 독립 읽기 전용 리뷰의 요약 기준일 optional 우려는 요약 화면에서 필수 props로 변경했다. 이번 검수는 **로컬 커밋 및 임시 프리뷰까지**이며, 원격 PR #17의 최신 head로 Netlify 미리보기를 재검증하거나 운영 main에 병합했다는 뜻이 아니다. 푸시·PR 갱신·main 병합은 사용자 후속 검수 뒤에만 진행한다.
