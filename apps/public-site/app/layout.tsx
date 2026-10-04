@@ -8,6 +8,7 @@ import "./styles.css";
 import "./styles/regulations.css";
 import "./styles/department.css";
 import "./styles/residual.css";
+import "./styles/work-traces.css";
 import "./styles/topic.css";
 import "./styles/information.css";
 import "./styles/detail.css";
