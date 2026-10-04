@@ -166,7 +166,7 @@ export function DepartmentResidualAnalysis({occurrences,summary,attributions}:Pr
 function AttributionExplanation({detail}:{detail:OrganizationAttributionExplanationRow}) {
   const confirmed=detail.current_functional_equivalent;
   return <section className="attribution-explanation" aria-label="조직 이동 추론 근거">
-    <header><div><p className="eyebrow">추론 근거</p><h4>선택한 게시물의 판정 과정</h4></div><span className="inference-badge">{detail.inference_basis_label}</span></header>
+    <header><div><p className="eyebrow">추론 근거</p><h4>{detail.title}</h4></div><span className="inference-badge">{detail.inference_basis_label}</span></header>
     <p className="residual-work-trace-note"><a href={`/work-traces?axis=notices&q=${encodeURIComponent(detail.title.slice(0,80))}`}>이 사규예고로 업무 추적 검색 ↗</a> · 별도 근거 공개본의 사규예고 제목 검색이며, 이 담당 표기를 현행 조직에 재배정한 결과가 아닙니다.</p>
     <div className="attribution-result-grid"><div><span>담당 표기 관측</span><b>{detail.display_label}</b><small>{detail.posted_at}</small></div><div><span>당시 확인 조직</span><b>{detail.responsible_org_as_of_notice??"확인되지 않음"}</b></div><div className={confirmed?"confirmed":"candidate"}><span>{confirmed?"현 부서 매칭":"현재 부서 후보"}</span><b>{confirmed??detail.current_org_candidate??"근거 부족"}</b><small>{confirmed?"공식 근거로 확인":"확정값이 아닌 후보"}</small></div></div>
     {detail.work_context.length>0&&<div className="work-context"><b>관측된 업무 문맥</b><p>{detail.work_context.join(" · ")}</p></div>}

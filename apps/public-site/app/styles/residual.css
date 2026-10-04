@@ -103,7 +103,9 @@
 .inference-badge { display:inline-flex; align-items:center; justify-self:start; max-width:100%; padding:5px 10px; border:1px solid #a9cfee; border-radius:999px; background:#eaf4ff; color:#135f9c; font-size:12px; font-weight:800; white-space:nowrap; }
 .attribution-explanation { margin-top:22px; padding:22px; border:2px solid #8dbdf7; border-radius:12px; background:#fff; }
 .attribution-explanation>header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
-.attribution-explanation>header h4 { margin:2px 0 0; font-family:Paperlogy,Inter,sans-serif; font-size:22px; }
+.attribution-explanation>header>div { min-width:0; }
+.attribution-explanation>header h4 { margin:2px 0 0; font-family:Inter,"Noto Sans KR",sans-serif; font-size:22px; line-height:1.4; overflow-wrap:anywhere; }
+.attribution-explanation>header .inference-badge { flex:0 0 auto; }
 .person-observation>header { justify-content:flex-start; flex-wrap:wrap; gap:12px 20px; }
 .person-observation>p { margin:14px 0 0; color:#3d5269; line-height:1.75; }
 .attribution-result-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:18px; }
@@ -157,6 +159,7 @@
   .residual-rubric dl { grid-template-columns:1fr; }
   .residual-policy dl>div { grid-template-columns:130px minmax(0,1fr); }
   .residual-pagination { align-items:flex-start; flex-direction:column; }
+  .attribution-explanation>header { align-items:flex-start; flex-direction:column; gap:8px; }
 }
 
 /* PERSON observation is a separate five-field public contract, not an ORG attribution table. */
