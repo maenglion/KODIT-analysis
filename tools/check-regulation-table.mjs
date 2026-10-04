@@ -4,7 +4,7 @@ import { gunzipSync } from "node:zlib";
 import { filterAndSortNotices, filterPublishRegulations, latestNoticeDates, normalizePublicSearch, organizationSnapshot, personResidualObservationsToCsv, publicResidualLabel, publishNoticesToCsv, publishRowsToCsv, residualLabelsToCsv, residualOccurrencesToCsv, sortPublishRegulations, validPublicUrl } from "../packages/common/src/regulations/index.ts";
 import * as residualUi from "../packages/common/src/regulations/residual-ui.ts";
 import { addDetailTerm, defaultDetailSettings, departmentRegulationCount, detailDateRange, filterDetailedNotices, filterDetailedRegulations, officialDepartmentCounts, settingsForScope } from "../packages/common/src/regulations/regulation-detail-ui.ts";
-import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv } from "../apps/public-site/lib/topic-notice-filter.ts";
+import { filterTopicNotices, topicEvidenceUrl, topicNoticesToCsv, topicRegulationAvailability } from "../apps/public-site/lib/topic-notice-filter.ts";
 
 const { RESIDUAL_PAGE_SIZE, mentionSourceLinks, residualOccurrencesForLabels, selectResidualLabels } = residualUi;
 const manifest = JSON.parse(await readFile(new URL("../reports/projections/2026-09-14-v06-baseline-correction/manifest.json", import.meta.url), "utf8"));
@@ -32,6 +32,7 @@ const purposeText = await readFile(new URL("../apps/public-site/components/DataP
 const parserText = await readFile(new URL("../apps/public-site/components/ParserEvidence.tsx", import.meta.url), "utf8");
 const organizationText = await readFile(new URL("../packages/common/src/regulations/index.ts", import.meta.url), "utf8");
 const evidenceText = await readFile(new URL("../apps/public-site/app/investment-statistics/evidence-notices/page.tsx", import.meta.url), "utf8");
+const topicPageText = await readFile(new URL("../apps/public-site/app/investment-statistics/page.tsx", import.meta.url), "utf8");
 const diagramText = await readFile(new URL("../apps/public-site/components/DiagramViewer.tsx", import.meta.url), "utf8");
 const helpText = await readFile(new URL("../packages/common/src/regulations/MetricHelp.tsx", import.meta.url), "utf8");
 const topicStyleText = await readFile(new URL("../apps/public-site/app/styles/topic.css", import.meta.url), "utf8");
@@ -140,7 +141,9 @@ assert.ok(residualAnalysisText.indexOf('<article ref={detailRef}') > residualAna
 assert.ok(residualAnalysisText.includes('<tr className="residual-detail-row">') && residualAnalysisText.includes('colSpan={6}'));
 assert.ok(residualAnalysisText.includes('aria-haspopup="dialog"') && residualAnalysisText.includes('type="checkbox"'));
 assert.ok(residualAnalysisText.includes('RESIDUAL_PAGE_SIZE') && residualAnalysisText.includes('근거 게시물과 이동 설명'));
-assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('관측·추정 판정 기준 보기'));
+assert.ok(residualAnalysisText.includes('담당 표기 관측 / 사규예고') && residualAnalysisText.includes('라벨 분류 근거'));
+assert.ok(residualAnalysisText.includes('조직 변경 추적') && residualAnalysisText.includes('ObservationClassificationEvidence'));
+assert.ok(residualAnalysisText.includes('residual-inline-evidence') && residualAnalysisText.includes('aria-expanded={expanded}'));
 assert.ok(personObservationText.includes('RESIDUAL_PAGE_SIZE') && personObservationText.includes('residual-detail-row') && personObservationText.includes('colSpan={4}'));
 assert.ok(personObservationText.includes('personResidualObservationsToCsv(safeRows)') && personObservationText.includes('publicResidualLabel(row.public_alias, "PERSON")'));
 assert.ok(personObservationText.includes('officialNoticeListUrl(row.source_location)') && personObservationText.includes('사규 제개정 예고 목록 페이지'));
@@ -192,11 +195,12 @@ assert.ok(departmentText.includes("organizationSnapshot") && departmentText.incl
 assert.ok(departmentText.includes("DepartmentSelectorDialog") && !departmentText.includes("<OrganizationHistory") && !departmentText.includes("<DepartmentEvidenceGuide"));
 assert.ok(semanticText.includes("DepartmentEvidenceGuide") && historyText.includes("OrganizationHistory"));
 assert.ok(navigationText.includes('href="/department-statistics/semantic-matching"') && navigationText.includes('href="/department-statistics/organization-history"'));
-assert.ok(navigationText.includes('href="/investment-statistics/yearly-notices"') && navigationText.includes('href="/investment-statistics/evidence-notices"'));
+assert.ok(navigationText.includes('>투자 보증</Link>') && navigationText.includes('개인정보보호 <small>준비중</small>'));
+assert.ok(topicText.includes('topic-page-links') && topicText.includes('href="/investment-statistics/yearly-notices"') && topicText.includes('topicEvidenceUrl()'));
 assert.ok(topicText.includes('view === "summary"') && topicText.includes('view === "yearly"') && topicText.includes('view === "evidence"') && evidenceText.includes('initialFamily={family}') && evidenceText.includes('initialYear={year}'));
 assert.ok(topicText.includes('집계 기준 구분') && topicText.includes('규정 목록의 2026-09-13 집계와 합산하지 않습니다.'));
 assert.ok(!topicText.includes('기준이 다른 두 공개본'));
-assert.ok(topicText.includes('onClick={() => saveCsv(filtered)}') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
+assert.ok(topicText.includes('saveCsv(filtered, noticeRegulationStatuses') && topicText.includes('topicEvidenceUrl({ year })') && topicText.includes('window.history.replaceState('));
 assert.ok(topicStyleText.includes('color:#217a39') && topicStyleText.includes('border:1px solid var(--figma-green)'));
 assert.ok(helpText.includes('>i</button>') && !helpText.includes('>ⓘ</button>'));
 assert.ok(!departmentText.includes("DepartmentResidualAnalysis"));
@@ -274,7 +278,7 @@ assert.deepEqual(mentionSourceLinks(officialListPages, [
 ]).map(link => link.label), ["사규 제개정 예고 (1)", "사규 제개정 예고 (2)"]);
 assert.ok(!personObservationText.includes('>{row.title} ↗</a>') && personObservationText.includes('개별 게시물 원문이 아닌'));
 assert.ok(!residualAnalysisText.includes('row.resolution_class==="PERSON_EVIDENCE"') && !residualAnalysisText.includes('person-observation'));
-assert.ok(residualAnalysisText.includes("<AttributionExplanation detail={activeAttribution}"));
+assert.ok(residualAnalysisText.includes('<AttributionExplanation detail={attribution}') && residualAnalysisText.includes('<ObservationClassificationEvidence occurrence={item}'));
 assert.ok(residualAnalysisText.includes("const evidenceUrl=validPublicUrl(step.evidence_url)"));
 
 const topicNames = new Map(topicSnapshot.families.map((item) => [item.code, item.name]));
@@ -283,6 +287,12 @@ const firstFamily = topicSnapshot.families[0];
 const familyTopics = filterTopicNotices(topicSnapshot.notices, { family: firstFamily.code, year: "", query: "" }, topicNames);
 const yearTopics = filterTopicNotices(topicSnapshot.notices, { family: "ALL", year: "2014", query: "" }, topicNames);
 const combinedTopics = filterTopicNotices(topicSnapshot.notices, { family: firstFamily.code, year: "2014", query: "" }, topicNames);
+const rankedRegulationNames = [...new Set([...topicSnapshot.mostMentioned, ...topicSnapshot.mostProposed].map((item) => item.name))];
+const rankedAvailability = topicRegulationAvailability(rankedRegulationNames, residualSnapshot.rows);
+assert.equal(Object.keys(rankedAvailability).length, rankedRegulationNames.length);
+assert.deepEqual(Object.values(rankedAvailability).reduce((counts, status) => ({ ...counts, [status]: (counts[status] ?? 0) + 1 }), {}), { FULLTEXT_PUBLIC: 2, NOTICE_ONLY: 5 });
+assert.ok(topicPageText.includes("getPublishDataset") && topicPageText.includes("topicRegulationAvailability"));
+assert.ok(topicText.includes("topic-rank-availability") && topicText.includes("사전예고만") && topicText.includes("비공개 확정이 아니라"));
 assert.equal(allTopics.length, topicSnapshot.noticeCount);
 assert.equal(familyTopics.length, firstFamily.noticeCount);
 assert.ok(familyTopics.every((notice) => notice.families.includes(firstFamily.code)));

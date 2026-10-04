@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { TopicDashboard } from "@/components/TopicDashboard";
+import snapshot from "@/data/topic-public-v2.json";
+import { getPublishDataset } from "@/lib/review-data";
+import { topicNoticePublications } from "@/lib/topic-publication-view";
 
 type Query = { family?: string; year?: string };
 
@@ -9,6 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default async function EvidenceTopicNoticesPage({ searchParams }: { searchParams: Promise<Query> }) {
-  const { family, year } = await searchParams;
-  return <TopicDashboard view="evidence" initialFamily={family} initialYear={year} />;
+  const [dataset, { family, year }] = await Promise.all([getPublishDataset(), searchParams]);
+  return <TopicDashboard view="evidence" initialFamily={family} initialYear={year}
+    noticeRegulationStatuses={topicNoticePublications(snapshot.notices, dataset.notices, dataset.rows)}
+    regulationEvidenceAsOf={dataset.release.evidence_as_of} />;
 }

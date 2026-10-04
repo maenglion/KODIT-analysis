@@ -73,6 +73,8 @@ a { color:inherit; }
 .sub-navigation a { display:grid; min-width:180px; place-items:center; padding:0 22px; color:#d8e9fa; font-size:18px; font-weight:400; text-decoration:none; white-space:nowrap; }
 .sub-navigation a:hover,.sub-navigation a.active { color:#fff; font-weight:700; }
 .sub-navigation a.active { margin-top:-2px; border-top:3px solid #fff; }
+.sub-navigation .topic-coming-soon { display:flex; min-width:180px; align-items:center; justify-content:center; gap:6px; padding:0 22px; color:#d8e9fa; font-family:Inter,"Noto Sans KR",sans-serif; font-size:17px; opacity:.78; white-space:nowrap; }
+.sub-navigation .topic-coming-soon small { padding:2px 5px; border:1px solid currentColor; border-radius:4px; font-size:11px; }
 
 /* White context banner and the approved snapshot metadata strip. */
 .public-page-intro { background:#fff; }

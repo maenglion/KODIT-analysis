@@ -4,11 +4,11 @@ import { useRef, useState, type MouseEvent } from "react";
 import type {
   PublicWorkTraceBranch,
   PublicWorkTraceEvidence,
-  PublicWorkTraceResearchBacklogRow,
   PublicWorkTraceRunComparison,
   PublicWorkTraceSnapshot,
 } from "@kodit/common/regulations/work-trace-contract";
 import { BACKLOG_NOTE } from "@/lib/work-trace-csv";
+import type { WorkTraceBacklogSection } from "@/lib/work-trace-backlog-view";
 import {
   TRACE_BACKLOG_SIZE, TRACE_BRANCH_SIZE, TRACE_LIST_SIZE,
   entryKey, officialSourceUrl, outcomeText, traceHref,
@@ -39,9 +39,7 @@ type Props = {
   branchPage: number;
   branch: PublicWorkTraceBranch | null;
   evidence: PublicWorkTraceEvidence[];
-  backlog: Omit<PublicWorkTraceResearchBacklogRow, "public_branch_keys">[];
-  backlogCount: number;
-  backlogPage: number;
+  backlogSections: WorkTraceBacklogSection[];
   comparisons: PublicWorkTraceRunComparison[];
   parentRunKey: string | null;
 };
@@ -66,7 +64,7 @@ const changeLabels: Record<string, string> = {
 export function WorkTraceExplorer(props: Props) {
   const {
     summary, dataLiteracy, axis, query, rows, rowCount, rowPage, entry, branchChoices,
-    branchCount, branchPage, branch, evidence, backlog, backlogCount, backlogPage, comparisons, parentRunKey,
+    branchCount, branchPage, branch, evidence, backlogSections, comparisons, parentRunKey,
   } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -75,6 +73,10 @@ export function WorkTraceExplorer(props: Props) {
   const activeEvidence = selection ? evidenceByNo.get(selection.no) : null;
   const entryRef = entry ? entryKey(entry) : undefined;
   const base = { axis, q: query, entry: entryRef };
+  const relationBacklogPage = backlogSections.find((section) => section.kind === "RELATION_EVIDENCE_GAP")?.page ?? 1;
+  const functionBacklogPage = backlogSections.find((section) => section.kind === "FUNCTION_CORRESPONDENCE_UNCONFIRMED")?.page ?? 1;
+  const backlogCount = backlogSections.reduce((count, section) => count + section.count, 0);
+  const affectedBranchCount = summary.terminal_outcomes.RELATION_EVIDENCE_GAP + summary.terminal_outcomes.FUNCTION_CORRESPONDENCE_UNCONFIRMED;
   const term = (key: string, label: string, short: string) =>
     <WorkTraceTerm label={label} explanation={dataLiteracy[key] ?? ""} short={short} />;
 
@@ -92,7 +94,7 @@ export function WorkTraceExplorer(props: Props) {
     </span>;
   }
   function href(values: Record<string, string | number | undefined>) {
-    return traceHref({ ...base, page: rowPage, branchPage: 1, needPage: backlogPage, ...values });
+    return traceHref({ ...base, page: rowPage, branchPage: 1, relationPage: relationBacklogPage, needPage: functionBacklogPage, ...values });
   }
   function csvHref(kind: "branches" | "endpoints" | "backlog") {
     const params = new URLSearchParams({ type: kind, axis, q: query });
@@ -119,7 +121,7 @@ export function WorkTraceExplorer(props: Props) {
     </section>
 
     <section className="work-trace-panel" id="work-trace-explore" aria-labelledby="work-trace-explore-title">
-      <div className="work-trace-panel-head"><div><p className="eyebrow">A / B / C · 동일한 추적 원장</p><h2 id="work-trace-explore-title">어디서부터 볼까요?</h2></div>
+      <div className="work-trace-panel-head"><div><p className="eyebrow">A / B / C · 동일한 추적 원장</p><h2 id="work-trace-explore-title">추적 분기</h2></div>
         <p>어느 방향에서 시작해도 같은 사규예고 추적 분기를 엽니다. 사람 이름이나 담당 표기를 현행 부서에 연결하지 않습니다.</p></div>
       <nav className="work-trace-axes" aria-label="업무 추적 탐색 방향">
         {(Object.keys(axisNames) as WorkTraceAxis[]).map((key, index) => <a key={key} className={axis === key ? "active" : undefined}
@@ -161,6 +163,7 @@ export function WorkTraceExplorer(props: Props) {
     {entry && <section className="work-trace-panel work-trace-entry" aria-labelledby="work-trace-entry-title">
       <div className="work-trace-panel-head"><div><p className="eyebrow">선택한 항목의 추적 분기</p><h2 id="work-trace-entry-title">{"current_org_name" in entry ? entry.current_org_name : entry.title}</h2></div><strong>{branchCount.toLocaleString("ko-KR")}건</strong></div>
       {axis === "current_organizations" && <p className="work-trace-scope-note">여기에 나타난 현행 조직은 직접 확인된 업무 또는 문구 대조 후보의 대응 지점입니다. 과거 게시부서나 조직 승계 확정값이 아닙니다. 분기 상세에는 관련된 다른 조직도 문맥으로 표시하지만, 현행 대응 CSV는 선택한 조직 행으로 한정합니다.</p>}
+      {"current_org_name" in entry && entry.current_org_name === "혁신금융부" && <p className="work-trace-temporal-note">현행 조직자료에서 같은 명칭이 확인되지만, 조직의 유효 시작일이 확인되지 않아 게시 시점의 조직 존재를 입증하는 근거로 사용하지 않았습니다.</p>}
       <div className="work-trace-branch-list">{branchChoices.map((item) => <a key={item.key} className={branch?.public_branch_key === item.key ? "active" : undefined}
         href={href({ entry: entryRef, branch: item.key, branchPage })} aria-current={branch?.public_branch_key === item.key ? "true" : undefined}>
         <span>{item.postedAt} · {item.outcome}</span><strong>{item.noticeTitle}</strong><small>{item.regulationTitle ? `관련 규정: ${item.regulationTitle}` : "개정 대상 규정 직접 근거 미확인"} · 현행 대응 조직 {item.endpointCount}개</small>
@@ -204,17 +207,29 @@ export function WorkTraceExplorer(props: Props) {
     </section>}
 
     <section className="work-trace-panel" id="work-trace-backlog" aria-labelledby="work-trace-backlog-title">
-      <div className="work-trace-panel-head"><div><p className="eyebrow">다음 조사자료</p><h2 id="work-trace-backlog-title">현재 확보 범위에서 추적을 멈추게 한 자료·근거 유형</h2></div>
+      <div className="work-trace-panel-head"><div><p className="eyebrow">다음 조사자료</p><h2 id="work-trace-backlog-title">추적 종료 근거</h2></div>
         <a className="work-trace-csv" href={csvHref("backlog")}>조사자료 CSV</a></div>
-      <p>{backlogCount.toLocaleString("ko-KR")}개 조사 항목입니다. 복수 대응과 확인 완료는 이 목록에 넣지 않습니다. {term("current_impact", "추가 전 영향 분기", "자료 확보 후 해결될 건수의 예측이 아님")}는 조사 우선순위의 참고값입니다.</p>
-      <div className="table-scroll"><table className="work-trace-table work-trace-backlog-table"><thead><tr><th scope="col">확인이 필요한 자료·근거</th><th scope="col">대상 기간</th><th scope="col">현재 영향 분기</th><th scope="col">관련 예고 / 규정</th><th scope="col">마지막 확인 근거</th></tr></thead>
-        <tbody>{backlog.map((item) => <tr key={item.public_need_key}><th scope="row">{item.required_evidence_description}</th>
-          <td>{item.period_from ?? "시작일 미기록"} ~ {item.period_to ?? "종료일 미기록"}</td><td>{item.current_affected_branch_count.toLocaleString("ko-KR")}건</td>
-          <td>{item.affected_notice_count.toLocaleString("ko-KR")}건 / {item.affected_regulation_count.toLocaleString("ko-KR")}개</td>
-          <td>{item.last_evidence_numbers.length ? evidenceControls(item.last_evidence_numbers, { context: "이 조사 항목의 마지막 확인 근거" }) : "번호 미제공"}</td>
-        </tr>)}</tbody></table></div>
-      <p className="work-trace-backlog-note">{BACKLOG_NOTE} 한 분기가 여러 조사 항목에 포함될 수 있어 행별 영향 수를 더하지 않습니다.</p>
-      <Pagination page={backlogPage} count={backlogCount} size={TRACE_BACKLOG_SIZE} hrefFor={(page) => href({ needPage: page, branch: branch?.public_branch_key, branchPage })} label="조사자료" />
+      <p className="work-trace-backlog-summary"><b>중복을 묶은 조사 대상 {backlogCount.toLocaleString("ko-KR")}개</b>입니다. 사규예고와 규정의 직접 연결 근거를 확인해야 하는 사규예고 {backlogSections.find((section) => section.kind === "RELATION_EVIDENCE_GAP")?.count.toLocaleString("ko-KR")}개와, 현행 업무분장의 직접 대응 근거를 확인해야 하는 규정 {backlogSections.find((section) => section.kind === "FUNCTION_CORRESPONDENCE_UNCONFIRMED")?.count.toLocaleString("ko-KR")}개로 구성됩니다. 이 조사 대상들은 현재 <b>{affectedBranchCount.toLocaleString("ko-KR")}개 추적 분기</b>에 영향을 줍니다. 조사 묶음의 개수와 영향을 받은 분기의 개수는 다른 단위입니다.</p>
+      <p className="work-trace-backlog-scope">복수 대응과 확인 완료는 이 목록에 넣지 않습니다. {term("current_impact", "추가 전 영향 분기", "자료 확보 후 해결될 건수의 예측이 아님")}는 조사 우선순위의 참고값입니다.</p>
+      {backlogSections.map((section) => {
+        const isRelation = section.kind === "RELATION_EVIDENCE_GAP";
+        const heading = isRelation ? "사규예고→규정 연결 근거 조사" : "규정→현행 업무분장 대응 조사";
+        const impact = isRelation ? summary.terminal_outcomes.RELATION_EVIDENCE_GAP : summary.terminal_outcomes.FUNCTION_CORRESPONDENCE_UNCONFIRMED;
+        return <section key={section.kind} className="work-trace-backlog-group" aria-labelledby={`work-trace-backlog-${section.kind}`}>
+          <header><h3 id={`work-trace-backlog-${section.kind}`}>{heading} <small>{section.count.toLocaleString("ko-KR")}개 조사 대상</small></h3>
+            <p>{isRelation ? "공식 사규예고와 개정 대상 규정을 직접 연결하는 자료를 확인해야 합니다." : "규정과 현행 업무분장의 직접 대응을 확인하는 자료를 조사해야 합니다."} 현재 영향을 받는 분기는 {impact.toLocaleString("ko-KR")}건입니다.</p></header>
+          <div className="table-scroll"><table className="work-trace-table work-trace-backlog-table"><thead><tr><th scope="col">{isRelation ? "사규예고 제목" : "규정명"}</th><th scope="col">대상 기간</th><th scope="col">영향 추적 분기</th><th scope="col">관련 예고 / 규정</th><th scope="col">마지막 확인 근거</th></tr></thead>
+            <tbody>{section.rows.map((item) => <tr key={item.public_need_key}><th scope="row">{item.targetTitle}</th>
+              <td>{item.period_from ?? "시작일 미기록"} ~ {item.period_to ?? "종료일 미기록"}</td><td>{item.current_affected_branch_count.toLocaleString("ko-KR")}건</td>
+              <td>{item.affected_notice_count.toLocaleString("ko-KR")}건 / {item.affected_regulation_count.toLocaleString("ko-KR")}개</td>
+              <td>{item.last_evidence_numbers.length ? evidenceControls(item.last_evidence_numbers, { context: "이 조사 항목의 마지막 확인 근거" }) : "번호 미제공"}</td>
+            </tr>)}</tbody></table></div>
+          <Pagination page={section.page} count={section.count} size={TRACE_BACKLOG_SIZE}
+            hrefFor={(page) => `${href({ [isRelation ? "relationPage" : "needPage"]: page, branch: branch?.public_branch_key, branchPage })}#work-trace-backlog`}
+            label={heading} />
+        </section>;
+      })}
+      <p className="work-trace-backlog-note">{BACKLOG_NOTE} 일반적으로 한 분기가 여러 조사 항목에 포함될 수 있으므로 행별 영향 수를 더해 해결 예정 건수를 만들지 않습니다. 위 {affectedBranchCount.toLocaleString("ko-KR")}건은 이번 승인 공개본의 서로 다른 종결값 분기 {summary.terminal_outcomes.RELATION_EVIDENCE_GAP.toLocaleString("ko-KR")}건과 {summary.terminal_outcomes.FUNCTION_CORRESPONDENCE_UNCONFIRMED.toLocaleString("ko-KR")}건을 구분해 센 값입니다.</p>
     </section>
 
     <section className="work-trace-panel work-trace-run" aria-label="추적 실행 간 변화">

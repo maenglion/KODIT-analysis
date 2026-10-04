@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { PublicWorkTraceSnapshot } from "@kodit/common/regulations/work-trace-contract";
 import { WorkTraceExplorer } from "@/components/WorkTraceExplorer";
 import { getWorkTraceDataset } from "@/lib/work-trace-data";
+import { visibleBacklogSection } from "@/lib/work-trace-backlog-view";
 import {
   TRACE_BACKLOG_SIZE, TRACE_BRANCH_SIZE, TRACE_LIST_SIZE,
   axisRows, entryKey, first, outcomeText, selectedBranches, traceAxis, tracePage, traceQuery,
@@ -34,17 +35,19 @@ export default async function WorkTracesPage({ searchParams }: { searchParams: P
   const branchPage = Math.min(tracePage(first(values.branchPage)), Math.max(1, Math.ceil(branches.length / TRACE_BRANCH_SIZE)));
   const branchChoice = branches.find((row) => row.public_branch_key === first(values.branch))
     ?? (branches.length === 1 ? branches[0] : null);
-  const currentBacklogPage = Math.min(tracePage(first(values.needPage)), Math.max(1, Math.ceil(snapshot.research_backlog.length / TRACE_BACKLOG_SIZE)));
-  const backlog = snapshot.research_backlog.slice((currentBacklogPage - 1) * TRACE_BACKLOG_SIZE, currentBacklogPage * TRACE_BACKLOG_SIZE);
+  const branchByKey = new Map(snapshot.branches.map((branch) => [branch.public_branch_key, branch]));
+  const backlogSections = [
+    visibleBacklogSection(snapshot.research_backlog, "RELATION_EVIDENCE_GAP", tracePage(first(values.relationPage)), TRACE_BACKLOG_SIZE, branchByKey),
+    visibleBacklogSection(snapshot.research_backlog, "FUNCTION_CORRESPONDENCE_UNCONFIRMED", tracePage(first(values.needPage)), TRACE_BACKLOG_SIZE, branchByKey),
+  ];
   const visibleRows = rows.slice((rowPage - 1) * TRACE_LIST_SIZE, rowPage * TRACE_LIST_SIZE)
     .map(({ public_branch_keys: _keys, ...display }) => display);
   const visibleEntry = entry ? (({ public_branch_keys: _keys, ...display }) => display)(entry) : null;
-  const visibleBacklog = backlog.map(({ public_branch_keys: _keys, ...display }) => display);
 
   const neededEvidence = new Set<string>();
   for (const step of branchChoice?.steps ?? []) for (const no of step.evidence_numbers) neededEvidence.add(no);
   for (const endpoint of branchChoice?.current_endpoints ?? []) for (const no of endpoint.evidence_numbers) neededEvidence.add(no);
-  for (const item of backlog) for (const no of item.last_evidence_numbers) neededEvidence.add(no);
+  for (const section of backlogSections) for (const item of section.rows) for (const no of item.last_evidence_numbers) neededEvidence.add(no);
   const evidence = snapshot.evidence.filter((item) => neededEvidence.has(item.evidence_no));
 
   const branchChoices: BranchChoice[] = branches
@@ -89,9 +92,7 @@ export default async function WorkTracesPage({ searchParams }: { searchParams: P
         branchPage={branchPage}
         branch={branchChoice}
         evidence={evidence}
-        backlog={visibleBacklog}
-        backlogCount={snapshot.research_backlog.length}
-        backlogPage={currentBacklogPage}
+        backlogSections={backlogSections}
         comparisons={snapshot.run_comparisons}
         parentRunKey={snapshot.parent_public_run_key}
       />
