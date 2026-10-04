@@ -153,6 +153,12 @@ assert.ok(residualAnalysisText.includes('id="residual-selected-detail"') && resi
 assert.ok(informationText.includes('href: "/residual-data"') && !informationText.includes('href="/department-statistics#residual-analysis"'));
 assert.ok(informationText.includes("function InformationRelated") && !informationText.includes("자료와 근거를 함께 보세요"));
 assert.ok(diagramText.includes('id="residual-ledger-erd"') && residualPageText.includes('/methodology#residual-ledger-erd'));
+for (const text of ["판정 근거와 검증 구조", "확인한 범위까지만 확정하고, 근거가 끊긴 지점은 그대로 남깁니다.", "원문·관측·판정의 분리", "규정 버전 단위의 공개 판정", "원본·추출문·추출 규칙의 식별", "미분류 담당표기의 잔차 보존", "자동 귀속의 검증 조건", "원문에서 판정 결과까지", "규정 버전의 전문 확인 기준", "업무·근거 추적"]) {
+  assert.ok(informationText.includes(text), `확정된 방법론 문구 누락: ${text}`);
+}
+assert.ok(informationText.includes('residualOccurrenceCount.toLocaleString("ko-KR")') && informationText.includes('residualLabelCount.toLocaleString("ko-KR")'));
+assert.ok(diagramText.includes('잔차·라벨·귀속 원장') && diagramText.includes('사규예고 → 규정 → 현행 업무분장'));
+assert.ok(residualPageText.includes('잔차·라벨·귀속 원장 보기 ↗'));
 assert.ok(explorerText.includes("필터 결과 전체 CSV"));
 assert.ok(explorerText.includes('onToggleSettings={toggleSettings}') && explorerText.includes('settingsTrigger.current?.isConnected') && explorerText.includes('target?.focus()') && explorerText.includes('id="search-results"'));
 assert.ok(explorerText.includes('aria-controls="advanced-search-panel"') && advancedText.includes('id="advanced-search-panel"'));
@@ -246,9 +252,9 @@ assert.equal(allResiduals.length + new Set(residualSnapshot.personResidualObserv
 assert.ok(allResiduals.every(row => Number(row.residual_occurrence_count) === Number(row.notice_count)));
 assert.equal(RESIDUAL_PAGE_SIZE, 10);
 assert.equal(residualSnapshot.personResidualObservations.length, 1113);
-assert.ok(diagramText.includes("이 그림은 잔차·라벨·귀속을 기록한 기존 원장입니다."));
+assert.ok(diagramText.includes("관측된 잔차와 라벨, 귀속 시도와 그 근거를 기록한 원장입니다."));
 assert.ok(diagramText.includes("추적 계층") && diagramText.includes('href="/work-traces"'));
-assert.ok(diagramText.includes("이 원장을 바꾸거나 대체하지 않고 별도로 추가했습니다."));
+assert.ok(diagramText.includes("이 원장을 대체하지 않고 별도로 추가되어 있습니다."));
 assert.equal(new Set(residualSnapshot.personResidualObservations.map(row => row.public_alias)).size, 317);
 const allowedPersonKeys = ["observation_count", "posted_at", "public_alias", "source_location", "title"];
 const forbiddenPersonKey = /(org|organization|department|role|candidate|path|confidence|reasoning|function|assignment|movement)/i;

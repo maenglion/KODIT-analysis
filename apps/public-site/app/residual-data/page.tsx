@@ -30,7 +30,7 @@ export default async function ResidualDataPage() {
       <div className="shell" id="residual-index">
         <aside className="public-notice"><img src="/figma-icons/info.svg" alt=""/><div>
           <b>담당 표기 잔차의 발생과 처리 과정을 공개합니다</b>
-          <p>사규예고의 담당 표기가 기준 조직명과 직접 일치하지 않아 관측 잔차로 남았습니다. 사람형 표기는 승인된 별칭과 관측 게시물만 공개하며 조직 후보·업무귀속·이동 경로·추론 과정과 결합하지 않습니다. <a href="/methodology#residual-ledger-erd">잔차 처리 원장 ERD 보기 ↗</a> · <a href="/work-traces">사규예고별 업무 추적 보기 ↗</a></p>
+          <p>사규예고의 담당 표기가 기준 조직명과 직접 일치하지 않아 관측 잔차로 남았습니다. 사람형 표기는 승인된 별칭과 관측 게시물만 공개하며 조직 후보·업무귀속·이동 경로·추론 과정과 결합하지 않습니다. <a href="/methodology#residual-ledger-erd">잔차·라벨·귀속 원장 보기 ↗</a> · <a href="/work-traces">사규예고별 업무 추적 보기 ↗</a></p>
         </div></aside>
         <aside className="residual-trace-teaser" aria-labelledby="residual-trace-title">
           <div>
