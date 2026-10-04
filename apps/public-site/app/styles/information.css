@@ -50,6 +50,9 @@ body:has(.information-hero) .header-inner { min-height:137px; }
 .full-erd-panel .eyebrow { margin:0 0 6px; }
 .full-erd-panel h2 { margin:0 0 8px; font:700 20px var(--display-font); }
 .full-erd-panel p { margin:0; color:#536982; font-size:13px; line-height:1.6; }
+.full-erd-panel .full-erd-layer-note { margin-top:12px; padding:10px 12px; border-left:3px solid var(--primary); background:#fff; color:#314d68; }
+.full-erd-layer-note strong { color:#164f7f; }
+.full-erd-layer-note a { color:#0e6eb6; font-weight:700; }
 .full-erd-thumbnail { display:block; width:100%; max-height:170px; object-fit:contain; border:1px solid #d9e5f0; background:#fff; }
 .full-erd-panel .full-erd-description { grid-column:1/-1; padding-top:13px; border-top:1px solid #d6e4f0; }
 .full-erd-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:13px; }
