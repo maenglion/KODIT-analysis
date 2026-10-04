@@ -288,3 +288,14 @@ UI 기능 head `056dbc8228ecb8c6b3aa2835529bafbc6775c876`을 `codex/work-trace-l
 대신 **동일 UI commit의 깨끗한 Next production build**를 임시 Sandbox HTTPS `https://3010-inttcbsfw5v55o5vlxuy4-e606b6a7.sg2.manus.computer/work-traces`에서 제공해 `/work-traces`·`/residual-data` HTTP 200과 Chromium 1440/800/768px 브라우저 회귀를 통과했다. 이 주소는 세션 한정 임시 검수용이지 기존 Netlify 운영 배포가 아니다. 기존 PERSON 5필드 CSV(1,113행), 규정 인사이트 1440/800/768px, 상세검색·CSV 1440/800px도 같은 production build에서 통과했다. 게시물 제목만 이용한 A축 검색은 승인 잔차 PERSON 1,113건·조직형 설명 45건에서 검색 결과 0건이 각각 0이었으며, 같은 제목이 복수로 검색되면 사용자가 사규예고를 직접 선택하도록 한다.
 
 다음 게이트는 **Codex 소관 데이터 계약 브랜치의 main 반영 순서 확인**이다. 그 뒤 PR #13을 새로운 main 기준으로 재검증·Netlify 자동 미리보기에서 테스트하고 사용자 승인 후에만 병합한다. 병합 전까지 `main`이나 Netlify 설정/API를 변경하지 않는다.
+
+
+### PR #13 병합 및 운영 검증 (2026-10-04)
+
+앞의 ‘Netlify Preview 미등록’ 기록은 **Codex 브랜치를 base로 하던 시점의 상태**다. Codex 공개계약과 migration 재실행 안전성 후속 패치가 별도 PR #14~#16을 거쳐 `main@ef795af4aec5c0549c84c5da9f69e3cc6ee29200`에 선반영된 뒤, PR #13의 base도 main으로 변경됐다. 최신 UI head `53a27861900073b6f4dfa98a6db92b422d347fae`는 승인받은 UI 파일 `936c166`과 동일했고 추가 merge 이력은 Codex가 이미 main에 반영한 migration뿐이었다. 실제 `main...PR` diff는 공개 사이트 UI/워크로그 14개 파일이며 migration, 공개 read contract, snapshot·fixture/loader/exporter/검증기, Netlify 설정의 PR diff는 0이다.
+
+해당 head의 Netlify deploy-preview 검사 성공과 `/work-traces`·`/residual-data` HTTP 200을 확인했다. Preview Chromium 1440/800/768px에서 A/B/C 탐색, 네 종결 유형, 공식 단계/문구 후보/단절, 근거 drawer·초점 복귀, 잔차 PERSON/ORG 게시물 제목 검색 진입, 가로 넘침 없음이 통과했다. PERSON 공개 다섯 열 CSV(1,113관측)·기존 규정 인사이트와 상세검색 회귀도 통과했고, 승인 trace CSV 분기 1,272행·현행 대응 819행·조사 backlog 677행 및 C축 선택 조직 `혁신금융부` 41행의 BOM/금지 열 부재를 확인했다. `pnpm check:work-trace-public`, `pnpm check:approved`, `pnpm check:regulations`, `pnpm check:residual-analysis`, `pnpm check:technical-specs`, `pnpm check:t07c`, `pnpm check`, `pnpm test`, UI 보호 범위 검사 및 `git diff --check`도 최신 main+head에서 통과했다.
+
+사용자가 병합을 명시 승인해 PR을 ready로 전환하고, base `ef795af4...`·head `53a2786...`·Netlify 검사 성공·CLEAN 상태를 재확인한 뒤 [PR #13](https://github.com/maenglion/KODIT-analysis/pull/13)을 **merge commit `2e0ef4d84f2563dc19f53646c2b8f7a23a54c53d`**으로 main에 병합했다. 로컬 main은 fast-forward-only로 동일 SHA에 동기화했다. 기존 GitHub main→Netlify 자동 배포만 사용하며 Netlify 설정/API는 조작하지 않았다.
+
+운영 `https://letscheck-sinbo.netlify.app/work-traces`와 `/residual-data`가 HTTP 200 및 새 화면 marker를 반환한다. 운영 Chromium 1440/800/768px의 업무 추적·증거사슬·용어·PERSON/ORG 제목 진입이 통과했다. 운영 PERSON v2 별칭 317개/관측 1,113건·CSV 다섯 열(1440/800px), 규정 인사이트(1440/800/768px), 기존 상세검색·CSV(1440/800px)가 통과했다. 운영 trace CSV의 전체 1,272/819/677행과 C축 선택 조직 41행 모두 UTF-8 BOM·PERSON/내부 ID 금지 열 부재를 확인했다. PERSON→ORG 공개 관계는 Codex 정적 snapshot 검증 기준 **0건**이며 UI도 PERSON 별칭을 조직 대응과 결합하지 않는다. 이 작업은 별도 cron 변경이력이나 조직 히스토리 padding을 포함하지 않는다.
