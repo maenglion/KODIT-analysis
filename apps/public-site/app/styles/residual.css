@@ -100,12 +100,24 @@
 .residual-notices time { white-space:nowrap; color:#536278; font-variant-numeric:tabular-nums; font-size:13px; }
 .attribution-notices button { min-width:0; border:0; background:transparent; padding:0; color:var(--primary); font:inherit; font-weight:750; text-align:left; cursor:pointer; }
 .attribution-notices button:hover,.attribution-notices button[aria-expanded="true"] { text-decoration:underline; text-underline-offset:3px; }
+.attribution-notices.is-expanded { max-height:none; overflow:visible; }
+.attribution-notices .residual-inline-evidence { grid-column:1/-1; min-width:0; }
+.attribution-notices .attribution-explanation { margin:6px 0 8px; padding:16px 18px; }
+.attribution-notices .attribution-explanation>header h4 { font-size:18px; }
 .inference-badge { display:inline-flex; align-items:center; justify-self:start; max-width:100%; padding:5px 10px; border:1px solid #a9cfee; border-radius:999px; background:#eaf4ff; color:#135f9c; font-size:12px; font-weight:800; white-space:nowrap; }
 .attribution-explanation { margin-top:22px; padding:22px; border:2px solid #8dbdf7; border-radius:12px; background:#fff; }
 .attribution-explanation>header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
 .attribution-explanation>header>div { min-width:0; }
 .attribution-explanation>header h4 { margin:2px 0 0; font-family:Inter,"Noto Sans KR",sans-serif; font-size:22px; line-height:1.4; overflow-wrap:anywhere; }
 .attribution-explanation>header .inference-badge { flex:0 0 auto; }
+.residual-observation-evidence>p { margin:12px 0 0; font-size:13px; line-height:1.6; }
+.residual-observation-evidence a { color:var(--primary); font-weight:700; }
+.residual-observation-evidence small { display:block; color:var(--muted); font-size:12px; }
+.residual-observation-facts { display:flex; flex-wrap:wrap; gap:8px 24px; margin:12px 0 0; font-size:13px; }
+.residual-observation-facts>div { display:flex; gap:7px; }
+.residual-observation-facts dt { color:var(--muted); }
+.residual-observation-facts dd { margin:0; font-weight:700; }
+.residual-temporal-note { padding:9px 12px; border-left:3px solid var(--amber); background:#fff8eb; font-size:12px; }
 .person-observation>header { justify-content:flex-start; flex-wrap:wrap; gap:12px 20px; }
 .person-observation>p { margin:14px 0 0; color:#3d5269; line-height:1.75; }
 .attribution-result-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:18px; }
