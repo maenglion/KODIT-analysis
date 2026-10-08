@@ -129,3 +129,5 @@ export function publicResidualLabel(value:string,labelType:string){
   }
   return value.trim()||"미기재";
 }
+
+export type { PublicPost, PublicPostsCoverage } from "./public-posts";

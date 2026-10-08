@@ -113,9 +113,9 @@ const regulationSubmenu = navigationText.split('aria-label="규정 하위 메뉴
 assert.ok(regulationSubmenu.includes('>내부규정</Link>') && !regulationSubmenu.includes('>내부규정(분석)</Link>'));
 assert.ok(!regulationSubmenu.includes('>조직도</Link>'));
 assert.ok(navigationText.includes('>조직 히스토리</Link>'));
-assert.ok(explorerText.includes('insightSlot') && explorerText.includes('scope !== "notice" && insightSlot'));
+assert.ok(explorerText.includes('insightSlot') && explorerText.includes('(scope === "master" || scope === "all") && insightSlot'));
 const introPosition = explorerText.indexOf('<section className="public-page-intro">');
-const insightPosition = explorerText.indexOf('scope !== "notice" && insightSlot');
+const insightPosition = explorerText.indexOf('(scope === "master" || scope === "all") && insightSlot');
 const overviewPosition = explorerText.indexOf('<div className="regulation-overview');
 const searchPosition = explorerText.indexOf('<SearchBar');
 assert.ok(introPosition >= 0 && introPosition < insightPosition && insightPosition < overviewPosition && overviewPosition < searchPosition);

@@ -1,0 +1,444 @@
+{
+  "collected_at": "2026-10-08T16:53:13.781426+00:00",
+  "discovery_source": "https://www.kodit.or.kr/kodit/main.do",
+  "population_complete": false,
+  "coverage_note": "홈페이지 메뉴에서 발견한 게시판의 공개 목록 수집. 전체 게시판 모집단과 비메뉴 게시판은 미확정. 일부 상세·첨부 미수집. 전수검색 완료 아님.",
+  "internal_db_status": "확인 불가: DB 관리 조회 권한 403",
+  "boards": [
+    {
+      "board_id": "411",
+      "menu_id": "2445",
+      "name": "주요 경영활동",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2445&bbsId=411",
+      "excluded_reason": null,
+      "listed_total": 1834,
+      "collected_count": 1834,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "420",
+      "menu_id": "2446",
+      "name": "CEO메시지",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2446&bbsId=420",
+      "excluded_reason": null,
+      "listed_total": 110,
+      "collected_count": 110,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "407",
+      "menu_id": "2518",
+      "name": "채용공고",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2518&bbsId=407",
+      "excluded_reason": null,
+      "listed_total": 88,
+      "collected_count": 88,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "1743",
+      "menu_id": "3001",
+      "name": "채용홍보동영상",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=3001&bbsId=1743",
+      "excluded_reason": null,
+      "listed_total": 5,
+      "collected_count": 5,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "2022",
+      "menu_id": "5018",
+      "name": "발행계획",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=5018&bbsId=2022",
+      "excluded_reason": null,
+      "listed_total": 0,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "2021",
+      "menu_id": "5019",
+      "name": "입찰공고",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=5019&bbsId=2021",
+      "excluded_reason": null,
+      "listed_total": 2,
+      "collected_count": 2,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "302",
+      "menu_id": "2600",
+      "name": "서비스 이행표준 점검결과",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2600&bbsId=302",
+      "excluded_reason": null,
+      "listed_total": 24,
+      "collected_count": 24,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "429",
+      "menu_id": "2606",
+      "name": "국민참여/공모",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2606&bbsId=429",
+      "excluded_reason": null,
+      "listed_total": 0,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "77",
+      "menu_id": "2611",
+      "name": "질의응답",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2611&bbsId=77",
+      "excluded_reason": null,
+      "listed_total": null,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "97",
+      "menu_id": "2616",
+      "name": "무엇이든물어보세요",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2616&bbsId=97",
+      "excluded_reason": "개인 문의 게시판",
+      "listed_total": null,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "265",
+      "menu_id": "2623",
+      "name": "민원신문고",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2623&bbsId=265",
+      "excluded_reason": "개인 민원 게시판",
+      "listed_total": null,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "103",
+      "menu_id": "2958",
+      "name": "칭찬의 말씀",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2958&bbsId=103",
+      "excluded_reason": "개인 참여 게시판",
+      "listed_total": null,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "148",
+      "menu_id": "2638",
+      "name": "소식안내",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2638&bbsId=148",
+      "excluded_reason": null,
+      "listed_total": 1327,
+      "collected_count": 1327,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "47",
+      "menu_id": "2639",
+      "name": "보도자료",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2639&bbsId=47",
+      "excluded_reason": null,
+      "listed_total": 2196,
+      "collected_count": 2196,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "187",
+      "menu_id": "2640",
+      "name": "언론보도해명",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2640&bbsId=187",
+      "excluded_reason": null,
+      "listed_total": 39,
+      "collected_count": 39,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "48",
+      "menu_id": "2641",
+      "name": "신보관련기사",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2641&bbsId=48",
+      "excluded_reason": null,
+      "listed_total": 3005,
+      "collected_count": 3005,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "73",
+      "menu_id": "2642",
+      "name": "신보소식(구,최신뉴스)",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2642&bbsId=73",
+      "excluded_reason": null,
+      "listed_total": 6,
+      "collected_count": 2836,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "1722",
+      "menu_id": "3529",
+      "name": "홍보자료",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=3529&bbsId=1722",
+      "excluded_reason": null,
+      "listed_total": 9,
+      "collected_count": 9,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "1229",
+      "menu_id": "2645",
+      "name": "이달의 동영상 뉴스",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2645&bbsId=1229",
+      "excluded_reason": null,
+      "listed_total": 210,
+      "collected_count": 210,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "414",
+      "menu_id": "2647",
+      "name": "e-뉴스레터",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2647&bbsId=414",
+      "excluded_reason": null,
+      "listed_total": 1,
+      "collected_count": 69,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "63",
+      "menu_id": "4873",
+      "name": "연차보고서",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=4873&bbsId=63",
+      "excluded_reason": null,
+      "listed_total": 53,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "56",
+      "menu_id": "2662",
+      "name": "업무서식",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2662&bbsId=56",
+      "excluded_reason": null,
+      "listed_total": 32,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "1002",
+      "menu_id": "2668",
+      "name": "약관자료",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2668&bbsId=1002",
+      "excluded_reason": null,
+      "listed_total": 32,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "1161",
+      "menu_id": "2800",
+      "name": "비공개대상정보",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2800&bbsId=1161",
+      "excluded_reason": null,
+      "listed_total": 2,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "421",
+      "menu_id": "2808",
+      "name": "친인척 채용정보 공개",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2808&bbsId=421",
+      "excluded_reason": null,
+      "listed_total": 28,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "44",
+      "menu_id": "2809",
+      "name": "감사공개방",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2809&bbsId=44",
+      "excluded_reason": null,
+      "listed_total": 1763,
+      "collected_count": 1763,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "322",
+      "menu_id": "2812",
+      "name": "사규 제개정 예고",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2812&bbsId=322",
+      "excluded_reason": "기존 사규예고 검색 유지",
+      "listed_total": null,
+      "collected_count": 0,
+      "failed_pages": 0,
+      "listing_complete": false
+    },
+    {
+      "board_id": "432",
+      "menu_id": "3324",
+      "name": "공공데이터 개방",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=3324&bbsId=432",
+      "excluded_reason": null,
+      "listed_total": 7,
+      "collected_count": 7,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "390",
+      "menu_id": "3386",
+      "name": "사업실명제",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=3386&bbsId=390",
+      "excluded_reason": null,
+      "listed_total": 240,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "337",
+      "menu_id": "2683",
+      "name": "윤리경영자료실",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2683&bbsId=337",
+      "excluded_reason": null,
+      "listed_total": 114,
+      "collected_count": 114,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "387",
+      "menu_id": "2688",
+      "name": "부패공직자 현황",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2688&bbsId=387",
+      "excluded_reason": null,
+      "listed_total": 23,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "418",
+      "menu_id": "2691",
+      "name": "인권경영자료실",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2691&bbsId=418",
+      "excluded_reason": null,
+      "listed_total": 9,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "424",
+      "menu_id": "2719",
+      "name": "알림 · 소식",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2719&bbsId=424",
+      "excluded_reason": null,
+      "listed_total": 4,
+      "collected_count": 0,
+      "failed_pages": 1,
+      "listing_complete": false
+    },
+    {
+      "board_id": "319",
+      "menu_id": "2742",
+      "name": "개인정보 처리방침",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2742&bbsId=319",
+      "excluded_reason": null,
+      "listed_total": 83,
+      "collected_count": 83,
+      "failed_pages": 0,
+      "listing_complete": true
+    },
+    {
+      "board_id": "428",
+      "menu_id": "2745",
+      "name": "신용정보 활용체제",
+      "url": "https://www.kodit.or.kr/kodit/na/ntt/selectNttList.do?mi=2745&bbsId=428",
+      "excluded_reason": null,
+      "listed_total": 2,
+      "collected_count": 2,
+      "failed_pages": 0,
+      "listing_complete": true
+    }
+  ],
+  "failures": [
+    {
+      "board_id": "63",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "56",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "1002",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "1161",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "421",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "390",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "387",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "418",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    },
+    {
+      "board_id": "424",
+      "page": 1,
+      "error": "unsupported_listing_format"
+    }
+  ],
+  "posts_count": 13723,
+  "details_attempted": 601,
+  "body_count": 54
+}

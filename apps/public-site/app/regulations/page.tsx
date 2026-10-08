@@ -2,14 +2,17 @@ import { RegulationExplorer } from "@kodit/common/regulations/RegulationExplorer
 import { organizationSnapshot } from "@kodit/common/regulations";
 import { CollectionStatus } from "@/components/CollectionStatus";
 import { PublicInsightStrip, type InsightMetric, type InsightTerm } from "@/components/PublicInsightStrip";
-import { getPublishDataset } from "@/lib/review-data";
+import { getPublishDataset, getPublicPosts, getPublicPostsCoverage, getExternalPublicPosts } from "@/lib/review-data";
 
 export const dynamic = "force-dynamic";
 
 export default async function RegulationsPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const dataset = await getPublishDataset();
+  const publicPosts = await getPublicPosts();
+  const postsCoverage = await getPublicPostsCoverage();
+  const externalPosts = await getExternalPublicPosts();
   const query = await searchParams;
-  const scope = ["master", "notice", "all"].includes(String(query.scope)) ? String(query.scope) as "master" | "notice" | "all" : "master";
+  const scope = ["master", "notice", "all", "posts"].includes(String(query.scope)) ? String(query.scope) as "master" | "notice" | "all" | "posts" : "master";
   const category = ["ALL", "FULLTEXT_PUBLIC", "PARTIAL_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(String(query.category)) ? String(query.category) as "ALL" | "FULLTEXT_PUBLIC" | "PARTIAL_PUBLIC" | "NOTICE_ONLY" | "SOURCE_UNKNOWN" : "ALL";
   const q = typeof query.q === "string" ? query.q : "";
   const noticeCount = dataset.notices.length;
@@ -41,7 +44,7 @@ export default async function RegulationsPage({ searchParams }: { searchParams: 
   if (ambiguousCount > 0) metrics.push({ termId: "ambiguous", value: `${format(ambiguousCount)}건` });
   if (ambiguousCount > 0) terms.push({ id: "ambiguous", label: "복수 유형 관측", short: "한 담당 표기에서 복수 유형의 근거가 관측됐습니다.", detail: "서로 다른 유형의 관측이 겹친 경우입니다. 단일 조직·인물로 자동 확정하지 않습니다." });
 
-  return <RegulationExplorer key={`${scope}:${category}:${q}`} rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={q} initialCategory={category}
+  return <RegulationExplorer key={`${scope}:${category}:${q}`} publicPosts={publicPosts} postsCoverage={postsCoverage} externalPosts={externalPosts} rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={q} initialCategory={category}
     metadataSlot={<CollectionStatus evidenceAsOf={dataset.release.evidence_as_of} snapshotGeneratedAt={dataset.release.generated_at} />}
     insightSlot={<PublicInsightStrip
       eyebrow="승인 공개본 대조"

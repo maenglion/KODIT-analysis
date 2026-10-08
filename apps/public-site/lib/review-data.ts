@@ -60,3 +60,25 @@ export async function getPublishDataset(): Promise<{
     organizationAttributionExplanations: snapshot.organizationAttributionExplanations,
   };
 }
+
+// General posts stay independent of the approved regulation snapshot.
+export async function getPublicPosts(): Promise<import("@kodit/common/regulations").PublicPost[]> {
+  const root = process.cwd().endsWith(path.join("apps", "public-site")) ? process.cwd() : path.join(process.cwd(), "apps", "public-site");
+  try {
+    return JSON.parse(await fs.readFile(path.join(root, "data", "public-posts.json"), "utf8"));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+export async function getPublicPostsCoverage(): Promise<import("@kodit/common/regulations").PublicPostsCoverage | undefined> {
+  const root = process.cwd().endsWith(path.join("apps", "public-site")) ? process.cwd() : path.join(process.cwd(), "apps", "public-site");
+  try { return JSON.parse(await fs.readFile(path.join(root, "data", "public-posts-coverage.json"), "utf8")); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined; throw error; }
+}
+export async function getExternalPublicPosts(): Promise<import("@kodit/common/regulations").PublicPost[]> {
+  const root = process.cwd().endsWith(path.join("apps", "public-site")) ? process.cwd() : path.join(process.cwd(), "apps", "public-site");
+  try { return JSON.parse(await fs.readFile(path.join(root, "data", "external-public-posts.json"), "utf8")); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") return []; throw error; }
+}

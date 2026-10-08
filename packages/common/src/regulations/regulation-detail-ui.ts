@@ -7,7 +7,7 @@ import {
   type PublishRegulationRow,
 } from "@kodit/common/regulations";
 
-export type DetailScope = "master" | "notice" | "all";
+export type DetailScope = "master" | "notice" | "all" | "posts";
 export type DetailField = "TITLE" | "DEPARTMENT" | "YEAR" | "ATTACHMENT_NAME" | "LINKED_REGULATION_NAME";
 export type EvidenceGroup = "ALIO" | "KODIT" | "OTHER";
 export type DetailDateField = "REVISION" | "LATEST_NOTICE" | "POSTED";
