@@ -13,6 +13,8 @@ export default async function RegulationsPage({ searchParams }: { searchParams: 
   const externalPosts = await getExternalPublicPosts();
   const query = await searchParams;
   const scope = ["master", "notice", "all", "posts"].includes(String(query.scope)) ? String(query.scope) as "master" | "notice" | "all" | "posts" : "master";
+  const collectedAt = postsCoverage?.collected_at;
+  const collectionDate = collectedAt && !Number.isNaN(Date.parse(collectedAt)) ? new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(collectedAt)) : "수집 기록 없음";
   const category = ["ALL", "FULLTEXT_PUBLIC", "PARTIAL_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN"].includes(String(query.category)) ? String(query.category) as "ALL" | "FULLTEXT_PUBLIC" | "PARTIAL_PUBLIC" | "NOTICE_ONLY" | "SOURCE_UNKNOWN" : "ALL";
   const q = typeof query.q === "string" ? query.q : "";
   const noticeCount = dataset.notices.length;
@@ -45,7 +47,7 @@ export default async function RegulationsPage({ searchParams }: { searchParams: 
   if (ambiguousCount > 0) terms.push({ id: "ambiguous", label: "복수 유형 관측", short: "한 담당 표기에서 복수 유형의 근거가 관측됐습니다.", detail: "서로 다른 유형의 관측이 겹친 경우입니다. 단일 조직·인물로 자동 확정하지 않습니다." });
 
   return <RegulationExplorer key={`${scope}:${category}:${q}`} publicPosts={publicPosts} postsCoverage={postsCoverage} externalPosts={externalPosts} rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={q} initialCategory={category}
-    metadataSlot={<CollectionStatus evidenceAsOf={dataset.release.evidence_as_of} snapshotGeneratedAt={dataset.release.generated_at} />}
+    metadataSlot={scope === "posts" ? <aside className="collection-status" aria-label="전체게시물 수집 기록"><dl className="public-release-meta"><div><dt>마지막 데이터 수집일</dt><dd><time dateTime={collectedAt}>{collectionDate}</time><small> · 한국시간</small></dd></div><div><dt>수집 자료</dt><dd>홈페이지 게시판 공개 목록</dd></div></dl></aside> : <CollectionStatus evidenceAsOf={dataset.release.evidence_as_of} snapshotGeneratedAt={dataset.release.generated_at} />}
     insightSlot={<PublicInsightStrip
       eyebrow="승인 공개본 대조"
       title="담당 표기 대조 결과"

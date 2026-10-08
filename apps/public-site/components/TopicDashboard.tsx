@@ -6,7 +6,7 @@ import { CollectionStatus } from "@/components/CollectionStatus";
 import snapshot from "@/data/topic-public-v2.json";
 import { filterTopicNotices, topicEvidenceUrl } from "@/lib/topic-notice-filter";
 import { topicEvidenceNoticesToCsv, topicNoticeKey, topicPublicationDescription, type TopicNoticePublication } from "@/lib/topic-publication-view";
-import { availabilityLabels, type Availability } from "@kodit/common/regulations";
+import { CopyTitleButton, availabilityLabels, type Availability } from "@kodit/common/regulations";
 
 type TopicNotice = (typeof snapshot.notices)[number];
 type TopicView = "summary" | "yearly" | "evidence";
@@ -30,12 +30,12 @@ type TopicDashboardProps = { initialFamily?: string; initialYear?: string } & (
 );
 const availabilityOrder: Availability[] = ["FULLTEXT_PUBLIC", "PARTIAL_PUBLIC", "NOTICE_ONLY", "SOURCE_UNKNOWN"];
 
-function NoticeRegulationStatus({ value }: { value: TopicNoticePublication | undefined }) {
+function NoticeRegulationStatus({ value, noticeNumber }: { value: TopicNoticePublication | undefined; noticeNumber: string | number }) {
   const warning = topicPublicationDescription(value);
   if (warning) return <span className="topic-notice-unmatched">{warning}</span>;
   return <div className="topic-notice-statuses" aria-label={`연결된 규정 버전 ${value!.linkedVersionCount}개 중 공개 상태별 건수`}>
     {availabilityOrder.filter((status) => value!.statusCounts[status] > 0).map((status) =>
-      <span key={status} className={`status-flag status-${status.toLowerCase()}`}>{availabilityLabels[status]} {value!.statusCounts[status]}개</span>)}
+      <span key={status} className={`status-flag status-${status.toLowerCase()}`}>{status === "FULLTEXT_PUBLIC" && value!.fulltextFiles.length === value!.statusCounts[status] ? <a href={`/api/topic-fulltexts?notice=${encodeURIComponent(String(noticeNumber))}`} download title="연결된 전문 파일을 ZIP으로 다운로드">{availabilityLabels[status]} {value!.statusCounts[status]}개</a> : <>{availabilityLabels[status]} {value!.statusCounts[status]}개</>}</span>)}
   </div>;
 }
 
@@ -139,7 +139,7 @@ export function TopicDashboard({ view = "summary", initialFamily = "ALL", initia
         <p className="topic-availability-legend" aria-label="규정 버전 공개결론 네 가지">{availabilityOrder.map((status) => <span key={status} className={`status-flag status-${status.toLowerCase()}`}>{availabilityLabels[status]}</span>)}<span className="topic-notice-unmatched">대조 미확인</span></p>
         <div className="topic-list-tools"><label><span className="sr-only">주제 사규예고 검색</span><input type="search" placeholder="사규예고 제목 또는 하위군 검색" value={query} onChange={(event) => { setQuery(event.target.value); setShowAll(false); }} /></label><select aria-label="하위군 선택" value={family} onChange={(event) => changeFamily(event.target.value)}><option value="ALL">전체 하위군</option>{snapshot.families.map((item) => <option value={item.code} key={item.code}>{item.name}</option>)}</select><button className="csv-button" type="button" onClick={() => saveCsv(filtered, noticeRegulationStatuses, regulationEvidenceAsOf ?? "기준일 미제공")}>현재 목록 CSV ↓</button></div>
         <div className="topic-list-count">검색 결과 <strong>{filtered.length}건</strong>{safeYear && <span className="topic-year-filter">{safeYear}년 <Link href={topicEvidenceUrl({ family })}>연도 해제 ×</Link></span>}{family !== "ALL" && <button type="button" onClick={() => changeFamily("ALL")}>분류 해제 ×</button>}</div>
-        <div className="topic-table-scroll"><table className="topic-table"><thead><tr><th scope="col">게시일</th><th scope="col">사규예고</th><th scope="col">연결 규정 공개 범위</th><th scope="col">승인된 하위군</th><th scope="col">공식 출처</th></tr></thead><tbody>{shown.map((notice) => <tr key={topicNoticeKey(notice)}><td>{notice.date}</td><td><strong>{notice.title}</strong><small>사규예고 번호 {notice.number}</small></td><td><NoticeRegulationStatus value={noticeRegulationStatuses[topicNoticeKey(notice)]}/></td><td>{notice.families.map((code) => <span className="topic-tag" key={code}>{familyNames.get(code)}</span>)}</td><td>{notice.sourceUrl ? <a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">공식 게시판 ↗</a> : "확인 가능한 URL 없음"}</td></tr>)}{filtered.length === 0 && <tr><td className="topic-empty" colSpan={5}>일치하는 승인 사규예고가 없습니다. 검색어나 하위군을 바꿔 주세요.</td></tr>}</tbody></table></div>
+        <div className="topic-table-scroll"><table className="topic-table"><thead><tr><th scope="col">게시일</th><th scope="col">사규예고</th><th scope="col">연결 규정 공개 범위</th><th scope="col">승인된 하위군</th><th scope="col">공식 출처</th></tr></thead><tbody>{shown.map((notice) => <tr key={topicNoticeKey(notice)}><td>{notice.date}</td><td><strong>{notice.title}</strong><CopyTitleButton title={notice.title} /></td><td><NoticeRegulationStatus value={noticeRegulationStatuses[topicNoticeKey(notice)]} noticeNumber={notice.number}/></td><td>{notice.families.map((code) => <span className="topic-tag" key={code}>{familyNames.get(code)}</span>)}</td><td>{notice.sourceUrl ? <a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">공식 게시판 ↗</a> : "확인 가능한 URL 없음"}</td></tr>)}{filtered.length === 0 && <tr><td className="topic-empty" colSpan={5}>일치하는 승인 사규예고가 없습니다. 검색어나 하위군을 바꿔 주세요.</td></tr>}</tbody></table></div>
         <p className="topic-table-scroll-note">표를 오른쪽으로 스크롤하면 승인된 하위군과 공식 출처를 볼 수 있습니다.</p>
         {!showAll && filtered.length > 10 && <button className="topic-more" type="button" onClick={() => setShowAll(true)}>나머지 {filtered.length - 10}건 더 보기 <span aria-hidden="true">↓</span></button>}
       </section>}

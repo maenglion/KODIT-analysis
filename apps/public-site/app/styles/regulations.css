@@ -168,3 +168,27 @@
   .public-insight-link { margin:0; }
   .public-insight-bottom,.public-insight-basis,.public-insight-detail { margin-left:0; }
 }
+
+.copy-title-button { display:inline-flex; align-items:center; justify-content:center; padding:3px; margin-left:6px; border:0; background:transparent; color:#77818c; vertical-align:middle; cursor:pointer; }
+.copy-title-button:hover { color:#334155; }
+.copy-title-button:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+
+.intro-copy > .intro-description { max-width:945px; margin:14px 0 0; color:#656a72; font-size:17px; line-height:1.5; }
+.posts-coverage-link { color:var(--primary); font-size:inherit; white-space:nowrap; text-underline-offset:3px; }
+.topic-keyword-cloud { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:14px; font-size:13px; }
+.topic-keyword-cloud > span { color:#656a72; margin-right:4px; }
+.topic-keyword-cloud button { border:1px solid var(--figma-blue-line); border-radius:16px; padding:5px 11px; background:var(--primary-soft); color:var(--primary); font:inherit; cursor:pointer; }
+.topic-keyword-cloud button:hover,.topic-keyword-cloud button[aria-pressed="true"] { background:var(--primary); color:#fff; }
+.public-posts-table { table-layout:fixed; }
+.public-posts-table th:nth-child(1) { width:12%; }
+.public-posts-table th:nth-child(2) { width:35%; }
+.public-posts-table th:nth-child(3) { width:27%; }
+.public-posts-table th:nth-child(4) { width:16%; }
+.public-posts-table th:nth-child(5) { width:10%; }
+.public-posts-table td:nth-child(2),.public-posts-table td:nth-child(3) { text-align:left; overflow-wrap:anywhere; }
+.public-posts-table td { padding:18px 16px; }
+.public-posts-table td p { margin:0 0 6px; }
+
+.posts-search-area { background:#fff; overflow-x:clip; }
+.posts-searchbar { position:relative; isolation:isolate; padding-bottom:32px; margin-bottom:28px; }
+.posts-searchbar::before { content:""; position:absolute; z-index:-1; inset:0 calc(50% - 50vw); background:#f8f9fb; }

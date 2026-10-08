@@ -14,6 +14,7 @@ export type TopicNoticePublication = {
   linkedVersionCount: number;
   knownVersionCount: number;
   statusCounts: Record<Availability, number>;
+  fulltextFiles: { versionId: string; name: string; url: string }[];
 };
 
 const emptyCounts = (): Record<Availability, number> => ({
@@ -44,6 +45,7 @@ export function topicNoticePublications(
       linkedVersionCount: 0,
       knownVersionCount: 0,
       statusCounts: emptyCounts(),
+      fulltextFiles: [],
     };
     if (candidates.length === 1) {
       const versionIds = new Set(candidates[0].linked_regulation_version_ids);
@@ -53,6 +55,9 @@ export function topicNoticePublications(
         if (!version) continue;
         item.statusCounts[version.availability] += 1;
         item.knownVersionCount += 1;
+        if (version.availability === "FULLTEXT_PUBLIC" && version.source_location) {
+          item.fulltextFiles.push({ versionId: id, name: version.display_name, url: version.source_location });
+        }
       }
     }
     result[topicNoticeKey(topic)] = item;

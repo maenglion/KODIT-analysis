@@ -18,6 +18,9 @@ const trace = readGzip('public-work-trace-v1.json.gz');
 const statuses = topicNoticePublications(topic.notices, approved.notices, approved.rows);
 assert.equal(topic.notices.length, 62);
 assert.equal(Object.keys(statuses).length, 62);
+assert.ok(Object.values(statuses).every(value => value.fulltextFiles.length === value.statusCounts.FULLTEXT_PUBLIC));
+assert.ok(Object.values(statuses).every(value => new Set(value.fulltextFiles.map(file => file.versionId)).size === value.fulltextFiles.length));
+assert.equal(statuses[topicNoticeKey(topic.notices.find(notice => String(notice.number) === "2047"))].fulltextFiles.length, 3);
 assert.ok(Object.values(statuses).every((status) => status.matchedNotice));
 assert.equal(Object.values(statuses).filter((status) => status.linkedVersionCount === 0).length, 7);
 assert.ok(Object.values(statuses).every((status) =>
