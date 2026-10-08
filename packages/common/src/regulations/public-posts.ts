@@ -24,3 +24,12 @@ export type PublicPostsCoverage = {
   boards: { board_id: string; name: string; listed_total: number | null; collected_count: number; excluded_reason: string | null; listing_complete: boolean; failed_pages: number }[];
   failures: unknown[]; body_count: number;
 };
+
+export function publicPostsToCsv(posts: PublicPost[]): string {
+  const cell = (value: string) => {
+    const safe = /^[\s]*[=+\-@]/u.test(value) ? `'${value}` : value;
+    return `"${safe.replaceAll('"', '""')}"`;
+  };
+  const rows = posts.map(post => [post.document_type, post.title, post.board_name, post.board_id, post.post_id ?? "", post.posted_date ?? "", post.source_url, post.attachments.map(file => file.title).join("; "), post.attachments.map(file => file.attachment_id).join("; ")]);
+  return "\uFEFF" + [["자료 유형", "제목", "게시판", "게시판 ID", "게시물 ID", "게시일", "공식 원문 URL", "첨부파일명", "첨부자료 ID"], ...rows].map(row => row.map(cell).join(",")).join("\r\n") + "\r\n";
+}
