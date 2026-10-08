@@ -22,11 +22,21 @@ def listings(board):
             rows=[]
             for row in re.findall(r"<tr\b.*?</tr>|<li\b.*?</li>",s,re.S|re.I):
                 m=re.search(r'<a[^>]*data-(?:id|param)="(\d+)"[^>]*class="[^"]*(?:nttInfoBtn|menuFormBtn)[^"]*"[^>]*>(.*?)</a>',row,re.S)
-                if not m:continue
+                if not m:
+                    title=re.search(r'<td[^>]*class="bbs_tit"[^>]*>(.*?)</td>',row,re.S)
+                    files=[]
+                    for key in dict.fromkeys(re.findall(r'nttFileDownload.do\?fileKey=([^"&]+)',row)):
+                        filename=re.search(r'title=["\']([^"\']+)["\']',row)
+                        files.append(dict(attachment_id=key,title=html.unescape(filename[1]) if filename else (clean(title[1]) if title else "첨부자료")))
+                    if title and files:
+                        dates=re.findall(r"20\d{2}[./-]\d{2}[./-]\d{2}",clean(row))
+                        rows.append(dict(post_id=None,board_id=board["board_id"],board_name=board["name"],title=clean(title[1]),posted_date=re.sub(r"[./]","-",dates[-1]) if dates else None,document_type="공개 첨부자료",source_url=board["url"],attachments=files,public_status="공개 목록 확인 · 게시물 ID 미제공",body_available=False,attachment_status="목록 확인"))
+                    continue
                 dates=re.findall(r"20\d{2}[./-]\d{2}[./-]\d{2}",clean(row))
                 pid=m[1];bid=board["board_id"]
                 rows.append(dict(post_id=pid,board_id=bid,board_name=board["name"],title=clean(m[2]),posted_date=None if bid=="44" else (re.sub(r"[./]","-",dates[-1]) if dates else None),document_type="감사결과" if bid=="44" else "일반 게시물",source_url=BASE+"/kodit/na/ntt/selectNttInfo.do?mi="+board["menu_id"]+"&bbsId="+bid+"&nttSn="+pid,attachments=[],public_status="공개 목록 확인",body_available=False,attachment_status="상세 미수집"))
-            seen={r["post_id"] for r in result}; fresh=[r for r in rows if r["post_id"] not in seen];result+=fresh
+            identity=lambda r: r["post_id"] or r["attachments"][0]["attachment_id"]
+            seen={identity(r) for r in result}; fresh=[r for r in rows if identity(r) not in seen];result+=fresh
             if not fresh or len(rows)<500:
                 if total and not result:failed.append(dict(page=page,error="unsupported_listing_format"))
                 break
@@ -64,7 +74,7 @@ def main():
         for board,rows,errors in pool.map(listings,boards.values()):
             inventory.append(board);posts+=rows;failures.extend(dict(board_id=board["board_id"],**e) for e in errors);print("board",board["board_id"],len(rows),flush=True)
     # Detail sampling is explicit; uncollected bodies are never searchable.
-    targets=[p for p in posts if KEYS.search(p["title"])][:600]
+    targets=[p for p in posts if p["post_id"] and KEYS.search(p["title"])][:600]
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         for post,error in pool.map(detail,targets):
             if error:failures.append(error)

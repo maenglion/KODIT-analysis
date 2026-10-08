@@ -8,7 +8,7 @@ import {
 } from "@kodit/common/regulations";
 
 export type DetailScope = "master" | "notice" | "all" | "posts";
-export type DetailField = "TITLE" | "DEPARTMENT" | "YEAR" | "ATTACHMENT_NAME" | "LINKED_REGULATION_NAME";
+export type DetailField = "TITLE" | "DEPARTMENT" | "YEAR" | "ATTACHMENT_NAME" | "LINKED_REGULATION_NAME" | "BODY";
 export type EvidenceGroup = "ALIO" | "KODIT" | "OTHER";
 export type DetailDateField = "REVISION" | "LATEST_NOTICE" | "POSTED";
 
@@ -26,13 +26,13 @@ export type RegulationDetailSettings = {
 
 export function defaultDetailSettings(scope: DetailScope = "master"): RegulationDetailSettings {
   return {
-    fields: ["TITLE", "DEPARTMENT", "YEAR"],
+    fields: scope === "posts" || scope === "all" ? ["TITLE", "YEAR", "ATTACHMENT_NAME", "BODY"] : ["TITLE", "DEPARTMENT", "YEAR"],
     availabilityStatuses: [],
     includes: [],
     excludes: [],
     departments: [],
     evidenceGroups: [],
-    dateField: scope === "notice" ? "POSTED" : "LATEST_NOTICE",
+    dateField: (scope === "notice" || scope === "posts") ? "POSTED" : "LATEST_NOTICE",
     startDate: "",
     endDate: "",
   };
@@ -41,16 +41,16 @@ export function defaultDetailSettings(scope: DetailScope = "master"): Regulation
 /** The two result types do not share every searchable public field or date. */
 export function settingsForScope(settings: RegulationDetailSettings, scope: DetailScope): RegulationDetailSettings {
   const supported = scope === "master"
-    ? settings.fields.filter(field => field !== "LINKED_REGULATION_NAME")
+    ? settings.fields.filter(field => field !== "LINKED_REGULATION_NAME" && field !== "BODY")
     : scope === "notice"
-      ? settings.fields.filter(field => field !== "ATTACHMENT_NAME")
-      : settings.fields.filter(field => field !== "ATTACHMENT_NAME" && field !== "LINKED_REGULATION_NAME");
+      ? settings.fields.filter(field => field !== "ATTACHMENT_NAME" && field !== "BODY")
+      : settings.fields.filter(field => field !== "LINKED_REGULATION_NAME" && (scope !== "posts" || field !== "DEPARTMENT"));
   return {
     ...settings,
     fields: supported.length ? supported : defaultDetailSettings(scope).fields,
-    availabilityStatuses: scope === "notice" ? [] : settings.availabilityStatuses,
+    availabilityStatuses: (scope === "notice" || scope === "posts") ? [] : settings.availabilityStatuses,
     evidenceGroups: scope === "master" ? settings.evidenceGroups : [],
-    dateField: scope === "notice" ? "POSTED" : scope === "all" || settings.dateField === "POSTED" ? "LATEST_NOTICE" : settings.dateField,
+    dateField: (scope === "notice" || scope === "posts") ? "POSTED" : scope === "all" || settings.dateField === "POSTED" ? "LATEST_NOTICE" : settings.dateField,
   };
 }
 

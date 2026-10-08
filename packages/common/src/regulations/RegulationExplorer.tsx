@@ -94,8 +94,8 @@ export function RegulationExplorer({ publicPosts = [], externalPosts = [], posts
     filterDetailedNotices(notices, noticeFilters.query, appliedDetail, regulationNames),
     { ...noticeFilters, query: "" },
   ), [notices, noticeFilters, appliedDetail, regulationNames]);
-  const filteredPosts = useMemo(() => filterPublicPosts(publicPosts, filters.query), [publicPosts, filters.query]);
-  const filteredExternalPosts = useMemo(() => filterPublicPosts(externalPosts, filters.query), [externalPosts, filters.query]);
+  const filteredPosts = useMemo(() => filterPublicPosts(publicPosts, filters.query, appliedDetail), [publicPosts, filters.query, appliedDetail]);
+  const filteredExternalPosts = useMemo(() => filterPublicPosts(externalPosts, filters.query, appliedDetail), [externalPosts, filters.query, appliedDetail]);
   const pageSize = 50;
   const activeLength = scope === "posts" ? filteredPosts.length : scope === "notice" ? filteredNotices.length : filteredRegulations.length;
   const pageCount = Math.max(1, Math.ceil(activeLength / pageSize));
@@ -160,9 +160,9 @@ export function RegulationExplorer({ publicPosts = [], externalPosts = [], posts
         <div id="search-results">
           {(scope === "master" || scope === "all") && <><RegulationTable rows={scope === "all" ? filteredRegulations.slice((currentCombinedRegPage - 1) * pageSize, currentCombinedRegPage * pageSize) : filteredRegulations.slice(offset, offset + pageSize)} allRows={filteredRegulations} rowOffset={scope === "all" ? (currentCombinedRegPage - 1) * pageSize : offset} release={release} noticeDates={noticeDates} noticeHistory={noticeHistory} sourcesByVersion={sourcesByVersion} sort={regulationSort} setSort={setRegulationSort} category={filters.availability} partialType={filters.partialType} onClearPartial={() => updateRegulations({ partialType: "ALL" })} grouped={scope === "all"} advancedOpen={advancedOpen} onToggleSettings={toggleSettings} detailApplied={hasDetailCriteria(appliedDetail, scope) || filters.availability !== "ALL"} selectedAvailability={appliedDetail.availabilityStatuses} />{scope === "all" && <Pagination label="규정 검색 결과" page={currentCombinedRegPage} pageCount={combinedRegPages} setPage={setCombinedRegPage} />}</>}
           {(scope === "notice" || scope === "all") && <><NoticeTable rows={scope === "all" ? filteredNotices.slice((currentCombinedNoticePage - 1) * pageSize, currentCombinedNoticePage * pageSize) : filteredNotices.slice(offset, offset + pageSize)} allRows={filteredNotices} rowOffset={scope === "all" ? (currentCombinedNoticePage - 1) * pageSize : offset} release={release} grouped={scope === "all"} advancedOpen={advancedOpen} onToggleSettings={toggleSettings} detailApplied={hasDetailCriteria(appliedDetail, "notice")} />{scope === "all" && <Pagination label="사규예고 검색 결과" page={currentCombinedNoticePage} pageCount={combinedNoticePages} setPage={setCombinedNoticePage} />}</>}
-          {(scope === "all" || scope === "posts") && <PublicPostsTable posts={scope === "posts" ? filteredPosts.slice(offset, offset + pageSize) : filteredPosts.slice((currentCombinedPostsPage - 1) * pageSize, currentCombinedPostsPage * pageSize)} count={filteredPosts.length} />}
+          {(scope === "all" || scope === "posts") && <PublicPostsTable posts={scope === "posts" ? filteredPosts.slice(offset, offset + pageSize) : filteredPosts.slice((currentCombinedPostsPage - 1) * pageSize, currentCombinedPostsPage * pageSize)} count={filteredPosts.length} onToggleSettings={toggleSettings} />}
           {scope === "all" && <Pagination label="일반 게시물 검색 결과" page={currentCombinedPostsPage} pageCount={combinedPostsPages} setPage={setCombinedPostsPage} />}
-          {scope === "all" && <PublicPostsTable posts={filteredExternalPosts} count={filteredExternalPosts.length} external />}
+          {scope === "all" && <PublicPostsTable posts={filteredExternalPosts} count={filteredExternalPosts.length} external onToggleSettings={toggleSettings} />}
           {scope !== "all" && <Pagination page={currentPage} pageCount={pageCount} setPage={setPage} />}
         </div>
         {(scope === "master" || scope === "all") && <details className="category-disclosure">
@@ -215,17 +215,16 @@ function SearchBar({ scope, initialScope, filters, noticeFilters, updateRegulati
     onApplyDetail(defaultDetailSettings(initialScope));
   };
   return <section className="public-searchbar" aria-label="공개 자료 검색">
-    <nav aria-label="검색 범위">{([["all", "전체"], ["master", "규정"], ["notice", "사규예고"], ["posts", "전체 게시물"]] as const).map(([value, label]) => <button key={value} type="button" aria-pressed={scope === value} onClick={() => chooseScope(value)}>{label}</button>)}</nav>
     <form className="search-field" role="search" onSubmit={(event) => { event.preventDefault(); setQuery(draft.trim()); }}>
       <label htmlFor="public-search"><span className="sr-only">규정·사규예고·일반 게시물 검색어</span></label>
       <input id="public-search" type="search" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={scope === "posts" ? "게시물 및 첨부문서 제목을 검색하세요" : scope === "notice" ? "사규예고 제목 또는 담당 표기를 검색하세요" : "규정명, 담당 표기, 개정연도를 검색하세요"} />
       <button type="submit">검색</button>
     </form>
     <div className="search-meta"><span role="status" aria-live="polite">검색 결과 <strong>{count.toLocaleString("ko-KR")}</strong>건</span><span>검색 버튼 또는 Enter를 눌러 적용합니다.</span></div>
-    {scope !== "posts" && <RegulationAdvancedSearch open={advancedOpen} onClose={onCloseSettings}
+    <RegulationAdvancedSearch open={advancedOpen} onClose={onCloseSettings}
       scope={scope} initialScope={initialScope} availability={filters.availability} appliedDetail={appliedDetail}
       officialDepartments={officialDepartments} availableEvidenceGroups={availableEvidenceGroups} availabilityCounts={availabilityCounts} evidenceAsOf={release.evidence_as_of}
-      query={draft} onQueryChange={setDraft} onApply={apply} onReset={reset} />}
+      query={draft} onQueryChange={setDraft} onApply={apply} onReset={reset} />
   </section>;
 }
 
@@ -250,6 +249,6 @@ function NoticeTable({ rows, allRows, rowOffset, release, grouped, advancedOpen,
   return <section className="result-group"><div className="notice-heading"><h2>{grouped ? "사규예고 검색 결과" : "사규예고 전체"} <span>({allRows.length.toLocaleString("ko-KR")}건)</span></h2><div className="table-actions">{detailApplied && <span className="detail-applied-badge">설정 적용 중</span>}<button className="csv-button" type="button" onClick={() => downloadCsv("kodit_public_notices.csv", publishNoticesToCsv(allRows, release))}>필터 결과 전체 CSV</button><button className="detail-button" type="button" aria-expanded={advancedOpen} aria-controls="advanced-search-panel" onClick={event => onToggleSettings(event.currentTarget)}><img src="/figma-icons/filter.svg" alt=""/>상세 설정</button></div></div><div className="table-scroll"><table className="regulations-table notice-table"><thead><tr><th>번호</th><th>제목</th><th>담당부서</th><th>게시일</th></tr></thead><tbody>{rows.map((notice, index) => <tr key={notice.notice_number}><td data-label="번호">{rowOffset + index + 1}</td><td data-label="제목">{validPublicUrl(notice.source_location) ? <a className="name-link" href={notice.source_location} target="_blank" rel="noopener noreferrer">{notice.title}</a> : notice.title}</td><td data-label="담당부서">{notice.notice_department ?? "—"}</td><td data-label="게시일">{notice.posted_date}</td></tr>)}{allRows.length === 0 && <tr><td colSpan={4} className="empty-result">일치하는 사규예고가 없습니다. 검색어나 상세 설정을 바꿔 주세요.</td></tr>}</tbody></table></div></section>;
 }
 
-function PublicPostsTable({ posts, count, external = false }: { posts: PublicPost[]; count: number; external?: boolean }) {
-  return <section className="result-group" aria-label="일반 게시물 검색 결과"><div className="notice-heading"><h2>{external ? "외부 공식자료" : "일반 게시물"} 검색 결과 ({count.toLocaleString("ko-KR")}건)</h2></div><div className="table-scroll"><table className="regulations-table notice-table"><thead><tr><th>자료 유형</th><th>제목·첨부문서</th><th>게시판</th><th>게시일</th></tr></thead><tbody>{posts.map(post => <tr key={`${post.board_id}:${post.post_id}`}><td>{post.document_type}</td><td>{validPublicUrl(post.source_url) ? <a className="name-link" href={post.source_url} target="_blank" rel="noopener noreferrer">{post.title}</a> : post.title}{post.attachments.map(item => <p key={item.attachment_id}>{item.title}</p>)}</td><td>{post.source_institution ?? "신용보증기금"} · {post.board_name}</td><td>{post.posted_date ?? "게시일 미확인"}</td></tr>)}{count === 0 && <tr><td colSpan={4} className="empty-result">일치하는 일반 게시물이 없습니다.</td></tr>}</tbody></table></div></section>;
+function PublicPostsTable({ posts, count, external = false, onToggleSettings }: { posts: PublicPost[]; count: number; external?: boolean; onToggleSettings: (trigger: HTMLButtonElement) => void }) {
+  return <section className="result-group" aria-label="일반 게시물 검색 결과"><div className="notice-heading"><h2>{external ? "외부 공식자료" : "일반 게시물"} 검색 결과 ({count.toLocaleString("ko-KR")}건)</h2><div className="table-actions"><button type="button" className="detail-button" aria-controls="advanced-search-panel" onClick={event => onToggleSettings(event.currentTarget)}><img src="/figma-icons/filter.svg" alt=""/>상세 설정</button></div></div><div className="table-scroll"><table className="regulations-table notice-table"><thead><tr><th>자료 유형</th><th>제목·첨부문서</th><th>게시판</th><th>게시일</th></tr></thead><tbody>{posts.map(post => <tr key={`${post.board_id}:${post.post_id ?? post.attachments[0]?.attachment_id}`}><td>{post.document_type}</td><td>{validPublicUrl(post.source_url) ? <a className="name-link" href={post.source_url} target="_blank" rel="noopener noreferrer">{post.title}</a> : post.title}{post.attachments.map(item => <p key={item.attachment_id}>{item.title}</p>)}</td><td>{post.source_institution ?? "신용보증기금"} · {post.board_name}</td><td>{post.posted_date ?? "게시일 미확인"}</td></tr>)}{count === 0 && <tr><td colSpan={4} className="empty-result">일치하는 일반 게시물이 없습니다.</td></tr>}</tbody></table></div></section>;
 }

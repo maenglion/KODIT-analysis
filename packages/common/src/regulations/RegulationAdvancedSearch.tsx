@@ -27,10 +27,11 @@ type Props = {
 };
 
 const fieldOptions: { value: DetailField; label: string; scopes: DetailScope[]; unavailableReason?: string }[] = [
-  { value: "TITLE", label: "규정명·예고 제목", scopes: ["master", "notice", "all"] },
-  { value: "DEPARTMENT", label: "담당 표기", scopes: ["master", "notice", "all"] },
-  { value: "YEAR", label: "개정·게시 연도", scopes: ["master", "notice", "all"] },
-  { value: "ATTACHMENT_NAME", label: "첨부파일명", scopes: ["master"], unavailableReason: "내부규정 단독 검색에서만 사용" },
+  { value: "TITLE", label: "규정명·게시물 제목", scopes: ["master", "notice", "all", "posts"] },
+  { value: "DEPARTMENT", label: "담당 표기", scopes: ["master", "notice", "all", "posts"] },
+  { value: "YEAR", label: "개정·게시 연도", scopes: ["master", "notice", "all", "posts"] },
+  { value: "BODY", label: "확보된 일반 게시물 본문", scopes: ["posts", "all"], unavailableReason: "일반 게시물의 확보된 본문만 검색" },
+  { value: "ATTACHMENT_NAME", label: "첨부파일명", scopes: ["master", "posts", "all"], unavailableReason: "내부규정 단독 검색에서만 사용" },
   { value: "LINKED_REGULATION_NAME", label: "연결된 규정명", scopes: ["notice"], unavailableReason: "사규예고 단독 검색에서만 사용" },
 ];
 const evidenceOptions: { value: EvidenceGroup; label: string }[] = [
@@ -124,18 +125,18 @@ export function RegulationAdvancedSearch({ open, onClose, scope, initialScope, a
   };
   const dateOptions: { value: DetailDateField; label: string; enabled: boolean }[] = [
     { value: "REVISION", label: "개정일", enabled: draft.scope === "master" },
-    { value: "LATEST_NOTICE", label: draft.scope === "all" ? "규정: 최근 연결 예고일 / 예고: 게시일" : "연결된 사규예고 중 최근 게시일", enabled: draft.scope !== "notice" },
-    { value: "POSTED", label: "사규예고 게시일", enabled: draft.scope === "notice" },
+    { value: "LATEST_NOTICE", label: draft.scope === "all" ? "규정: 최근 연결 예고일 / 예고: 게시일" : "연결된 사규예고 중 최근 게시일", enabled: draft.scope === "master" || draft.scope === "all" },
+    { value: "POSTED", label: "게시일", enabled: draft.scope === "notice" || draft.scope === "posts" },
   ];
   return <section ref={panelRef} id="advanced-search-panel" className="advanced-search-panel" aria-labelledby="advanced-search-title" tabIndex={-1} hidden={!open}>
     <div className="advanced-search-heading"><div><h2 id="advanced-search-title">상세 설정</h2><p>승인 공개본의 항목만 검색합니다. 설정을 적용하면 아래 결과와 필터 결과 전체 CSV가 함께 바뀝니다.</p></div><button type="button" className="advanced-search-close" onClick={onClose} aria-label="상세 설정 닫기">×</button></div>
     <div className="detail-setting-grid">
       <DetailRow title="검색 자료">
         <fieldset className="detail-choice-list"><legend className="sr-only">검색 자료</legend>
-          {([ ["master", "내부규정"], ["notice", "사규예고"], ["all", "통합검색"] ] as const).map(([value, label]) => <label key={value}><input type="radio" name="detail-scope" checked={draft.scope === value} onChange={() => setDraft(old => ({ ...old, scope: value, detail: settingsForScope(old.detail, value) }))} />{label}</label>)}
+          {([ ["master", "내부규정"], ["notice", "사규예고"], ["posts", "전체 게시물"], ["all", "통합검색"] ] as const).map(([value, label]) => <label key={value}><input type="radio" name="detail-scope" checked={draft.scope === value} onChange={() => setDraft(old => ({ ...old, scope: value, detail: settingsForScope(old.detail, value) }))} />{label}</label>)}
         </fieldset>
       </DetailRow>
-      <DetailRow title="검색 범위" note="확보문서·첨부의 본문 텍스트는 이 공개본에 없어 검색하지 않습니다.">
+      <DetailRow title="검색 범위" note="규정·사규예고는 공개 필드만 검색합니다. 일반 게시물은 확보된 본문만 본문 검색할 수 있습니다.">
         <fieldset className="detail-choice-list"><legend className="sr-only">검색할 공개 필드</legend>
           {fieldOptions.map(({ value, label, scopes, unavailableReason }) => {
             const unsupported = !scopes.includes(draft.scope);
@@ -162,7 +163,7 @@ export function RegulationAdvancedSearch({ open, onClose, scope, initialScope, a
           {evidenceOptions.map(({ value, label }) => <label key={value} className={draft.scope !== "master" || !availableEvidenceGroups.includes(value) ? "detail-disabled" : ""}><input type="checkbox" checked={draft.detail.evidenceGroups.includes(value)} disabled={draft.scope !== "master" || !availableEvidenceGroups.includes(value)} onChange={() => updateDetail({ evidenceGroups: draft.detail.evidenceGroups.includes(value) ? draft.detail.evidenceGroups.filter(item => item !== value) : [...draft.detail.evidenceGroups, value] })} />{label}{!availableEvidenceGroups.includes(value) && " (현재 0건)"}</label>)}
         </fieldset>
       </DetailRow>
-      {draft.scope !== "notice" && <DetailRow title="공개결론" note="규정 버전에만 적용합니다. 선택하지 않으면 네 공개결론 모두 포함합니다; 사규예고 게시물에는 적용하지 않습니다."><fieldset className="detail-choice-list detail-availability-options"><legend className="sr-only">공개결론 복수 선택</legend>{availabilityOrder.map(status => <label key={status}><input type="checkbox" checked={draft.detail.availabilityStatuses.includes(status)} onChange={() => updateDetail({ availabilityStatuses: draft.detail.availabilityStatuses.includes(status) ? draft.detail.availabilityStatuses.filter(item => item !== status) : availabilityOrder.filter(item => item === status || draft.detail.availabilityStatuses.includes(item)) })} /><span>{availabilityLabels[status]}</span><small>{availabilityCounts[status].toLocaleString("ko-KR")}건</small></label>)}</fieldset></DetailRow>}
+      {(draft.scope === "master" || draft.scope === "all") && <DetailRow title="공개결론" note="규정 버전에만 적용합니다. 선택하지 않으면 네 공개결론 모두 포함합니다; 사규예고 게시물에는 적용하지 않습니다."><fieldset className="detail-choice-list detail-availability-options"><legend className="sr-only">공개결론 복수 선택</legend>{availabilityOrder.map(status => <label key={status}><input type="checkbox" checked={draft.detail.availabilityStatuses.includes(status)} onChange={() => updateDetail({ availabilityStatuses: draft.detail.availabilityStatuses.includes(status) ? draft.detail.availabilityStatuses.filter(item => item !== status) : availabilityOrder.filter(item => item === status || draft.detail.availabilityStatuses.includes(item)) })} /><span>{availabilityLabels[status]}</span><small>{availabilityCounts[status].toLocaleString("ko-KR")}건</small></label>)}</fieldset></DetailRow>}
       <DetailRow title="기간 설정" note="기간 선택 시 날짜가 없는 결과는 제외됩니다.">
         <fieldset className="detail-period-fieldset"><legend className="sr-only">기간 검색 기준</legend>
           <div className="detail-choice-list">{dateOptions.map(({ value, label, enabled }) => <label key={value} className={!enabled ? "detail-disabled" : ""}><input type="radio" name="detail-date-field" disabled={!enabled} checked={draft.detail.dateField === value} onChange={() => updateDetail({ dateField: value })} />{label}</label>)}</div>
