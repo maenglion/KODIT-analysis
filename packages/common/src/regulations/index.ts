@@ -131,3 +131,5 @@ export function publicResidualLabel(value:string,labelType:string){
 }
 
 export type { PublicPost, PublicPostsCoverage } from "./public-posts";
+
+export { CopyTitleButton } from "./CopyTitleButton";
