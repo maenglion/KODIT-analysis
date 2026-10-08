@@ -113,9 +113,9 @@ const regulationSubmenu = navigationText.split('aria-label="규정 하위 메뉴
 assert.ok(regulationSubmenu.includes('>내부규정</Link>') && !regulationSubmenu.includes('>내부규정(분석)</Link>'));
 assert.ok(!regulationSubmenu.includes('>조직도</Link>'));
 assert.ok(navigationText.includes('>조직 히스토리</Link>'));
-assert.ok(explorerText.includes('insightSlot') && explorerText.includes('scope !== "notice" && insightSlot'));
+assert.ok(explorerText.includes('insightSlot') && explorerText.includes('(scope === "master" || scope === "all") && insightSlot'));
 const introPosition = explorerText.indexOf('<section className="public-page-intro">');
-const insightPosition = explorerText.indexOf('scope !== "notice" && insightSlot');
+const insightPosition = explorerText.indexOf('(scope === "master" || scope === "all") && insightSlot');
 const overviewPosition = explorerText.indexOf('<div className="regulation-overview');
 const searchPosition = explorerText.indexOf('<SearchBar');
 assert.ok(introPosition >= 0 && introPosition < insightPosition && insightPosition < overviewPosition && overviewPosition < searchPosition);
@@ -165,7 +165,7 @@ assert.ok(explorerText.includes('aria-controls="advanced-search-panel"') && adva
 assert.ok(advancedText.includes('panelRef.current?.focus()') && advancedText.includes('handleEscape') && advancedText.includes('aria-labelledby="advanced-search-title"'));
 assert.ok(explorerText.includes('partial-filter-clear') && explorerText.includes('부분공개 속성:') && explorerText.includes('onClearPartial={() => updateRegulations({ partialType: "ALL" })}'));
 for (const field of ["포함 단어", "제외 단어", "담당부서 및 조직", "공식 근거 경로", "기간 설정", ">적용<"]) assert.ok(advancedText.includes(field));
-assert.ok(advancedText.includes('과거→현재 조직 자동 매칭은 제공하지 않습니다') && advancedText.includes('본문 텍스트는 이 공개본에 없어 검색하지 않습니다'));
+assert.ok(advancedText.includes('과거→현재 조직 자동 매칭은 제공하지 않습니다') && advancedText.includes('일반 게시물은 확보된 본문만 본문 검색할 수 있습니다'));
 assert.ok(explorerText.includes('ALIO 출처 연결') && explorerText.includes('승인 공개본 전체 규정') && explorerText.includes('전체 사규예고'));
 assert.ok(explorerText.includes('regulation-overview-grid') && explorerText.includes('notices.length.toLocaleString("ko-KR")') && !explorerText.includes('regulation-overview-note'));
 assert.ok(regulationsText.includes('<CollectionStatus') && collectionRouteText.includes('public_collection_state'));

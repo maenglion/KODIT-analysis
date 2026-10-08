@@ -23,6 +23,7 @@ export function SiteNavigation() {
     {isRegulations && <nav className="sub-navigation" aria-label="규정 하위 메뉴">
       <Link className={scope === "master" && pathname === "/regulations" ? "active" : ""} href="/regulations?scope=master">내부규정</Link>
       <Link className={scope === "notice" && pathname === "/regulations" ? "active" : ""} href="/regulations?scope=notice">사규예고</Link>
+      <Link className={scope === "posts" && pathname === "/regulations" ? "active" : ""} href="/regulations?scope=posts">전체 게시물</Link>
     </nav>}
     {isDepartment && <nav className="sub-navigation" aria-label="부서 통계 하위 메뉴">
       <Link href="/department-statistics" className={pathname === "/department-statistics" ? "active" : ""} aria-current={pathname === "/department-statistics" ? "page" : undefined}>요약</Link>
