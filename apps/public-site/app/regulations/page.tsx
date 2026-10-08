@@ -1,3 +1,4 @@
+import revisionHistories from "@/data/regulation-revision-histories.json";
 import { RegulationExplorer } from "@kodit/common/regulations/RegulationExplorer";
 import { organizationSnapshot } from "@kodit/common/regulations";
 import { CollectionStatus } from "@/components/CollectionStatus";
@@ -46,7 +47,7 @@ export default async function RegulationsPage({ searchParams }: { searchParams: 
   if (ambiguousCount > 0) metrics.push({ termId: "ambiguous", value: `${format(ambiguousCount)}건` });
   if (ambiguousCount > 0) terms.push({ id: "ambiguous", label: "복수 유형 관측", short: "한 담당 표기에서 복수 유형의 근거가 관측됐습니다.", detail: "서로 다른 유형의 관측이 겹친 경우입니다. 단일 조직·인물로 자동 확정하지 않습니다." });
 
-  return <RegulationExplorer key={`${scope}:${category}:${q}`} publicPosts={publicPosts} postsCoverage={postsCoverage} externalPosts={externalPosts} rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={q} initialCategory={category}
+  return <RegulationExplorer revisionHistories={revisionHistories} key={`${scope}:${category}:${q}`} publicPosts={publicPosts} postsCoverage={postsCoverage} externalPosts={externalPosts} rows={dataset.rows} notices={dataset.notices} sources={dataset.sources} release={dataset.release} initialScope={scope} initialQuery={q} initialCategory={category}
     metadataSlot={scope === "posts" ? <aside className="collection-status" aria-label="전체게시물 수집 기록"><dl className="public-release-meta"><div><dt>마지막 데이터 수집일</dt><dd><time dateTime={collectedAt}>{collectionDate}</time><small> · 한국시간</small></dd></div><div><dt>수집 자료</dt><dd>홈페이지 게시판 공개 목록</dd></div></dl></aside> : <CollectionStatus evidenceAsOf={dataset.release.evidence_as_of} snapshotGeneratedAt={dataset.release.generated_at} />}
     insightSlot={<PublicInsightStrip
       eyebrow="승인 공개본 대조"
