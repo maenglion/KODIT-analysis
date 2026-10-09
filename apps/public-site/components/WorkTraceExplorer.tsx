@@ -121,8 +121,7 @@ export function WorkTraceExplorer(props: Props) {
     </section>
 
     <section className="work-trace-panel" id="work-trace-explore" aria-labelledby="work-trace-explore-title">
-      <div className="work-trace-panel-head"><div><p className="eyebrow">A / B / C · 동일한 추적 원장</p><h2 id="work-trace-explore-title">추적 분기</h2></div>
-        <p>어느 방향에서 시작해도 같은 사규예고 추적 분기를 엽니다. 사람 이름이나 담당 표기를 현행 부서에 연결하지 않습니다.</p></div>
+      <div className="work-trace-panel-head"><div><p className="eyebrow">A / B / C · 동일한 추적 원장</p><h2 id="work-trace-explore-title">추적 분기</h2></div></div>
       <nav className="work-trace-axes" aria-label="업무 추적 탐색 방향">
         {(Object.keys(axisNames) as WorkTraceAxis[]).map((key, index) => <a key={key} className={axis === key ? "active" : undefined}
           aria-current={axis === key ? "page" : undefined} href={traceHref({ axis: key })}><span>{String.fromCharCode(65 + index)}</span>{axisNames[key]}</a>)}

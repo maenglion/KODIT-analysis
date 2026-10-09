@@ -19,6 +19,7 @@ const residualPageText = await readFile(new URL("../apps/public-site/app/residua
 const residualAnalysisText = await readFile(new URL("../packages/common/src/regulations/DepartmentResidualAnalysis.tsx", import.meta.url), "utf8");
 const residualUiText = await readFile(new URL("../packages/common/src/regulations/residual-ui.ts", import.meta.url), "utf8");
 const personObservationText = await readFile(new URL("../packages/common/src/regulations/PersonResidualObservations.tsx", import.meta.url), "utf8");
+const workTraceText = await readFile(new URL("../apps/public-site/components/WorkTraceExplorer.tsx", import.meta.url), "utf8");
 const navigationText = await readFile(new URL("../apps/public-site/components/SiteNavigation.tsx", import.meta.url), "utf8");
 const informationText = await readFile(new URL("../apps/public-site/components/InformationPages.tsx", import.meta.url), "utf8");
 const loaderText = await readFile(new URL("../apps/public-site/lib/review-data.ts", import.meta.url), "utf8");
@@ -159,6 +160,8 @@ for (const text of ["판정 근거와 검증 구조", "확인한 범위까지만
 assert.ok(informationText.includes('residualOccurrenceCount.toLocaleString("ko-KR")') && informationText.includes('residualLabelCount.toLocaleString("ko-KR")'));
 assert.ok(diagramText.includes('잔차·라벨·귀속 원장') && diagramText.includes('사규예고 → 규정 → 현행 업무분장'));
 assert.ok(residualPageText.includes('잔차·라벨·귀속 원장 보기 ↗'));
+assert.ok(workTraceText.includes('id="work-trace-explore-title">추적 분기</h2>') && workTraceText.includes('className="work-trace-axes"'));
+assert.ok(!workTraceText.includes('어느 방향에서 시작해도 같은 사규예고 추적 분기를 엽니다.') && !workTraceText.includes('사람 이름이나 담당 표기를 현행 부서에 연결하지 않습니다.'));
 assert.ok(explorerText.includes("필터 결과 전체 CSV"));
 assert.ok(explorerText.includes('onToggleSettings={toggleSettings}') && explorerText.includes('settingsTrigger.current?.isConnected') && explorerText.includes('target?.focus()') && explorerText.includes('id="search-results"'));
 assert.ok(explorerText.includes('aria-controls="advanced-search-panel"') && advancedText.includes('id="advanced-search-panel"'));
