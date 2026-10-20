@@ -1,0 +1,27 @@
+{
+  "input_paths": 117,
+  "unique_documents": 90,
+  "binary_aliases": 27,
+  "missing_paths": 0,
+  "stats": {
+    "formats_.docx": 36,
+    "ocr_documents": 24,
+    "ocr_pages": 121,
+    "formats_.pdf": 39,
+    "formats_.md": 10,
+    "formats_.eml": 4,
+    "formats_.png": 1
+  },
+  "audited_pdf_results": {
+    "NO_EXTRACTABLE_TEXT": 16,
+    "SUCCESS": 23
+  },
+  "runtime_contracts": {
+    "SATISFIED": 39
+  },
+  "metadata_body_reviewed": 47,
+  "metadata_pending": 43,
+  "response_items": 19,
+  "db_applied": false,
+  "originals_uploaded": false
+}

@@ -1,3 +1,6 @@
 *.csv text eol=crlf
 # The supplied manuscript uses an intentional Markdown hard break after its basis date.
 apps/public-site/content/data-purpose.md whitespace=-blank-at-eol
+docs/bethel/** text eol=lf
+tools/bethel/** text eol=lf
+supabase/migrations/20261020000100_bethel_private_correspondence.sql text eol=lf

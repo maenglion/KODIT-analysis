@@ -1,0 +1,211 @@
+[
+  {
+    "item_id": "R01",
+    "topic": "B 약정서 수령 여부·범위",
+    "request_document_id": "BET-7f9e729acd07a731",
+    "request_search": "제공받은 사실",
+    "reply_document_id": "BET-abe391396e10a932",
+    "reply_locator": "ocr:ocr-page-1",
+    "response_status": "substantive",
+    "match_basis": "topic_only",
+    "assessment": "컬러 복사본 두 매 전체를 수령했다고 구체적으로 답함. MD 초안이 실제 발송본인지는 미확정."
+  },
+  {
+    "item_id": "R02",
+    "topic": "B 자료 수령일",
+    "request_document_id": "BET-7f9e729acd07a731",
+    "request_search": "제공받은 일자",
+    "reply_document_id": "BET-abe391396e10a932",
+    "reply_locator": "ocr:ocr-page-1",
+    "response_status": "substantive",
+    "match_basis": "topic_only",
+    "assessment": "2025-12-02라고 특정. 회피 항목으로 분류하지 않음."
+  },
+  {
+    "item_id": "R03",
+    "topic": "B 마스킹 여부",
+    "request_document_id": "BET-7f9e729acd07a731",
+    "request_search": "마스킹(가림 처리)",
+    "reply_document_id": "BET-abe391396e10a932",
+    "reply_locator": "ocr:ocr-page-1",
+    "response_status": "substantive",
+    "match_basis": "topic_only",
+    "assessment": "마스킹된 부분이 없었다고 답함."
+  },
+  {
+    "item_id": "R04",
+    "topic": "B 감정서 PDF 보관 여부 정정",
+    "request_document_id": "BET-8cf8ef7a4f88d43a",
+    "request_search": "보관 및 파기 현황",
+    "reply_document_id": "BET-1ff6b077e36b080d",
+    "reply_locator": "ocr:ocr-page-2",
+    "response_status": "correction",
+    "match_basis": "topic_only",
+    "assessment": "7월22일 미보관 회신을 8월10일 하드디스크 보관 확인으로 명시 정정. 고의 허위 여부는 별도."
+  },
+  {
+    "item_id": "R05",
+    "topic": "B 등록 법원·분야·등록번호",
+    "request_document_id": "BET-8cf8ef7a4f88d43a",
+    "request_search": "등록된 법원의 명칭",
+    "reply_document_id": "BET-1ff6b077e36b080d",
+    "reply_locator": "ocr:ocr-page-1",
+    "response_status": "unanswered",
+    "match_basis": "topic_only",
+    "assessment": "8월10일 회신에 해당 식별정보를 찾지 못함. 법20조 사항은 종전 회신으로 갈음하나 등록 세부사항에 대한 개별 답변은 없음. 날짜 빈 초안과 7월29일 발송본의 동일성은 미확정."
+  },
+  {
+    "item_id": "R06",
+    "topic": "B 장비로 생성한 본인 관련 영상·측정자료",
+    "request_document_id": "BET-8cf8ef7a4f88d43a",
+    "request_search": "CCD카메라",
+    "reply_document_id": "BET-1ff6b077e36b080d",
+    "reply_locator": "ocr:ocr-page-2",
+    "response_status": "partial",
+    "match_basis": "topic_only",
+    "assessment": "현재 보유 자료 사본 제공을 안내하고 약정서 두 매 첨부. 요청한 영상·측정자료의 파일명·형식·생성일시·존부에 관한 항목별 설명은 확인되지 않음."
+  },
+  {
+    "item_id": "R07",
+    "topic": "B 계산서·영수증·비용부담 확인 자료",
+    "request_document_id": "BET-5c927bc4044459e5",
+    "request_search": "감정료 청구서",
+    "reply_document_id": "BET-48b5578ea8eae840",
+    "reply_locator": "ocr:ocr-page-7",
+    "response_status": "partial",
+    "match_basis": "topic_only",
+    "assessment": "법원 촉탁 회신에는 70만원 입금내역이 첨부됨. 계산서 발행·세무처리·기관 최종정산까지 답한 자료는 아님. 신청서 초안과 실제 촉탁 범위의 동일성은 별도 대조 필요."
+  },
+  {
+    "item_id": "R08",
+    "topic": "A 자료 수령 방법",
+    "request_document_id": "BET-739fcfb4ef79f3e5",
+    "request_search": "수령 방법이",
+    "reply_document_id": "BET-618dba8e33fc43a6",
+    "reply_locator": "ocr:ocr-page-1",
+    "response_status": "substantive",
+    "match_basis": "topic_only",
+    "assessment": "8월13일 회신에서 이메일 수령과 2025-12-02경이라는 시점을 구체화. 이 항목은 답변함."
+  },
+  {
+    "item_id": "R09",
+    "topic": "A 발신·수신 계정과 메일 원본·헤더",
+    "request_document_id": "BET-739fcfb4ef79f3e5",
+    "request_search": "발신 계정, 수신 계정",
+    "reply_document_id": "BET-618dba8e33fc43a6",
+    "reply_locator": "ocr:ocr-page-1",
+    "response_status": "outside_scope",
+    "match_basis": "topic_only",
+    "assessment": "이메일이라는 방식은 답했으나 계정·원본·전체 헤더 존부를 개별 특정하지 않음. 나머지 범위 밖 사항은 별도 답변하지 않는다고 기재."
+  },
+  {
+    "item_id": "R10",
+    "topic": "B 원본 메일 확보와 후속 공개",
+    "request_document_id": "BET-5c927bc4044459e5",
+    "request_search": "감정의뢰서 원본",
+    "reply_document_id": "BET-48b5578ea8eae840",
+    "reply_locator": "ocr:ocr-page-2",
+    "response_status": "partial",
+    "match_basis": "topic_only",
+    "assessment": "후속 법원 회신에서 일부 가림 처리된 의뢰 메일 출력본 제공. 출력본 확보와 EML·전체헤더 확보는 다름. 신청서 초안과 실제 촉탁 범위의 동일성은 별도 대조 필요."
+  },
+  {
+    "item_id": "R11",
+    "topic": "A 삼일의 자료 전달일·목적",
+    "request_document_id": "BET-81cdb37caeff34bc",
+    "request_search": "감정원 측 수령자",
+    "reply_document_id": "BET-6399ea4424391cac",
+    "reply_locator": "ocr:ocr-page-4",
+    "response_status": "partial",
+    "match_basis": "topic_only",
+    "assessment": "의뢰인 승인, 감정 위탁, 2025-12-02 사본 전달과 법원 제출을 답함. 요청한 단계별 송수신계정·전달기록 전부를 제공한 것은 아님."
+  },
+  {
+    "item_id": "R12",
+    "topic": "A 삼일의 계약·회계·업무 및 전달기록",
+    "request_document_id": "BET-81cdb37caeff34bc",
+    "request_search": "지시·승인한 자",
+    "reply_document_id": "BET-6399ea4424391cac",
+    "reply_locator": "ocr:ocr-page-5",
+    "response_status": "refusal",
+    "match_basis": "topic_only",
+    "assessment": "업무·계약·회계·다른 사람 정보, 소송상 이익 및 비밀 등을 이유로 제한. 제한 사유를 적었으므로 단순 무응답으로 표시하지 않음. 적법성은 별도 검토."
+  },
+  {
+    "item_id": "R13",
+    "topic": "A 삼일 보완요구에 대한 종전 답변 원용",
+    "request_document_id": null,
+    "request_search": null,
+    "reply_document_id": "BET-9fdc8509dec6a673",
+    "reply_locator": "ocr:ocr-page-4",
+    "response_status": "prior_reference",
+    "match_basis": "request_not_supplied",
+    "assessment": "8월10일 회신은 8월6일자 요구서를 지칭하고 종전 열람통지를 원용. 현재 지정된 8월5일 초안과 실제 발송본 일치는 미확정이므로 직접 연결하지 않음."
+  },
+  {
+    "item_id": "R14",
+    "topic": "A 삼일 보완요구의 나머지 항목",
+    "request_document_id": null,
+    "request_search": null,
+    "reply_document_id": "BET-9fdc8509dec6a673",
+    "reply_locator": "ocr:ocr-page-4",
+    "response_status": "refusal",
+    "match_basis": "request_not_supplied",
+    "assessment": "업무·계약·회계 정보와 소송상 비밀 등의 이유로 제한을 반복 기재. 정확한 잔여 미답변 항목 수는 발송본 확보 전 계산하지 않음."
+  },
+  {
+    "item_id": "R15",
+    "topic": "A 삼일 9월 회신 문1 항목1-8 수령시점",
+    "request_document_id": null,
+    "request_search": null,
+    "reply_document_id": "BET-e5453c2b5b8651ec",
+    "reply_locator": "ocr:ocr-page-2",
+    "response_status": "substantive",
+    "match_basis": "request_not_supplied",
+    "assessment": "의뢰인으로부터 SNS 게시물을 2024년10월경 수령했다고 답함. 회신이 지칭한 9월11일 요구서 원본은 현재 묶음에서 특정되지 않음."
+  },
+  {
+    "item_id": "R16",
+    "topic": "A 삼일 9월 회신 문1 나머지·문2~문5",
+    "request_document_id": null,
+    "request_search": null,
+    "reply_document_id": "BET-e5453c2b5b8651ec",
+    "reply_locator": "ocr:ocr-page-2",
+    "response_status": "refusal",
+    "match_basis": "request_not_supplied",
+    "assessment": "법정사항 미해당·법적근거 부재·변호사 비밀 등을 이유로 제한. 9월3일 초안의 3차라는 이름을 그대로 회신 차수로 확정하지 않음."
+  },
+  {
+    "item_id": "R17",
+    "topic": "A 삼일 개인정보 보유기간",
+    "request_document_id": null,
+    "request_search": null,
+    "reply_document_id": "BET-e5453c2b5b8651ec",
+    "reply_locator": "ocr:ocr-page-2",
+    "response_status": "partial",
+    "match_basis": "request_not_supplied",
+    "assessment": "소송수행업무 종료 후 법정보유기한까지라고 답함. 적용 법령·구체 기간·종료/파기 기준의 특정은 남음."
+  },
+  {
+    "item_id": "R18",
+    "topic": "B 신보 감정·비용 승인 원기록",
+    "request_document_id": "BET-d15026ffbb88cf68",
+    "request_search": "감정 의뢰·자료 송부·비용·승인 관련 원기록",
+    "reply_document_id": "BET-d15026ffbb88cf68",
+    "reply_locator": "page:4",
+    "response_status": "stated_absence",
+    "match_basis": "explicit_reference",
+    "assessment": "청구문과 답변이 한 결정통지서에 함께 있음. 보유·관리하지 않는 정보라고 부존재 통지. 행위가 없었다는 답변으로 바꾸어 읽지 않음."
+  },
+  {
+    "item_id": "R19",
+    "topic": "B 신보 감정 진행과 비용지급 협의·승인",
+    "request_document_id": "BET-d15026ffbb88cf68",
+    "request_search": "감정 의뢰·자료 송부·비용·승인 관련 원기록",
+    "reply_document_id": "BET-d15026ffbb88cf68",
+    "reply_locator": "page:4",
+    "response_status": "substantive",
+    "match_basis": "explicit_reference",
+    "assessment": "부존재 통지와 별개로 구두 협의·승인을 했다고 설명. 승인자·일시·정산증빙은 추가 확인 대상."
+  }
+]
