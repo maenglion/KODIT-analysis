@@ -30,6 +30,9 @@ def insert(table,row,update=False):
 # Reviewed document metadata: body dates, never filesystem timestamps.
 # A/B are pseudonyms; full name mapping stays in the private input data.
 REVIEWED={
+ 'BET-fc05f8971406f157':('A','법원','2026-10-13','other','reference',None),
+ 'BET-41ff98881ff68155':('A','법원',None,'other','reference',None),
+ 'BET-375209b396d4a6fe':('A','법원',None,'other','reference',None),
  'BET-abe391396e10a932':('벧엘','B','2026-07-22','personal_data_access','reply',None),
  'BET-4769bf6d686b9496':('벧엘','B','2026-07-22','personal_data_access','reply',None),
  'BET-1ff6b077e36b080d':('벧엘','B','2026-08-10','personal_data_access','reply',None),
@@ -75,6 +78,9 @@ REVIEWED={
 }
 
 EVIDENCE=[
+ ('E19','BET-41ff98881ff68155','line:70','A','litigation_argument','processing_status','원업무가 없는 이상', '의견서의 주장: 비당사자 개인정보 처리 원업무와 위탁 전제에 이의를 제기함. 법적 결론 미확정',False),
+ ('E20','BET-fc05f8971406f157','line:665','A','litigation_argument','retention_authority','보유 권한의 문제: 이러한 정보를 보유할 수 있는 주체인가','의견서의 문제제기: 감정 완료 후 보유 주체의 처리 근거와 파기 의무 확인 필요',False),
+ ('E21','BET-375209b396d4a6fe','line:11','A','litigation_argument','nonparty_status','저는 이 사건의 피고가 아닙니다.','의견서의 진술: 비당사자의 독립된 개인정보 권리보호를 요청',False),
  ('E01','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','registration','법원에 등록되어있는 문서감정원','법원 등록 문서감정원이라는 자기표시',True),
  ('E02','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','transfer','본 감정원은 의뢰인으로부터 「책임경영 이행 약정서」 컬러 복사본 2매를 수령하였습니다.','사본 수령 및 마스킹 미실시라는 회신',True),
  ('E03','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','retention','본 감정원에서는 보관하고 있지 않습니다.','원본 및 PDF 미보관이라고 회신',True),
@@ -95,6 +101,9 @@ EVIDENCE=[
  ('E18','BET-a18b8bb12850a526','ocr:ocr-page-19','벧엘','attachment','equipment','전자 현미경','사본 네 매와 현미경·CCD카메라 등 사용 기재가 같은 감정서에 존재',True),
 ]
 QUESTIONS=[
+ ('Q09',1,'법원행정처','법원 인가·등록 또는 등재 심사와 관리 범위에 개인정보 처리·보유·파기 요건이 포함되는가'),
+ ('Q10',3,'개인정보보호위원회','B 주민등록번호의 수령·저장·감정서 편철에 대한 구체적 처리 허용 근거와 현재 보관·파기 상태'),
+ ('Q11',3,'개인정보보호위원회','A 비당사자 식별정보를 받은 벧엘의 처리 지위·독립적 법적 근거와 감정 완료 후 보관·파기 상태'),
  ('Q01',1,'법원행정처','사설 감정원 인가와 개인 감정인 명단 등재 제도의 구분'),
  ('Q02',1,'법원행정처/관할법원','2025년12월 및 2026년7월 해당인·기관의 등재 주체·분야·기간'),
  ('Q03',2,'법원행정처/관할법원','당시 적용된 시설·장비 기준과 제출·심사한 장비 소명자료'),
@@ -157,6 +166,8 @@ def main():
         if did=='BET-618dba8e33fc43a6':row['notes']='파일명 3차와 달리 본문은 2차 요구서에 대한 회신. 회신 차수 미확정'
         if did=='BET-e5453c2b5b8651ec':row['notes']='2026-09-11 요구서와 09-14 도달을 회신에 기재; 제공된 09-03 초안과 동일 발송본으로 자동 연결하지 않음'
         if did=='BET-48b5578ea8eae840':row['notes']='작성 10-07, 법원 제출 10-12. 일반 우편 수신일과 구분'
+        if did in {'BET-fc05f8971406f157','BET-41ff98881ff68155','BET-375209b396d4a6fe'}:
+            row['notes']='사용자 제공 법원 의견서 MD 전사본. 내용은 작성자의 주장·해석이며 기관 회신과 구별. 원 PDF·그림·접수증 미대조. 문서명 또는 본문 제출 표시는 제출 완료의 독립 증명이 아님.'
         # Drafts, receipt evidence and confidence remain explicit.
         if row['metadata_review']=='pending':unreviewed.append(did)
         rows.append(row)
@@ -174,6 +185,7 @@ def main():
         evidence.append(e)
         sql.append('insert into "case".bethel_evidence ('+','.join(e)+') values ('+','.join(literal(v) for v in e.values())+') on conflict (evidence_id) do nothing;')
     question_evidence={
+        'Q09':['E01','E15'],'Q10':['E02','E03','E04'],'Q11':['E05','E06','E19','E20','E21'],
         'Q01':['E01','E15'],'Q02':['E01','E13','E15'],'Q03':['E01','E14','E18'],
         'Q04':['E02','E07','E13','E14','E16','E18'],'Q05':['E05','E07','E08','E10','E11','E12','E17'],
         'Q06':['E03','E04'],'Q07':['E08','E14'],'Q08':['E01','E02','E03','E04','E10','E11']}

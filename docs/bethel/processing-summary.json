@@ -1,6 +1,6 @@
 {
-  "input_paths": 117,
-  "unique_documents": 90,
+  "input_paths": 120,
+  "unique_documents": 93,
   "binary_aliases": 27,
   "missing_paths": 0,
   "stats": {
@@ -8,7 +8,7 @@
     "ocr_documents": 24,
     "ocr_pages": 121,
     "formats_.pdf": 39,
-    "formats_.md": 10,
+    "formats_.md": 13,
     "formats_.eml": 4,
     "formats_.png": 1
   },
@@ -19,7 +19,7 @@
   "runtime_contracts": {
     "SATISFIED": 39
   },
-  "metadata_body_reviewed": 47,
+  "metadata_body_reviewed": 50,
   "metadata_pending": 43,
   "response_items": 19,
   "db_applied": false,

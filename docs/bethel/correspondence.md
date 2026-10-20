@@ -96,6 +96,9 @@
 |BET-a18b8bb12850a526|삼일 → 법원|미확정|other / reference|? / ?|미확인|body_reviewed|
 |BET-384baeb7d7e32317|? → ?|미확정|personal_data_access / reference|? / ?|미확인|pending|
 |BET-a57200ce7131cd91|? → ?|미확정|unknown / reference|? / ?|미확인|pending|
+|BET-fc05f8971406f157|A → 법원|2026-10-13|other / reference|? / ?|미확인|body_reviewed|
+|BET-41ff98881ff68155|A → 법원|미확정|other / reference|? / ?|미확인|body_reviewed|
+|BET-375209b396d4a6fe|A → 법원|미확정|other / reference|? / ?|미확인|body_reviewed|
 
 ## 원장 읽는 방법
 
