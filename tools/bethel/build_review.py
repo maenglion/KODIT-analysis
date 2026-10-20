@@ -30,6 +30,7 @@ def insert(table,row,update=False):
 # Reviewed document metadata: body dates, never filesystem timestamps.
 # A/B are pseudonyms; full name mapping stays in the private input data.
 REVIEWED={
+ 'BET-88173b7d439e952d':('A','법원행정처','2026-10-20','information_disclosure','request',None),
  'BET-fc05f8971406f157':('A','법원','2026-10-13','other','reference',None),
  'BET-41ff98881ff68155':('A','법원',None,'other','reference',None),
  'BET-375209b396d4a6fe':('A','법원',None,'other','reference',None),
@@ -168,6 +169,10 @@ def main():
         if did=='BET-48b5578ea8eae840':row['notes']='작성 10-07, 법원 제출 10-12. 일반 우편 수신일과 구분'
         if did in {'BET-fc05f8971406f157','BET-41ff98881ff68155','BET-375209b396d4a6fe'}:
             row['notes']='사용자 제공 법원 의견서 MD 전사본. 내용은 작성자의 주장·해석이며 기관 회신과 구별. 원 PDF·그림·접수증 미대조. 문서명 또는 본문 제출 표시는 제출 완료의 독립 증명이 아님.'
+        if did=='BET-88173b7d439e952d':
+            row.update(dispatch_status='confirmed',receipt_status='confirmed',receipt_number='1654')
+            row['notes']='PDF 1쪽 접수일자 2026-10-20·접수번호 1654·청구인 A를 원본 이미지 대조. 감정인 개인정보 심사·보관·파기·교육·평가·제재 기준의 실제 청구. 접수 시각·처리기한·담당자·회신 여부는 이 문서로 확인하지 않음.'
+            row['metadata_evidence']=[{'locator':'ocr:ocr-page-1','basis':'접수표시 및 청구내용 원본 이미지 대조; 사용자 접수 완료 확인'}]
         # Drafts, receipt evidence and confidence remain explicit.
         if row['metadata_review']=='pending':unreviewed.append(did)
         rows.append(row)
@@ -247,7 +252,7 @@ def main():
     for row in rows:
         s=row['sender'] or row['sender_candidate'] or '?'; t=row['recipient'] or row['recipient_candidate'] or '?'
         kind=row['procedure'] or row['procedure_candidate'];direction=row['direction'] or row['direction_candidate']
-        table.append(f"|{row['document_id']}|{s} → {t}|{row['document_date'] or '미확정'}|{kind} / {direction}|{row['round_claimed'] or '?'} / {row['round_filename'] or '?'}|미확인|{row['metadata_review']}|")
+        table.append(f"|{row['document_id']}|{s} → {t}|{row['document_date'] or '미확정'}|{kind} / {direction}|{row['round_claimed'] or '?'} / {row['round_filename'] or '?'}|{row['dispatch_status']} / {row['receipt_status']}|{row['metadata_review']}|")
     table += ['', '## 원장 읽는 방법','',
         '- `body_reviewed`: 해당 발신·수신·문서일 등을 본문과 대조했습니다. 실제 도달일·발송본 여부까지 확정한 뜻은 아닙니다.',
         '- `pending`: 수집·파싱은 되었으나 당사자·차수 매칭은 검토 전입니다. 임의로 채우지 않았습니다.',
