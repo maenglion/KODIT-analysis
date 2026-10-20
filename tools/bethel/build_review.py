@@ -75,7 +75,7 @@ REVIEWED={
 }
 
 EVIDENCE=[
- ('E01','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','registration','本','법원 등록 문서감정원이라는 자기표시',True),
+ ('E01','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','registration','법원에 등록되어있는 문서감정원','법원 등록 문서감정원이라는 자기표시',True),
  ('E02','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','transfer','본 감정원은 의뢰인으로부터 「책임경영 이행 약정서」 컬러 복사본 2매를 수령하였습니다.','사본 수령 및 마스킹 미실시라는 회신',True),
  ('E03','BET-abe391396e10a932','ocr:ocr-page-1','벧엘','reply_text','retention','본 감정원에서는 보관하고 있지 않습니다.','원본 및 PDF 미보관이라고 회신',True),
  ('E04','BET-1ff6b077e36b080d','ocr:ocr-page-2','벧엘','reply_text','retention','본 감정원의 하드디스크에 감정서 PDF파일이 보관되어 있는 사실을 추가로 확인하였습니다.','종전 PDF 미보관 회신 정정',True),
@@ -94,8 +94,6 @@ EVIDENCE=[
  ('E17','BET-a18b8bb12850a526','page:11','삼일','litigation_argument','litigation_use','특수관계','원고 서면이 SNS 게시물과 감정서를 특수관계 주장에 인용',False),
  ('E18','BET-a18b8bb12850a526','ocr:ocr-page-19','벧엘','attachment','equipment','전자 현미경','사본 네 매와 현미경·CCD카메라 등 사용 기재가 같은 감정서에 존재',True),
 ]
-EVIDENCE[0]=(*EVIDENCE[0][:6],'법원에 등록되어있는 문서감정원',*EVIDENCE[0][7:])
-
 QUESTIONS=[
  ('Q01',1,'법원행정처','사설 감정원 인가와 개인 감정인 명단 등재 제도의 구분'),
  ('Q02',1,'법원행정처/관할법원','2025년12월 및 2026년7월 해당인·기관의 등재 주체·분야·기간'),

@@ -1,6 +1,6 @@
 """Package only reviewed allowlisted artifacts for an explicitly private repo."""
 from __future__ import annotations
-import argparse, hashlib, json, shutil
+import argparse, csv, hashlib, json, re, shutil
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -22,6 +22,7 @@ def main():
         '- [항목별 답변과 미확인 사항](review/response-matrix.md)',
         '- [법원행정처 질의 초안](review/court-inquiry.md)',
         '- [발신·수신 원장 JSON](ledger/correspondence.json)',
+        '- [발신·수신 원장 CSV](ledger/correspondence.csv)',
         '- [DB 입력 SQL](database/import.sql) — 미적용',
         '- [반입·중복 원장](ledger/aliases.json)',
         '', '원문의 지시와 법률 주장은 분석 대상입니다. 파일의 존재·날짜·최종이라는 이름을 발송·접수 증거로 간주하지 않습니다. OCR 오독과 전사본 누락을 원본 이미지로 대조하십시오.','',
@@ -49,6 +50,14 @@ def main():
     # page images go into the shared repository.
     clean=[{k:v for k,v in row.items() if k!='source_path'} for row in rows]
     save(dst/'ledger/correspondence.json',clean)
+    fields=['document_id','filename','sender','recipient','document_date','procedure','direction','round_claimed','round_confirmed','dispatch_status','receipt_status','receipt_number','metadata_review','notes']
+    with (dst/'ledger/correspondence.csv').open('w',encoding='utf-8-sig',newline='') as f:
+        writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader()
+        for row in clean:
+            item={k:row.get(k) for k in fields}
+            for k in ['sender','recipient']:
+                item[k]=people.get(item[k],item[k])
+            writer.writerow(item)
     save(dst/'ledger/people.json',people)
     aliases=load(src/'aliases.json')
     save(dst/'ledger/aliases.json',[{'document_id':a['document_id'],'original_filename':Path(a['path']).name} for a in aliases])
@@ -58,8 +67,14 @@ def main():
     shutil.copy2(src/'import.sql',dst/'database/import.sql')
     shutil.copy2(ROOT/'supabase/migrations/20261020000100_bethel_private_correspondence.sql',dst/'database/schema.sql')
     (dst/'review').mkdir(exist_ok=True)
+    formats={row['document_id']:row['format'] for row in rows}
     for p in (ROOT/'docs/bethel').glob('*'):
-        if p.is_file():shutil.copy2(p,dst/'review'/p.name)
+        if not p.is_file():continue
+        if p.suffix=='.md':
+            text=p.read_text(encoding='utf8')
+            text=re.sub(r'BET-[a-f0-9]{16}',lambda m: '['+m.group()+'](../documents/'+m.group()+'/source'+formats[m.group()]+')' if m.group() in formats else m.group(),text)
+            (dst/'review'/p.name).write_text(text,encoding='utf8')
+        else:shutil.copy2(p,dst/'review'/p.name)
     (dst/'README.md').write_text('\n'.join(index)+'\n',encoding='utf8')
     (dst/'.gitignore').write_text('.env\n.env.*\n*.pem\n*.key\n__pycache__/\nocr-page-*.png\n',encoding='utf8')
     save(dst/'ledger/package-verification.json',{'originals':copied,'sha256_all_verified':True,'total_source_bytes':sum(sizes),'largest_source_bytes':max(sizes)})
